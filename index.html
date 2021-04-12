@@ -43,13 +43,45 @@
 					<img id="menuImg">
 				</div>
 			</div>
-			<input id="menuBtn" type="button">
-			<div id="menuC"></div>
+			<button id="menuBtn"><img></button>
+			<div id="menuC">
+				<button class="menuBtns" id="branchesBtn">
+					<img class="menuBtnImg">
+					<div class="menuBtnTxtC">
+						<div>Branches</div>
+					</div>
+				</button>
+				<button class="menuBtns" id="employeesBtn">
+					<img class="menuBtnImg">
+					<div class="menuBtnTxtC">
+						<div>Employees</div>
+					</div>
+				</button>
+				<button class="menuBtns" id="busesBtn">
+					<img class="menuBtnImg">
+					<div class="menuBtnTxtC">
+						<div>Buses</div>
+					</div>
+				</button>
+				<button class="menuBtns" id="requestsBtn">
+					<img class="menuBtnImg">
+					<div class="menuBtnTxtC">
+						<div>Requests</div>
+					</div>
+				</button>
+				<button class="menuBtns" id="busesBtn">
+					<img class="menuBtnImg">
+					<div class="menuBtnTxtC">
+						<div>Buses</div>
+					</div>
+				</button>
+			</div>
+			<div id="menuDownImgC"></div>
 		</div>
 		<div id="rightC">
 			<div id="headerC">
 				<h1>Δρομολόγια Λεωφορείων - Υπ.Ελ.Δ</h1>
-				<img id="Img1">
+				<img id="img1">
 			</div>
 
 			<div id="contentC"></div>
@@ -59,11 +91,11 @@
 	<script type="text/javascript" src="Js/Bus.js"></script>
 	<script type="text/javascript" src="Js/Branch.js"></script>
 	<script type="text/javascript" src="Js/BtnListener.js"></script>
-
+	<script type="text/javascript" src="Js/FixesStyle.js"></script>
 	<script type="text/javascript">
-		
+
 		var branch = new Branch(101, 1, 1, 1);
-		console.log(branch.id);
+		//console.log(branch.id);
 
 		var btnListener = new ButtonListener();
 		btnListener.AddEventsToButtons();
