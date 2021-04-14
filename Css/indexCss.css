@@ -1,3 +1,7 @@
+	* {
+		box-sizing: border-box;
+	}
+
 	html {
 		scroll-behavior: smooth;
 	}
@@ -11,21 +15,29 @@
 
 	#backgroundC {
 		position: relative;
-		width: 100%; height: 100%;
-		background: grey;
+		width: 100%; height: 1000px;
+		background: rgb(13, 18, 24);
 		overflow: hidden;
 	}
 
 	#leftC {
 		float: left;
-		position: fixed;
 		width: 240px; height: 100%;
-		background: rgb(77, 77, 77);
-		overflow: visible;
+		background: red;
+		overflow: hidden;
 		box-shadow: 3px 0px 2px black;
 		transition: width 0.3s;
-		
 	}
+
+		#leftFixedC {
+			position: fixed;
+			width: 240px; height: 100%;
+			background: rgb(77, 77, 77);
+			overflow: visible;
+			box-shadow: 3px 0px 2px black;
+			transition: width 0.3s;
+			z-index: 4;
+		}
 
 		#menuSymbolC {
 			position: relative;
@@ -36,47 +48,66 @@
 			-moz-background-size: cover;
 			-webkit-background-size: cover;
 			top: 0px; right: 0px;
-			z-index: 3;
-			border-bottom: 2px solid rgb(141, 157, 169); 
+			overflow: hidden;
+			border-bottom: 2px solid rgb(128, 155, 186);
 			box-shadow: 2px 0px 2px black;
+			z-index: 5;
 		}
 
 		#menuImgC {
-			position: absolute;
-			width: 40px; height: 40px;
-			bottom: 0px;
-			right: 5px;
-			margin: auto;
+			position: relative;
+			width: 85%; height: 85%;
+			background: rgb(13, 18, 24);
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 4px;
+			border: 4px solid white;
 		}
 
 		#menuImg {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			margin: auto;
+			content: url(../Assets/icons8_braineyes_95px.png);
+		}
+
+		#menuBtnC {
 			position: relative;
-			width: 100%; height: 100%;
-			bottom: 0px; right: 0px;
-			content: url(../Assets/icons8_greece_50px.png);
+			height: 50px;
+			background-image: url(../Assets/sky.jpg);
+			background-size: cover;
+			z-index: 10;
 		}
 
 		#menuBtn {
-			position: absolute;
-			width: 50px; height: 45px;
-			background: transparent;
+			display: block;
+			position: relative;
+			width: 60px; height: 100%;
+			background: rgb(13, 18, 24);
 			outline: none;
 			cursor: pointer;
-			top: 100px; right: -25px;
-			border: 2px solid rgb(10, 24, 41);
-			border-radius: 0px 4px 4px 0px;
-			z-index: 1;
-			transition: right 0.3s;
+			border: 2px solid rgb(13, 18, 24);
+			border-radius: 0 0 4px 4px;
+			margin: auto;
+			padding: 0;
+			transition: border-radius 0.5s;
+			z-index: 5;
 		}
 
 		#menuBtn:hover {
-			background: rgb(16, 38, 65);
-			right: -50px;
+			background: rgb(255, 215, 0);
 		}
 
 		#menuBtn img {
 			width: 100%; height: 100%;
 			content: url(../Assets/icons8_business_50px.png);
+		}
+
+		#menuBtn:hover img {
+			content: url(../Assets/icons8_business_50px_3.png);
 		}
 
 		#menuC {
@@ -86,9 +117,9 @@
 			background-size: cover;
 			top: 0px; right: 0px;
 			overflow: hidden;
+			padding-top: 70px;
+			padding-bottom: 70px;
 			z-index: 5;
-			padding-top: 50px;
-			padding-bottom: 50px;
 		}
 
 		.menuBtns {
@@ -96,6 +127,7 @@
 			width: 100%; height: 45px;
 			background: transparent;
 			cursor: pointer;
+			font-size: 22px;
 			outline: none;
 			border: none;
 			border-top: 2px solid white;
@@ -106,6 +138,7 @@
 		.menuBtns:hover {
 			background: rgb(46, 54, 78, 0.5);
 			border: none;
+			font-size: 25px;
 			border-top: 2px solid rgb(46, 54, 78);
 			border-bottom: 2px solid rgb(46, 54, 78);
 		}
@@ -115,9 +148,57 @@
 			position: relative;
 			width: 35px; height: 80%;
 			margin-left: 30px;
-			content: url(../Assets/icons8_region_50px.png);
 			top: 50%;
 			transform: translate(0%, -50%);
+		}
+
+		.menuBtns:hover img {
+			height: 90%;
+		}
+
+		#branchesBtn img {
+			content: url(../Assets/icons8_compare_git_50px.png);
+		}
+
+		#branchesBtn:hover img {
+			height: 80%;
+			content: url(../Assets/icons8_compare_git_50px_2.png);
+		}
+
+		#employeesBtn img {
+			height: 90%;
+			content: url(../Assets/icons8_gender_neutral_employee_group_50px.png);
+		}
+
+		#employeesBtn:hover img {
+			height: 100%;
+			content: url(../Assets/icons8_gender_neutral_employee_group_50px_2.png);
+		}
+
+		#routesBtn img {
+			content: url(../Assets/icons8_route_50px.png);
+		}
+
+		#routesBtn:hover img {
+			content: url(../Assets/icons8_route_50px_2.png);
+		}
+
+		#busesBtn img {
+			content: url(../Assets/icons8_bus_50px_3.png);
+		}
+
+		#busesBtn:hover img {
+			height: 80%;
+			content: url(../Assets/icons8_bus_50px_2.png);
+		}
+
+		#requestsBtn img {
+			content: url(../Assets/icons8_notification_50px.png);
+		}
+
+		#requestsBtn:hover img {
+			height: 80%;
+			content: url(../Assets/icons8_notification_50px_2.png);
 		}
 
 		.menuBtnTxtC {
@@ -126,9 +207,20 @@
 		}
 
 		.menuBtnTxtC div {
+			float: left;
 			position: relative;
 			color: white;
-			font-size: 22px;
+			font-family: "Times New Roman", Times, serif;
+			font-style: italic;
+			text-align: left;
+			top: 50%; left: 5px;
+			transform: translate(0%, -50%);
+		}
+
+		#numberOfRequestsC {
+			position: relative;
+			color: white;
+			font-size: 19px;
 			font-family: "Times New Roman", Times, serif;
 			font-style: italic;
 			text-align: left;
@@ -146,26 +238,89 @@
 		}
 
 	#rightC {
-		height: 1000px;
+		position: relative;
+		height: 100%;
 		background: rgb(0, 0, 0, 0.1);
 		overflow: hidden;
 	}
 
 		#headerC {
-			height: 70px;
-			background: rgb(0, 0, 0, 0.4);
+			position: relative;
+			background: rgb(13, 18, 24);
 			margin: auto;
-			padding: 10px 0 10px 0;
-			text-align: center;
+			padding: 10px 0 0 0;
 			border-bottom: 2px solid rgb(255, 215, 0);
 		}
 
-		#headerC h1 {
-			color: white;
+		#headerHeadC {
+			position: relative;
 		}
 
-		#img1 {
+		#headerHeadC h1 {
+			position: relative;
+			color: white;
+			text-align: center;
+		}
+
+		#headerImg {
+			float: left;
+			position: relative;
+			height: 100px;
+			top: -16px; left: 50%;
 			content: url(../Assets/icons8_network_95pxEdited.png);
+			margin: auto;
+			transform: translate(-50%, 0);
+		}
+
+		#profileInfoC {
+			float: right;
+			position: relative;
+			background: rgb(0, 0, 0, 0.5);
+			right: 30px;
+			border-radius: 0 0 2px 2px;
+			padding: 10px;
+		}
+
+		#usernameC {
+			float: left;
+			position: relative;
+			height: 30px;
+			color: white;
+			margin-right: 20px;
+		}
+
+		#usernameC div {
+			position: relative;
+			font-size: 16px;
+			font-family: "Times New Roman", Times, serif;
+			top: 50%;
+			transform: translate(0, -50%);
+		}
+
+		#adminImg {
+			content: url(../Assets/icons8_leadership_30px.png);
+			overflow: hidden;
+		}
+
+		#logOutBtn {
+			display: block;
+			position: relative;
+			background: transparent;
+			cursor: pointer;
+			outline: none;
+			border: none;
+			padding: 0;
+		}
+
+		#logOutBtn div {
+			color: rgb(255, 215, 0);
+			font-size: 16px;
+			font-family: "Times New Roman", Times, serif;
+			letter-spacing: 1px;
+		}
+
+		#logOutBtn:hover div {
+			color: rgb(255, 255, 90);
 		}
 
 		#contentC {
