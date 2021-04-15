@@ -15,14 +15,16 @@
 
 	#backgroundC {
 		position: relative;
-		width: 100%; height: 1000px;
+		width: 100%;
+		min-width: 1000px;
+		overflow: visible;
 		background: rgb(13, 18, 24);
-		overflow: hidden;
 	}
 
 	#leftC {
+		position: relative;
 		float: left;
-		width: 240px; height: 100%;
+		height: 100%;
 		background: red;
 		overflow: hidden;
 		box-shadow: 3px 0px 2px black;
@@ -31,7 +33,7 @@
 
 		#leftFixedC {
 			position: fixed;
-			width: 240px; height: 100%;
+			height: 100%;
 			background: rgb(77, 77, 77);
 			overflow: visible;
 			box-shadow: 3px 0px 2px black;
@@ -86,11 +88,11 @@
 			display: block;
 			position: relative;
 			width: 60px; height: 100%;
-			background: rgb(13, 18, 24);
+			background: transparent;
 			outline: none;
 			cursor: pointer;
-			border: 2px solid rgb(13, 18, 24);
-			border-radius: 0 0 4px 4px;
+			border: none;
+			border-radius: 0 4px 4px 0;
 			margin: auto;
 			padding: 0;
 			transition: border-radius 0.5s;
@@ -238,18 +240,22 @@
 		}
 
 	#rightC {
+		float: right;
 		position: relative;
 		height: 100%;
-		background: rgb(0, 0, 0, 0.1);
-		overflow: hidden;
+		min-width: 650px;
+		background: rgb(13, 18, 24);
+		overflow: visible;
+		transition: width 0.3s;
 	}
 
 		#headerC {
 			position: relative;
+			min-width: 650px;
 			background: rgb(13, 18, 24);
 			margin: auto;
+			overflow: visible;
 			padding: 10px 0 0 0;
-			border-bottom: 2px solid rgb(255, 215, 0);
 		}
 
 		#headerHeadC {
@@ -259,13 +265,26 @@
 		#headerHeadC h1 {
 			position: relative;
 			color: white;
+			font-size: 35px;
 			text-align: center;
 		}
 
-		#headerImg {
-			float: left;
+		#downHeaderC {
 			position: relative;
-			height: 100px;
+			width: 100%;
+			min-width: 650px;
+			overflow: visible;
+			background: transparent;
+			border-top: 2px solid rgb(255, 215, 0);
+		}
+
+		#firstLineContentC {
+			position: relative;
+			overflow: visible;
+		}
+
+		#headerImg {
+			position: relative;
 			top: -16px; left: 50%;
 			content: url(../Assets/icons8_network_95pxEdited.png);
 			margin: auto;
@@ -273,6 +292,7 @@
 		}
 
 		#profileInfoC {
+			display: block;
 			float: right;
 			position: relative;
 			background: rgb(0, 0, 0, 0.5);
@@ -324,7 +344,52 @@
 		}
 
 		#contentC {
-			width: 100%;
-			background: rgb(0, 0, 0, 0.2);
-			margin-top: 130px;
+			position: relative;
+			width: 100%; height: 5000px;
+			min-width: 650px;
+			background: rgb(0, 0, 0, 0.0);
+			padding: 0px 60px 0px 60px;
 		}
+
+		#showPanelC {
+			position: relative;
+			width: 100%; height: 100%;
+			min-width: 650px;
+			background: rgb(0, 0, 0, 0.2);
+			border-radius: 2px;
+		}
+
+
+/*SCREEN WIDTH UNDER 420px*/
+	@media only screen and (max-width: 420px) {
+		
+	}
+
+	/*SCREEN WIDTH UNDER 380px*/
+	@media only screen and (max-width: 380px) {
+		
+		
+	}
+
+	/*SCREEN WIDTH UNDER 374px*/
+	@media only screen and (max-width: 374px) {
+		
+		
+	}
+
+	/*SCREEN WIDTH UNDER 300px*/
+	@media only screen and (max-width: 300px) {
+		
+		
+	}
+/**/
+
+/*ANIMATIONS*/
+	@keyframes spinOnLoading {
+		from { 
+            transform: rotate(0deg); 
+        } to { 
+            transform: rotate(360deg); 
+        }
+	}
+/**/
