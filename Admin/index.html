@@ -53,31 +53,31 @@
 					<button id="menuBtn"><img></button>
 				</div>
 				<div id="menuC">
-					<button class="menuBtns" id="branchesBtn">
+					<button class="menuBtns" id="branchesBtn" name="Branches">
 						<img class="menuBtnImg">
 						<div class="menuBtnTxtC">
 							<div>Καταστήματα</div>
 						</div>
 					</button>
-					<button class="menuBtns" id="employeesBtn">
+					<button class="menuBtns" id="employeesBtn" name="Employees">
 						<img class="menuBtnImg">
 						<div class="menuBtnTxtC">
 							<div>Υπάλληλοι</div>
 						</div>
 					</button>
-					<button class="menuBtns" id="routesBtn">
+					<button class="menuBtns" id="routesBtn" name="Routes">
 						<img class="menuBtnImg">
 						<div class="menuBtnTxtC">
 							<div>Δρομολόγια</div>
 						</div>
 					</button>
-					<button class="menuBtns" id="busesBtn">
+					<button class="menuBtns" id="busesBtn" name="Buses">
 						<img class="menuBtnImg">
 						<div class="menuBtnTxtC">
 							<div>Λεωφορεία</div>
 						</div>
 					</button>
-					<button class="menuBtns" id="requestsBtn">
+					<button class="menuBtns" id="requestsBtn" name="Requests">
 						<img class="menuBtnImg">
 						<div class="menuBtnTxtC">
 							<div>Αιτήματα</div>
@@ -120,17 +120,18 @@
 
 	<script type="text/javascript" src="../Js/Bus.js"></script>
 	<script type="text/javascript" src="../Js/Branch.js"></script>
+	<script type="text/javascript" src="../Js/MenuScreenAdmin.js"></script>
 	<script type="text/javascript" src="../Js/BtnListener.js"></script>
 	<script type="text/javascript" src="../Js/FixesStyle.js"></script>
 	<script type="text/javascript">
-
 		var branch = new Branch(101, 1, 1, 1);
 		//console.log(branch.id);
 
 		var btnListener = new ButtonListener("ADMIN");
 		btnListener.AddEventsToButtons();
-
 	</script>
+
+	<script type="text/javascript" src="../Js/ServerAdmin.js"></script>
 
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
 	<script src="/__/firebase/8.4.1/firebase-app.js"></script>

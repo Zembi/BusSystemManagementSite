@@ -5,13 +5,64 @@ class ButtonListener {
 	#menuBtn;
 	#branchesBtn;
 	#employeesBtn;
+	#routesBtn;
+	#busesBtn;
+	#requestsBtn;
 
 	constructor(type) {
 		this.#type = type;
 	}
 
-	get type() {
+	get getType() {
 		return this.#type;
+	}
+
+	get getMenuBtn() {
+		return this.#menuBtn;
+	}
+
+	set setMenuBtn(lang) {
+    	this.#menuBtn = lang;
+	}
+
+	get getBranchesBtn() {
+		return this.#branchesBtn;
+	}
+
+	set setBranchesBtn(lang) {
+    	this.#branchesBtn = lang;
+	}
+
+	get getEmployeesBtn() {
+		return this.#employeesBtn;
+	}
+
+	set setEmployeesBtn(lang) {
+    	this.#employeesBtn = lang;
+	}
+
+	get getRoutesBtn() {
+		return this.#routesBtn;
+	}
+
+	set setRoutesBtn(lang) {
+    	this.#routesBtn = lang;
+	}
+
+	get getBusesBtn() {
+		return this.#busesBtn;
+	}
+
+	set setBusesBtn(lang) {
+    	this.#busesBtn = lang;
+	}
+
+	get getRequestsBtn() {
+		return this.#requestsBtn;
+	}
+
+	set setRequestsBtn(lang) {
+    	this.#requestsBtn = lang;
 	}
 
 	AddEventsToButtons() {
@@ -20,10 +71,16 @@ class ButtonListener {
 			//IF CLASS IS BEING CALLED FROM ADMIN SITE
 			this.#menuBtn = document.getElementById("menuBtn");
 			this.#menuBtn.addEventListener("click", this.#MenuButtonListener);
-			this.#branchesBtn = document.getElementById("branchesBtn");
+			this.setBranchesBtn = document.getElementById("branchesBtn");
 			this.#branchesBtn.addEventListener("click", this.#BranchesButtonListenerAdmin);
-			this.#employeesBtn = document.getElementById("employeesBtn");
+			this.setEmployeesBtn = document.getElementById("employeesBtn");
 			this.#employeesBtn.addEventListener("click", this.#EmployeesButtonListenerAdmin);
+			this.setRoutesBtn = document.getElementById("routesBtn");
+			this.#routesBtn.addEventListener("click", this.#RoutesButtonListenerAdmin);
+			this.setBusesBtn = document.getElementById("busesBtn");
+			this.#busesBtn.addEventListener("click", this.#BusesButtonListenerAdmin);
+			this.setRequestsBtn = document.getElementById("requestsBtn");
+			this.#requestsBtn.addEventListener("click", this.#RequestsButtonListenerAdmin);
 		}
 		else if(this.#type == "EMPLOYEE") {
 			//IF CLASS IS BEING CALLED FROM EMPLOYEE SITE
@@ -32,6 +89,8 @@ class ButtonListener {
 
 	//MENU BUTTON EVENTS
 	#MenuButtonListener() {
+		alert(this.getMenuBtn);
+
 		var leftC = document.getElementById("leftC");
 		var leftFixedC = document.getElementById("leftFixedC");
 		var menuSymbolC = document.getElementById("menuSymbolC");
@@ -75,22 +134,32 @@ class ButtonListener {
 
 	//BRANCHES BUTTON ADMIN EVENTS
 	#BranchesButtonListenerAdmin() {
-		var typeUser = this.Type;
-
-		$(function(){
-      		$("#showPanelC").load('Branches.html',{'type':typeUser}, 
-      			function(response, status, xhr) {
-					if(status == "error") {
-    					alert("Error: " + xhr.status + " " + xhr.statusText);
-  					}
-  				})
-      	});
+		alert(this.getBranchesBtn);
+		var m = new MenuScreenAdmin(this.getBranchesBtn);
+		m.ChooseFromActionId();
 	}
 
-	//BRANCHES BUTTON ADMIN EVENTS
+	//EMPLOYEES BUTTON ADMIN EVENTS
 	#EmployeesButtonListenerAdmin() {
-		$(function(){
-      		$("#showPanelC").load("Branches.html?requiredid=VALUE_TO_PASS"); 
-    	});
+		var m = new MenuScreenAdmin(this.getEmployeesBtn);
+		m.ChooseFromActionId();
+	}
+	
+	//ROUTES BUTTON ADMIN EVENTS
+	#RoutesButtonListenerAdmin() {
+		var m = new MenuScreenAdmin(this.getRoutesBtn);
+		m.ChooseFromActionId();
+	}
+
+	//BUSES BUTTON ADMIN EVENTS
+	#BusesButtonListenerAdmin() {
+		var m = new MenuScreenAdmin(this.getBusesBtn);
+		m.ChooseFromActionId();
+	}
+
+	//REQUESTS BUTTON ADMIN EVENTS
+	#RequestsButtonListenerAdmin() {
+		var m = new MenuScreenAdmin(this.getRequestsBtn);
+		m.ChooseFromActionId();
 	}
 }
