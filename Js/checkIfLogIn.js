@@ -4,7 +4,7 @@ Check();
 
 function Check() {
 	if(window.location.pathname.includes("Admin")) {
-		if(sessionStorage.getItem("userStatus") == null) {
+		if((sessionStorage.getItem("userStatus") == "null") || (sessionStorage.getItem("userStatus") == null)) {
 			window.location.href = "../Index";
 		}
 		else if(sessionStorage.getItem("userStatus") == "employee") {
@@ -12,7 +12,7 @@ function Check() {
 		}
 	}
 	else if(window.location.pathname.includes("Employee")) {
-		if(sessionStorage.getItem("userStatus") == null) {
+		if((sessionStorage.getItem("userStatus") == "null") || (sessionStorage.getItem("userStatus") == null)) {
 			window.location.href = "../Index";
 		}
 		else if(sessionStorage.getItem("userStatus") == "admin") {

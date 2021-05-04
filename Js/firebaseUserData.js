@@ -22,7 +22,7 @@ function ConfigFirebaseUserLogIn() {
 	   	firebase.app(); // IF ALREADY INITIALIZED, USE THIS ONE
 	}
 
-	if(sessionStorage.getItem("userStatus") == null) {
+	if((sessionStorage.getItem("userStatus") == null) || (sessionStorage.getItem("userStatus") == "null")) {
 		if(partNowOpened == 1) {
 			UsernameLogIn(userPath);
 		}
