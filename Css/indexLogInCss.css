@@ -1,0 +1,445 @@
+
+	* {
+  		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		height: 750px;
+		background: rgb(250, 250, 250);
+		margin: 0;
+		padding: 0;
+	}
+
+	#mainC {
+		position: absolute;
+		width: 100%; height: 100%;
+		min-width: 475px;
+		background: white;
+	}
+
+/*ALL ELEMENTS UP FROM FOOTER*/
+	#allUpperElementsC {
+		width: 100%; height: 82%;
+		min-height: 590px;
+		position: relative;
+		background: rgb(220, 170, 4);
+		z-index: 3;
+		box-shadow: 0 0.9vw 0.9vw -1.5vw grey;
+		padding-bottom: 45px;
+	}
+
+	/*UPPER CONTAINER*/
+	#upC {
+		position: relative;
+		width: 280px;
+		background: transparent;
+		margin: auto;
+		padding-top: 14px;
+	}
+
+	#headerBtn {
+		position: relative;
+		background: transparent;
+		left: 50%;
+		border: none;
+		cursor: pointer;
+		padding: 4px;
+		transform: translate(-50%, 0);
+	}
+
+	#imageC {
+		width: 180px; height: 90px;
+		background: transparent;
+	}
+
+	#headerImg {
+		width: 100%; height: 100%;
+		content: url(../Assets/bus5.png);
+		user-select: none;
+	}
+	/**/
+
+	/*MID CONTAINER*/
+	#midC {
+		position: relative;
+		width: 400px;
+		background: rgb(13, 18, 24);
+		left: 50%;
+		box-shadow: 0 0.7vw 0.6vw -0.9vw grey;
+		border-radius: 5px;
+		border: 1px solid rgb(111, 142, 171);
+		margin-top: 20px;
+		padding: 25px; padding-top: 10px; padding-bottom: 18px;
+		transform: translate(-50%, 0);
+		/*transition: box-shadow 0.3s;*/
+	}
+
+	#signInC {
+		position: relative;
+		height: 100%;
+		background: transparent;
+		overflow: hidden;
+		padding-top: 10px;
+	}
+
+	#signInHeaderC {
+		position: relative;
+		width: 130px;
+		color: white;
+		font-family: "Times New Roman", Times, serif;
+		font-weight: bold;
+		font-size: 38px;
+		text-align: center;
+		border-bottom: 4px solid rgb(111, 142, 171);
+		margin: auto; margin-top: 10px;
+		padding-bottom: 6px;
+	}
+
+	#usernameAndEmailC {
+		position: relative;
+		background: transparent;
+		overflow: hidden;
+		margin-top: 25px;
+		transform: translate(0, 0);
+		transition: transform 0.2s;
+	}
+
+	#usernameC {
+		float: left;
+		position: relative;
+		height: 100%;
+		background: transparent;
+	}
+
+	#usernameHeaderC {
+		float: left;
+		position: relative;
+		color: white;
+		font-family: "Times New Roman", Times, serif;
+		font-size: 24px;
+		margin-left: 8px; margin-bottom: 3px;
+	}
+
+	#useEmailToSignInBtn {
+		position: relative;
+		float: right;
+		background: transparent;
+		top: 7px;
+		outline: none;
+		cursor: pointer;
+		border: none;
+		margin-right: 4px;
+	}
+
+	#useEmailToSignInBtn:hover {
+	}
+
+	#useEmailToSignInBtn div {
+		color: rgb(111, 142, 171);
+		font-family: "Times New Roman", Times, serif;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	#useEmailToSignInBtn:hover div {
+		color: rgb(141, 166, 188);
+	}
+
+	#useEmailToSignInBtn:active div {
+		color: rgb(111, 142, 171);
+	}
+
+	#usernameInput {
+		position: relative;
+		width: 100%; height: 30px;
+		color: rgb(220, 170, 4);
+		font-family: "Times New Roman", Times, serif;
+		font-size: 19px;
+		letter-spacing: 1px;
+		outline: none;
+		border-radius: 5px;
+		border: 1px solid rgb(111, 142, 171);
+		padding-top: 2px; padding-left: 6px; padding-right: 6px;
+		transition: border 0.3s, box-shadow 0.5s;
+	}
+
+	#usernameInput:focus {
+		border: 2px solid rgb(111, 142, 171);
+		box-shadow: 0 0 4px 0 grey;
+	}
+
+	#emailC {
+		position: relative;
+		width: 340px; height: 100%;
+		background: transparent;
+		overflow: hidden;
+	}
+
+	#emailHeaderC {
+		float: left;
+		position: relative;
+		color: white;
+		font-family: "Times New Roman", Times, serif;
+		font-size: 24px;
+		margin-left: 8px; margin-bottom: 3px;
+	}
+
+	#useUsernameToSignInBtn {
+		position: relative;
+		float: right;
+		background: transparent;
+		top: 7px;
+		cursor: pointer;
+		outline: none;
+		border: none;
+		margin-right: 4px;
+	}
+
+	#useUsernameToSignInBtn div {
+		color: rgb(111, 142, 171);
+		font-family: "Times New Roman", Times, serif;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	#useUsernameToSignInBtn:hover div {
+		color: rgb(141, 166, 188);
+	}
+
+	#useUsernameToSignInBtn:active div {
+		color: rgb(111, 142, 171);
+	}
+
+	#emailInput {
+		position: relative;
+		width: 100%; height: 30px;
+		color: rgb(220, 170, 4);
+		font-family: "Times New Roman", Times, serif;
+		font-size: 19px;
+		letter-spacing: 1px;
+		outline: none;
+		border-radius: 5px;
+		border: 1px solid rgb(111, 142, 171);
+		padding-top: 2px; padding-left: 6px; padding-right: 6px;
+		transition: border 0.3s, box-shadow 0.5s;
+	}
+
+	#emailInput:focus {
+		border: 2px solid rgb(111, 142, 171);
+		box-shadow: 0 0 4px 0 grey;
+	}
+
+	#passwordC {
+		position: relative;
+		display: inline-block;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin-top: 25px;
+	}
+
+	#passwordHeaderC {
+		float: left;
+		position: relative;
+		color: white;
+		font-family: "Times New Roman", Times, serif;
+		font-size: 24px;
+		margin-left: 8px; margin-bottom: 3px;
+	}
+
+	#passwordInput {
+		position: relative;
+		width: 100%; height: 30px;
+		color: rgb(220, 170, 4);
+		font-family: "Times New Roman", Times, serif;
+		font-size: 19px;
+		letter-spacing: 1px;
+		outline: none;
+		border-radius: 5px;
+		border: 1px solid rgb(111, 142, 171);
+		padding-top: 2px; padding-left: 6px; padding-right: 40px;
+		transition: border 0.3s, box-shadow 0.5s;
+	}
+
+	#passwordInput:focus {
+		border: 2px solid rgb(111, 142, 171);
+		box-shadow: 0 0 4px 0 grey;
+	}
+
+	#showMePasswdImageBtn {
+		position: absolute;
+		z-index: 10;
+		width: 30px; height: 28px;
+		background: transparent;
+		top: 31px;
+		outline: none;
+		cursor: pointer;
+		border: none;
+		margin-left: -10%; 
+	}
+
+	#showMePasswdImg {
+		width: 30px; height: 30px;
+		user-select: none;
+		content: url("../Assets/passwdEyeClosed.png");
+		margin-top: -1px; margin-left: -6px;
+	}
+
+	#showMePasswdImg:hover {
+		content: url("../Assets/passwdEyeClosedHover.png");
+	}
+
+	#signInBtn {
+		position: relative;
+		z-index: 1;
+		width: 100%; height: 35px;
+		color: rgb(13, 18, 24);
+		background: rgb(220, 170, 4);
+		font-family: "Times New Roman", Times, serif;
+		font-weight: bold;
+		font-size: 22px;
+		cursor: pointer;
+		outline: none;
+		border-radius: 5px;
+		border: 1px solid rgb(141, 166, 188);
+		margin-top: 40px; margin-bottom: 2px;
+	}
+
+	#signInBtn:hover {
+		color: white;
+		background: rgb(13, 18, 24);
+	}
+
+	#signInBtn:focus {
+		color: white;
+		background: rgb(13, 18, 24);
+	}
+
+	#signInBtn:active {
+		background: rgb(9, 12, 10);
+	}
+
+	#lineInSignInC {
+		height: 2px;
+		background: rgb(141, 166, 188);
+		border: 1px solid rgb(141, 166, 188);
+		margin-top: 50px;
+	}
+
+	#textInLineSignInC {
+		display: table;
+		position: relative;
+		z-index: 10;
+		color: rgb(13, 18, 24);
+		background: rgb(141, 166, 188);
+		font-family: "Times New Roman", Times, serif;
+		font-size: 16px;
+		font-weight: bold;
+		border-radius: 50px;
+		margin: auto; margin-top: -10px;
+		padding-left: 6px; padding-right: 6px;
+	}
+	/**/
+/**/
+
+/*FOOTER INSIDE ELEMENTS*/
+	#footerC {
+		position: relative;
+		width: 100%; height: 18%;
+		min-height: 150px;
+		bottom: 0;
+		background: rgb(250, 250, 250);
+	}
+
+	#columnFooterWithInfoC {
+		position: absolute;
+		width: 306px;
+		background: transparent;
+		left: 50%;
+		top: 30px;
+		transform: translate(-50%, 0);
+	}
+
+	#termsAndCondsFooterBtn {
+		float: left;
+		position: relative;
+		color: rgb(13, 18, 24);
+		background: transparent;
+		left: 20px;
+		font-family: "Times New Roman", Times, serif;
+		font-size: 15px;
+		cursor: pointer;
+		outline: none;
+		border: none;
+	}
+
+	#termsAndCondsFooterBtn:hover {
+	}
+
+	#termsAndCondsFooterBtn:hover div {
+		color: rgb(208, 208, 225);
+	}
+
+	#termsAndCondsFooterBtn:active div {
+		color: rgb(131, 131, 175);
+	}
+
+	#helpFooterBtn {
+		float: right;
+		position: relative;
+		color: rgb(13, 18, 24);
+		background: transparent;
+		right: 20px;
+		font-family: "Times New Roman", Times, serif;
+		font-size: 15px;
+		overflow: hidden;
+		cursor: pointer;
+		outline: none;
+		border: none;
+	}
+
+	#helpFooterBtn:hover {
+	}
+
+	#helpFooterBtn:hover div {
+		color: rgb(208, 208, 225);
+	}
+
+	#helpFooterBtn:active div {
+		color: rgb(131, 131, 175);
+	}
+
+	#lastFooterInfoC {
+		float: left;
+		position: relative;
+		min-width: 200px;
+		background: transparent;
+		color: rgb(13, 18, 24);
+		font-family: "Times New Roman", Times, serif;
+		font-size: 16px;
+		font-weight: bold;
+		top: 75%;
+		left: 50%;
+		transform: translate(-50%, 0);
+	}
+
+	#lastFooterInfoC span {
+		color: rgb(220, 170, 4);
+	}
+/**/
+
+/*ANIMATIONS*/
+	@keyframes RoundMenuLogoRight {
+		0% {transform: rotateZ(0deg);}
+		100% {transform: rotateZ(360deg);}
+	}
+
+	@keyframes RoundMenuLogoLeft {
+		0% {transform: rotateZ(0deg);}
+		100% {transform: rotateZ(-360deg);}
+	}
+/**/

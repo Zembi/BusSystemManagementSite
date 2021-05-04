@@ -1,0 +1,432 @@
+
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		height: 100%;
+		background: black;
+		margin: 0;
+		padding: 0;
+	}
+
+	#backgroundC {
+		position: relative;
+		width: 100%;
+		min-width: 1100px;
+		overflow: visible;
+		background: rgb(13, 18, 24);
+	}
+
+	#leftC {
+		position: relative;
+		float: left;
+		height: 100%;
+		background: red;
+		overflow: hidden;
+		box-shadow: 3px 0px 2px black;
+		transition: width 0.3s;
+	}
+
+		#leftFixedC {
+			position: fixed;
+			height: 100%;
+			background: rgb(77, 77, 77);
+			overflow: visible;
+			box-shadow: 3px 0px 2px black;
+			transition: width 0.3s;
+			z-index: 4;
+		}
+
+		#menuSymbolC {
+			position: relative;
+			width: 100%; height: 200px;
+			background: rgb(111, 142, 171);
+			-ms-background-size: cover;
+			-o-background-size: cover;
+			-moz-background-size: cover;
+			-webkit-background-size: cover;
+			top: 0px; right: 0px;
+			overflow: hidden;
+			border-bottom: 2px solid rgb(128, 155, 186);
+			box-shadow: 2px 0px 2px black;
+			z-index: 5;
+		}
+
+		#homeBtn {
+			position: relative;
+			width: 85%; height: 85%;
+			background: rgb(13, 18, 24);
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			overflow: hidden;
+			outline: none;
+			cursor: pointer;
+			border-radius: 4px;
+			border: 4px solid white;
+			transition: background 0.1s;
+		}
+
+		#homeBtn:hover {
+			background: rgb(255, 215, 0);
+		}
+
+		#menuImg {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: auto;
+			content: url(../Assets/icons8_braineyes_95px.png);
+			transform: translate(-50%, -50%);
+			transition: transform 0.3s;
+		}
+
+		#homeBtn:hover #menuImg {
+			transform: translate(-50%, 100%);
+		}
+
+		#homeShowC {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			color: white;
+			font-size: 28px;
+			font-family: "Times New Roman", Times, serif;
+			font-weight: bold;
+			transform: translate(-50%, -1000%);
+			transition: transform 0.3s;
+		}
+
+		#homeBtn:hover #homeShowC {
+			transform: translate(-50%, -50%);
+		}
+
+		#menuBtnC {
+			position: relative;
+			height: 50px;
+			background-image: url(../Assets/sky.jpg);
+			background-size: cover;
+			z-index: 10;
+		}
+
+		#menuBtn {
+			display: block;
+			position: relative;
+			width: 60px; height: 100%;
+			background: transparent;
+			outline: none;
+			cursor: pointer;
+			border: none;
+			border-radius: 0 4px 4px 0;
+			margin: auto;
+			padding: 0;
+			transition: border-radius 0.5s;
+			z-index: 5;
+		}
+
+		#menuBtn:hover {
+			background: rgb(255, 215, 0);
+		}
+
+		#menuBtn img {
+			width: 100%; height: 100%;
+			content: url(../Assets/icons8_business_50px.png);
+		}
+
+		#menuBtn:hover img {
+			content: url(../Assets/icons8_business_50px_3.png);
+		}
+
+		#menuC {
+			position: relative;
+			width: 100%;
+			background-image: url(../Assets/bus2.jpg);
+			background-size: cover;
+			top: 0px; right: 0px;
+			overflow: hidden;
+			padding-top: 70px;
+			padding-bottom: 70px;
+			z-index: 5;
+		}
+
+		.menuBtns {
+			position: relative;
+			width: 100%; height: 45px;
+			background: transparent;
+			cursor: pointer;
+			font-size: 22px;
+			outline: none;
+			border: none;
+			border-top: 2px solid white;
+			border-bottom: 2px solid white;
+
+		}
+
+		.menuBtns:hover {
+			background: rgb(46, 54, 78, 0.5);
+			border: none;
+			font-size: 25px;
+			border-top: 2px solid rgb(46, 54, 78);
+			border-bottom: 2px solid rgb(46, 54, 78);
+		}
+
+		.menuBtnImg {
+			float: left;
+			position: relative;
+			width: 35px; height: 80%;
+			margin-left: 30px;
+			top: 50%;
+			transform: translate(0%, -50%);
+		}
+
+		.menuBtns:hover img {
+			height: 90%;
+		}
+
+		#branchesBtn img {
+			content: url(../Assets/icons8_compare_git_50px.png);
+		}
+
+		#branchesBtn:hover img {
+			height: 80%;
+			content: url(../Assets/icons8_compare_git_50px_2.png);
+		}
+
+		#employeesBtn img {
+			height: 90%;
+			content: url(../Assets/icons8_gender_neutral_employee_group_50px.png);
+		}
+
+		#employeesBtn:hover img {
+			height: 100%;
+			content: url(../Assets/icons8_gender_neutral_employee_group_50px_2.png);
+		}
+
+		#routesBtn img {
+			content: url(../Assets/icons8_route_50px.png);
+		}
+
+		#routesBtn:hover img {
+			content: url(../Assets/icons8_route_50px_2.png);
+		}
+
+		#busesBtn img {
+			content: url(../Assets/icons8_bus_50px_3.png);
+		}
+
+		#busesBtn:hover img {
+			height: 80%;
+			content: url(../Assets/icons8_bus_50px_2.png);
+		}
+
+		#requestsBtn img {
+			content: url(../Assets/icons8_notification_50px.png);
+		}
+
+		#requestsBtn:hover img {
+			height: 80%;
+			content: url(../Assets/icons8_notification_50px_2.png);
+		}
+
+		.menuBtnTxtC {
+			height: 100%;
+			overflow: hidden;
+		}
+
+		.menuBtnTxtC div {
+			float: left;
+			position: relative;
+			color: white;
+			font-family: "Times New Roman", Times, serif;
+			font-style: italic;
+			text-align: left;
+			top: 50%; left: 5px;
+			transform: translate(0%, -50%);
+		}
+
+		#numberOfRequestsC {
+			position: relative;
+			color: white;
+			font-size: 22px;
+			font-family: "Times New Roman", Times, serif;
+			font-weight: bold;
+			text-align: left;
+			top: 50%; left: 10px;
+			transform: translate(0%, -50%);
+		}
+
+		#requestsBtn:hover #numberOfRequestsC {
+			color: rgb(255, 215, 0);
+		}
+
+		#menuDownImgC {
+			position: relative;
+			width: 100%;
+			background: rgb(13, 18, 24);
+			overflow: hidden;
+			border-top: 2px solid rgb(141, 157, 169);
+			z-index: 5;
+		}
+
+	#rightC {
+		float: right;
+		position: relative;
+		height: 100%;
+		min-width: 900px;
+		background: rgb(13, 18, 24);
+		overflow: visible;
+		transition: width 0.3s;
+	}
+
+		#headerC {
+			position: relative;
+			min-width: 100%;
+			background: rgb(13, 18, 24);
+			margin: auto;
+			overflow: visible;
+			padding: 10px 0 0 0;
+		}
+
+		#headerHeadC {
+			position: relative;
+		}
+
+		#headerHeadC h1 {
+			position: relative;
+			color: white;
+			font-size: 35px;
+			text-align: center;
+		}
+
+		#downHeaderC {
+			position: relative;
+			width: 100%;
+			min-width: 100%;
+			overflow: visible;
+			background: transparent;
+			border-top: 2px solid rgb(255, 215, 0);
+		}
+
+		#firstLineContentC {
+			position: relative;
+			overflow: visible;
+		}
+
+		#headerImg {
+			position: relative;
+			top: -16px; left: 50%;
+			content: url(../Assets/icons8_network_95pxEdited.png);
+			margin: auto;
+			transform: translate(-50%, 0);
+		}
+
+		#profileInfoC {
+			display: block;
+			float: right;
+			position: relative;
+			background: rgb(0, 0, 0, 0.5);
+			right: 30px;
+			border-radius: 0 0 2px 2px;
+			padding: 10px;
+		}
+
+		#usernameC {
+			float: left;
+			position: relative;
+			height: 30px;
+			color: white;
+			margin-right: 20px;
+		}
+
+		#usernameC div {
+			position: relative;
+			font-size: 16px;
+			font-family: "Times New Roman", Times, serif;
+			top: 50%;
+			transform: translate(0, -50%);
+		}
+
+		#adminImg {
+			content: url(../Assets/icons8_leadership_30px.png);
+			overflow: hidden;
+			cursor: crosshair;
+		}
+
+		#logOutBtn {
+			display: block;
+			position: relative;
+			background: transparent;
+			cursor: pointer;
+			outline: none;
+			border: none;
+			padding: 0;
+		}
+
+		#logOutBtn div {
+			color: rgb(255, 215, 0);
+			font-size: 16px;
+			font-family: "Times New Roman", Times, serif;
+			letter-spacing: 1px;
+		}
+
+		#logOutBtn:hover div {
+			color: rgb(255, 255, 90);
+		}
+
+		#contentC {
+			position: relative;
+			width: 100%;
+			min-width: 900px;
+			background: rgb(0, 0, 0, 0.0);
+			overflow: hidden;
+			padding: 0px 5% 10% 10%;
+		}
+
+		#showPanelC {
+			position: relative;
+			width: 100%;
+			min-width: 100%; min-height: 1000px;
+			background: rgb(0, 0, 0, 0.2);
+			border-radius: 2px;
+			overflow: hidden;
+		}
+
+
+/*SCREEN WIDTH UNDER 420px*/
+	@media only screen and (max-width: 420px) {
+		
+	}
+
+	/*SCREEN WIDTH UNDER 380px*/
+	@media only screen and (max-width: 380px) {
+		
+		
+	}
+
+	/*SCREEN WIDTH UNDER 374px*/
+	@media only screen and (max-width: 374px) {
+		
+		
+	}
+
+	/*SCREEN WIDTH UNDER 300px*/
+	@media only screen and (max-width: 300px) {
+		
+		
+	}
+/**/
+
+/*ANIMATIONS*/
+	@keyframes spinOnLoading {
+		from { 
+            transform: rotate(0deg); 
+        } to { 
+            transform: rotate(360deg); 
+        }
+	}
+/**/

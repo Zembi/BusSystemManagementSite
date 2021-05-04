@@ -1,96 +1,38 @@
 
 class ButtonListener {
 
-	#type;
-	#menuBtn;
-	#branchesBtn;
-	#employeesBtn;
-	#routesBtn;
-	#busesBtn;
-	#requestsBtn;
-
 	constructor(type) {
-		this.#type = type;
-	}
-
-	get getType() {
-		return this.#type;
-	}
-
-	get getMenuBtn() {
-		return this.#menuBtn;
-	}
-
-	set setMenuBtn(lang) {
-    	this.#menuBtn = lang;
-	}
-
-	get getBranchesBtn() {
-		return this.#branchesBtn;
-	}
-
-	set setBranchesBtn(lang) {
-    	this.#branchesBtn = lang;
-	}
-
-	get getEmployeesBtn() {
-		return this.#employeesBtn;
-	}
-
-	set setEmployeesBtn(lang) {
-    	this.#employeesBtn = lang;
-	}
-
-	get getRoutesBtn() {
-		return this.#routesBtn;
-	}
-
-	set setRoutesBtn(lang) {
-    	this.#routesBtn = lang;
-	}
-
-	get getBusesBtn() {
-		return this.#busesBtn;
-	}
-
-	set setBusesBtn(lang) {
-    	this.#busesBtn = lang;
-	}
-
-	get getRequestsBtn() {
-		return this.#requestsBtn;
-	}
-
-	set setRequestsBtn(lang) {
-    	this.#requestsBtn = lang;
+		this.type = type;
+		this.homeBtn = document.getElementById("homeBtn");
+		this.menuBtn = document.getElementById("menuBtn");
+		this.branchesBtn = document.getElementById("branchesBtn");
+		this.employeesBtn = document.getElementById("employeesBtn");
+		this.routesBtn = document.getElementById("routesBtn");
+		this.busesBtn = document.getElementById("busesBtn");
+		this.requestsBtn = document.getElementById("requestsBtn");
+		this.logOutBtn = document.getElementById("logOutBtn");
 	}
 
 	AddEventsToButtons() {
 		
-		if(this.#type == "ADMIN") {
+		if(this.type == "ADMIN") {
 			//IF CLASS IS BEING CALLED FROM ADMIN SITE
-			this.#menuBtn = document.getElementById("menuBtn");
-			this.#menuBtn.addEventListener("click", this.#MenuButtonListener);
-			this.setBranchesBtn = document.getElementById("branchesBtn");
-			this.#branchesBtn.addEventListener("click", this.#BranchesButtonListenerAdmin);
-			this.setEmployeesBtn = document.getElementById("employeesBtn");
-			this.#employeesBtn.addEventListener("click", this.#EmployeesButtonListenerAdmin);
-			this.setRoutesBtn = document.getElementById("routesBtn");
-			this.#routesBtn.addEventListener("click", this.#RoutesButtonListenerAdmin);
-			this.setBusesBtn = document.getElementById("busesBtn");
-			this.#busesBtn.addEventListener("click", this.#BusesButtonListenerAdmin);
-			this.setRequestsBtn = document.getElementById("requestsBtn");
-			this.#requestsBtn.addEventListener("click", this.#RequestsButtonListenerAdmin);
+			homeBtn.addEventListener("click", this.HomeButtonListener);
+			menuBtn.addEventListener("click", this.MenuButtonListener);
+			branchesBtn.addEventListener("click", this.BranchesButtonListenerAdmin);
+			employeesBtn.addEventListener("click", this.EmployeesButtonListenerAdmin);
+			routesBtn.addEventListener("click", this.RoutesButtonListenerAdmin);
+			busesBtn.addEventListener("click", this.BusesButtonListenerAdmin);
+			requestsBtn.addEventListener("click", this.RequestsButtonListenerAdmin);
+			logOutBtn.addEventListener("click", this.LogOutButtonListenerAdmin);
 		}
-		else if(this.#type == "EMPLOYEE") {
+		else if(type == "EMPLOYEE") {
 			//IF CLASS IS BEING CALLED FROM EMPLOYEE SITE
 		}
 	}
 
 	//MENU BUTTON EVENTS
-	#MenuButtonListener() {
-		alert(this.getMenuBtn);
-
+	MenuButtonListener() {
 		var leftC = document.getElementById("leftC");
 		var leftFixedC = document.getElementById("leftFixedC");
 		var menuSymbolC = document.getElementById("menuSymbolC");
@@ -132,34 +74,45 @@ class ButtonListener {
 		}
 	}
 
+	//HOME BUTTON ADMIN EVENTS
+	HomeButtonListener() {
+		var menuScrnA = new MenuScreenAdmin(homeBtn.name);
+		menuScrnA.ChooseFromActionId();
+	}
+
 	//BRANCHES BUTTON ADMIN EVENTS
-	#BranchesButtonListenerAdmin() {
-		alert(this.getBranchesBtn);
-		var m = new MenuScreenAdmin(this.getBranchesBtn);
-		m.ChooseFromActionId();
+	BranchesButtonListenerAdmin() {
+		var menuScrnA = new MenuScreenAdmin(branchesBtn.name);
+		menuScrnA.ChooseFromActionId();
 	}
 
 	//EMPLOYEES BUTTON ADMIN EVENTS
-	#EmployeesButtonListenerAdmin() {
-		var m = new MenuScreenAdmin(this.getEmployeesBtn);
-		m.ChooseFromActionId();
+	EmployeesButtonListenerAdmin() {
+		var menuScrnA = new MenuScreenAdmin(employeesBtn.name);
+		menuScrnA.ChooseFromActionId();
 	}
 	
 	//ROUTES BUTTON ADMIN EVENTS
-	#RoutesButtonListenerAdmin() {
-		var m = new MenuScreenAdmin(this.getRoutesBtn);
-		m.ChooseFromActionId();
+	RoutesButtonListenerAdmin() {
+		var menuScrnA = new MenuScreenAdmin(routesBtn.name);
+		menuScrnA.ChooseFromActionId();
 	}
 
 	//BUSES BUTTON ADMIN EVENTS
-	#BusesButtonListenerAdmin() {
-		var m = new MenuScreenAdmin(this.getBusesBtn);
-		m.ChooseFromActionId();
+	BusesButtonListenerAdmin() {
+		var menuScrnA = new MenuScreenAdmin(busesBtn.name);
+		menuScrnA.ChooseFromActionId();
 	}
 
 	//REQUESTS BUTTON ADMIN EVENTS
-	#RequestsButtonListenerAdmin() {
-		var m = new MenuScreenAdmin(this.getRequestsBtn);
-		m.ChooseFromActionId();
+	RequestsButtonListenerAdmin() {
+		var menuScrnA = new MenuScreenAdmin(requestsBtn.name);
+		menuScrnA.ChooseFromActionId();
+	}
+
+	//LOGOUT BUTTON ADMIN EVENTS
+	LogOutButtonListenerAdmin() {
+		sessionStorage.setItem("userStatus", "null");
+		window.location.href = "../Index";
 	}
 }

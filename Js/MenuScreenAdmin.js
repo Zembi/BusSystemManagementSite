@@ -1,34 +1,34 @@
 
 class MenuScreenAdmin {
-	
-	#actionId;
-	#menuItems;
 
-	constructor(actionId) {
-		this.#actionId = actionId;
-		alert(this.#actionId);
-	}
-
-	#GetMenuItems() {
-		var menuItems = document.getElementsByClassName("menuBtns");
-
-		return menuItems;
+	constructor(actionID) {
+		this.actionId = actionID;
+		this.openedBtn = document.getElementsByName(this.actionId)[0];
 	}
 
 	ChooseFromActionId() {
-		var menuItems = this.#GetMenuItems();
-		alert("here " + this.#actionId);
+		var menuItems = document.getElementsByClassName("menuBtns");
 
-		for(var i = 0; i < menuItems.length; i++) {
-			if(this.#actionId == menuItems[i].id) {
-				this.#ChosenButtonListener(menuItems[i].name);
+		if(this.actionId == "Home"){
+			sessionStorage.setItem('action', this.actionId);
+			this.ChosenButtonListener(this.actionId);
+			this.URLChangeMenuButtonContent(this.actionId);
+		}
+		else {
+			for(var i = 0; i < menuItems.length; i++) {
+				if(this.actionId == menuItems[i].name) {
+					sessionStorage.setItem('action', this.actionId);
+					this.ChosenButtonListener(menuItems[i].name);
+					this.URLChangeMenuButtonContent(menuItems[i].name);
+					this.OpenedButton();
+				}
 			}
 		}
 	}
 
-	#ChosenButtonListener(chosenBtnName) {
-		var data = chosenBtnName;
-		var file = data + ".html";
+	ChosenButtonListener(chosenBtnName) {
+		var file = chosenBtnName + ".html";
+
 		$(function(){
       		$("#showPanelC").load(file, 
       			function(response, status, xhr) {
@@ -37,7 +37,18 @@ class MenuScreenAdmin {
   					}
   				})
       	});
+	}
 
-      	window.location = "#" + data;
+	URLChangeMenuButtonContent(chosenBtnName) {
+		if(chosenBtnName == "Home") {
+			window.location = "#";
+		}
+		else {
+			window.location = "#" + chosenBtnName;
+		}
+	}
+
+	OpenedButton() {
+		var style = getComputedStyle(this.openedBtn);
 	}
 }

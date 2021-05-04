@@ -1,8 +1,26 @@
-<div>aaaaa</div>
-<script type="text/javascript">
-	<%
-    if (request.getParameter("name") == null) {
-        out.println("Please enter your name.");
-    }
-    %>
-</script>
+<!DOCTYPE html>
+
+<html>
+<head>
+	<!--CSS FILES BEEN USED-->
+	<link rel="stylesheet" href="../Css/branchesAdminCss.css">
+</head>
+<body>
+
+	<div id="branchesContentC">
+		<div id="branchesHeaderTitleC">Καταστήματα:</div>
+		<div id="branchesHeaderCountC"></div>
+		<div id="newBranchBtnC">
+			<button id="newBranchBtn">
+				<div>Νέο Κατάστημα</div>
+			</button>
+		</div>
+		<div id="showPanelC"></div>
+	</div>
+
+
+	<script type="text/javascript" src="../Js/Id.js"></script>
+	<script type="text/javascript" src="../Js/branchesAdminData.js"></script>
+	<script type="text/javascript" src="../Js/firebaseBranchData.js"></script>
+</body>
+</html>

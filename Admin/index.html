@@ -3,38 +3,50 @@
 <html>
 <head>
 
-<!--JQUERY LIBRARIES-->
-<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!--ANGULARJS LIBRARIES-->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>   
-    
-<![if lte IE 8]>
-<script src="IEsucks.js"></script>
-<![endif]-->
+	<!--JQUERY LIBRARIES-->
+	<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!--ANGULARJS LIBRARIES-->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	
+	<!--CHECK SESSION FOR USER LOGGEDIN-->
+	<script type="text/javascript" src="../Js/checkIfLogIn.js"></script>
 
-<script src="js/includeHTML.js"></script>
+	<!--***<script src="js/includeHTML.js"></script>-->
 
-<!--FONT-FAMILIES USED-->
-<link href='https://fonts.googleapis.com/css?family=Arbutus' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Amiko' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Architects Daughter' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Archivo' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Flamenco' rel='stylesheet'>
-<link href='https://fonts.googleapis.com/css?family=Roboto Slab' rel='stylesheet'>
+	<!--FONT-FAMILIES USED-->
+	<link href='https://fonts.googleapis.com/css?family=Arbutus' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Amiko' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Advent Pro' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Architects Daughter' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Archivo' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Flamenco' rel='stylesheet'>
+	<link href='https://fonts.googleapis.com/css?family=Roboto Slab' rel='stylesheet'>
 
-<!--CSS FILES BEEN USED-->
-<link rel="stylesheet" href="../Css/indexCss.css">
+	<!--CSS FILES BEEN USED-->
+	<link rel="stylesheet" href="../Css/indexAdminCss.css">
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
- 
-<meta name="theme-color" content="rgb(190, 214, 148)">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	 
+	<meta name="theme-color" content="rgb(190, 214, 148)">
 
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+
+	<!--****** TODO: Add SDKs for Firebase products that you want to use
+  		https://firebase.google.com/docs/web/setup#available-libraries 
+	<script src="/__/firebase/8.4.1/firebase-analytics.js"></script>-->
+
+	<!--****** Initialize Firebase 
+	<script src="/__/firebase/init.js"></script>-->
 
 	<title>Υπ.Ελ.Δ</title>
 
@@ -45,9 +57,10 @@
 		<div id="leftC">
 			<div id="leftFixedC">
 				<div id="menuSymbolC">
-					<div id="menuImgC">
+					<button id="homeBtn" name="Home">
 						<img id="menuImg">
-					</div>
+						<div id="homeShowC">Αρχική</div>
+					</button>
 				</div>
 				<div id="menuBtnC">
 					<button id="menuBtn"><img></button>
@@ -81,7 +94,7 @@
 						<img class="menuBtnImg">
 						<div class="menuBtnTxtC">
 							<div>Αιτήματα</div>
-							<div id="numberOfRequestsC">(10)</div>
+							<div id="numberOfRequestsC">(*10)</div>
 						</div>
 					</button>
 				</div>
@@ -100,7 +113,7 @@
 					<img id="headerImg">
 					<div id="profileInfoC">
 						<div id="usernameC">
-							<div>Billy111111 1 11111</div>
+							<div></div>
 						</div>
 						<img id="adminImg" title="Admin">
 						<button id="logOutBtn">
@@ -118,6 +131,7 @@
 		</div>
 	</div>
 
+	<script type="text/javascript" src="../Js/Admin.js"></script>
 	<script type="text/javascript" src="../Js/Bus.js"></script>
 	<script type="text/javascript" src="../Js/Branch.js"></script>
 	<script type="text/javascript" src="../Js/MenuScreenAdmin.js"></script>
@@ -126,22 +140,10 @@
 	<script type="text/javascript">
 		var branch = new Branch(101, 1, 1, 1);
 		//console.log(branch.id);
-
-		var btnListener = new ButtonListener("ADMIN");
-		btnListener.AddEventsToButtons();
 	</script>
 
+	<script type="text/javascript" src="../Js/firebaseUserData.js"></script>
 	<script type="text/javascript" src="../Js/ServerAdmin.js"></script>
-
-	<!-- The core Firebase JS SDK is always required and must be listed first -->
-	<script src="/__/firebase/8.4.1/firebase-app.js"></script>
-
-	<!-- TODO: Add SDKs for Firebase products that you want to use
-     	https://firebase.google.com/docs/web/setup#available-libraries -->
-	<script src="/__/firebase/8.4.1/firebase-analytics.js"></script>
-
-	<!-- Initialize Firebase -->
-	<script src="/__/firebase/init.js"></script>
 
 </body>
 </html>
