@@ -9,6 +9,7 @@
 
 	body {
 		height: 100%;
+		min-width: 1100px;
 		background: black;
 		margin: 0;
 		padding: 0;
@@ -118,7 +119,7 @@
 			display: block;
 			position: relative;
 			width: 60px; height: 100%;
-			background: transparent;
+			background: rgb(111, 142, 171, 0.9);
 			outline: none;
 			cursor: pointer;
 			border: none;
@@ -164,7 +165,6 @@
 			border: none;
 			border-top: 2px solid white;
 			border-bottom: 2px solid white;
-
 		}
 
 		.menuBtns:hover {
@@ -224,15 +224,6 @@
 			content: url(../Assets/icons8_bus_50px_2.png);
 		}
 
-		#requestsBtn img {
-			content: url(../Assets/icons8_notification_50px.png);
-		}
-
-		#requestsBtn:hover img {
-			height: 80%;
-			content: url(../Assets/icons8_notification_50px_2.png);
-		}
-
 		.menuBtnTxtC {
 			height: 100%;
 			overflow: hidden;
@@ -249,21 +240,6 @@
 			transform: translate(0%, -50%);
 		}
 
-		#numberOfRequestsC {
-			position: relative;
-			color: white;
-			font-size: 22px;
-			font-family: "Times New Roman", Times, serif;
-			font-weight: bold;
-			text-align: left;
-			top: 50%; left: 10px;
-			transform: translate(0%, -50%);
-		}
-
-		#requestsBtn:hover #numberOfRequestsC {
-			color: rgb(255, 215, 0);
-		}
-
 		#menuDownImgC {
 			position: relative;
 			width: 100%;
@@ -277,7 +253,7 @@
 		float: right;
 		position: relative;
 		height: 100%;
-		min-width: 900px;
+		min-width: 800px;
 		background: rgb(13, 18, 24);
 		overflow: visible;
 		transition: width 0.3s;
@@ -330,7 +306,7 @@
 			float: right;
 			position: relative;
 			background: rgb(0, 0, 0, 0.5);
-			right: 30px;
+			right: 5%;
 			border-radius: 0 0 2px 2px;
 			padding: 10px;
 		}
@@ -381,12 +357,106 @@
 		#contentC {
 			position: relative;
 			width: 100%;
-			min-width: 900px;
+			min-width: 90%;
 			background: rgb(0, 0, 0, 0.0);
-			overflow: hidden;
-			padding: 0px 5% 10% 10%;
+			padding: 0 5% 10% 5%;
+		}
+		
+		#contentCenterC {
+			position: relative;
+			border-radius: 2px;
+			border: 2px solid rgb(6, 9, 12);
 		}
 
+		/*TOP PANEL WITH INFO IN MAIN PANEL*/
+		#contentInfoC {
+			float: left;
+			position: sticky;
+			width: 100%;
+			top: 0;
+			background: rgb(255, 255, 255);
+			z-index: 1;
+		}
+
+		#pathC {
+			float: left;
+			position: absolute;
+			height: 50px;
+			color: rgb(6, 9, 12);
+			top: 50%;
+			margin-left: 20px;
+			transform: translate(0, -50%);
+		}
+
+		#pathC img {
+			float: left;
+			content: url(../Assets/icons8_polyline_50px_2.png);
+			margin-right: 10px;
+		}
+
+		#pathTextC {
+			float: left;
+			position: relative;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		#pathTextC div {
+			position: relative;
+			top: 50%;
+			font-size: 20px;
+			font-family: Roboto Slab;
+			transform: translate(0, -50%);
+		}
+
+		#requestsBtn {
+			float: right;
+			position: relative;
+			width: 40px; height: 35px;
+			cursor: pointer;
+			background: rgb(6, 9, 12);
+			outline: none;
+			border: none;
+			border-radius: 50%;
+			margin: 10px;
+			margin-bottom: none;
+			padding: 2px;
+		}
+
+		#requestsBtn img {
+			float: left;
+			position: absolute;
+			width: 80%; height: 80%;
+			top: 50%; left: 50%;
+			border-radius: 50%;
+			content: url(../Assets/icons8_notification_50px.png);
+			transform: translate(-50%, -50%);
+		}
+
+		#requestsBtn:hover img {
+			width: 70%; height: 70%;
+			content: url(../Assets/icons8_notification_50px_2.png);
+		}
+
+		#numberOfRequestsC{
+			position: absolute;
+			background: rgb(240, 40, 73);
+			color: white;
+			font-size: 12px;
+			top: -3px; left: -9px;
+			overflow: hidden;
+			border-radius: 50%;
+			overflow: hidden;
+			padding: 1px 4px 1px 4px;
+		}
+
+		#numberOfRequestsC div {
+			position: relative;
+			font-family: Roboto Slab;
+			font-weight: bold;
+		}
+
+		/*BOTTOM PANEL WITH INFO IN MAIN PANEL*/
 		#showPanelC {
 			position: relative;
 			width: 100%;

@@ -9,8 +9,8 @@ class ButtonListener {
 		this.employeesBtn = document.getElementById("employeesBtn");
 		this.routesBtn = document.getElementById("routesBtn");
 		this.busesBtn = document.getElementById("busesBtn");
-		this.requestsBtn = document.getElementById("requestsBtn");
 		this.logOutBtn = document.getElementById("logOutBtn");
+		this.requestsBtn = document.getElementById("requestsBtn");
 	}
 
 	AddEventsToButtons() {
@@ -23,8 +23,8 @@ class ButtonListener {
 			employeesBtn.addEventListener("click", this.EmployeesButtonListenerAdmin);
 			routesBtn.addEventListener("click", this.RoutesButtonListenerAdmin);
 			busesBtn.addEventListener("click", this.BusesButtonListenerAdmin);
-			requestsBtn.addEventListener("click", this.RequestsButtonListenerAdmin);
 			logOutBtn.addEventListener("click", this.LogOutButtonListenerAdmin);
+			requestsBtn.addEventListener("click", this.RequestsButtonListenerAdmin);
 		}
 		else if(type == "EMPLOYEE") {
 			//IF CLASS IS BEING CALLED FROM EMPLOYEE SITE
@@ -51,7 +51,7 @@ class ButtonListener {
 				this.style.border = "none";
 			});
 			this.addEventListener("mouseout", function() {
-				this.style.background = "transparent";
+				this.style.background = "rgb(111, 142, 171)";
 				this.style.border = "none";
 			});
 		}
@@ -103,16 +103,16 @@ class ButtonListener {
 		var menuScrnA = new MenuScreenAdmin(busesBtn.name);
 		menuScrnA.ChooseFromActionId();
 	}
+	
+	//LOGOUT BUTTON ADMIN EVENTS
+	LogOutButtonListenerAdmin() {
+		sessionStorage.setItem("userStatus", "null");
+		window.location.href = "../Index";
+	}
 
 	//REQUESTS BUTTON ADMIN EVENTS
 	RequestsButtonListenerAdmin() {
 		var menuScrnA = new MenuScreenAdmin(requestsBtn.name);
 		menuScrnA.ChooseFromActionId();
-	}
-
-	//LOGOUT BUTTON ADMIN EVENTS
-	LogOutButtonListenerAdmin() {
-		sessionStorage.setItem("userStatus", "null");
-		window.location.href = "../Index";
 	}
 }
