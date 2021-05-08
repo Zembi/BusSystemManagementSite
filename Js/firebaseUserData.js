@@ -1,7 +1,7 @@
 
 //FIREBASE CONNECTION WITH REALTIME DATABASE FOR LOGIN
 function ConfigFirebaseUserLogIn() {
-	var userPath = "BusSystem/User";
+	var userPath = "BusSystemUser/User";
 
 	//INITIALIZE FIREBASE
 	const config = {
@@ -15,12 +15,7 @@ function ConfigFirebaseUserLogIn() {
   		measurementId: "G-YF4MPREFCD"
 	};
 
-	if (!firebase.apps.length) {
-   		firebase.initializeApp(config);
-	}
-	else {
-	   	firebase.app(); // IF ALREADY INITIALIZED, USE THIS ONE
-	}
+	firebaseCoreProcess(config);
 
 	if((sessionStorage.getItem("userStatus") == null) || (sessionStorage.getItem("userStatus") == "null")) {
 		if(partNowOpened == 1) {
@@ -85,6 +80,8 @@ function AdminMainDataLoad(userPath) {
 		snapshot.forEach(function(childSnapshot) {
 			if(sessionStorage.getItem("user") == childSnapshot.key) {
 				adminU.setUsername(childSnapshot.key);
+				adminU.setName(childSnapshot.val().Name);
+				adminU.setName(childSnapshot.val().Email);
 				usernameC.children[0].innerHTML = adminU.getUsername();
 			}
 		});

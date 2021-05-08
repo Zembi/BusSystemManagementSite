@@ -2,11 +2,16 @@
 //INITIALIZE VARIABLES FOR STYLING 
 var branchesHeaderCountC = document.getElementById("branchesHeaderCountC");
 var newBranchBtn = document.getElementById("newBranchBtn");
-var firebaseTypeCall = "init";
+var firebaseBranchTypeCall = "init";
 
 newBranchBtn.addEventListener("click", NewBranchBtnListener);
 
+ConfigFirebaseBranch();
+
 function NewBranchBtnListener() {
-	firebaseTypeCall = "newBtn";
-	ConfigFirebaseBranch();
+	ConfigFirebaseBranch()
 }
+
+/*
+	firebaseBranchTypeCall = "newBtn";
+	ConfigFirebaseBranch();*/

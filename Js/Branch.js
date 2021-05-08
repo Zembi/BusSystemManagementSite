@@ -1,35 +1,23 @@
 
-class Branch {
+function Branch(id, location, numOfEmployees, maxPeople) {
+	this.id = id;
+	this.location = location;
+	this.numOfEmployees = numOfEmployees;
+	this.maxPeople = maxPeople;
 
-	#id;
-	#location;
-	#numOfEmployees;
-	#maxPeople;
-
-	constructor(id, location, numOfEmployees, maxPeople) {
-		this.#id = id;
-		this.#location = location;
-		this.#numOfEmployees = numOfEmployees;
-		this.#maxPeople = maxPeople;
+	this.getId = function() {
+		return this.id;
 	}
 
-	get id() {
-
-		return this.#id;
+	this.getLocation = function() {
+		return this.location;
 	}
 
-	get location() {
-		
-		return this.#location;
+	this.getNumOfEmployees = function() {
+		return this.numOfEmployees;
 	}
 
-	get numOfEmployees() {
-		
-		return this.#numOfEmployees;
-	}
-
-	get maxPeople() {
-		
-		return this.#maxPeople;
+	this.getMaxPeople = function() {
+		return this.maxPeople;
 	}
 }

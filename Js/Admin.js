@@ -1,43 +1,40 @@
 
-class Admin{
+function Admin() {
+	this.username;
+	this.email;
+	this.password;
+	this.name;
 
-	constructor() {
-		this.username;
-		this.email;
-		this.password;
-		this.name;
-	}
-
-	setUsername(username) {
-		this.username = username;
-	}
-
-	getUsername() {
+	this.getUsername = function() {
 		return this.username;
 	}
 
-	setEmail(email) {
-		this.email = email;
+	this.setUsername = function(username) {
+		this.username = username;
 	}
 
-	getEmail() {
+	this.getEmail = function() {
 		return this.email;
 	}
 
-	setPassword(password) {
-		this.password = password;
+	this.setEmail = function(email) {
+		this.email = email;
 	}
 
-	getPassword() {
+	this.getPassword = function() {
 		return this.password;
 	}
 
-	setName(name) {
-		this.name = name;
+	this.setPassword = function(password) {
+		this.password = password;
 	}
 
-	getName() {
+	this.getName = function() {
 		return this.name;
+	}
+
+	this.setName = function(name) {
+		this.name = name;
 	}
 }
 

@@ -8,27 +8,22 @@ function ConfigFirebaseBranch() {
 	//INITIALIZE FIREBASE
 	const config = {
 		apiKey: "AIzaSyDwlt1YdlNVNvDsAQDMzfjF-iHpLlHP6LY",
-  		authDomain: "bussystemdata-f2082.firebaseapp.com",
- 		databaseURL: "https://bussystemdata-f2082-default-rtdb.europe-west1.firebasedatabase.app",
-  		projectId: "bussystemdata-f2082",
- 		storageBucket: "bussystemdata-f2082.appspot.com",
-  		messagingSenderId: "444999008633",
-  		appId: "1:444999008633:web:77aab1f2ddc1746a4b6fa8",
-  		measurementId: "G-YF4MPREFCD"
+    	authDomain: "bussystemdata-f2082.firebaseapp.com",
+    	databaseURL: "https://bussystemdata-f2082-default-rtdb.europe-west1.firebasedatabase.app",
+    	projectId: "bussystemdata-f2082",
+    	storageBucket: "bussystemdata-f2082.appspot.com",
+    	messagingSenderId: "444999008633",
+    	appId: "1:444999008633:web:6910f92bc2ae7d124b6fa8",
+   	 	measurementId: "G-FZW6QH68H5"
 	};
 
-	if (!firebase.apps.length) {
-   		firebase.initializeApp(config);
-	}
-	else {
-	   	firebase.app(); // IF ALREADY INITIALIZED, USE THIS ONE
-	}
+	firebaseCoreProcess(config);
 
 	if(sessionStorage.getItem("userStatus") == "admin") {
-		if(firebaseTypeCall == "init") {
+		if(firebaseBranchTypeCall == "init") {
 			AdminBranchData(branchPath);
 		}
-		else if(firebaseTypeCall == "newBtn") {
+		else if(firebaseBranchTypeCall == "newBtn") {
 			AdminSetNewBranch(branchPath);
 		}
 	}
