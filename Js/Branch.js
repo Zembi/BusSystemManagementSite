@@ -1,9 +1,13 @@
 
-function Branch(id, location, numOfEmployees, maxPeople) {
+function Branch(id, location, manager, employees, buses, store, conveniences, status) {
 	this.id = id;
 	this.location = location;
-	this.numOfEmployees = numOfEmployees;
-	this.maxPeople = maxPeople;
+	this.manager = manager;
+	this.employees = employees;
+	this.buses = buses;
+	this.store = store;
+	this.conveniences = conveniences;
+	this.status = status;
 
 	this.getId = function() {
 		return this.id;
@@ -13,11 +17,27 @@ function Branch(id, location, numOfEmployees, maxPeople) {
 		return this.location;
 	}
 
-	this.getNumOfEmployees = function() {
-		return this.numOfEmployees;
+	this.getManager = function() {
+		return this.manager;
 	}
 
-	this.getMaxPeople = function() {
-		return this.maxPeople;
+	this.getEmployees = function() {
+		return this.employees;
+	}
+
+	this.getBuses = function() {
+		return this.buses;
+	}
+
+	this.getStore = function() {
+		return this.store;
+	}
+
+	this.getConveniences = function() {
+		return this.conveniences;
+	}
+
+	this.getStatus = function() {
+		return this.status;
 	}
 }

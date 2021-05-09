@@ -9,9 +9,12 @@ newBranchBtn.addEventListener("click", NewBranchBtnListener);
 ConfigFirebaseBranch();
 
 function NewBranchBtnListener() {
-	ConfigFirebaseBranch()
+	CreateBranchInputInfoForSet();
 }
 
+function CreateBranchInputInfoForSet() {
+	
+}
 /*
 	firebaseBranchTypeCall = "newBtn";
 	ConfigFirebaseBranch();*/

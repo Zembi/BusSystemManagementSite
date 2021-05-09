@@ -45,7 +45,7 @@
 
 		#menuSymbolC {
 			position: relative;
-			width: 100%; height: 200px;
+			width: 100%; height: 250px;
 			background: rgb(111, 142, 171);
 			-ms-background-size: cover;
 			-o-background-size: cover;
@@ -88,7 +88,7 @@
 		}
 
 		#homeBtn:hover #menuImg {
-			transform: translate(-50%, 100%);
+			transform: translate(-50%, 300%);
 		}
 
 		#homeShowC {
@@ -150,8 +150,8 @@
 			background-size: cover;
 			top: 0px; right: 0px;
 			overflow: hidden;
-			padding-top: 70px;
-			padding-bottom: 70px;
+			padding-top: 30%;
+			padding-bottom: 30%;
 			z-index: 5;
 		}
 

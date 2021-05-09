@@ -79,10 +79,11 @@ function AdminMainDataLoad(userPath) {
 	dbRefObject.once("value").then(function(snapshot) {
 		snapshot.forEach(function(childSnapshot) {
 			if(sessionStorage.getItem("user") == childSnapshot.key) {
+				sessionStorage.setItem("userInUsername", childSnapshot.key)
 				adminU.setUsername(childSnapshot.key);
 				adminU.setName(childSnapshot.val().Name);
 				adminU.setName(childSnapshot.val().Email);
-				usernameC.children[0].innerHTML = adminU.getUsername();
+				adminU.setStatus(childSnapshot.val().Status);
 			}
 		});
 	});

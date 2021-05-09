@@ -21,4 +21,5 @@ function CheckAdminBeforeLoad() {
 
 function AdminInfo() {
 	ConfigFirebaseUserLogIn();
+	usernameC.children[0].innerHTML = sessionStorage.getItem("userInUsername");
 }

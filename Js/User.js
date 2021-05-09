@@ -1,9 +1,10 @@
 
-function Admin() {
+function User() {
 	this.username;
 	this.email;
 	this.password;
 	this.name;
+	this.status;
 
 	this.getUsername = function() {
 		return this.username;
@@ -36,6 +37,14 @@ function Admin() {
 	this.setName = function(name) {
 		this.name = name;
 	}
+
+	this.getStatus = function() {
+		return this.status;
+	}
+
+	this.setStatus = function(status) {
+		this.status = status;
+	}
 }
 
-var adminU = new Admin();
+var adminU = new User();
