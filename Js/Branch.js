@@ -1,10 +1,10 @@
 
-function Branch(id, location, manager, employees, buses, store, conveniences, status) {
+function Branch(id, location, manager, store, conveniences, status) {
 	this.id = id;
 	this.location = location;
 	this.manager = manager;
-	this.employees = employees;
-	this.buses = buses;
+	this.employees;
+	this.buses;
 	this.store = store;
 	this.conveniences = conveniences;
 	this.status = status;

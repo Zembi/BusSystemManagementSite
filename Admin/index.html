@@ -53,6 +53,13 @@
 </head>
 <body>
 
+	<script type="text/javascript">
+		var branchTh = new Branch(produceUniqueId(), "Θεσσαλονίκη", "Ioannis", null, "T_FS_MME", "Active");
+		var branchKat = new Branch(produceUniqueId(), "Κατερίνη", "Donn", 102021, "T_FS", "Active");
+		
+		
+	</script>
+
 	<div id="backgroundC">
 		<div id="leftC">
 			<div id="leftFixedC">
@@ -124,6 +131,9 @@
 									<div>aaa</div>
 								</div>
 							</div>
+							<button id="centerScreenBtn" title="Κεντρική θέαση">
+								<img>
+							</button>
 							<button id="requestsBtn" name="Requests">
 								<img>
 								<div id="numberOfRequestsC">
@@ -143,14 +153,10 @@
 	<script type="text/javascript" src="../Js/User.js"></script>
 	<script type="text/javascript" src="../Js/Bus.js"></script>
 	<script type="text/javascript" src="../Js/Branch.js"></script>
+	<script type="text/javascript" src="../Js/Id.js"></script>
 	<script type="text/javascript" src="../Js/MenuScreenAdmin.js"></script>
 	<script type="text/javascript" src="../Js/BtnListener.js"></script>
 	<script type="text/javascript" src="../Js/fixesStyle.js"></script>
-	<script type="text/javascript">
-		var branch = new Branch(101, 1, 1, 1);
-		//console.log(branch.id);
-	</script>
-
 	<script type="text/javascript" src="../Js/firebaseCoreProcess.js"></script>
 	<script type="text/javascript" src="../Js/firebaseUserData.js"></script>
 	<script type="text/javascript" src="../Js/serverAdmin.js"></script>

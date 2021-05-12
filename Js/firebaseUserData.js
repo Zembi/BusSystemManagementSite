@@ -15,7 +15,12 @@ function ConfigFirebaseUserLogIn() {
   		measurementId: "G-YF4MPREFCD"
 	};
 
-	firebaseCoreProcess(config);
+	if (!firebase.apps.length) {
+   		firebase.initializeApp(config);
+	}
+	else {
+	   	firebase.app(); // IF ALREADY INITIALIZED, USE THIS ONE
+	}
 
 	if((sessionStorage.getItem("userStatus") == null) || (sessionStorage.getItem("userStatus") == "null")) {
 		if(partNowOpened == 1) {

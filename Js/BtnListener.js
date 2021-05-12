@@ -10,6 +10,7 @@ class ButtonListener {
 		this.routesBtn = document.getElementById("routesBtn");
 		this.busesBtn = document.getElementById("busesBtn");
 		this.logOutBtn = document.getElementById("logOutBtn");
+		this.centerScreenBtn = document.getElementById("centerScreenBtn");
 		this.requestsBtn = document.getElementById("requestsBtn");
 	}
 
@@ -24,6 +25,7 @@ class ButtonListener {
 			routesBtn.addEventListener("click", this.RoutesButtonListenerAdmin);
 			busesBtn.addEventListener("click", this.BusesButtonListenerAdmin);
 			logOutBtn.addEventListener("click", this.LogOutButtonListenerAdmin);
+			centerScreenBtn.addEventListener("click", this.CenterScreenButtonListenerAdmin);
 			requestsBtn.addEventListener("click", this.RequestsButtonListenerAdmin);
 		}
 		else if(type == "EMPLOYEE") {
@@ -51,9 +53,10 @@ class ButtonListener {
 				this.style.border = "none";
 			});
 			this.addEventListener("mouseout", function() {
-				this.style.background = "rgb(111, 142, 171)";
+				this.style.background = "rgb(13, 18, 24, 0.8)";
 				this.style.border = "none";
 			});
+			centerScreenBtn.style.display = "inline-block";
 		}
 		else {
 			leftC.style.width = "240px";
@@ -71,6 +74,7 @@ class ButtonListener {
 				this.style.background = "rgb(13, 18, 24)";
 				this.style.border = "2px solid rgb(13, 18, 24)";
 			});
+			centerScreenBtn.style.display = "none";
 		}
 	}
 
@@ -108,6 +112,16 @@ class ButtonListener {
 	LogOutButtonListenerAdmin() {
 		sessionStorage.setItem("userStatus", "null");
 		window.location.href = "../Index";
+	}
+
+	//CENTER SCREEN BUTTON ADMIN EVENTS
+	CenterScreenButtonListenerAdmin() {
+		if(leftFixedC.offsetWidth != 0) {
+		}
+		else {
+			var contentInfoC = document.getElementById("contentInfoC");
+			contentInfoC.scrollIntoView({block: 'end', inline: 'center'});
+		}
 	}
 
 	//REQUESTS BUTTON ADMIN EVENTS
