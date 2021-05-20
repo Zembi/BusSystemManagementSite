@@ -1,8 +1,7 @@
 
 //FIREBASE CONNECTION WITH REALTIME DATABASE FOR LOGIN
-function ConfigFirebaseUserLogIn() {
+async function ConfigFirebaseUser(id, action) {
 	var userPath = "BusSystemUser/User";
-
 	//INITIALIZE FIREBASE
 	const config = {
 		apiKey: "AIzaSyDwlt1YdlNVNvDsAQDMzfjF-iHpLlHP6LY",
@@ -22,74 +21,128 @@ function ConfigFirebaseUserLogIn() {
 	   	firebase.app(); // IF ALREADY INITIALIZED, USE THIS ONE
 	}
 
-	if((sessionStorage.getItem("userStatus") == null) || (sessionStorage.getItem("userStatus") == "null")) {
-		if(partNowOpened == 1) {
-			UsernameLogIn(userPath);
+	if(id == null) {
+		if((sessionStorage.getItem("userStatus") == null) || (sessionStorage.getItem("userStatus") == "null")) {
+			if(partNowOpened == 1) {
+				await UsernameLogIn(userPath);
+			}
+			else if(partNowOpened == 2) {
+				await EmailLogIn(userPath);
+			}
 		}
-		else if(partNowOpened == 2) {
-			EmailLogIn(userPath);
+		else if(sessionStorage.getItem("userStatus") == "admin") {
+			await UserDataLoad(userPath);
+		}
+		else if(sessionStorage.getItem("userStatus") == "employee") {
+			await UserDataLoad(userPath);
 		}
 	}
-	else if(sessionStorage.getItem("userStatus") == "admin") {
-		AdminMainDataLoad(userPath);
+	else {
+		if(id != "none") {
+			if(action == "find") {
+				var user = await FindUserFromData(id, userPath);
+				return user;
+			}
+			else if(action == "send") {
+				await SendUserDataToDB(id, userPath);
+			}
+		}
+		else  {
+		}
 	}
 }
 
 function UsernameLogIn(userPath) {
 	var dbRefObject = firebase.database().ref().child(userPath);
-	dbRefObject.once("value").then(function(snapshot) {
-		snapshot.forEach(function(childSnapshot) {
-			if(usernameInput.value == childSnapshot.key) {
-				if(passwordInput.value == childSnapshot.val().Password) {
-					if(childSnapshot.val().Status == "Admin") {
-						sessionStorage.setItem("userStatus", "admin");
-						sessionStorage.setItem("user", childSnapshot.key);
-						window.location.href = "../Admin";
-					}
-					else if(childSnapshot.val().Status == "Employee") {
-						sessionStorage.setItem("userStatus", "employee");
-						sessionStorage.setItem("user", childSnapshot.key);
-						window.location.href = "../Employee";
+
+	return new Promise ((resolve, reject) => {
+		dbRefObject.once("value").then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				if(usernameInput.value == childSnapshot.key) {
+					if(passwordInput.value == childSnapshot.val().Password) {
+						if(childSnapshot.val().Status == "Admin") {
+							sessionStorage.setItem("userStatus", "admin");
+							sessionStorage.setItem("user", childSnapshot.key);
+							window.location.href = "../Admin";
+							resolve();
+						}
+						else if(childSnapshot.val().Status == "Employee") {
+							sessionStorage.setItem("userStatus", "employee");
+							sessionStorage.setItem("user", childSnapshot.key);
+							window.location.href = "../Employee";
+							resolve();
+						}
 					}
 				}
-			}
+			});
 		});
 	});
 }
 
 function EmailLogIn(userPath) {
 	var dbRefObject = firebase.database().ref().child(userPath);
-	dbRefObject.once("value").then(function(snapshot) {
-		snapshot.forEach(function(childSnapshot) {
-			if(emailInput.value == childSnapshot.val().Email) {
-				if(passwordInput.value == childSnapshot.val().Password) {
-					if(childSnapshot.val().Status == "Admin") {
-						sessionStorage.setItem("userStatus", "admin");
-						sessionStorage.setItem("user", childSnapshot.key);
-						window.location.href = "../Admin";
-					}
-					else if(childSnapshot.val().Status == "Employee") {
-						sessionStorage.setItem("userStatus", "employee");
-						sessionStorage.setItem("user", childSnapshot.key);
-						window.location.href = "../Employee";
+	
+	return new Promise ((resolve, reject) => {
+		dbRefObject.once("value").then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				if(emailInput.value == childSnapshot.val().Email) {
+					if(passwordInput.value == childSnapshot.val().Password) {
+						if(childSnapshot.val().Status == "Admin") {
+							sessionStorage.setItem("userStatus", "admin");
+							sessionStorage.setItem("user", childSnapshot.key);
+							window.location.href = "../Admin";
+							resolve();
+						}
+						else if(childSnapshot.val().Status == "Employee") {
+							sessionStorage.setItem("userStatus", "employee");
+							sessionStorage.setItem("user", childSnapshot.key);
+							window.location.href = "../Employee";
+							resolve();
+						}
 					}
 				}
-			}
+			});
 		});
 	});
 }
 
-function AdminMainDataLoad(userPath) {
+function UserDataLoad(userPath) {
 	var dbRefObject = firebase.database().ref().child(userPath);
-	dbRefObject.once("value").then(function(snapshot) {
-		snapshot.forEach(function(childSnapshot) {
-			if(sessionStorage.getItem("user") == childSnapshot.key) {
-				sessionStorage.setItem("userInUsername", childSnapshot.key)
-				adminU.setUsername(childSnapshot.key);
-				adminU.setName(childSnapshot.val().Name);
-				adminU.setName(childSnapshot.val().Email);
-				adminU.setStatus(childSnapshot.val().Status);
-			}
+	
+	return new Promise ((resolve, reject) => {
+		dbRefObject.once("value").then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				if(sessionStorage.getItem("user") == childSnapshot.key) {
+					userIn = new User(childSnapshot.key, childSnapshot.val().Email, childSnapshot.val().Password, 
+										childSnapshot.val().Name, childSnapshot.val().Status, childSnapshot.val().Icon);
+					resolve();
+				}
+			});
 		});
+	});
+}
+
+function FindUserFromData(id, userPath) {
+	var dbRefObject = firebase.database().ref().child(userPath);
+	
+	return new Promise ((resolve, reject) => {
+		dbRefObject.once("value").then(function(snapshot) {
+			snapshot.forEach(function(childSnapshot) {
+				//alert(id);
+				if(id == childSnapshot.key) {
+					var user = new User(childSnapshot.key, childSnapshot.val().Email, childSnapshot.val().Password, 
+										childSnapshot.val().Name, childSnapshot.val().Status, childSnapshot.val().Icon);
+					resolve(user);
+				}
+			});
+		});
+	});
+}
+
+function SendUserDataToDB(id, userPath) {
+	var dbRefObject = firebase.database().ref().child(userPath);
+	
+	return new Promise ((resolve, reject) => {
+		resolve();
 	});
 }

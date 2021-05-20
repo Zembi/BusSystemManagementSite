@@ -17,36 +17,112 @@
 		position: relative;
 		width: 100%; height: 100%;
 		overflow: hidden;
-		background: transparent;
+		background: rgb(22, 28, 34);
+		z-index: 1;
 	}
 
-	#branchesHeaderTitleC {
-		float: left;
+	#branchTopBarC {
 		position: relative;
-		color: white;
-		font-size: 40px;
-		font-family: "Times New Roman", Times, serif;
-		font-style: italic;
-		font-weight: bold;
-		margin-left: 5%;
+		width: 100%; height: 62px;
+		background: transparent;
+		overflow: hidden;
+		padding: 10px 0 10px 0;
 	}
 
 	#branchesHeaderCountC {
 		float: left;
+		position: absolute;
+		top: 50%;
+		margin: 0 0 0 5%;
+		transform: translate(0, -50%);
+	}
+
+	.statusBranchesC {
+		float: left;
 		position: relative;
+		height: 30px;
 		color: white;
-		font-size: 42px;
+		background: transparent;
+		font-size: 20px;
 		font-family: "Times New Roman", Times, serif;
+		font-style: italic;
 		font-weight: bold;
-		overflow: hidden;
-		margin-left: 10px;
+		margin-right: 30px;
+		padding: 2px;
+	}
+
+	.statusBranchesImgC {
+		float: left;
+		position: relative;
+		width: 25px; height: 100%;
+		margin-right: 4px;
+	}
+
+	#activeBranchesC {
+		content: url(../Assets/icons8_ok_30px.png);
+	}
+
+	#underReconstBranchesC {
+		content: url(../Assets/icons8_construction_carpenter_ruler_30px.png);
+	}
+
+	#underConstBranchesC {
+		content: url(../Assets/icons8_construction_30px.png);
+	}
+
+	#problemBranchesC {
+		content: url(../Assets/icons8_high_priority_30px.png);
+	}
+
+	.statusNumC {
+		display: inline-block;
+		position: relative;
+		height: 100%;
+		padding: 2px 0 2px 0;
+	}
+
+	#lastUpdateInfoC {
+		float: left;
+		position: absolute;
+		color: white;
+		background: transparent;
+		font-size: 11px;
+		font-style: italic;
+		left: 40px; bottom: 0;
+		padding: 0 1px 0 1px;
+	}
+
+	#listOfBranchesBtn {
+		position: absolute;
+		width: 46px; height: 46px;
+		background: transparent;
+		top: 50%; left: 50%;
+		cursor: pointer;
+		border: none;
+		padding: 0;
+		transform: translate(-50%, -50%);
+	}
+
+	#listOfBranchesBtn img {
+		width: 100%; height: 100%;
+		background-size: 100%;
+		content: url(../Assets/icons8_shortlist_52px.png);
+	}
+
+	#listOfBranchesBtn:hover img {
+		content: url(../Assets/icons8_shortlist_52px_2.png);
+	}
+
+	#listOfBranchesBtn:active img {
+		content: url(../Assets/icons8_shortlist_52px_3.png);
 	}
 
 	#newBranchBtnC {
 		float: right;
-		position: relative;
-		top: 3px; right: 10px;
+		position: absolute;
+		top: 50%; right: 30px;
 		overflow: hidden;
+		transform: translate(0, -50%);
 	}
 
 	#newBranchBtn {
@@ -61,6 +137,196 @@
 	#newBranchBtn div {
 	}
 
-	#showPanelC {
+	#branchContentC {
+		position: relative;
+		width: 100%;
+		background: rgb(111, 142, 171, 0.8);
+	}
+
+	/*START SCREEN CSS*/
+
+		/*LOADING SCREEN CSS*/
+	#loadC {
+		position: relative;
 		width: 100%; height: 100px;
+		background: rgb(0, 0, 0, 0.5);
+		top: 0; left: 0;
+		overflow: hidden;
+ 	 	z-index: 10;
+	}
+
+	#loaderC {
+		position: absolute;
+  		width: 80px; height: 80px;
+  		top: 10%; left: 50%;
+  		background-size: 100%;
+  		border-radius: 50%;
+  		border: 16px solid white; /* Outside color */
+  		border-top: 16px solid rgb(255, 215, 0);
+  		border-bottom: 16px solid rgb(255, 215, 0); /* Inside color */
+  		content: url(../Assets/icons8_flat_tire_100px.png);
+  		transform: translate(-50%, -50%);
+  		padding: 0;
+  		animation: spin 2s linear infinite;
+	}
+
+		/*SHOW BRANCHES CSS*/
+	#showBranchesC {
+		position: relative;
+		padding: 30px 50px 30px 50px;
+	}
+
+	.branchListViewC {
+		position: relative;
+		width: 100%;
+		background: transparent;
+		margin: 4px 0 0 0;
+	}
+
+		/*PROTOTYPE BRANCH VIEW CSS*/
+	.prototypeBranchViewC {
+		display: inline-block;
+		position: relative;
+		width: 100%; height: 100%;
+		background: white;
+		font-size: 20px;
+		font-family: Advent Pro, serif;
+		border: 2px solid rgb(22, 28,34);
+		padding: 5px;
+		margin: 0;
+	}
+
+			/*TOP PART OF ELEMENTS CSS*/
+	#topBranchListC {
+		float: left;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		top: 0;
+	}
+
+	#typeBrViewC {
+		position: absolute;
+		top: -6px; left: 50%;
+		border: 1px solid rgb(22, 28,34); border-top: none;
+		padding: 0 3px 0 3px;
+		transform: translate(-50%, 0); 
+	}
+
+	#statusBrViewC {
+		float: left;
+		position: relative;
+		width: 25px; height: 25px;
+		background-size: 100%;
+		margin-left: 4px;
+	}
+
+	#uniqueIdBrViewC {
+		float: left;
+		position: relative;
+		font-size: 15px;
+		letter-spacing: 1px;
+		margin: 3px 0 0 4px;
+	}
+
+	#editBrViewBtn {
+		float: right;
+		position: relative;
+		width: 30px; height: 30px;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		margin: 2px 2px 2px 0;
+		padding: 0;
+	}
+
+	#editBrViewBtn img {
+		width: 100%; height: 100%;
+		background-size: 100%;
+		content: url(../Assets/icons8_edit_property_30px.png);
+	}
+
+			/*MIDDLE PART OF ELEMENTS CSS*/
+	#midBranchListC {
+		float: left;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		padding: 0 0 0 20px;
+	}
+
+	#imageBranchC {
+		float: left;
+		position: relative;
+		width: 240px; height: 180px;
+		background: rgb(0, 0, 0, 0.3);
+	}
+
+	#rightSideInfoC {
+		position: relative;
+		overflow: hidden;
+		background: transparent;
+	}
+
+	#locationBranchC {
+		display: table;
+		position: relative;
+		background: transparent;
+		margin: 10px 0 0 20px;
+	}
+
+	#locationBranchC img {
+		float: left;
+		width: 40px; height: 40px;
+		content: url(../Assets/icons8_location_40px.png)
+	}
+
+	#locationBranchC div {
+		float: left;
+		background: transparent;
+		color: rgb(22, 28, 34);
+		font-size: 25px;
+		font-weight: bold;
+		margin: 5px 0 0 14px;
+	}
+
+	#managerNameC {
+		display: table;
+		position: relative;
+		background: transparent;
+		margin: 10px 0 0 20px;
+	}
+
+	#managerNameC img {
+		float: left;
+		width: 34px; height: 34px;
+	}
+
+	#managerNameC div {
+		float: left;
+		background: yellow;
+		margin: 4.5px 0 0 14px;
+	}
+
+	/*NEW BRANCH CSS*/
+
+
+	/*ANIMATIONS*/
+	@keyframes spin {
+  		0% { transform: rotate(0deg); }
+  		100% { transform: rotate(360deg); }
+	}
+
+	@keyframes roundBorderToRight {
+  		0% { width: 4px; border-top: 2px solid white; }
+  		33% { width: 4px; border-right: 2px solid rgb(255, 215, 0); }
+  		66% { width: 4px; border-bottom: 2px solid white; }
+  		100% { width: 4px; border-left: 2px solid rgb(255, 215, 0); }
+	}
+
+	@keyframes roundBorderToLeft {
+  		0% { width: 4px; border-top: 2px solid white; }
+  		33% { width: 4px; border-left: 2px solid rgb(255, 215, 0); }
+  		66% { width: 4px; border-bottom: 2px solid white; }
+  		100% { width: 4px; border-right: 2px solid rgb(255, 215, 0); }
 	}

@@ -85,7 +85,7 @@
 		}
 
 		function SignInClick() {
-			ConfigFirebaseUserLogIn();
+			ConfigFirebaseUser(null, null);
 		}
 
 		function NowOpenedPartStyling() {
@@ -175,5 +175,3 @@
 				});
 			}
 		}
-
-		//sessionStorage.clear();

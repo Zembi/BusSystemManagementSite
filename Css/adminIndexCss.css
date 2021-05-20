@@ -40,7 +40,7 @@
 			overflow: visible;
 			box-shadow: 3px 0px 2px black;
 			transition: width 0.3s;
-			z-index: 4;
+			z-index: 40;
 		}
 
 		#menuSymbolC {
@@ -357,7 +357,7 @@
 
 		#contentC {
 			position: relative;
-			width: 100%;
+			width: 100%; min-height: 800px;
 			min-width: 90%;
 			background: rgb(0, 0, 0, 0.0);
 			padding: 0 5% 10% 5%;
@@ -376,7 +376,8 @@
 			width: 100%;
 			top: 0;
 			background: rgb(255, 255, 255);
-			z-index: 1;
+			border-bottom: 1px solid rgb(22, 28, 34);
+			z-index: 10;
 		}
 
 		#pathC {
@@ -391,8 +392,9 @@
 
 		#pathC img {
 			float: left;
-			content: url(../Assets/icons8_polyline_50px_2.png);
-			margin-right: 10px;
+			content: url(../Assets/icons8_microsoft_admin_40px.png);
+			margin-right: 8px;
+			padding: 4px 0 4px 0;
 		}
 
 		#pathTextC {
@@ -477,8 +479,8 @@
 		#showPanelC {
 			position: relative;
 			width: 100%;
-			min-width: 100%; min-height: 1000px;
-			background: rgb(0, 0, 0, 0.2);
+			min-width: 100%;
+			background: black;
 			border-radius: 2px;
 			overflow: hidden;
 		}

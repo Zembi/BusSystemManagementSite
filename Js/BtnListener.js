@@ -110,6 +110,7 @@ class ButtonListener {
 	
 	//LOGOUT BUTTON ADMIN EVENTS
 	LogOutButtonListenerAdmin() {
+		sessionStorage.setItem("Load", "Off");
 		sessionStorage.setItem("userStatus", "null");
 		window.location.href = "../Index";
 	}

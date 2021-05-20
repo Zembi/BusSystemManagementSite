@@ -7,29 +7,30 @@ class MenuScreenAdmin {
 	}
 
 	ChooseFromActionId() {
-		var menuItems = document.getElementsByClassName("menuBtns");
-		var requestBtnItem = document.getElementsByName("Requests")[0];
+		if(sessionStorage.getItem("Load") != "On") {
+			var menuItems = document.getElementsByClassName("menuBtns");
+			var requestBtnItem = document.getElementsByName("Requests")[0];
 
-		if(this.actionId == "Home"){
-			sessionStorage.setItem('action', this.actionId);
-			this.ChosenButtonListener(this.actionId);
-			this.URLChangeMenuButtonContent(this.actionId);
-			this.PathChangeMenu("Αρχική");
-		}
-		else if(this.actionId == requestBtnItem.name) {
-			sessionStorage.setItem('action', this.actionId);
-			this.ChosenButtonListener(requestBtnItem.name);
-			this.URLChangeMenuButtonContent(requestBtnItem.name);
-			this.PathChangeMenu("Ειδοποιήσεις");
-		}
-		else {
-			for(var i = 0; i < menuItems.length; i++) {
-				if(this.actionId == menuItems[i].name) {
-					sessionStorage.setItem('action', this.actionId);
-					this.ChosenButtonListener(menuItems[i].name);
-					this.URLChangeMenuButtonContent(menuItems[i].name);
-					this.PathChangeMenu(menuItems[i].getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[0].innerHTML);
-					//this.OpenedButton();
+			if((this.actionId == "Home") && (sessionStorage.getItem('lastOpenedAction') != this.actionId)){
+				sessionStorage.setItem('action', this.actionId);
+				this.ChosenButtonListener(this.actionId);
+				this.URLChangeMenuButtonContent(this.actionId);
+				this.PathChangeMenu("Αρχική");
+			}
+			else if((this.actionId == requestBtnItem.name) && (sessionStorage.getItem('lastOpenedAction') != this.actionId)) {
+				sessionStorage.setItem('action', this.actionId);
+				this.ChosenButtonListener(requestBtnItem.name);
+				this.URLChangeMenuButtonContent(requestBtnItem.name);
+				this.PathChangeMenu("Ειδοποιήσεις");
+			}
+			else {
+				for(var i = 0; i < menuItems.length; i++) {
+					if((this.actionId == menuItems[i].name) && (sessionStorage.getItem('lastOpenedAction') != this.actionId)) {
+						sessionStorage.setItem('action', this.actionId);
+						this.ChosenButtonListener(menuItems[i].name);
+						this.URLChangeMenuButtonContent(menuItems[i].name);
+						this.PathChangeMenu(menuItems[i].getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[0].innerHTML);
+					}
 				}
 			}
 		}
@@ -47,6 +48,8 @@ class MenuScreenAdmin {
   					}
   				})
       	});
+
+      	sessionStorage.setItem('lastOpenedAction', this.actionId);
 	}
 
 	URLChangeMenuButtonContent(chosenBtnName) {
@@ -62,11 +65,6 @@ class MenuScreenAdmin {
 		//PATH CHANGE
       	var pathTextC = document.getElementById("pathTextC").getElementsByTagName("DIV")[0];
 
-		if(this.actionId)
       	pathTextC.innerHTML = "/" + pathLast;
-	}
-
-	OpenedButton() {
-		var style = getComputedStyle(this.openedBtn);
 	}
 }

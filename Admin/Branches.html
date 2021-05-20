@@ -8,19 +8,52 @@
 <body>
 
 	<div id="branchesContentC">
-		<div id="branchesHeaderTitleC">Καταστήματα:</div>
-		<div id="branchesHeaderCountC"></div>
-		<div id="newBranchBtnC">
-			<button id="newBranchBtn">
-				<div>Νέο Κατάστημα</div>
+		<div id="branchTopBarC">
+			<div id="branchesHeaderCountC">
+				<div class="statusBranchesC" title="Ενεργά">
+					<img class="statusBranchesImgC" id="activeBranchesC"><div class="statusNumC" id="activeBranchNumC"></div>
+				</div>
+				<div class="statusBranchesC" title="Υπο-επισκευή">
+					<img class="statusBranchesImgC" id="underReconstBranchesC"><div class="statusNumC" id="underReconstBranchNumC"></div>
+				</div>
+				<div class="statusBranchesC" title="Υπο-κατασκευή">
+					<img class="statusBranchesImgC" id="underConstBranchesC"><div class="statusNumC" id="underConstBranchNumC"></div>
+				</div>
+				<div class="statusBranchesC" title="Μη ενεργά">
+					<img class="statusBranchesImgC" id="problemBranchesC"><div class="statusNumC" id="problemBranchNumC"></div>
+				</div>
+			</div>
+			<div id="lastUpdateInfoC"></div>
+			<button id="listOfBranchesBtn" title="Λίστα καταστημάτων">
+				<img>
 			</button>
+			<div id="newBranchBtnC">
+				<button id="newBranchBtn">
+					<div>Νέο Κατάστημα</div>
+				</button>
+			</div>
 		</div>
-		<div id="showPanelC"></div>
+		<div id="branchContentC"></div>
 	</div>
 
+	<script type="text/javascript">
+		var branchArray = [];
+	</script>
 	<script type="text/javascript" src="../Js/Id.js"></script>
-	<script type="text/javascript" src="../Js/branchesAdminData.js"></script>
-	<script type="text/javascript" src="../Js/firebaseCoreProcess.js"></script>
-	<script type="text/javascript" src="../Js/firebaseBranchData.js"></script>
+	<script type="text/javascript">
+		//var manager1 = new User("Ioannis", "ioidoafo", "aaaaaaa", "Giannis", "Employee_Manager", "male1");
+		//var manager2 = new User("Donn", "kjkajdka", "aaaaaaa", "Don", "Employee_Manager", "male4");
+
+		var branchThes = new Branch(produceUniqueId(), "Σταθμός", "Θεσσαλονίκη", "Ioannis", "null", "T_FS_MME", "Active");
+		var branchKat = new Branch(produceUniqueId(), "Απλό κατάστημα", "Κατερίνη", "Donn", 102021, "T_FS", "Under_C");
+		var branchThe = new Branch(produceUniqueId(), "Σταθμός", "Θεσσαλονίκη", "Ioannis", "null", "T_FS_MME", "Under_R");
+		var branchKa = new Branch(produceUniqueId(), "Απλό κατάστημα", "Κατερίνη", "Donn", 102021, "T_FS", "Problem");
+		
+		branchArray.push(branchThes);
+		branchArray.push(branchKat);
+		branchArray.push(branchThe);
+		branchArray.push(branchKa);
+	</script>
+	<script type="text/javascript" src="../Js/branchesAdminDataServer.js"></script>
 </body>
 </html>
