@@ -57,7 +57,7 @@ function AddInfoMiddle() {
 
 async function ManagerChooseIcon() {
 	userManager = await branchArray[countBranch].findManagerInfo();
-	alert(userManager.getIcon());
+	//alert(userManager.getIcon());
 	PickImgForManager(userManager.getIcon());
 }
 
