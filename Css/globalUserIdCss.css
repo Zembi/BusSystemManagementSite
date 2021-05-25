@@ -1,0 +1,72 @@
+
+/*INFO FOR ID CSS*/
+	#userIdC {
+		display: block;
+		position: relative;
+		width: 350px; height: 220px;
+		background: rgb(255, 215, 0);
+		background-image: url("../Assets/id.png");
+		background-size: 100%;
+		background-repeat: no-repeat;
+  		background-position: center;
+		border-radius: 8px;
+		padding: 0;
+	}
+
+	/*STATUS PLACE TO ID CSS*/
+	#statusIdC {
+		position: relative;
+		background: transparent;
+		color: white;
+		text-align: center;
+		font-size: 22px;
+		font-weight: bold;
+		overflow: hidden;
+		border-radius: 8px 8px 0 0;
+		padding: 2px;
+	}
+
+	/*USERNAME PLACE TO ID CSS*/
+	#usernameIdC {
+		float: right;
+		position: absolute;
+		width: 162px;
+		background: transparent;
+		top: 59px; right: 12.5px;
+		font-size: 16px;
+		font-style: italic;
+		text-align: left;
+		overflow: hidden;
+		padding: 1px 5px 1px 5px;
+		z-index: 10;
+	}
+
+	/*NAME PLACE TO ID CSS*/
+		#nameIdC {
+		float: right;
+		position: absolute;
+		width: 162px;
+		background: transparent;
+		top: 96px; right: 12.5px;
+		font-size: 18px;
+		font-style: italic;
+		text-align: left;
+		overflow: hidden;
+		padding: 1px 5px 1px 5px;
+		z-index: 10;
+	}
+
+	/*EMAIL PLACE TO ID CSS*/
+	#emailIdC {
+		float: right;
+		position: absolute;
+		width: 162px;
+		background: transparent;
+		top: 135px; right: 12.5px;
+		font-size: 14px;
+		font-style: italic;
+		text-align: left;
+		overflow: hidden;
+		padding: 2px 3px 2px 3px;
+		z-index: 10;
+	}

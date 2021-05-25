@@ -1,7 +1,8 @@
 
-function Branch(id, type, location, manager, store, conveniences, status) {
+function Branch(id, type, street, location, manager, store, conveniences, status) {
 	this.id = id;
 	this.type = type;
+	this.street = street;
 	this.location = location;
 	this.manager = manager;
 	this.managerObject;
@@ -16,7 +17,11 @@ function Branch(id, type, location, manager, store, conveniences, status) {
 	}
 
 	this.getType = function() {
-		return this.type
+		return this.type;
+	}
+
+	this.getStreet = function() {
+		return this.street;
 	}
 
 	this.getLocation = function() {
@@ -29,6 +34,11 @@ function Branch(id, type, location, manager, store, conveniences, status) {
 
 	this.findManagerInfo = async function() {
 		var user = await ConfigFirebaseUser(this.manager, "find");
+		return user;
+	}
+
+	this.findUserInfo = async function(userToFind) {
+		var user = await ConfigFirebaseUser(userToFind, "find");
 		return user;
 	}
 

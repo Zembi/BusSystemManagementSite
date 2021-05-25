@@ -13,7 +13,7 @@ var countBranch = 0;
 FindBranchesAndCreateView();
 
 async function FindBranchesAndCreateView() {
-
+	alert
 	StartLoaderOnMainInfo();
 	ClearStatusData();
 	lastUpdateInfoC.innerHTML = "";
@@ -124,6 +124,9 @@ function PrototypeOfBranchList(action, id) {
 	
  	return new Promise ((resolve, reject) => {
 	//FILE CALL
+		setTimeout(function() {
+     	 	resolve();
+     	}, 300);
 		var file = "BranchesScreens/" + action + ".html";
 		$(function(){
      	 	$("#" + id).load(file, 
@@ -132,9 +135,6 @@ function PrototypeOfBranchList(action, id) {
     					alert("Error: " + xhr.status + " " + xhr.statusText);
   					}
   				})
-     	 	setTimeout(function() {
-     	 		resolve();
-     	 	}, 200);
    		});
     });
 }

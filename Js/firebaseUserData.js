@@ -44,7 +44,7 @@ async function ConfigFirebaseUser(id, action) {
 				return user;
 			}
 			else if(action == "send") {
-				await SendUserDataToDB(id, userPath);
+				//await SendUserDataToDB(id, userPath);
 			}
 		}
 		else  {

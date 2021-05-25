@@ -31,15 +31,19 @@ function AddInfoTop() {
 function StatusChooseIcon() {
 	if(branchArray[countBranch].getStatus() == "Active") {
 		topBarC.children[1].style.backgroundImage = "url(../Assets/icons8_ok_30px.png)";
+		topBarC.children[1].title = "Ενεργά";
 	}
 	else if(branchArray[countBranch].getStatus() == "Under_R") {
 		topBarC.children[1].style.backgroundImage = "url(../Assets/icons8_construction_carpenter_ruler_30px.png)";
+		topBarC.children[1].title = "Υπό-επισκευή";
 	}
 	else if(branchArray[countBranch].getStatus() == "Under_C") {
 		topBarC.children[1].style.backgroundImage = "url(../Assets/icons8_construction_30px.png)";
+		topBarC.children[1].title = "Υπο-κατασκευή";
 	}
 	else if(branchArray[countBranch].getStatus() == "Problem") {
 		topBarC.children[1].style.backgroundImage = "url(../Assets/icons8_high_priority_30px_2.png)";
+		topBarC.children[1].title = "Μη ενεργά";
 	}
 }
 
@@ -47,18 +51,27 @@ function EditInfoOfThisBranch() {
 
 }
 
-function AddInfoMiddle() {
+async function AddInfoMiddle() {
 	//#locationBranchC
 	midRightPartC.children[0].children[1].innerHTML = branchArray[countBranch].getLocation();
+	//#streetBranchC
+	midRightPartC.children[0].children[2].innerHTML = "(" + branchArray[countBranch].getStreet() + ")";
 	//#managerNameC
 	ManagerChooseIcon();
 	midRightPartC.children[1].children[1].innerHTML = branchArray[countBranch].getManager();
+	//#hiddenInfoManagerC
+	var hiddenInfoManagerC = document.getElementsByClassName("hiddenInfoManagerC")[countBranch];
+	var user = await FindUser(branchArray[countBranch].getManager());
+	user.createId(hiddenInfoManagerC);
 }
 
 async function ManagerChooseIcon() {
 	userManager = await branchArray[countBranch].findManagerInfo();
-	//alert(userManager.getIcon());
 	PickImgForManager(userManager.getIcon());
+}
+
+async function FindUser(userToFind) {
+	return(await branchArray[countBranch].findUserInfo(userToFind));
 }
 
 function PickImgForManager(info) {
