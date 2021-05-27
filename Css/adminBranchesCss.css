@@ -191,8 +191,9 @@
 		background: white;
 		font-size: 20px;
 		font-family: Advent Pro, serif;
-		border: 2px solid rgb(22, 28,34);
-		padding: 5px;
+		border: 4px solid rgb(22, 28,34);
+		overflow: hidden;
+		padding: 5px 5px 0 5px;
 		margin: 0;
 	}
 
@@ -208,6 +209,7 @@
 	#typeBrViewC {
 		position: absolute;
 		top: -6px; left: 50%;
+		border-radius: 2px;
 		border: 1px solid rgb(22, 28,34); border-top: none;
 		padding: 0 3px 0 3px;
 		transform: translate(-50%, 0); 
@@ -246,11 +248,19 @@
 		content: url(../Assets/icons8_edit_property_30px.png);
 	}
 
+	#editBrViewBtn:hover img {
+		content: url(../Assets/icons8_edit_property_30px_2.png);
+	}
+
+	#editBrViewBtn:active img {
+		content: url(../Assets/icons8_edit_property_30px.png);
+	}
+
 			/*MIDDLE PART OF ELEMENTS CSS*/
 	#midBranchListC {
 		float: left;
 		position: relative;
-		width: 100%; height: 180px;
+		width: 100%; height: 200px;
 		background: transparent;
 		padding: 0 0 0 20px;
 	}
@@ -258,8 +268,14 @@
 	#imageBranchC {
 		float: left;
 		position: relative;
-		width: 240px; height: 100%;
+		width: 300px; height: 100%;
 		background: rgb(0, 0, 0, 0.3);
+		overflow: hidden;
+		border-radius: 2px;
+	}
+
+	#imageBranchC img {
+		width: 100%; height: 100%;
 	}
 
 	#rightSideInfoC {
@@ -299,8 +315,7 @@
 	}
 
 	#managerNameC {
-		float: left;
-		display: block;
+		display: table;
 		position: relative;
 		background: transparent;
 		cursor: pointer;
@@ -324,24 +339,68 @@
 	}
 
 	.hiddenInfoManagerC {
-		float: left;
-		position: relative;
-		background: rgb(255, 215, 0);
-		bottom: 90px;
+		position: fixed;
+		background: rgb(13, 18, 24);
+		bottom: 1px; right: 2px;
 		opacity: 0;
 		border-radius: 10px;
-		border: 2px solid grey;
-		overflow: hidden;
+		border: 2px solid rgb(13, 18, 24);
+		overflow: visible;
 		box-shadow: 0px 0px 2px black;
 		z-index: -10;
-		margin-left: 5px;
-		transition: opacity 0.4s;
+		transition: opacity 0.3s;
 	}
 
 	#managerNameC:hover + .hiddenInfoManagerC {
 		display: block;
 		opacity: 1;
-		z-index: 10;
+		z-index: 100;
+	}
+
+		/*DOWN PART OF ELEMENTS CSS*/
+	#downBranchListInfoC {
+		float: left;
+		position: relative;
+		background: transparent;
+		width: 100%; height: 41px;
+		background: transparent;
+	}
+
+	#downBranchThatGoesTopC {
+		display: block;
+		position: absolute;
+		width: 100%; height: auto;
+		background: white;
+		top: 10px;
+		overflow: visible;
+		margin: auto;
+		transition: top 1s ease 0s;
+	}
+
+	#branchInfoBtn {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: rgb(13, 18, 24);
+		color: white;
+		font-size: 20px;
+		cursor: pointer;
+		border-radius: 2px 2px 0 0;
+		border: none;
+		margin: auto;
+		padding: 4px;
+	}
+
+	#branchInfoBtn:hover {
+		background: rgb(93, 120, 144);
+	}
+
+	#branchInfoBtn:active {
+		background: rgb(13, 18, 24);
+	}
+
+	#branchInfoBtn:focus {
+		outline: 2px solid rgb(255, 215, 0);
 	}
 
 	/*NEW BRANCH CSS*/

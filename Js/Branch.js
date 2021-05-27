@@ -1,9 +1,10 @@
 
-function Branch(id, type, street, location, manager, store, conveniences, status) {
+function Branch(id, type, street, location, imageSrc, manager, store, conveniences, status) {
 	this.id = id;
 	this.type = type;
 	this.street = street;
 	this.location = location;
+	this.imageSrc = imageSrc;
 	this.manager = manager;
 	this.managerObject;
 	this.employees;
@@ -26,6 +27,10 @@ function Branch(id, type, street, location, manager, store, conveniences, status
 
 	this.getLocation = function() {
 		return this.location;
+	}
+
+	this.getImageSrc = function() {
+		return this.imageSrc;
 	}
 
 	this.getManager = function() {

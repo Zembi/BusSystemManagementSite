@@ -3,8 +3,8 @@
 	#userIdC {
 		display: block;
 		position: relative;
-		width: 350px; height: 220px;
-		background: rgb(255, 215, 0);
+		width: 342px; height: 186px;
+		background: rgb(13, 18, 24);
 		background-image: url("../Assets/id.png");
 		background-size: 100%;
 		background-repeat: no-repeat;
@@ -19,25 +19,48 @@
 		background: transparent;
 		color: white;
 		text-align: center;
-		font-size: 22px;
-		font-weight: bold;
+		font-family: Arial;
+		font-size: 20px;
 		overflow: hidden;
 		border-radius: 8px 8px 0 0;
 		padding: 2px;
+	}
+
+	/*IMG PLACE TO ID CSS*/
+	#imgIdC {
+		float: left;
+		position: absolute;
+		width: 87px; height: 90px;
+		background: white;
+		top: 46px; left: 16px;
+		font-size: 16px;
+		font-style: italic;
+		text-align: left;
+		overflow: hidden;
+		border-radius: 10px;
+		padding: 1px 5px 1px 5px;
+		z-index: 10;
+	}
+
+	#imgIdImg {
+		position: absolute;
+		width: 60px; height: 60px;
+		top: 50%; left: 50%;
+		transform: translate(-50%, -50%);
 	}
 
 	/*USERNAME PLACE TO ID CSS*/
 	#usernameIdC {
 		float: right;
 		position: absolute;
-		width: 162px;
+		width: 205px;
 		background: transparent;
-		top: 59px; right: 12.5px;
+		top: 45px; right: 12.5px;
 		font-size: 16px;
 		font-style: italic;
 		text-align: left;
 		overflow: hidden;
-		padding: 1px 5px 1px 5px;
+		padding: 1px 5px 2px 5px;
 		z-index: 10;
 	}
 
@@ -45,14 +68,14 @@
 		#nameIdC {
 		float: right;
 		position: absolute;
-		width: 162px;
+		width: 205px;
 		background: transparent;
-		top: 96px; right: 12.5px;
-		font-size: 18px;
+		top: 86px; right: 12.5px;
+		font-size: 16px;
 		font-style: italic;
 		text-align: left;
 		overflow: hidden;
-		padding: 1px 5px 1px 5px;
+		padding: 1px 5px 2px 5px;
 		z-index: 10;
 	}
 
@@ -60,13 +83,13 @@
 	#emailIdC {
 		float: right;
 		position: absolute;
-		width: 162px;
+		width: 205px;
 		background: transparent;
-		top: 135px; right: 12.5px;
+		top: 127px; right: 12.5px;
 		font-size: 14px;
 		font-style: italic;
 		text-align: left;
 		overflow: hidden;
-		padding: 2px 3px 2px 3px;
+		padding: 2px 4px 3px 4px;
 		z-index: 10;
 	}

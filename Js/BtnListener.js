@@ -3,15 +3,21 @@ class ButtonListener {
 
 	constructor(type) {
 		this.type = type;
-		this.homeBtn = document.getElementById("homeBtn");
-		this.menuBtn = document.getElementById("menuBtn");
-		this.branchesBtn = document.getElementById("branchesBtn");
-		this.employeesBtn = document.getElementById("employeesBtn");
-		this.routesBtn = document.getElementById("routesBtn");
-		this.busesBtn = document.getElementById("busesBtn");
-		this.logOutBtn = document.getElementById("logOutBtn");
-		this.centerScreenBtn = document.getElementById("centerScreenBtn");
-		this.requestsBtn = document.getElementById("requestsBtn");
+		if(this.type == "ADMIN") {
+			//IF CLASS IS BEING CALLED FROM ADMIN SITE
+			this.homeBtn = document.getElementById("homeBtn");
+			this.menuBtn = document.getElementById("menuBtn");
+			this.branchesBtn = document.getElementById("branchesBtn");
+			this.employeesBtn = document.getElementById("employeesBtn");
+			this.routesBtn = document.getElementById("routesBtn");
+			this.busesBtn = document.getElementById("busesBtn");
+			this.logOutBtn = document.getElementById("logOutBtn");
+			this.centerScreenBtn = document.getElementById("centerScreenBtn");
+			this.requestsBtn = document.getElementById("requestsBtn");
+		}
+		else if(type == "EMPLOYEE") {
+			//IF CLASS IS BEING CALLED FROM EMPLOYEE SITE
+		}
 	}
 
 	AddEventsToButtons() {

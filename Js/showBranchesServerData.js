@@ -13,7 +13,6 @@ var countBranch = 0;
 FindBranchesAndCreateView();
 
 async function FindBranchesAndCreateView() {
-	alert
 	StartLoaderOnMainInfo();
 	ClearStatusData();
 	lastUpdateInfoC.innerHTML = "";

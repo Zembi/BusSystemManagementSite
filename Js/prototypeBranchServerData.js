@@ -1,109 +1,139 @@
 
 var prototypeBranchViewC;
-var topBarC;
+var topPartC;
+var midPartC;
 var midRightPartC;
-var parentOfProto;
+var bottomPartC;
 
 FindThisBranch();
 
 function FindThisBranch() {
 	prototypeBranchViewC = document.getElementsByClassName("prototypeBranchViewC")[countBranch];
-	//parentOfProto = prototypeBranchViewC.parentElement;
-	topBarC = prototypeBranchViewC.children[0];
+	topPartC = prototypeBranchViewC.children[0];
+	midPartC = prototypeBranchViewC.children[1];
 	midRightPartC = prototypeBranchViewC.children[1].children[1];
+	bottomPartC = prototypeBranchViewC.children[2];
 	AddInfoTop();
 	AddInfoMiddle();
+	AddInfoBottom();
 
 	countBranch++;
 }
 
 function AddInfoTop() {
+	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
+	
 	//#typeBrViewC
-	topBarC.children[0].innerHTML = branchArray[countBranch].getType();
+	topPartC.children[0].innerHTML = branchArray[countBranch].getType();
 	//#statusBrViewC
 	StatusChooseIcon();
 	//#uniqueIdBrViewC
-	topBarC.children[2].innerHTML = "#" + branchArray[countBranch].getId();
+	topPartC.children[2].innerHTML = "#" + branchArray[countBranch].getId();
 	//#editBrViewBtn
-	topBarC.children[3].addEventListener("click", EditInfoOfThisBranch);
+	topPartC.children[3].addEventListener("click", function() {EditInfoOfThisBranch(id, document.getElementsByClassName("prototypeBranchViewC")[id]);});
 }
 
 function StatusChooseIcon() {
 	if(branchArray[countBranch].getStatus() == "Active") {
-		topBarC.children[1].style.backgroundImage = "url(../Assets/icons8_ok_30px.png)";
-		topBarC.children[1].title = "Ενεργά";
+		topPartC.children[1].style.backgroundImage = "url(../Assets/icons8_ok_30px.png)";
+		topPartC.children[1].title = "Ενεργά";
 	}
 	else if(branchArray[countBranch].getStatus() == "Under_R") {
-		topBarC.children[1].style.backgroundImage = "url(../Assets/icons8_construction_carpenter_ruler_30px.png)";
-		topBarC.children[1].title = "Υπό-επισκευή";
+		topPartC.children[1].style.backgroundImage = "url(../Assets/icons8_construction_carpenter_ruler_30px.png)";
+		topPartC.children[1].title = "Υπό-επισκευή";
 	}
 	else if(branchArray[countBranch].getStatus() == "Under_C") {
-		topBarC.children[1].style.backgroundImage = "url(../Assets/icons8_construction_30px.png)";
-		topBarC.children[1].title = "Υπο-κατασκευή";
+		topPartC.children[1].style.backgroundImage = "url(../Assets/icons8_construction_30px.png)";
+		topPartC.children[1].title = "Υπο-κατασκευή";
 	}
 	else if(branchArray[countBranch].getStatus() == "Problem") {
-		topBarC.children[1].style.backgroundImage = "url(../Assets/icons8_high_priority_30px_2.png)";
-		topBarC.children[1].title = "Μη ενεργά";
+		topPartC.children[1].style.backgroundImage = "url(../Assets/icons8_high_priority_30px_2.png)";
+		topPartC.children[1].title = "Μη ενεργά";
 	}
 }
 
-function EditInfoOfThisBranch() {
+function EditInfoOfThisBranch(id, element) {
+	var topC = element.children[0];
+	var midC = element.children[1];
+	var bottomUpDownC = element.children[2];
 
+	//WAITING TO OPEN
+	if(!branchSituationArray[id]) {
+	}
 }
 
 async function AddInfoMiddle() {
+	//#imageBranchC
+	midPartC.children[0].children[0].style.content = "url(../Assets/BranchesImages/" + branchArray[countBranch].getImageSrc() + ")";
 	//#locationBranchC
 	midRightPartC.children[0].children[1].innerHTML = branchArray[countBranch].getLocation();
 	//#streetBranchC
 	midRightPartC.children[0].children[2].innerHTML = "(" + branchArray[countBranch].getStreet() + ")";
-	//#managerNameC
+	//#managerNameC *
 	ManagerChooseIcon();
-	midRightPartC.children[1].children[1].innerHTML = branchArray[countBranch].getManager();
 	//#hiddenInfoManagerC
 	var hiddenInfoManagerC = document.getElementsByClassName("hiddenInfoManagerC")[countBranch];
 	var user = await FindUser(branchArray[countBranch].getManager());
-	user.createId(hiddenInfoManagerC);
+	user.createId("name", hiddenInfoManagerC);
+	//* #managerNameC
+	midRightPartC.children[1].children[1].innerHTML = user.getName();
 }
 
 async function ManagerChooseIcon() {
 	userManager = await branchArray[countBranch].findManagerInfo();
-	PickImgForManager(userManager.getIcon());
+	midRightPartC.children[1].children[0].style.content = userManager.getUserImageSrc();
 }
 
 async function FindUser(userToFind) {
-	return(await branchArray[countBranch].findUserInfo(userToFind));
+	return (await branchArray[countBranch].findUserInfo(userToFind));
 }
 
-function PickImgForManager(info) {
-	if(info == "male1") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_male_no1_40px.png)";
+function OpenBranchInfo(id, element) {
+	var topC = element.children[0];
+	var midC = element.children[1];
+	var bottomUpDownC = element.children[2];
+
+	//WAITING TO OPEN
+	if(!branchSituationArray[id]) {
+		bottomUpDownC.children[0].style.top = "-" + midC.offsetHeight + "px";
+		bottomUpDownC.children[0].style.height = midC.offsetHeight + bottomUpDownC.offsetHeight + "px";
+		bottomUpDownC.children[0].children[0].style.borderRadius = "2px";
 	}
-	else if(info == "male2") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_male_no2_40px.png)";
-	}
-	else if(info == "male3") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_male_no3_40px.png)";
-	}
-	else if(info == "male4") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_male_no4_40px.png)";
-	}
-	else if(info == "male5") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_male_no5_40px.png)";
-	}
-	else if(info == "female1") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_female_no1_40px.png)";
-	}
-	else if(info == "female2") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_female_no2_40px.png)";
-	}
-	else if(info == "female3") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_female_no3_40px.png)";
-	}
-	else if(info == "female4") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_female_no4_40px.png)";
-	}
-	else if(info == "female5") {
-		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_female_no5_40px.png)";
+	//WAITING TO CLOSE
+	else {
+		bottomUpDownC.children[0].style.top = "10px";
+		bottomUpDownC.children[0].children[0].style.borderRadius = "2px 2p 0px 0px";
 	}
 
+	//DISABLE BUTTONS WHEN BRANCH INFO IS ON MOVE
+	bottomUpDownC.children[0].children[0].disabled = true;
+	bottomUpDownC.children[0].children[0].style.opacity = "0.3";
+	bottomUpDownC.children[0].children[0].style.cursor = "auto";
+	topC.children[3].disabled = true;
+	topC.children[3].style.opacity = "0.3";
+	topC.children[3].style.cursor = "auto";
+	setTimeout(function() {
+		bottomUpDownC.children[0].children[0].disabled = false;
+		bottomUpDownC.children[0].children[0].style.opacity = "1";
+		bottomUpDownC.children[0].children[0].style.cursor = "pointer";
+		topC.children[3].disabled = false;
+		topC.children[3].style.opacity = "1";
+	topC.children[3].style.cursor = "pointer";
+	}, 1000);
+
+	console.log(id + "    " + branchSituationArray[id])
+
+	if(branchSituationArray[id]) {
+		branchSituationArray[id] = 0;
+	}
+	else {
+		branchSituationArray[id] = 1;
+	}
+}
+
+function AddInfoBottom() {
+	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
+	//#branchInfoBtn
+	bottomPartC.children[0].children[0].innerHTML = "Πληροφορίες για το κατάστημα: " + branchArray[countBranch].getLocation();
+	bottomPartC.children[0].children[0].addEventListener("click", function() {OpenBranchInfo(id, document.getElementsByClassName("prototypeBranchViewC")[id]);});
 }
