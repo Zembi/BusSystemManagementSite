@@ -13,7 +13,7 @@
 				<div class="statusBranchesC" title="Ενεργά">
 					<img class="statusBranchesImgC" id="activeBranchesC"><div class="statusNumC" id="activeBranchNumC"></div>
 				</div>
-				<div class="statusBranchesC" title="">
+				<div class="statusBranchesC" title="Υπο-επισκευή">
 					<img class="statusBranchesImgC" id="underReconstBranchesC"><div class="statusNumC" id="underReconstBranchNumC"></div>
 				</div>
 				<div class="statusBranchesC" title="Υπο-κατασκευή">
@@ -33,6 +33,7 @@
 				</button>
 			</div>
 		</div>
+		<!--HERE ALL THE DATA AND ACTIONS WILL LOAD FROM SUB-HTML FILES-->
 		<div id="branchContentC"></div>
 	</div>
 
@@ -44,13 +45,11 @@
 	</script>
 	<script type="text/javascript" src="../Js/Id.js"></script>
 	<script type="text/javascript">
-		//var manager1 = new User("Ioannis", "ioidoafo", "aaaaaaa", "Giannis", "Employee_Manager", "male1");
-		//var manager2 = new User("Donn", "kjkajdka", "aaaaaaa", "Don", "Employee_Manager", "male4");
-
-		var branchThes = new Branch(produceUniqueId(), "Σταθμός", "Γιαννιτσών 12", "Θεσσαλονίκη", "Thessaloniki.jpg", "Ioannis", "null", "T_FS_MME", "Active", 0);
-		var branchKat = new Branch(produceUniqueId(), "Απλό κατάστημα", "19ης Μαϊου", "Κατερίνη", "Katerini.jpg", "Donn", 102021, "T_FS", "Under_C", 0);
-		var branchThe = new Branch(produceUniqueId(), "Σταθμός", "Γιαννιτσών 12", "Θεσσαλονίκη", "Thessaloniki.jpg", "Ioannis", "null", "T_FS_MME", "Under_R", 0);
-		var branchKa = new Branch(produceUniqueId(), "Απλό κατάστημα", "19ης Μαϊου", "Κατερίνη", "Katerini.jpg", "Donn", 102021, "T_FS", "Problem", 0);
+		
+		var branchThes = new Branch("1112", "Σταθμός", "Γιαννιτσών 12", "Θεσσαλονίκη", "Thessaloniki.jpg", "IoannisK", "null", "T_FS_MME", "Active");
+		var branchKat = new Branch("1132", "Απλό κατάστημα", "19ης Μαϊου", "Κατερίνη", "Katerini.jpg", "DonnKras", 102021, "T_FS", "Under_C");
+		var branchThe = new Branch("1112", "Σταθμός", "Γιαννιτσών 12", "Θεσσαλονίκη", "Thessaloniki.jpg", "IoannisK", "null", "T_FS_MME", "Under_R");
+		var branchKa = new Branch("1132", "Απλό κατάστημα", "19ης Μαϊου", "Κατερίνη", "Katerini.jpg", "DonnKras", 102021, "T_FS", "Problem");
 		
 		branchArray.push(branchThes);
 		branchSituationArray.push(0);

@@ -2,10 +2,13 @@
 //STARTING ACTIONS IN ADMIN SITE
 ServerStart();
 
-function ServerStart() {
+async function ServerStart() {
+	userObj = new Array();
+
 	sessionStorage.setItem("Load", "Off");
 	CheckAdminBeforeLoad();
-	AdminInfo();
+	userObj = await GetAdminInfoFromServer();
+	AdminInfoManage(userObj);
 	var btnListener = new ButtonListener("ADMIN");
 	btnListener.AddEventsToButtons();
 }
@@ -23,7 +26,21 @@ function CheckAdminBeforeLoad() {
 	menuScrnA.ChooseFromActionId();
 }
 
-async function AdminInfo() {
-	await ConfigFirebaseUser(null, null);
-	usernameC.children[0].innerHTML = userIn.getUsername();
+function GetAdminInfoFromServer(userObj) {
+	return new Promise((resolve, reject) => {
+		$.ajax({
+      		type: 'POST',
+      		url: "../Php/findUserPhp.php",
+      		data: {username: userIn},
+      		success: function(data) {
+      			userObj = JSON.parse(data);
+   				userNameC.children[0].innerHTML = userObj.name;
+	    		resolve(userObj);
+      		}
+		});
+	});
+}
+
+function AdminInfoManage(userObj) {
+	userInObject = new User(userObj.username, userObj.email, userObj.icon, userObj.name, userObj.password, userObj.status);
 }

@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 	
 	<!--JQUERY LIBRARIES-->
-	<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!--ANGULARJS LIBRARIES-->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-
-	<!--CHECK SESSION FOR USER LOGGEDIN-->
-	<script type="text/javascript" src="../Js/checkIfLogIn.js"></script>
 
 	<!--FONT-FAMILIES USED-->
 	<link href='https://fonts.googleapis.com/css?family=Arbutus' rel='stylesheet'>
@@ -33,14 +28,21 @@
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
 
 	<title>Υπ.Ελ.Δ - Είσοδος</title>
 
 </head>
 <body>
 	
+	<!--CHECK SESSION FOR USER LOGGEDIN-->
+	<?php 
+
+	session_start();
+	$checkScreenNow = "LogIn";
+	include("../Php/startSessionPhp.php");
+
+ 	?>
+ 	
 	<div id="mainC">
 		<div id="allUpperElementsC">
 			<div id="upC">
@@ -59,19 +61,19 @@
 							<button id="useEmailToSignInBtn">
 								<div>Χρήση email</div>
 							</button>
-							<input id="usernameInput" maxlength="25" spellcheck="false">
+							<input id="usernameInput" autocomplete="on" maxlength="25" spellcheck="false">
 						</div>
 						<div id="emailC">
 							<div id="emailHeaderC">Email</div>
 							<button id="useUsernameToSignInBtn">
 								<div>Χρήση username</div>
 							</button>
-							<input id="emailInput" maxlength="25" spellcheck="false">
+							<input id="emailInput" autocomplete="on" maxlength="35" spellcheck="false">
 						</div>
 					</div>
 					<div id="passwordC">
 						<div id="passwordHeaderC">Κωδικός</div>
-						<input id="passwordInput" type="password" maxlength="25" spellcheck="false">
+						<input id="passwordInput" type="password" autocomplete="on" maxlength="25" spellcheck="false">
 						<button id="showMePasswdImageBtn" tabindex="-1" title="Click&See">
 							<img id="showMePasswdImg">
 						</button>
@@ -96,9 +98,7 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="../Js/firebaseCoreProcess.js"></script>
 	<script type="text/javascript" src="../Js/logInSupportCssAndActions.js"></script>
-	<script type="text/javascript" src="../Js/firebaseUserData.js"></script>
 
 </body>
 </html>

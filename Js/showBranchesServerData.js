@@ -6,7 +6,7 @@ var problemBranchNumC = document.getElementById("problemBranchNumC");
 
 var lastUpdateInfoC = document.getElementById("lastUpdateInfoC");
 
-var loadC = document.getElementById("loadC");
+var loadBranchesC = document.getElementById("loadBranchesC");
 var showBranchesC = document.getElementById("showBranchesC");
 var countBranch = 0;
 
@@ -69,7 +69,7 @@ function UpdateChange() {
 	if(currentDate.getSeconds() < 10) {
 		extraS = 0;
 	}
-	var dateTime = "Last Update: " + currentDate.getDate() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear() + "  -  " 
+	var dateTime = "Τελευταία ενημέρωση: " + currentDate.getDate() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear() + "  -  " 
 					+ extraH + currentDate.getHours() + ":" + extraM + currentDate.getMinutes() + ":" + extraS + currentDate.getSeconds();
 	return dateTime;
 }
@@ -77,9 +77,9 @@ function UpdateChange() {
 function StartLoaderOnMainInfo() {
 	var loaderC = document.createElement("div");
 	loaderC.id = "loaderC";
-	loadC.appendChild(loaderC);
+	loadBranchesC.appendChild(loaderC);
 	showBranchesC.style.display = "none";
-	loadC.style.display = "block";
+	loadBranchesC.style.display = "block";
 	sessionStorage.setItem("Load", "On");
 }
 
@@ -99,9 +99,9 @@ function ClearStatusData() {
 
 function StopLoaderOnMainInfo() {
 	var loaderC = document.getElementById("loaderC");
-	loadC.innerHTML = "";
+	loadBranchesC.innerHTML = "";
 	showBranchesC.style.display = "block";
-	loadC.style.display = "none";
+	loadBranchesC.style.display = "none";
 	sessionStorage.setItem("Load", "Off");
 }
 
@@ -121,19 +121,18 @@ function CreateElementForBranch(id) {
 
 function PrototypeOfBranchList(action, id) {
 	
- 	return new Promise ((resolve, reject) => {
+	return new Promise ((resolve, reject) => {
 	//FILE CALL
 		setTimeout(function() {
-     	 	resolve();
-     	}, 300);
+		 	resolve();
+		}, 100);
 		var file = "BranchesScreens/" + action + ".html";
 		$(function(){
-     	 	$("#" + id).load(file, 
-      			function(response, status, xhr) {
+			$("#" + id).load(file, function(response, status, xhr) {
 					if(status == "error") {
-    					alert("Error: " + xhr.status + " " + xhr.statusText);
-  					}
-  				})
-   		});
-    });
+						alert("Error: " + xhr.status + " " + xhr.statusText);
+					}
+				})
+		});
+	});
 }

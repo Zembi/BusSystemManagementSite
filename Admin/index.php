@@ -1,18 +1,12 @@
-<!DOCTYPE html>
+<!DOCTYPE php>
 
 <html>
 <head>
 
 	<!--JQUERY LIBRARIES-->
-	<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<!--ANGULARJS LIBRARIES-->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-	
-	<!--CHECK SESSION FOR USER LOGGEDIN-->
-	<script type="text/javascript" src="../Js/checkIfLogIn.js"></script>
-
-	<!--***<script src="js/includeHTML.js"></script>-->
 
 	<!--FONT-FAMILIES USED-->
 	<link href='https://fonts.googleapis.com/css?family=Arbutus' rel='stylesheet'>
@@ -39,8 +33,6 @@
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
 
 	<!--****** TODO: Add SDKs for Firebase products that you want to use
   		https://firebase.google.com/docs/web/setup#available-libraries 
@@ -53,6 +45,15 @@
 
 </head>
 <body>
+	
+	<!--CHECK SESSION FOR USER LOGGEDIN-->
+	<?php 
+
+	session_start();
+	$checkScreenNow = "Admin";
+	include("../Php/startSessionPhp.php");
+
+ 	?>
 
 	<div id="backgroundC">
 		<div id="leftC">
@@ -106,13 +107,17 @@
 				<div id="firstLineContentC">
 					<img id="headerImg">
 					<div id="profileInfoC">
-						<div id="usernameC">
-							<div></div>
+						<div id="profileLine1">
+							<div id="userNameC">
+								<div></div>
+							</div>
+							<img id="adminImg" title="Admin">
 						</div>
-						<img id="adminImg" title="Admin">
-						<button id="logOutBtn">
-							<div>Έξοδος</div>
-						</button>
+						<div id="profileLine2">
+							<button id="logOutBtn">
+								<div>Έξοδος</div>
+							</button>
+						</div>
 					</div>
 				</div>
 			
@@ -120,7 +125,7 @@
 					<div id="contentCenterC">
 						<div id="contentInfoC">
 							<div id="pathC">
-								<img>
+								<img title="Admin">
 								<div id="pathTextC">
 									<div>Something wrong...</div>
 								</div>
@@ -143,17 +148,10 @@
 			</div>
 		</div>
 	</div>
-
-	<script type="text/javascript" src="../Js/adminGlobalVarInit.js"></script>
-	<script type="text/javascript" src="../Js/User.js"></script>
-	<script type="text/javascript" src="../Js/Bus.js"></script>
-	<script type="text/javascript" src="../Js/Branch.js"></script>
-	<script type="text/javascript" src="../Js/Id.js"></script>
-	<script type="text/javascript" src="../Js/MenuScreenAdmin.js"></script>
-	<script type="text/javascript" src="../Js/BtnListener.js"></script>
-	<script type="text/javascript" src="../Js/fixesStyle.js"></script>
-	<script type="text/javascript" src="../Js/firebaseUserData.js"></script>
-	<script type="text/javascript" src="../Js/serverAdmin.js"></script>
+	
+	<?php
+	include("../Php/adminGlobalPhp.php")
+	?>
 
 </body>
 </html>

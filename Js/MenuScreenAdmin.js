@@ -63,8 +63,8 @@ class MenuScreenAdmin {
 
 	PathChangeMenu(pathLast) {
 		//PATH CHANGE
-      	var pathTextC = document.getElementById("pathTextC").getElementsByTagName("DIV")[0];
+		var pathTextC = document.getElementById("pathTextC").getElementsByTagName("DIV")[0];
 
-      	pathTextC.innerHTML = "/" + pathLast;
+      	pathTextC.innerHTML = "/" + userIn + "/" + pathLast;
 	}
 }

@@ -37,14 +37,20 @@ function Branch(id, type, street, location, imageSrc, manager, store, convenienc
 		return this.manager;
 	}
 
-	this.findManagerInfo = async function() {
-		var user = await ConfigFirebaseUser(this.manager, "find");
-		return user;
-	}
-
-	this.findUserInfo = async function(userToFind) {
-		var user = await ConfigFirebaseUser(userToFind, "find");
-		return user;
+	this.findUserInfo = function(userToFind) {
+		return new Promise((resolve, reject) => {
+			var userPhp = new Array();
+			$.ajax({
+      			type: 'POST',
+      			url: "../Php/findUserPhp.php",
+      			data: {username: userToFind},
+      			success: function(data) {
+      				userPhp = JSON.parse(data);
+      				userObj = new User(userPhp.username, userPhp.email, userPhp.icon, userPhp.name, userPhp.password, userPhp.status);
+	    			resolve(userObj);
+      			}
+			});
+		});
 	}
 
 	this.getEmployees = function() {

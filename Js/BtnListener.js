@@ -11,7 +11,6 @@ class ButtonListener {
 			this.employeesBtn = document.getElementById("employeesBtn");
 			this.routesBtn = document.getElementById("routesBtn");
 			this.busesBtn = document.getElementById("busesBtn");
-			this.logOutBtn = document.getElementById("logOutBtn");
 			this.centerScreenBtn = document.getElementById("centerScreenBtn");
 			this.requestsBtn = document.getElementById("requestsBtn");
 		}
@@ -30,7 +29,6 @@ class ButtonListener {
 			employeesBtn.addEventListener("click", this.EmployeesButtonListenerAdmin);
 			routesBtn.addEventListener("click", this.RoutesButtonListenerAdmin);
 			busesBtn.addEventListener("click", this.BusesButtonListenerAdmin);
-			logOutBtn.addEventListener("click", this.LogOutButtonListenerAdmin);
 			centerScreenBtn.addEventListener("click", this.CenterScreenButtonListenerAdmin);
 			requestsBtn.addEventListener("click", this.RequestsButtonListenerAdmin);
 		}
@@ -112,13 +110,6 @@ class ButtonListener {
 	BusesButtonListenerAdmin() {
 		var menuScrnA = new MenuScreenAdmin(busesBtn.name);
 		menuScrnA.ChooseFromActionId();
-	}
-	
-	//LOGOUT BUTTON ADMIN EVENTS
-	LogOutButtonListenerAdmin() {
-		sessionStorage.setItem("Load", "Off");
-		sessionStorage.setItem("userStatus", "null");
-		window.location.href = "../Index";
 	}
 
 	//CENTER SCREEN BUTTON ADMIN EVENTS

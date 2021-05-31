@@ -8,7 +8,11 @@ var lastAction = "none";
 listOfBranchesBtn.addEventListener("click", StartBranchScreen);
 newBranchBtn.addEventListener("click", NewBranchBtnListener);
 
-StartBranchScreen();
+ServerBranch();
+
+function ServerBranch() {
+  StartBranchScreen();
+}
 
 function StartBranchScreen() {
 
@@ -36,12 +40,11 @@ function ChangeScreen(action) {
 	//FILE CALL
 	var file = "BranchesScreens/" + action + ".html";
 
-	$(function(){
-      	$("#branchContentC").load(file, 
-      		function(response, status, xhr) {
-				if(status == "error") {
-    				alert("Error: " + xhr.status + " " + xhr.statusText);
-  				}
-  			})
-      });
+  $(function(){
+    $("#branchContentC").load(file, function(response, status, xhr) {
+        if(status == "error") {
+          alert("Error: " + xhr.status + " " + xhr.statusText);
+        }
+    })
+  });
 }

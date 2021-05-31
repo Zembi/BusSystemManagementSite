@@ -8,14 +8,14 @@
 
 	body {
 		height: 100%;
-		background: black;
+		background: white;
 		margin: 0;
 		padding: 0;
 	}
 
 	#branchesContentC {
 		position: relative;
-		width: 100%; height: 100%;
+		width: 100%; height: auto;
 		overflow: hidden;
 		background: rgb(22, 28, 34);
 		z-index: 1;
@@ -137,6 +137,7 @@
 	#newBranchBtn div {
 	}
 
+	/*IN THIS DIV WILL LOAD ALL THE CONTENT FOR ADMIN*/
 	#branchContentC {
 		position: relative;
 		width: 100%;
@@ -146,7 +147,7 @@
 	/*START SCREEN CSS*/
 
 		/*LOADING SCREEN CSS*/
-	#loadC {
+	#loadBranchesC {
 		position: relative;
 		width: 100%; height: 100px;
 		background: rgb(100, 0, 0, 0.5);
@@ -180,21 +181,21 @@
 		position: relative;
 		width: 100%;
 		background: transparent;
-		margin: 4px 0 0 0;
+		margin: 0;
 	}
 
 		/*PROTOTYPE BRANCH VIEW CSS*/
 	.prototypeBranchViewC {
 		display: inline-block;
 		position: relative;
-		width: 100%; height: 100%;
+		width: 100%; height: auto;
 		background: white;
 		font-size: 20px;
 		font-family: Advent Pro, serif;
 		border: 4px solid rgb(22, 28,34);
 		overflow: hidden;
 		padding: 5px 5px 0 5px;
-		margin: 0;
+		margin-top: 10px;
 	}
 
 			/*TOP PART OF ELEMENTS CSS*/
@@ -279,10 +280,10 @@
 	}
 
 	#rightSideInfoC {
-		float: left;
 		position: relative;
-		width: 60%; height: 100%;
+		height: 100%;
 		background: transparent;
+		overflow: hidden;
 	}
 
 	#locationBranchC {
@@ -319,6 +320,7 @@
 		position: relative;
 		background: transparent;
 		cursor: pointer;
+		border-radius: 2px;
 		margin: 15px 0 0 20px;
 	}
 
@@ -333,6 +335,7 @@
 		float: left;
 		background: transparent;
 		color: rgb(22, 28, 34);
+		font-size: 19px;
 		font-weight: bold;
 		font-style: italic;
 		margin: 4.5px 0 0 19px;
@@ -361,7 +364,6 @@
 	#downBranchListInfoC {
 		float: left;
 		position: relative;
-		background: transparent;
 		width: 100%; height: 41px;
 		background: transparent;
 	}
@@ -370,7 +372,7 @@
 		display: block;
 		position: absolute;
 		width: 100%; height: auto;
-		background: white;
+		background: rgb(93, 120, 144);
 		top: 10px;
 		overflow: visible;
 		margin: auto;
@@ -393,6 +395,7 @@
 
 	#branchInfoBtn:hover {
 		background: rgb(93, 120, 144);
+		border-bottom: 2px solid rgb(13, 18, 24);
 	}
 
 	#branchInfoBtn:active {
@@ -405,6 +408,24 @@
 
 	/*NEW BRANCH CSS*/
 
+	/*MEDIA FOR LOWER PIXEL SCREEN*/
+	@media screen and (max-width: 1300px) {
+		#imageBranchC {
+			width: 250px;
+		}
+
+		#locationTextBranchC {
+			font-size: 22px;
+		}
+
+		#streetBranchC {
+			font-size: 15px;
+		}
+
+		#managerTextBranchC {
+			font-size: 17px;
+		}
+	}
 
 	/*ANIMATIONS*/
 	@keyframes spin {
@@ -413,15 +434,21 @@
 	}
 
 	@keyframes roundBorderToRight {
-  		0% { width: 4px; border-top: 2px solid white; }
-  		33% { width: 4px; border-right: 2px solid rgb(255, 215, 0); }
-  		66% { width: 4px; border-bottom: 2px solid white; }
-  		100% { width: 4px; border-left: 2px solid rgb(255, 215, 0); }
+		0% { width: 4px; border-top: 2px solid white; }
+		33% { width: 4px; border-right: 2px solid rgb(255, 215, 0); }
+		66% { width: 4px; border-bottom: 2px solid white; }
+		100% { width: 4px; border-left: 2px solid rgb(255, 215, 0); }
 	}
 
 	@keyframes roundBorderToLeft {
-  		0% { width: 4px; border-top: 2px solid white; }
-  		33% { width: 4px; border-left: 2px solid rgb(255, 215, 0); }
-  		66% { width: 4px; border-bottom: 2px solid white; }
-  		100% { width: 4px; border-right: 2px solid rgb(255, 215, 0); }
+		0% { width: 4px; border-top: 2px solid white; }
+		33% { width: 4px; border-left: 2px solid rgb(255, 215, 0); }
+		66% { width: 4px; border-bottom: 2px solid white; }
+		100% { width: 4px; border-right: 2px solid rgb(255, 215, 0); }
+	}
+
+	@keyframes flash {
+		35% {background-color: transparent;}
+		50% {background-color: rgb(255, 215, 0, 0.2);}
+		65% {background-color: transparent;}
 	}

@@ -9,7 +9,7 @@ var rightC = document.getElementById("rightC");
 var headerC = document.getElementById("headerC");
 var headerImg = document.getElementById("headerImg");
 var profileInfoC = document.getElementById("profileInfoC");
-var usernameC = document.getElementById("usernameC");
+var userNameC = document.getElementById("userNameC");
 var contentC = document.getElementById("contentC");
 
 //FIXING RIGHTC WIDTH

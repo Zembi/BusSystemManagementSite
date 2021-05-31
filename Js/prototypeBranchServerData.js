@@ -63,29 +63,38 @@ function EditInfoOfThisBranch(id, element) {
 }
 
 async function AddInfoMiddle() {
+	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
+
 	//#imageBranchC
-	midPartC.children[0].children[0].style.content = "url(../Assets/BranchesImages/" + branchArray[countBranch].getImageSrc() + ")";
+	midPartC.children[0].children[0].style.content = "url(../Assets/BranchesImages/" + branchArray[id].getImageSrc() + ")";
 	//#locationBranchC
-	midRightPartC.children[0].children[1].innerHTML = branchArray[countBranch].getLocation();
+	midRightPartC.children[0].children[1].innerHTML = branchArray[id].getLocation();
 	//#streetBranchC
-	midRightPartC.children[0].children[2].innerHTML = "(" + branchArray[countBranch].getStreet() + ")";
-	//#managerNameC *
-	ManagerChooseIcon();
+	midRightPartC.children[0].children[2].innerHTML = "(" + branchArray[id].getStreet() + ")";
 	//#hiddenInfoManagerC
-	var hiddenInfoManagerC = document.getElementsByClassName("hiddenInfoManagerC")[countBranch];
-	var user = await FindUser(branchArray[countBranch].getManager());
-	user.createId("name", hiddenInfoManagerC);
-	//* #managerNameC
-	midRightPartC.children[1].children[1].innerHTML = user.getName();
+	var hiddenInfoManagerC = document.getElementsByClassName("hiddenInfoManagerC")[id];
+	//#managerNameC
+	var manager = await FindUser(branchArray[id].getManager());
+	manager.createId("name", hiddenInfoManagerC, midRightPartC.children[1]);
+	midRightPartC.children[1].children[1].innerHTML = manager.getName();
+	ManagerChooseIcon(manager);
 }
 
-async function ManagerChooseIcon() {
-	userManager = await branchArray[countBranch].findManagerInfo();
-	midRightPartC.children[1].children[0].style.content = userManager.getUserImageSrc();
+async function ManagerChooseIcon(manager) {
+	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
+	midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/" + manager.getUserImageSrc() + ")";
 }
 
 async function FindUser(userToFind) {
-	return (await branchArray[countBranch].findUserInfo(userToFind));
+	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
+	return (await branchArray[id].findUserInfo(userToFind));
+}
+
+function AddInfoBottom() {
+	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
+	//#branchInfoBtn
+	bottomPartC.children[0].children[0].innerHTML = "Πληροφορίες για το κατάστημα: " + branchArray[id].getLocation();
+	bottomPartC.children[0].children[0].addEventListener("click", function() {OpenBranchInfo(id, document.getElementsByClassName("prototypeBranchViewC")[id]);});
 }
 
 function OpenBranchInfo(id, element) {
@@ -114,6 +123,7 @@ function OpenBranchInfo(id, element) {
 	topC.children[3].style.cursor = "auto";
 	setTimeout(function() {
 		bottomUpDownC.children[0].children[0].disabled = false;
+		bottomUpDownC.children[0].children[0].focus();
 		bottomUpDownC.children[0].children[0].style.opacity = "1";
 		bottomUpDownC.children[0].children[0].style.cursor = "pointer";
 		topC.children[3].disabled = false;
@@ -129,11 +139,4 @@ function OpenBranchInfo(id, element) {
 	else {
 		branchSituationArray[id] = 1;
 	}
-}
-
-function AddInfoBottom() {
-	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
-	//#branchInfoBtn
-	bottomPartC.children[0].children[0].innerHTML = "Πληροφορίες για το κατάστημα: " + branchArray[countBranch].getLocation();
-	bottomPartC.children[0].children[0].addEventListener("click", function() {OpenBranchInfo(id, document.getElementsByClassName("prototypeBranchViewC")[id]);});
 }

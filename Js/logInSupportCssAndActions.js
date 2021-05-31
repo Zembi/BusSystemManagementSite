@@ -85,7 +85,55 @@
 		}
 
 		function SignInClick() {
-			ConfigFirebaseUser(null, null);
+			var error = 0;
+
+			if(partNowOpened == 1) {
+				if(usernameInput.value == "") {
+					error = 1;
+					inputChangeOnClick(usernameInput);
+				}
+				else {
+					usernameInput.placeholder = "";
+				}
+			}
+			else {
+				if(emailInput.value == "") {
+					error = 1;
+					inputChangeOnClick(emailInput);
+				}
+				else {
+					emailInput.placeholder = "";
+				}
+			}
+
+			if(passwordInput.value == "") {
+				error = 1;
+				inputChangeOnClick(passwordInput);
+			}
+			else {
+				passwordInput.placeholder = "";
+			}
+
+			if(!error) {
+				$.ajax({
+	      			type: 'POST',
+	      			url: "../Php/signInPhp.php",
+	      			data: {singInUsernameInput: usernameInput.value, singInEmailInput: emailInput.value, singInPasswordInput: passwordInput.value, partNow: partNowOpened},
+	      			success: function(data) {
+	      				if(data == "1") {
+							window.location.href = "../Admin";
+	      				}
+	      				else {
+	      					alert("Λάθος στοιχεία! Ξαναπροσπαθήστε")
+	      				}
+	      			}
+				});
+			}
+		}
+
+		function inputChangeOnClick(inputElement) {
+			inputElement.style.border = "2px solid rgb(140, 0, 0)";
+			inputElement.placeholder = "Πληκτρολογήστε κάτι..";
 		}
 
 		function NowOpenedPartStyling() {

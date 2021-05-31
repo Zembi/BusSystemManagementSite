@@ -266,6 +266,8 @@
 	}
 
 	#passwordInput:focus {
+		color: rgb(220, 170, 4);
+		font-size: 19px;
 		border: 2px solid rgb(111, 142, 171);
 		box-shadow: 0 0 4px 0 grey;
 	}
