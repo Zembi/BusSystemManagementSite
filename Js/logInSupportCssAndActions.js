@@ -223,3 +223,19 @@
 				});
 			}
 		}
+
+		NoWhiteSpaceInUsernameBar("usernameInput");
+		NoWhiteSpaceInUsernameBar("emailInput");
+
+		//NO WHITE SPACE USERNAME BAR
+		function NoWhiteSpaceInUsernameBar(id) {
+			$("#" + id).on({
+  				keydown: function(e) {
+    				if (e.which === 32)
+      					return false;
+  					},
+  				change: function() {
+    				this.value = this.value.replace(/\s/g, "");
+  				}
+			});
+		}

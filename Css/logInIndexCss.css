@@ -14,12 +14,19 @@
 		padding: 0;
 	}
 
+	input::-ms-reveal, input::-ms-clear {
+		display: none;
+	}
+
 	#mainC {
 		position: absolute;
 		width: 100%; height: 100%;
 		min-width: 475px;
 		background: white;
+		font-family: Roboto Slab;
+		user-select: none;
 	}
+
 
 /*ALL ELEMENTS UP FROM FOOTER*/
 	#allUpperElementsC {
@@ -90,7 +97,6 @@
 		position: relative;
 		width: 130px;
 		color: white;
-		font-family: "Times New Roman", Times, serif;
 		font-weight: bold;
 		font-size: 38px;
 		text-align: center;
@@ -119,7 +125,6 @@
 		float: left;
 		position: relative;
 		color: white;
-		font-family: "Times New Roman", Times, serif;
 		font-size: 24px;
 		margin-left: 8px; margin-bottom: 3px;
 	}
@@ -140,7 +145,6 @@
 
 	#useEmailToSignInBtn div {
 		color: rgb(111, 142, 171);
-		font-family: "Times New Roman", Times, serif;
 		font-size: 16px;
 		font-weight: bold;
 	}
@@ -157,7 +161,6 @@
 		position: relative;
 		width: 100%; height: 30px;
 		color: rgb(220, 170, 4);
-		font-family: "Times New Roman", Times, serif;
 		font-size: 19px;
 		letter-spacing: 1px;
 		outline: none;
@@ -183,7 +186,6 @@
 		float: left;
 		position: relative;
 		color: white;
-		font-family: "Times New Roman", Times, serif;
 		font-size: 24px;
 		margin-left: 8px; margin-bottom: 3px;
 	}
@@ -201,7 +203,6 @@
 
 	#useUsernameToSignInBtn div {
 		color: rgb(111, 142, 171);
-		font-family: "Times New Roman", Times, serif;
 		font-size: 16px;
 		font-weight: bold;
 	}
@@ -218,7 +219,6 @@
 		position: relative;
 		width: 100%; height: 30px;
 		color: rgb(220, 170, 4);
-		font-family: "Times New Roman", Times, serif;
 		font-size: 19px;
 		letter-spacing: 1px;
 		outline: none;
@@ -246,7 +246,6 @@
 		float: left;
 		position: relative;
 		color: white;
-		font-family: "Times New Roman", Times, serif;
 		font-size: 24px;
 		margin-left: 8px; margin-bottom: 3px;
 	}
@@ -255,7 +254,6 @@
 		position: relative;
 		width: 100%; height: 30px;
 		color: rgb(220, 170, 4);
-		font-family: "Times New Roman", Times, serif;
 		font-size: 19px;
 		letter-spacing: 1px;
 		outline: none;
@@ -301,7 +299,6 @@
 		width: 100%; height: 35px;
 		color: rgb(13, 18, 24);
 		background: rgb(220, 170, 4);
-		font-family: "Times New Roman", Times, serif;
 		font-weight: bold;
 		font-size: 22px;
 		cursor: pointer;
@@ -338,7 +335,6 @@
 		z-index: 10;
 		color: rgb(13, 18, 24);
 		background: rgb(141, 166, 188);
-		font-family: "Times New Roman", Times, serif;
 		font-size: 16px;
 		font-weight: bold;
 		border-radius: 50px;
@@ -372,7 +368,6 @@
 		color: rgb(13, 18, 24);
 		background: transparent;
 		left: 20px;
-		font-family: "Times New Roman", Times, serif;
 		font-size: 15px;
 		cursor: pointer;
 		outline: none;
@@ -396,7 +391,6 @@
 		color: rgb(13, 18, 24);
 		background: transparent;
 		right: 20px;
-		font-family: "Times New Roman", Times, serif;
 		font-size: 15px;
 		overflow: hidden;
 		cursor: pointer;
@@ -421,7 +415,6 @@
 		min-width: 200px;
 		background: transparent;
 		color: rgb(13, 18, 24);
-		font-family: "Times New Roman", Times, serif;
 		font-size: 16px;
 		font-weight: bold;
 		top: 75%;

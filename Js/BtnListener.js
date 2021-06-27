@@ -3,6 +3,9 @@ class ButtonListener {
 
 	constructor(type) {
 		this.type = type;
+
+		//EXIT EDIT BUTTON
+		this.exitEditBtn = document.getElementById("exitEditBtn");
 		if(this.type == "ADMIN") {
 			//IF CLASS IS BEING CALLED FROM ADMIN SITE
 			this.homeBtn = document.getElementById("homeBtn");
@@ -20,7 +23,9 @@ class ButtonListener {
 	}
 
 	AddEventsToButtons() {
-		
+			
+		//EXIT EDIT BUTTON
+		exitEditBtn.addEventListener("click", this.ExitEditButtonListener);
 		if(this.type == "ADMIN") {
 			//IF CLASS IS BEING CALLED FROM ADMIN SITE
 			homeBtn.addEventListener("click", this.HomeButtonListener);
@@ -37,12 +42,19 @@ class ButtonListener {
 		}
 	}
 
+	//EXIT EDIT BUTTON EVENT
+	ExitEditButtonListener() {
+		var editWindowC = document.getElementById("editWindowC");
+		editWindowC.style.display = "none";
+		var editAlertBeforeEndTaskC = document.getElementById("editAlertBeforeEndTaskC");
+		editAlertBeforeEndTaskC.style.display = "none";
+	}
+
 	//MENU BUTTON EVENTS
 	MenuButtonListener() {
 		var leftC = document.getElementById("leftC");
 		var leftFixedC = document.getElementById("leftFixedC");
 		var menuSymbolC = document.getElementById("menuSymbolC");
-
 
 		if(leftFixedC.offsetWidth != 0) {
 			leftC.style.width = 0;

@@ -57,7 +57,7 @@
 					<div id="signInHeaderC">Είσοδος</div>
 					<div id="usernameAndEmailC">
 						<div id="usernameC">
-							<div id="usernameHeaderC">Username</div>
+							<div id="usernameHeaderC">Όνομα χρήστη</div>
 							<button id="useEmailToSignInBtn">
 								<div>Χρήση email</div>
 							</button>
@@ -66,7 +66,7 @@
 						<div id="emailC">
 							<div id="emailHeaderC">Email</div>
 							<button id="useUsernameToSignInBtn">
-								<div>Χρήση username</div>
+								<div>Χρήση ονόματος χρήστη</div>
 							</button>
 							<input id="emailInput" autocomplete="on" maxlength="35" spellcheck="false">
 						</div>

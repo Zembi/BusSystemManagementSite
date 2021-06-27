@@ -19,7 +19,7 @@
 				<div class="statusBranchesC" title="Υπο-κατασκευή">
 					<img class="statusBranchesImgC" id="underConstBranchesC"><div class="statusNumC" id="underConstBranchNumC"></div>
 				</div>
-				<div class="statusBranchesC" title="Μη ενεργά">
+				<div id="problemBrC" class="statusBranchesC" title="Μη ενεργά">
 					<img class="statusBranchesImgC" id="problemBranchesC"><div class="statusNumC" id="problemBranchNumC"></div>
 				</div>
 			</div>
@@ -46,10 +46,10 @@
 	<script type="text/javascript" src="../Js/Id.js"></script>
 	<script type="text/javascript">
 		
-		var branchThes = new Branch("1112", "Σταθμός", "Γιαννιτσών 12", "Θεσσαλονίκη", "Thessaloniki.jpg", "IoannisK", "null", "T_FS_MME", "Active");
-		var branchKat = new Branch("1132", "Απλό κατάστημα", "19ης Μαϊου", "Κατερίνη", "Katerini.jpg", "DonnKras", 102021, "T_FS", "Under_C");
-		var branchThe = new Branch("1112", "Σταθμός", "Γιαννιτσών 12", "Θεσσαλονίκη", "Thessaloniki.jpg", "IoannisK", "null", "T_FS_MME", "Under_R");
-		var branchKa = new Branch("1132", "Απλό κατάστημα", "19ης Μαϊου", "Κατερίνη", "Katerini.jpg", "DonnKras", 102021, "T_FS", "Problem");
+		var branchThes = new Branch("1112", "Σταθμός", "Γιαννιτσών 12", "Θεσσαλονίκη", "Thessaloniki.jpg", "IoannisK", 0, "Active");
+		var branchKat = new Branch("1132", "Απλό κατάστημα", "19ης Μαϊου", "Κατερίνη", "Katerini.jpg", "DonnKras", 102021, "Under_C");
+		var branchThe = new Branch("1112", "Σταθμός", "Γιαννιτσών 12", "Θεσσαλονίκη", "Thessaloniki.jpg", "IoannisK", 0, "Under_R");
+		var branchKa = new Branch("1132", "Απλό κατάστημα", "19ης Μαϊου", "Κατερίνη", "Katerini.jpg", "DonnKras", 102021, "Problem");
 		
 		branchArray.push(branchThes);
 		branchSituationArray.push(0);

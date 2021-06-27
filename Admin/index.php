@@ -56,6 +56,24 @@
  	?>
 
 	<div id="backgroundC">
+		<div id="editWindowC">
+			<div id="centerEditWindowC">
+				<div id="exitEditBtn">X</div>
+				<div id="editTitleC"><div id="editTitleTextC"></div></div>
+				<div id="editInfoGetterC">
+					<div id="editInfoGetterLeftC"></div>
+					<div id="editInfoGetterRightC"></div>
+					<div id="editAlertBeforeEndTaskC">
+						<div id="editAlertTextC"></div>
+						<div id="editApproveOrNotBtnC">
+							<button id="editAlertOkBtn">ΕΝΤΑΞΕΙ</button>
+							<button id="editAlertCancelBtn">ΑΚΥΡΩΣΗ</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="generalAlertWindowC"></div>
 		<div id="leftC">
 			<div id="leftFixedC">
 				<div id="menuSymbolC">
@@ -111,7 +129,7 @@
 							<div id="userNameC">
 								<div></div>
 							</div>
-							<img id="adminImg" title="Admin">
+							<img id="adminImg" title="Γενικός Διαχειριστής">
 						</div>
 						<div id="profileLine2">
 							<button id="logOutBtn">
@@ -125,7 +143,7 @@
 					<div id="contentCenterC">
 						<div id="contentInfoC">
 							<div id="pathC">
-								<img title="Admin">
+								<img title="Γενικός Διαχειριστής">
 								<div id="pathTextC">
 									<div>Something wrong...</div>
 								</div>

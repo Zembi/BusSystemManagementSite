@@ -16,24 +16,16 @@
 		echo "Database Not Selected";
 	}
 
-	
-	$usernameToFind = $_POST['username'];
-	$query = "SELECT * FROM users WHERE Username = '$usernameToFind'";
-
-	$result = mysqli_query($conn, $query);
+	$sqlFindUpdate = "SELECT * FROM updates WHERE Activity = 'Α'";
+	$result = mysqli_query($conn, $sqlFindUpdate);
 	while (($row = mysqli_fetch_array($result))) {
-		$userFound = array(
+		$update = array(
 			'username' => $row['Username'],
 			'email' => $row['Email'],
-			'icon' => $row['Icon'],
-   			'name' => $row['Name'],
-			'password' => $row['Password'],
-			'status' => $row['Status']
-		);
-		//var_dump($userFound);
-   		echo json_encode($userFound, JSON_UNESCAPED_UNICODE);
+			'name' => $row['Name'],
+   			'icon' => $row['Icon'],
 	}
-
+	
 	mysqli_close($conn);
 
 ?>

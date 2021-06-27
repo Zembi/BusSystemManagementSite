@@ -1,13 +1,16 @@
-<?php	
+<?php
 
 	$servername = "127.0.0.1";
 	$user = "root";
 	$password = "";
 	$db = "bussystemmanagement";
 
+	$counter = 0;
+
 	$conn = mysqli_connect($servername, $user, $password);
 
 	mysqli_set_charset($conn, 'utf8');
+
 	if (!$conn) {
 	  	echo "Not Connected To Server";
 	}
@@ -16,24 +19,28 @@
 		echo "Database Not Selected";
 	}
 
-	
-	$usernameToFind = $_POST['username'];
-	$query = "SELECT * FROM users WHERE Username = '$usernameToFind'";
+	$users = [];
+
+	$query = "SELECT * FROM employees";
 
 	$result = mysqli_query($conn, $query);
 	while (($row = mysqli_fetch_array($result))) {
-		$userFound = array(
+		$recruitmentDay = $row['RecruitmentDay'];
+		$formatedRecruitmentDay = date("d/m/Y", strtotime($recruitmentDay));  
+		
+		$user = array(
 			'username' => $row['Username'],
 			'email' => $row['Email'],
-			'icon' => $row['Icon'],
-   			'name' => $row['Name'],
-			'password' => $row['Password'],
-			'status' => $row['Status']
+			'name' => $row['Name'],
+   			'icon' => $row['Icon'],
+			'branchId' => $row['BranchId'],
+			'status' => $row['Status'],
+			'wage' => $row['Wage'],
+			'recruitmentDay' => $formatedRecruitmentDay
 		);
-		//var_dump($userFound);
-   		echo json_encode($userFound, JSON_UNESCAPED_UNICODE);
+		array_push($users, $user);
 	}
+  	echo json_encode($users);
 
 	mysqli_close($conn);
-
 ?>

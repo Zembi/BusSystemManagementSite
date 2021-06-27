@@ -10,12 +10,11 @@ var loadBranchesC = document.getElementById("loadBranchesC");
 var showBranchesC = document.getElementById("showBranchesC");
 var countBranch = 0;
 
-FindBranchesAndCreateView();
+FindBranchesStatusAndCreateView();
 
-async function FindBranchesAndCreateView() {
+async function FindBranchesStatusAndCreateView() {
 	StartLoaderOnMainInfo();
 	ClearStatusData();
-	lastUpdateInfoC.innerHTML = "";
 	StartLoadingStatusInfo();
 	for(var i = 0; i < branchArray.length; i++) {
 		var id = "branches" + i + "C";
@@ -83,18 +82,20 @@ function StartLoaderOnMainInfo() {
 	sessionStorage.setItem("Load", "On");
 }
 
-function StartLoadingStatusInfo() {
-	activeBranchNumC.style.animation = "roundBorderToRight 1s linear infinite";
-	underReconstBranchNumC.style.animation = "roundBorderToLeft 1s linear infinite";
-	underConstBranchNumC.style.animation = "roundBorderToRight 1s linear infinite";
-	problemBranchNumC.style.animation = "roundBorderToLeft 1s linear infinite";
-}
-
 function ClearStatusData() {
 	activeBranchNumC.innerHTML = "";
 	underReconstBranchNumC.innerHTML = "";
 	underConstBranchNumC.innerHTML = "";
 	problemBranchNumC.innerHTML = "";
+
+	lastUpdateInfoC.innerHTML = "";
+}
+
+function StartLoadingStatusInfo() {
+	activeBranchNumC.style.animation = "roundBorderToRight 1s linear infinite";
+	underReconstBranchNumC.style.animation = "roundBorderToLeft 1s linear infinite";
+	underConstBranchNumC.style.animation = "roundBorderToRight 1s linear infinite";
+	problemBranchNumC.style.animation = "roundBorderToLeft 1s linear infinite";
 }
 
 function StopLoaderOnMainInfo() {
@@ -125,7 +126,7 @@ function PrototypeOfBranchList(action, id) {
 	//FILE CALL
 		setTimeout(function() {
 		 	resolve();
-		}, 100);
+		}, 200);
 		var file = "BranchesScreens/" + action + ".html";
 		$(function(){
 			$("#" + id).load(file, function(response, status, xhr) {

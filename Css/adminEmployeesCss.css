@@ -13,30 +13,37 @@
 		padding: 0;
 	}
 
+	input:disabled {
+		background: rgb(255, 255, 255, 0.4);
+	}
+
 	#employeeBodyC {
 		position: relative;
 		width: 100%; height: auto;
 		background: transparent;
+		font-family: Roboto Slab;
 		overflow: hidden;
-		z-index: 1;
 	}
 
 	#employeeTopBarC {
 		position: relative;
-		width: 100%; height: 62px;
-		background: rgb(255, 215, 0);
+		width: 100%; height: 92px;
+		background: rgb(13, 18, 24);
 		overflow: hidden;
+		user-select: none;
 		padding: 10px 0 10px 0;
+		box-shadow: 0 0 10px black;
 	}
 
 	#employeeMenuC {
 		float: left;
 		display: block;
 		position: relative;
-		width: 90%; height: 50px;
+		width: 90%; height: 60px;
 		background: transparent;
 		top: 50%; left: 50%;
 		overflow: visible;
+		user-select: none;
 		margin: auto;
 		transform: perspective(1px) translate(-50%, -50%);
 	}
@@ -48,13 +55,13 @@
 		position: relative;
 		height: 100%;
 		background: transparent;
-		margin: 0 2.5% 0 0	;
+		margin: 0;
 	}
 
 	#onlineAdminsImg {
 		float: left;
 		position: relative;
-		width: 28px; height: 28px;
+		width: 32px; height: 32px;
 		top: 50%;
 		cursor: pointer;
 		border-radius: 4px;
@@ -68,89 +75,69 @@
 	}
 
 	#onlineAdminsImg:hover + #onlineAdminTextC {
-		color: rgb(22, 36, 53);
+		color: rgb(255, 215, 0);
 	}
 
 	#onlineAdminTextC {
 		float: left;
 		position: relative;
+		height: 30px;
 		background: transparent;
 		color: white;
 		top: 50%;
 		font-size: 22px;
 		font-weight: bold;
+		cursor: pointer;
+		user-select: none;
 		transform: perspective(1px) translateY(-50%);
 	}
 
 	#onlineAdminTextC:hover {
-		color: rgb(22, 36, 53);
-	}
-
-	/*ONLINE EMPLOYEES*/
-	#onlineEmployeesC {
-		float: left;
-		display: block;
-		position: relative;
-		height: 100%;
-		background: transparent;
-		margin: 0 0 0 1%;
-	}
-
-	#onlineEmployeesImg {
-		float: left;
-		position: relative;
-		width: 30px; height: 34px;
-		top: 50%;
-		cursor: pointer;
-		border-radius: 4px;
-		margin-right: 5px;
-		content: url(../Assets/icons8_management_30px_4.png);
-		transform: perspective(1px) translateY(-50%);
-	}
-
-	#onlineEmployeesImg:hover {
-		content: url(../Assets/icons8_management_30px_3.png);
-	}
-
-	#onlineEmployeesImg:hover + #onlineEmployeeTextC {
-		color: rgb(22, 36, 53);
-	}
-
-	#onlineEmployeeTextC {
-		float: left;
-		position: relative;
-		background: transparent;
-		color: white;
-		top: 50%;
-		font-size: 22px;
-		font-weight: bold;
-		transform: perspective(1px) translateY(-50%);
-	}
-
-	#onlineEmployeeTextC:hover {
-		color: rgb(22, 36, 53);
+		color: rgb(255, 215, 0);
 	}
 
 	/*ALL MENU MAIN CONTAINERS*/
+	#employeesBtnInfoC {
+		position: absolute;
+		background: transparent;
+		width: 420px;
+		left: 50%;
+		transform: translate(-50%, 0);
+	}
+
 	.employeesMenuC {
 		float: left;
-		display: inline-block;
+		display: block;
 		position: relative;
-		height: 50px;
+		width: 60px; height: 100%;
 		background: transparent;
 		margin: 0 30px 0 30px;
 	}
 
-	#employeesBtnInfoC {
-		float: right;
-		position: relative;
-		background: transparent;
+	.employeesMenuC:hover .menuEmployeeTextC {
+		color: rgb(255, 215, 0);
+	}
+
+	.menuEmployeeTextC {
+		float: left;
+		position: absolute;
+		color: white;
+		left: 50%;
+		font-weight: bold;
+		margin-top: 48px;
+		transform: translate(-50%, 0);
+		z-index: 10;
 	}
 
 	/*VIEW EMPLOYEES AND SEE THE RECORD OF VIEWED EMPLOYEES*/
+	#viewEmployeesC {
+		background: transparent;
+		margin: 0 30px 0 0;
+	}
+
 	#viewEmployeeBtn {
 		position: relative;
-		height: 100%;
+		width: 100%; height: 100%;
 		background: transparent;
 		cursor: pointer;
 		border: none;
@@ -158,18 +145,18 @@
 	}
 
 	#viewEmployeeBtn img {
-		width: 50px; height: 100%;
+		width: 100%; height: 100%;
 		content: url(../Assets/icons8_view_carousel_50px.png);
 	}
 
 	#viewEmployeeBtn:hover img {
-		content: url(../Assets/icons8_view_carousel_50px_3.png);
+		content: url(../Assets/icons8_view_carousel_50px_4.png);
 	}
 
 	/*RECRUIT EMPLOYEES AND SEE THE RECORD OF RECRUITED EMPLOYEES*/
 	#recruitmentEmployeeBtn {
 		position: relative;
-		height: 100%;
+		width: 100%; height: 100%;
 		background: transparent;
 		cursor: pointer;
 		border: none;
@@ -177,7 +164,7 @@
 	}
 
 	#recruitmentEmployeeBtn img {
-		width: 50px; height: 100%;
+		width: 100%; height: 100%;
 		content: url(../Assets/icons8_send_job_list_50px.png);
 	}
 
@@ -188,7 +175,7 @@
 	/*DISCHARGE EMPLOYEES AND SEE THE RECORD OF DISHARCED EMPLOYEES*/
 	#dischargeEmployeeBtn {
 		position: relative;
-		height: 100%;
+		width: 100%; height: 100%;
 		background: transparent;
 		cursor: pointer;
 		border: none;
@@ -196,7 +183,7 @@
 	}
 
 	#dischargeEmployeeBtn img {
-		width: 50px; height: 100%;
+		width: 100%; height: 100%;
 		content: url(../Assets/icons8_retirement_50px.png);
 	}
 
@@ -211,7 +198,7 @@
 
 	#resignationEmployeeBtn {
 		position: relative;
-		height: 100%;
+		width: 100%; height: 100%;
 		background: transparent;
 		cursor: pointer;
 		border: none;
@@ -219,7 +206,7 @@
 	}
 
 	#resignationEmployeeBtn img {
-		width: 50px; height: 100%;
+		width: 100%; height: 100%;
 		content: url(../Assets/icons8_leave_50px.png);
 	}
 
@@ -227,32 +214,907 @@
 		content: url(../Assets/icons8_leave_50px_2.png);
 	}
 
-	#lastUpdateInfoC {
-		float: left;
-		position: absolute;
-		color: rgb(22, 36, 53);
+	/*ONLINE EMPLOYEES*/
+	#onlineEmployeesC {
+		float: right;
+		display: block;
+		position: relative;
+		height: 100%;
 		background: transparent;
-		font-size: 11px;
+		user-select: none;
+		margin: 0;
+	}
+
+	#onlineEmployeesImg {
+		float: left;
+		position: relative;
+		width: 36px; height: 36px;
+		top: 50%;
+		cursor: pointer;
+		border-radius: 4px;
+		margin-right: 5px;
+		content: url(../Assets/icons8_management_30px_4.png);
+		transform: perspective(1px) translateY(-50%);
+	}
+
+	#onlineEmployeesImg:hover {
+		content: url(../Assets/icons8_management_30px_3.png);
+	}
+
+	#onlineEmployeesImg:hover + #onlineEmployeeTextC {
+		color: rgb(255, 215, 0);
+	}
+
+	#onlineEmployeeTextC {
+		float: left;
+		position: relative;
+		height: 30px;
+		background: transparent;
+		color: white;
+		top: 50%;
+		font-size: 22px;
+		font-weight: bold;
+		cursor: pointer;
+		transform: perspective(1px) translateY(-50%);
+	}
+
+	#onlineEmployeeTextC:hover {
+		color: rgb(255, 215, 0);
+	}
+
+	#lastUpdateInfoC {
+		position: absolute;
+		color: rgb(255, 215, 0);
+		background: transparent;
+		font-size: 13px;
 		font-style: italic;
-		left: -10px; bottom: -7px;
+		bottom: -10px;
 		opacity: 0;
 		padding: 0 1px 0 1px;
 	}
 
-	#lastUpdateInfoC:hover {
+	#onlineAdminsC:hover ~ #lastUpdateInfoC {
+		float: left;
+		left: -10px;
 		opacity: 1;
+	}
+
+	#onlineEmployeesC:hover ~ #lastUpdateInfoC {
+		float: right;
+		right: -10px;
+		opacity: 1;
+	}
+	
+	/*LOADING SCREEN FOR EMPLOYEES CSS*/
+	#loadEmployeesC {
+		position: relative;
+		width: 100%; height: 100px;
+		background: rgb(37, 52, 69);
+		top: 0; left: 0;
+		overflow: visible;
+ 	 	z-index: 10;
+	}
+
+	#loaderC {
+		display: block;
+		position: absolute;
+  		width: 80px; height: 80px;
+  		top: 10%; left: 47.25%;
+  		background-size: 100%;
+  		border-radius: 50%;
+  		border: 16px solid white; /* Outside color */
+  		border-top: 16px solid rgb(255, 215, 0);
+  		border-bottom: 16px solid rgb(255, 215, 0); /* Inside color */
+  		content: url(../Assets/icons8_flat_tire_100px.png);
+  		transform: translate(-50%, -50%);
+  		padding: 0;
+  		animation: spin 2s linear infinite;
+	}
+
+	/*SEARCH BAR EMPLOYEES CSS*/
+	#searchEmployeeC {
+		position: relative;
+		width: 40%;
+		min-width: 350px;
+		background: transparent;
+		margin: auto;
+		margin-top: 25px; margin-bottom: 5px;
+	}
+	
+	#searchEmployeeInpt {
+		width: 100%;
+		background: white;
+		font-size: 25px;
+		text-align: center;
+		letter-spacing: 1px;
+		border-radius: 2px;
+		border: 2px solid rgb(22, 36, 53);
+		outline: none;
+		padding: 5px 60px 5px 10px;
+		transition: box-shadow 0.3s;
+	}
+
+	#searchEmployeeInpt::placeholder {
+		font-size: 15px;
+	}
+
+	#searchEmployeeInpt:focus {
+		box-shadow: 0px 0px 12px black;
+	}
+
+	#searchEmployeeBtn {
+		float: right;
+		position: absolute;
+		width: 50px; height: 96%;
+		background: transparent;
+		top: 50%; right: 1px;
+		cursor: pointer;
+		outline: none;
+		border-radius: 2px;
+		border: none;
+		transform: translate(0, -50%);
+	}
+
+	#searchEmployeeBtn:hover {
+		background: lightgrey;
+	}
+
+	#searchEmployeeBtn:focus {
+		background: lightgrey;
+	}
+
+	#searchEmployeeBtn:active {
+		background: grey;
+	}
+
+	#searchEmployeeBtn img {
+		width: 100%; height: 100%;
+		content: url(../Assets/icons8_search_64px.png);
 	}
 
 	/*IN THIS DIV WILL LOAD ALL THE CONTENT FOR EMPLOYEE*/
 	#employeeContentC {
 		position: relative;
 		width: 100%;
-		background: rgb(111, 142, 171, 0.8);
+		background: transparent;
+		font-family: Roboto Slab;
+		user-select: none;
+	}
+
+	/*ALL MENUS BTNS TITLE CSS*/
+	#titleOfContentC {
+		display: inline-block;
+		position: relative;
+		background: rgb(13, 18, 24);
+		color: white;
+		left: 50%;
+		font-size: 25px;
+		border-radius: 4px 4px 0 0;
+		user-select: auto;
+		margin: auto;
+		margin-bottom: 0px;
+		padding: 4px 6px 4px 6px;
+		box-shadow: 0px 2px 5px black;
+		transform: translate(-50%, 0);
 	}
 
 	/*SHOW START SCREEN OF EMPLOYEES CSS*/
 	#showEmployeesC {
-		
+		background: transparent;
+		user-select: none;
+		padding: 30px 0 25px 0;
 	}
 
+	#showContentC {
+		position: relative;
+		width: 99%; height: auto;
+		background: rgb(37, 52, 69);
+		overflow: hidden;
+		border-radius: 2px;
+		margin: auto;
+		padding: 10px 0 80px 0;
+		transition: box-shadow 0.3s;
+		box-shadow: 0px 0px 3px black;
+	}
+
+	#allInfoLockedBtn {
+		display: block;
+		position: relative;
+		width: 40px; height: 40px;
+		background: transparent;
+		overflow: hidden;
+		cursor: pointer;
+		border: none;
+		margin: auto; margin-top: 5px; margin-bottom: 10px;
+		padding: 0;
+	}
+
+	#allInfoLockedBtn img {
+		width: 100%; height: 100%;
+	}
+
+	#leftClickEmployeesBtn {
+		position: absolute;
+		background: rgb(0, 0, 0, 0.4);
+		color: white;
+		top: 50%; left: 0px;
+		font-size: 40px;
+		border: none;
+		cursor: pointer;
+		z-index: 10;
+		padding: 1px 5px 1px 5px;
+		transform: translate(0, -50%);
+	}
+
+	#leftClickEmployeesBtn:hover {
+		background: rgb(0, 0, 0, 0.6);
+	}
+
+	#leftClickEmployeesBtn:focus {
+		background: rgb(0, 0, 0, 0.6);
+	}
+
+	#leftClickEmployeesBtn:active {
+		background: rgb(0, 0, 0, 0.7);
+	}
+
+	#rightClickEmployeesBtn {
+		display: block;
+		position: absolute;
+		background: rgb(0, 0, 0, 0.4);
+		color: white;
+		top: 50%; right: 0px;
+		font-size: 40px;
+		border: none;
+		cursor: pointer;
+		z-index: 10;
+		padding: 1px 5px 1px 5px;
+		transform: translate(0, -50%);
+	}
+
+	#rightClickEmployeesBtn:hover {
+		background: rgb(0, 0, 0, 0.6);
+	}
+
+	#rightClickEmployeesBtn:focus {
+		background: rgb(0, 0, 0, 0.6);
+	}
+
+	#rightClickEmployeesBtn:active {
+		background: rgb(0, 0, 0, 0.7);
+	}
+
+	#centerShowContentC {
+		display: table;
+		position: relative;
+		width: 800px; height: 450px;
+		background: transparent;
+		overflow: hidden;
+		border-radius: 2px;
+		margin: auto;
+		padding: 0;
+		transition: border-left 0.7s, border-right 0.7s;
+	}
+
+	/*EMPLOYEES VIEW CSS*/
+	#allElementsC {
+		position: relative;
+		height: 100%;
+		background: transparent;
+		left: 0;
+		white-space: nowrap;
+		transition: left 0.7s;
+	}
+
+	.panelOfEmployeeC {
+		display: inline-block;
+		position: relative;
+		width: 33.33%; height: 100%;
+		background: rgb(22, 36, 53);
+		overflow: auto;
+		user-select: none;
+		border-style: solid;
+		border-color: darkgrey;
+		border-width: 1px 2px 1px 2px;
+		padding: 0;
+	}
+
+	.panelOfEmployeeC:hover {
+		border-color: rgb(255, 215, 0);
+	}
+
+	#employeeEditInfoC {
+		position: absolute;
+		display: block;
+		width: 34px; height: 32px;
+		background: transparent;
+		right: 6px;
+		padding: 4px 6px 4px 6px;
+		z-index: 13;
+	}
+
+	#employeeEditInfoBtn {
+		width: 100%; height: 100%;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		padding: 0;
+	}
+
+	#employeeEditInfoBtn:hover img {
+		content: url(../Assets/icons8_edit_30px_2.png);
+	}
+
+	#employeeEditInfoBtn:active img {
+		content: url(../Assets/icons8_edit_30px_3.png);
+	}
+	
+	#employeeEditInfoImg {
+		width: 100%; height: 100%;
+		content: url(../Assets/icons8_edit_30px.png);
+	}
+
+	#employeeStatusC {
+		position: relative;
+		width: 100%;
+		background: rgb(13, 18, 24);
+		color: white;
+		font-size: 18px;
+		text-align: center;
+		padding: 4px;
+		z-index: 12;
+	}
+
+	#employeeLockUnclockBtn {
+		display: block;
+		position: relative;
+		width: 30px; height: 30px;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		margin: auto; margin-top: -60px; margin-bottom: 45px;
+		padding: 0;
+		transition: margin 0.3s;
+		z-index: 11;
+	}
+
+	.panelOfEmployeeC:hover #employeeLockUnclockBtn {
+		margin-top: 5px; margin-bottom: 0px;
+	}
+
+	#employeeLockUnclockImg {
+		width: 100%; height: 100%;
+	}
+
+	#employeeLockUnclockImg:hover {
+		content: url(../Assets/icons8_lock_50px_2.png);
+	}
+
+	#employeeUpColumnC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+	}
+
+	#employeeLeftInfoC {
+		display: table-cell;
+		position: relative;
+		width: 80%;
+		background: transparent;
+		color: white;
+		font-size: 16px;
+	}
+
+	#employeeNameC {
+		position: relative;
+		display: block;
+		background: transparent;
+		white-space: initial;
+		text-align: left;
+		border-radius: 5px;
+		margin: 0 0 0 5px;
+		padding: 1px;
+	}
+
+	#employeeNameTitleC {
+		position: relative;
+		color: rgb(13, 18, 24);
+		font-size: 13px;
+		margin: 0 0 0 10px;
+	}
+	
+	#employeeNameTextC {
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+		user-select: text;
+	}
+
+	#employeeUsernameC {
+		position: relative;
+		display: block;
+		background: transparent;
+		white-space: initial;
+		text-align: left;
+		border-radius: 5px;
+		margin: 10px 0 0 5px;
+	}
+
+	#employeeUsernameTitleC {
+		position: relative;
+		color: rgb(13, 18, 24);
+		font-size: 13px;
+		margin: 0 0 0 10px;
+	}
+	
+	#employeeUsernameTextC {
+		word-break: break-word;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+		user-select: text;
+	}
+
+	#employeeRightInfoC {
+		display: table-cell;
+		width: 20%;
+		background: transparent;
+		padding: 0 10px 0 10px;
+	}
+
+	#pictureOfEmployeeC {
+		position: relative;
+		display: block;
+		width: 60px; height: 60px;
+		background: rgb(13, 18, 24);
+		color: darkgrey;
+		top: 25px;
+		overflow: hidden;
+		border: 1px solid darkgrey;
+	}
+
+	#pictureOfEmployeeC:hover {
+		background: transparent;
+		border: none;
+	}
+
+	#pictureOfEmployeeC:hover #pictureOfEmployeeTextC {
+		transform: translate(0, -120%);
+	}
+
+	#pictureOfEmployeeTextC {
+		position: relative;
+		width: 100%; height: 100%;
+		transform-origin: left;
+		transform: translate(32%, 52%) rotateZ(-45deg);
+		transition: transform 0.3s;
+	}
+
+	#pictureOfEmployeeC:hover #pictureOfEmployeeImg {
+		transform: translate(0, -120%);
+	}
+
+	#pictureOfEmployeeImg {
+		position: relative;
+		width: 100%; height: 100%;
+		margin-top: 10px;
+		transition: transform 0.3s;
+	}
+
+	#employeeEmailC {
+		float: left;
+		position: relative;
+		width: 90%;
+		background: transparent;
+		color: white;
+		font-size: 15px;
+		white-space: initial;
+		text-align: center;
+		border-radius: 5px;
+		margin: 10px 4% 0 4%;
+		padding: 1px;
+	}
+
+	#employeeEmailTitleC {
+		position: relative;
+		color: rgb(13, 18, 24);
+		font-size: 13px;
+		margin: 0 0 0 10px;
+	}
+
+	#employeeEmailTextC {
+		word-break: break-word;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+		user-select: text;
+	}
+
+	#employeeBranchC {
+		float: left;
+		position: relative;
+		width: 90%;
+		background: transparent;
+		color: white;
+		font-size: 16px;
+		white-space: initial;
+		text-align: center;
+		border-radius: 5px;
+		margin: 10px 4% 0 4%;
+		padding: 1px;
+	}
+
+	#employeeBranchTitleC {
+		position: relative;
+		color: rgb(13, 18, 24);
+		font-size: 13px;
+		margin: 0 0 0 10px;
+	}
+
+	#employeeBranchTextC {
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+		user-select: text;
+	}
+
+	#employeeWageC {
+		float: left;
+		position: relative;
+		width: 90%;
+		background: transparent;
+		color: white;
+		font-size: 16px;
+		white-space: initial;
+		text-align: center;
+		border-radius: 5px;
+		margin: 10px 4% 0 4%;
+		padding: 1px;
+	}
+
+	#employeeWageTitleC {
+		position: relative;
+		color: rgb(13, 18, 24);
+		font-size: 13px;
+		margin: 0 0 0 10px;
+	}
+
+	#employeeWageTextC {
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+		user-select: text;
+	}
+
+	#employeeRecruitmentDayC {
+		float: left;
+		position: relative;
+		width: 90%;
+		background: transparent;
+		color: white;
+		font-size: 16px;
+		white-space: initial;
+		text-align: center;
+		border-radius: 5px;
+		margin: 10px 4% 0 4%;
+		padding: 1px;
+	}
+
+	#employeeRecruitmentDayTitleC {
+		position: relative;
+		color: rgb(13, 18, 24);
+		font-size: 13px;
+		margin: 0 0 0 10px;
+	}
+	
+	#employeeRecruitmentDayTextC {
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+		user-select: text;
+	}
+
+	/*COUNTER OF EMPLOYEE VIEW*/
+	#downShowEmployeesCountC {
+		position: absolute;
+		background: rgb(0, 0, 0, 0.6);
+		bottom: 25px; left: 50%;
+		font-size: 1px;
+		border-radius: 2px;
+		padding: 4px 6px 4px 6px;
+		transform: translate(-50%, 0);
+		z-index: 20;
+	}
+
+	.downCounterEmployeesC {
+		float: left;
+		border: 11px solid rgb(255, 215, 0);
+		border-radius: 50%;
+		margin: 0 3px 0 3px;
+	}
+
+	#leftNoEmployee1C {
+		border: 6px solid rgb(22, 36, 53);
+		border-radius: 50%;
+		margin: 5.5px 5px 0 0;
+	}
+
+	#leftNoEmployee2C {
+		border: 9px solid rgb(22, 36, 53);
+		border-radius: 50%;
+		margin: 2px 4px 0 0;
+	}
+
+	#rightNoEmployee1C {
+		border: 9px solid rgb(22, 36, 53);
+		border-radius: 50%;
+		margin: 2px 0 0 4px;
+	}
+
+	#rightNoEmployee2C {
+		border: 6px solid rgb(22, 36, 53);
+		border-radius: 50%;
+		margin: 5.5px 0 0 5px;
+	}
+
+	#usernameEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#usernameEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#usernameEmployeeEditInpt {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+	}
+
+	#emailEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#emailEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#emailEmployeeEditInpt {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px 4px 2px 4px;
+	}
+
+	#nameEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#nameEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#nameEmployeeEditInpt {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px 4px 2px 4px;
+	}
+
+	#wageEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#wageEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#wageEmployeeEditInpt {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px 4px 2px 4px;
+	}
+
+	.optionsForStatus {
+		text-align: center;
+	}
+
+	#statusEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#statusEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#statusEmployeeEditSelect {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px 4px 2px 4px;
+	}
+
+	#branchIdEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#branchIdEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#branchIdEmployeeEditInpt {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px 4px 2px 4px;
+	}
+
+	#branchIdEmployeeEditInpt:focus {
+		outline: none;
+	}
+
+	#recruitmentDayEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#recruitmentDayEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#recruitmentDayEmployeeEditInpt {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px 4px 2px 4px;
+	}
+
+	#editConfirmBtnC {
+		display: table;
+		position: relative;
+		width: 60%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 30px; margin-bottom: 25px;
+		padding: 2px;
+	}
+	
+	#editConfirmBtn {
+		width: 100%; height: 40px;
+		background: rgb(255, 255, 255, 0.2);
+		color: white;
+		font-size: 25px;
+		text-align: center;
+		cursor: pointer;
+		border-radius: 4px;
+		border: 1px solid rgb(13, 18, 24);
+		padding: 2px 4px 2px 4px;
+	}
+
+	#editConfirmBtn:hover {
+		background: rgb(37, 52, 69);
+	}
+
+	#editConfirmBtn:active {
+		background: rgb(13, 18, 24);
+	}
+
+	/*MEDIA FOR LOWER PIXEL SCREEN*/
+	@media screen and (max-width: 1200px) {
+	}
+
+
 	/*ANIMATIONS*/
+	@keyframes spin {
+  		0% { transform: rotate(0deg); }
+  		100% { transform: rotate(360deg); }
+	}
+
+	@keyframes roundBorderToRight {
+		0% { width: 4px; border-top: 2px solid white; }
+		33% { width: 4px; border-right: 2px solid rgb(61, 18, 26); }
+		66% { width: 4px; border-bottom: 2px solid white; }
+		100% { width: 4px; border-left: 2px solid rgb(61, 18, 26); }
+	}
+
+	@keyframes roundBorderToLeft {
+		0% { width: 4px; border-top: 2px solid white; }
+		33% { width: 4px; border-left: 2px solid rgb(61, 18, 26); }
+		66% { width: 4px; border-bottom: 2px solid white; }
+		100% { width: 4px; border-right: 2px solid rgb(61, 18, 26); }
+	}
+
+	@keyframes rotate {
+		from { 
+            transform: rotateY(0deg); 
+        } to { 
+            transform: rotateY(360deg); 
+        }
+	}

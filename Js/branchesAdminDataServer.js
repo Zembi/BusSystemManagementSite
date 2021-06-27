@@ -17,7 +17,7 @@ function ServerBranch() {
 function StartBranchScreen() {
 
   if((sessionStorage.getItem("Load") != "On") && (lastAction != "Start")) {
-    ChangeScreen("ShowBranches");
+    ChangeScreen("CreateNewBranch");
     currentAction = "Start";
     listOfBranchesBtn.style.display = "none";
     newBranchBtn.style.display = "block";

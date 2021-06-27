@@ -5,31 +5,161 @@
 
 	html {
 		scroll-behavior: smooth;
-		background: white;
+		background: rgb(22, 36, 53);
 	}
 
 	body {
 		height: 100%;
-		min-width: 1100px;
-		background: white;
+		min-width: 1300px;
+		background: rgb(22, 36, 53);
 		margin: 0;
 		padding: 0;
 	}
 
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
 	#backgroundC {
 		position: relative;
-		width: 100%;
+		width: 100%; height: 100%;
 		min-width: 1100px;
 		overflow: visible;
 		background: rgb(13, 18, 24);
+		font-family: Roboto Slab;
 	}
 
-	#leftC {
+	/*EDIT WINDOW*/
+	#editWindowC {
+		display: none;
+		position: fixed;
+		width: 100%; height: 100%;
+		background: rgb(255, 255, 255, 0.2);
+		z-index: 100000;
+	}
+
+	#centerEditWindowC {
+		position: absolute;
+		width: 60%;
+		min-width: 700px;
+		background: rgb(22, 36, 53);
+		color: white;
+		top: 50%; left: 50%;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		transform: translate(-50%, -50%);
+	}
+
+	#exitEditBtn {
+		position: absolute;
+		background: rgb(0, 0, 0, 0.0);
+		top: 0; right: 0;
+		font-size: 25px;
+		cursor: pointer;
+		user-select: none;
+		padding: 2px 6px 2px 6px;
+		z-index: 2;
+	}
+
+	#exitEditBtn:hover {
+		color: rgb(37, 52, 69);
+	}
+
+	#exitEditBtn:active {
+		color: rgb(22, 36, 53);
+	}
+
+	#editTitleC {
+		float: left;
+		display: block;
 		position: relative;
+		width: 100%;
+		background: rgb(255, 255, 255, 0.2);
+		font-size: 28px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#editTitleTextC {
+		display: table;
+		margin: auto;
+	}
+
+	#editInfoGetterC {
+		display: table;
+		width: 100%;
+	}
+
+	#editInfoGetterLeftC {
+		display: table-cell;
+		position: relative;
+		width: 50%;
+		background: transparent;
+		border-right: 4px solid black;
+		padding: 10px;
+	}
+
+	#editInfoGetterRightC {
+		display: table-cell;
+		position: relative;
+		width: 50%;
+		background: transparent;
+		overflow: hidden;
+		border: none;
+		padding: 10px;
+	}
+
+	#editAlertBeforeEndTaskC {
+		display: none;
+		position: absolute;
+		background: rgb(255, 215, 0);
+		top: 50%; left: 50%;
+		padding: 20px;
+		transform: translate(-50%, -50%);
+	}
+
+	#editAlertTextC {
+		display: table;
+		position: relative;
+		background: rgb(0, 0, 0, 0.2);
+	}
+
+	#editApproveOrNotBtnC {
+		display: table;
+		background: transparent;
+		margin: auto;
+	}
+
+	#editAlertOkBtn {
+		float: left;
+		position: relative;
+		color: rgb(13, 18, 24);
+		cursor: pointer;
+		left: 0; bottom: 0;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		margin-right: 10px;
+	}
+
+	#editAlertCancelBtn {
+		position: relative;
+		color: rgb(13, 18, 24);
+		cursor: pointer;
+		right: 0; bottom: 0;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+	}
+	/**/
+
+	#leftC {
+		position: absolute;
 		float: left;
 		height: 100%;
-		background: red;
+		background: rgb(22, 36, 53);
 		overflow: hidden;
+		user-select: none;
 		box-shadow: 3px 0px 2px black;
 		transition: width 0.3s;
 	}
@@ -98,7 +228,6 @@
 			left: 50%;
 			color: white;
 			font-size: 28px;
-			font-family: "Times New Roman", Times, serif;
 			font-weight: bold;
 			transform: translate(-50%, -1000%);
 			transition: transform 0.3s;
@@ -234,7 +363,6 @@
 			float: left;
 			position: relative;
 			color: white;
-			font-family: "Times New Roman", Times, serif;
 			font-style: italic;
 			text-align: left;
 			top: 50%; left: 5px;
@@ -254,7 +382,7 @@
 		float: right;
 		position: relative;
 		height: 100%;
-		min-width: 800px;
+		min-width: 1200px;
 		background: rgb(22, 36, 53);
 		overflow: visible;
 		transition: width 0.3s;
@@ -267,6 +395,7 @@
 			background: rgb(13, 18, 24);
 			margin: auto;
 			overflow: visible;
+			user-select: none;
 			padding: 10px 0 0 0;
 		}
 
@@ -279,6 +408,7 @@
 			color: white;
 			font-size: 35px;
 			text-align: center;
+			user-select: text;
 		}
 
 		#downHeaderC {
@@ -294,6 +424,7 @@
 			position: relative;
 			overflow: visible;
 			background: transparent;
+			user-select: none;
 		}
 
 		#headerImg {
@@ -311,6 +442,7 @@
 			background: rgb(0, 0, 0, 0.5);
 			right: 5%;
 			border-radius: 0 0 2px 2px;
+			user-select: none;
 			padding: 10px;
 		}
 
@@ -330,8 +462,8 @@
 		#userNameC div {
 			position: relative;
 			font-size: 16px;
-			font-family: "Times New Roman", Times, serif;
 			top: 50%;
+			user-select: text;
 			transform: translate(0, -50%);
 		}
 
@@ -359,7 +491,6 @@
 		#logOutBtn div {
 			color: rgb(255, 215, 0);
 			font-size: 16px;
-			font-family: "Times New Roman", Times, serif;
 			letter-spacing: 1px;
 		}
 
@@ -370,7 +501,7 @@
 		#contentC {
 			position: relative;
 			width: 100%; min-height: 800px;
-			min-width: 90%;
+			min-width: 100%;
 			background: rgb(22, 36, 53);
 			padding: 0 5% 10% 5%;
 		}
@@ -378,7 +509,7 @@
 		#contentCenterC {
 			position: relative;
 			border-radius: 2px;
-			border: 2px solid rgb(6, 9, 12);
+			border: none;
 		}
 
 		/*TOP PANEL WITH INFO IN MAIN PANEL*/
@@ -389,7 +520,8 @@
 			top: 0;
 			background: rgb(255, 255, 255);
 			border-bottom: 1px solid rgb(22, 28, 34);
-			z-index: 10;
+			user-select: none;
+			z-index: 30;
 		}
 
 		#pathC {
@@ -414,13 +546,13 @@
 			position: relative;
 			height: 100%;
 			overflow: hidden;
+			user-select: text;
 		}
 
 		#pathTextC div {
 			position: relative;
 			top: 50%;
 			font-size: 20px;
-			font-family: Roboto Slab;
 			transform: translate(0, -50%);
 		}
 
@@ -483,7 +615,6 @@
 
 		#numberOfRequestsC div {
 			position: relative;
-			font-family: Roboto Slab;
 			font-weight: bold;
 		}
 
@@ -492,8 +623,8 @@
 			position: relative;
 			width: 100%;
 			min-width: 100%;
-			background: white;
-			border-radius: 2px;
+			background: transparent;
+			border-radius: 0 0 2px 2px;
 			overflow: hidden;
 		}
 
@@ -519,6 +650,11 @@
 	@media only screen and (max-width: 300px) {
 		
 		
+	}
+
+	/*SCREEN WIDTH UNDER 1200px*/
+	@media only screen and (max-width: 1200px) {
+	
 	}
 /**/
 

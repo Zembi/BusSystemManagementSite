@@ -1,14 +1,21 @@
 
 //INITIALIZE VARIABLES FOR STYLING 
+var onlineAdminTextC = document.getElementById("onlineAdminTextC");
+var onlineEmployeeTextC = document.getElementById("onlineEmployeeTextC");
 var lastUpdateInfoC = document.getElementById("lastUpdateInfoC");
-var listOfBranchesBtn = document.getElementById("listOfBranchesBtn");
+var searchEmployeeInpt = document.getElementById("searchEmployeeInpt");
 var newBranchBtn = document.getElementById("newBranchBtn");
 var viewEmployeeBtn = document.getElementById("viewEmployeeBtn");
 var recruitmentEmployeeBtn = document.getElementById("recruitmentEmployeeBtn");
 var dischargeEmployeeBtn = document.getElementById("dischargeEmployeeBtn");
 var resignationEmployeeBtn = document.getElementById("resignationEmployeeBtn");
-var currentAction = "Start";
+var currentAction = "StartView";
 var lastAction = "none";
+var employeesObjSArray = [];
+
+var loadEmployeesC = document.getElementById("loadEmployeesC");
+var searchEmployeeC = document.getElementById("searchEmployeeC");
+var employeeContentC = document.getElementById("employeeContentC");
 
 viewEmployeeBtn.addEventListener("click", StartEmployeeScreen);
 recruitmentEmployeeBtn.addEventListener("click", RecruitmentEmployeeScreen);
@@ -17,27 +24,39 @@ resignationEmployeeBtn.addEventListener("click", ResignationEmployeeScreen);
 
 ServerEmployee();
 
-function ServerEmployee() {
+async function ServerEmployee() {
+	StartLoaderOnMainInfo();
+	ClearStatusData();
+	StartLoadingStatusInfo();
+	//MAKE OBJECTS FROM SERVER EMPLOYEES OBJECTS
+	phpObjectConvertToJsObject(await GetAllEmployees());
+	await new Promise(wait => setTimeout(wait, 1000));
+	StopLoaderOnMainInfo();
+	GetUsersIn();
+	StopLoadingStatusInfo();
+	NoWhiteSpaceInSearchBar();
 	StartEmployeeScreen();
 
-	GetUsersOnline();
-	setInterval(function() { 
-		GetUsersOnline();
+	setInterval(async function() {
+		GetUsersIn();
 	}, 15000);
 }
 
+function phpObjectConvertToJsObject(employeesArray) {
+	for(var i = 0; i < employeesArray.length; i++) {
+		var employee = new Employee(employeesArray[i].username, employeesArray[i].email, employeesArray[i].name,
+					employeesArray[i].icon, employeesArray[i].branchId, employeesArray[i].status,
+					employeesArray[i].wage, employeesArray[i].recruitmentDay);
+
+		employeesObjSArray.push(employee);
+	}
+	//alert(employee.getDateDifferenceFromWhenEmployeeHired("months"));
+}
+
 function StartEmployeeScreen() {
-	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Start")) {
+	if((sessionStorage.getItem("Load") != "On") && (lastAction != "StartView")) {
 		ChangeScreen("ShowEmployees");
-		currentAction = "Start";
-		viewEmployeeBtn.style.display = "none";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "none");
-		recruitmentEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		dischargeEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		resignationEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "last");
+		currentAction = "StartView";
 	}
 	lastAction = currentAction;
 }
@@ -46,14 +65,6 @@ function RecruitmentEmployeeScreen() {
 	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Recruit")) {
 		ChangeScreen("RecruitNewEmployee");
 		currentAction = "Recruit";
-		viewEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		recruitmentEmployeeBtn.style.display = "none";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "none");
-		dischargeEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		resignationEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "last");
 	}
 	lastAction = currentAction;
 }
@@ -62,14 +73,6 @@ function DischargeEmployeeScreen() {
 	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Discharge")) {
 		ChangeScreen("DischargeEmployee");
 		currentAction = "Discharge";
-		viewEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		recruitmentEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		dischargeEmployeeBtn.style.display = "none";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "none");
-		resignationEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "last");
 	}
 	lastAction = currentAction;
 }
@@ -78,49 +81,65 @@ function ResignationEmployeeScreen() {
 	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Resign")) {
 		ChangeScreen("ResignEmployee");
 		currentAction = "Resign";
-		viewEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		recruitmentEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		dischargeEmployeeBtn.style.display = "block";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "");
-		resignationEmployeeBtn.style.display = "none";
-		MarginForBtnsOfMenu(viewEmployeeBtn, "none");
 	}
 	lastAction = currentAction;
 }
 
-function MarginForBtnsOfMenu(element, pos) {
-	if(pos == "last") {
-		element.style.margin = "0 0 0 30px";
-	}
-	else if(pos == "none") {
-		element.style.margin = "0px";
-	}
-	else {
-		element.style.margin = "0 30px 0 30px";
-	}
+function StartLoaderOnMainInfo() {
+	var loaderC = document.createElement("div");
+	loaderC.id = "loaderC";
+	loadEmployeesC.appendChild(loaderC);
+	searchEmployeeC.style.display = "none";
+	employeeContentC.style.display = "none";
+	loadEmployeesC.style.display = "block";
+	sessionStorage.setItem("Load", "On");
 }
 
-function GetUsersOnline() {
+function ClearStatusData() {
+	onlineAdminTextC.innerHTML = "";
+	onlineEmployeeTextC.innerHTML = "";
+
+	lastUpdateInfoC.innerHTML = "";
+}
+
+function StartLoadingStatusInfo() {
+	onlineAdminTextC.style.animation = "roundBorderToRight 1s linear infinite";
+	onlineEmployeeTextC.style.animation = "roundBorderToLeft 1s linear infinite";
+}
+
+function GetAllEmployees() {
+	var emplArray = [];
+	return new Promise((resolve, reject) => {
+		$.ajax({
+			type: 'POST',
+			url: "../Php/getEmployeesPhp.php",
+			data: {},
+			success: function(data) {
+				//alert(data);
+				emplArray = JSON.parse(data);
+				resolve(emplArray);
+			}
+		});
+	});
+}
+
+function GetUsersIn() {
+	//USER ADMINS ONLINE
 	$.ajax({
 		type: 'POST',
 		url: "../Php/getCountOfAdminsOnlinePhp.php",
 		data: {},
 		success: function(data) {
-			if(onlineAdminTextC.innerHTML != data) {
-				onlineAdminTextC.innerHTML = data;
-			}
+			onlineAdminTextC.innerHTML = data;
 		}
 	});
+	//OTHER USER EMPLOYEES
 	$.ajax({
 		type: 'POST',
 		url: "../Php/getCountOfEmployeesOnlinePhp.php",
 		data: {},
 		success: function(data) {
-			if(onlineEmployeeTextC.innerHTML != data) {
-				onlineEmployeeTextC.innerHTML = data;
-			}
+			onlineEmployeeTextC.innerHTML = data;
 		}
 	});
 	lastUpdateInfoC.innerHTML = UpdateChange();
@@ -145,6 +164,20 @@ function UpdateChange() {
 	return dateTime;
 }
 
+function StopLoaderOnMainInfo() {
+	var loaderC = document.getElementById("loaderC");
+	loadEmployeesC.innerHTML = "";
+	searchEmployeeC.style.display = "block";
+	employeeContentC.style.display = "block";
+	loadEmployeesC.style.display = "none";
+	sessionStorage.setItem("Load", "Off");
+}
+
+function StopLoadingStatusInfo() {
+	onlineAdminTextC.style.animation = "none";
+	onlineEmployeeTextC.style.animation = "none";
+}
+
 function ChangeScreen(action) {
 	//FILE CALL
 	var file = "EmployeesScreens/" + action + ".html";
@@ -156,4 +189,17 @@ function ChangeScreen(action) {
         	}
     	})
   });
+}
+
+//NO WHITE SPACE IN SEARCH BAR
+function NoWhiteSpaceInSearchBar() {
+	$("#searchEmployeeInpt").on({
+  		keydown: function(e) {
+    	if (e.which === 32)
+      		return false;
+  		},
+  		change: function() {
+    		this.value = this.value.replace(/\s/g, "");
+  		}
+	});
 }

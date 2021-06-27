@@ -8,7 +8,7 @@
 
 	body {
 		height: 100%;
-		background: white;
+		background: transparent;
 		margin: 0;
 		padding: 0;
 	}
@@ -17,24 +17,31 @@
 		position: relative;
 		width: 100%; height: auto;
 		overflow: hidden;
-		background: rgb(22, 28, 34);
+		background: transparent;
+		user-select: none;
 		z-index: 1;
 	}
 
 	#branchTopBarC {
 		position: relative;
 		width: 100%; height: 62px;
-		background: transparent;
+		background: rgb(22, 28, 34);
 		overflow: hidden;
 		padding: 10px 0 10px 0;
+		box-shadow: 0 0 10px black;
 	}
 
 	#branchesHeaderCountC {
 		float: left;
 		position: absolute;
+		background: transparent;
 		top: 50%;
 		margin: 0 0 0 5%;
 		transform: translate(0, -50%);
+	}
+
+	#branchesHeaderCountC:hover + #lastUpdateInfoC {
+		opacity: 1;
 	}
 
 	.statusBranchesC {
@@ -47,6 +54,7 @@
 		font-family: "Times New Roman", Times, serif;
 		font-style: italic;
 		font-weight: bold;
+		user-select: text;
 		margin-right: 30px;
 		padding: 2px;
 	}
@@ -70,6 +78,10 @@
 		content: url(../Assets/icons8_construction_30px.png);
 	}
 
+	#problemBrC {
+		margin-right: 0px;
+	}
+
 	#problemBranchesC {
 		content: url(../Assets/icons8_high_priority_30px.png);
 	}
@@ -78,6 +90,7 @@
 		display: inline-block;
 		position: relative;
 		height: 100%;
+		user-select: text;
 		padding: 2px 0 2px 0;
 	}
 
@@ -88,8 +101,14 @@
 		background: transparent;
 		font-size: 11px;
 		font-style: italic;
+		opacity: 0;
 		left: 40px; bottom: 0;
+		user-select: text;
 		padding: 0 1px 0 1px;
+	}
+
+	#lastUpdateInfoC:hover {
+		opacity: 1;
 	}
 
 	#listOfBranchesBtn {
@@ -141,7 +160,7 @@
 	#branchContentC {
 		position: relative;
 		width: 100%;
-		background: rgb(111, 142, 171, 0.8);
+		background: rgb(111, 142, 171, 0.0);
 	}
 
 	/*START SCREEN CSS*/
@@ -159,7 +178,7 @@
 	#loaderC {
 		position: absolute;
   		width: 80px; height: 80px;
-  		top: 10%; left: 50%;
+  		top: 10%; left: 47.25%;
   		background-size: 100%;
   		border-radius: 50%;
   		border: 16px solid white; /* Outside color */
@@ -212,6 +231,7 @@
 		top: -6px; left: 50%;
 		border-radius: 2px;
 		border: 1px solid rgb(22, 28,34); border-top: none;
+		user-select: text;
 		padding: 0 3px 0 3px;
 		transform: translate(-50%, 0); 
 	}
@@ -229,6 +249,7 @@
 		position: relative;
 		font-size: 15px;
 		letter-spacing: 1px;
+		user-select: text;
 		margin: 3px 0 0 4px;
 	}
 
@@ -305,6 +326,7 @@
 		color: rgb(22, 28, 34);
 		font-size: 25px;
 		font-weight: bold;
+		user-select: text;
 		margin: 6px 0 0 14px;
 	}
 
@@ -312,6 +334,7 @@
 		float: left;
 		font-size: 18px;
 		font-weight: none;
+		user-select: text;
 		margin: 12px 0 0 7px;
 	}
 
@@ -320,7 +343,7 @@
 		position: relative;
 		background: transparent;
 		cursor: pointer;
-		border-radius: 2px;
+		border-radius: 5px;
 		margin: 15px 0 0 20px;
 	}
 
@@ -338,7 +361,9 @@
 		font-size: 19px;
 		font-weight: bold;
 		font-style: italic;
+		user-select: text;
 		margin: 4.5px 0 0 19px;
+		padding: 0 6px 0 0;
 	}
 
 	.hiddenInfoManagerC {
@@ -407,6 +432,225 @@
 	}
 
 	/*NEW BRANCH CSS*/
+	#createNewBranchC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		font-family: Roboto Slab;
+	}
+
+	/*LEFT SIDE*/
+	#leftPanelBranchC {
+		display: table-cell;
+		position: relative;
+		width: 600px;
+		background: transparent;
+		margin: auto;
+		padding: 30px 100px 100px 100px;
+	}
+
+	#categoryNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+
+		#categoryNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+	
+		#categoryNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+	
+	#locationNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+	
+		#locationNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#locationNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+	
+	#addressNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+
+		#addressNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#addressNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+
+	#managerNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+
+		#managerNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#managerNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+
+	#imageNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+
+		#imageNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#imageNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+
+	#managerNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+
+		#managerNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#managerNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+
+	#storeIdNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+
+		#storeIdNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#storeIdNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+
+	#conveniencesNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+
+		#conveniencesNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#conveniencesNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+
+	#statusNewBranchInptC {
+		width: 100%;
+		margin-top: 20px;
+	}
+
+		#statusNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#statusNewBranchInpt {
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			padding: 1px 3px 1px 3px;
+		}
+
+	/*RIGHT SIDE*/
+	#rightPanelBranchC {
+		display: table-cell;
+		position: relative;
+		width: 600px; height: 100px;
+		background: red;
+		overflow: hidden;
+
+	}
+
+	#otherBranchesConnectedC {
+		
+	}
+
+		#otherBranchesConnectedSlct {
+
+		}
+	
+		#otherBranchesConnectedShowC {
+			
+		}
 
 	/*MEDIA FOR LOWER PIXEL SCREEN*/
 	@media screen and (max-width: 1300px) {
@@ -449,6 +693,6 @@
 
 	@keyframes flash {
 		35% {background-color: transparent;}
-		50% {background-color: rgb(255, 215, 0, 0.2);}
+		50% {background-color: rgb(255, 215, 0, 0.4);}
 		65% {background-color: transparent;}
 	}
