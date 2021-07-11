@@ -20,23 +20,37 @@
 	$usernameToFind = $_POST['employee'];
 
 	$key = $_POST['key'];
+	$importantChange = $_POST['importantChange'];
+	$previousBranchId = $_POST['previousBranch'];
 	$usernameToFindDecoded = json_decode($usernameToFind);
 
-	echo $key;
-	$sqlCheckIfUserIsOnline = "SELECT 1 FROM usersonline WHERE Username = '$key'";
+	//UPDATE usersonline TABLE IF A USER IS ONLINE(BY ACCIDENT CAUSE WHEN UPDATES HAPPEN< EVEYRONE IN THE SYSTEM EXCEPTS FROM THE ADMINS, WILL LOG OFF) WHILE HIS STATUS IS BEING CHANGED, UPDATE SQL COLUMNS
+	$sqlAddUserToOnline = "UPDATE usersonline SET Username = '$usernameToFindDecoded->username', Status = '$usernameToFindDecoded->status' WHERE Username = '$key'";
+	mysqli_query($conn, $sqlAddUserToOnline);
 
-	//IF USER IS ONLINE DELETE FROM ONLINE TABLE AND INSERT THE NEW DATA
-	if(mysqli_query($conn, $sqlCheckIfUserIsOnline)) {
-		$sqlDeleteIfUserIsOnline = "DELETE FROM usersonline WHERE Username = '$key'";
-		mysqli_query($conn, $sqlDeleteIfUserIsOnline);
-
-		$sqlAddUserToOnline = "INSERT INTO usersonline (Username, Status) VALUES ('$usernameToFindDecoded->username', '$usernameToFindDecoded->status')";
-		mysqli_query($conn, $sqlAddUserToOnline);
+	//FIND IF EMPLOYEE BEING CHANGED FROM BRANCH HE IS WORKING
+	if($importantChange) {
+		$sqlUpdateToNullBranchManager = "UPDATE branches SET Manager = NULL WHERE Id = '$previousBranchId'";
+		mysqli_query($conn, $sqlUpdateToNullBranchManager);
+		echo $usernameToFindDecoded->branchId;
 	}
 
-	$sqlUpdateEmployees = "UPDATE employees SET Username = '$usernameToFindDecoded->username', Email = '$usernameToFindDecoded->email', BranchId = '$usernameToFindDecoded->branchId', Status = '$usernameToFindDecoded->status', Wage = '$usernameToFindDecoded->wage', RecruitmentDay = '$usernameToFindDecoded->recruitmentDay' WHERE Username = '$key'";
+	//UPDATE employees TABLE SPLIT IT IN TWO DIFFERENT PATHS. ONE WITHOUT BRANCH TO WORK SO IT IS NULL THE BRANCH ID AND THE OTHER ONE TO A NEW BRANCH
+	if(empty($usernameToFindDecoded->branchId)) {
+		$sqlUpdateEmployees = "UPDATE employees SET Username = '$usernameToFindDecoded->username', Email = '$usernameToFindDecoded->email', BranchId = NULL, Status = '$usernameToFindDecoded->status', Wage = '$usernameToFindDecoded->wage' WHERE Username = '$key'";
+	}
+	else {
+		$sqlUpdateEmployees = "UPDATE employees SET Username = '$usernameToFindDecoded->username', Email = '$usernameToFindDecoded->email', BranchId = '$usernameToFindDecoded->branchId', Status = '$usernameToFindDecoded->status', Wage = '$usernameToFindDecoded->wage' WHERE Username = '$key'";
 
-	$sqlUpdateUsers = "UPDATE users SET Username = '$usernameToFindDecoded->username', Email = '$usernameToFindDecoded->email', BranchId = '$usernameToFindDecoded->branchId', Status = '$usernameToFindDecoded->status' WHERE Username = '$key'";
+		//UPDATE branches TABLE IF IS BEING ADDED A NEW EMPLOYEE MANAGER
+		if($usernameToFindDecoded->status == "Employee Manager") {
+			$sqlUpdateBranches = "UPDATE branches SET Manager = '$usernameToFindDecoded->username' WHERE Id = '$usernameToFindDecoded->branchId'";
+			mysqli_query($conn, $sqlUpdateBranches);
+		}
+	}
+
+	//UPDATE users TABLE (STATUS OF EMPLOYEE)
+	$sqlUpdateUsers = "UPDATE users SET Username = '$usernameToFindDecoded->username', Email = '$usernameToFindDecoded->email', Status = '$usernameToFindDecoded->status' WHERE Username = '$key'";
 
 	if(!mysqli_query($conn, $sqlUpdateEmployees)) {		
 		$messagesArray[0] = 0;

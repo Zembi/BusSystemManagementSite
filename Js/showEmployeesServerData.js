@@ -106,10 +106,10 @@ function LightPanelOfEmployee(idOfEmployeeFound) {
 	panelOfEmployeeFound.style.transition = "background 0.3s";
 	setTimeout( function() {
 		panelOfEmployeeFound.style.background = "rgb(123, 106, 128)";
-	}, 500);
+	}, 1000);
 	setTimeout( function() {
 		panelOfEmployeeFound.style.background = "rgb(22, 36, 53)";
-	}, 1000);
+	}, 2000);
 	/*panelOfEmployeeFound.addEventListener("mouseover", function() {
 		panelOfEmployeeFound.style.background = "rgb(19, 36, 43)";
 	});

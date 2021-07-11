@@ -45,7 +45,7 @@ function Branch(id, type, street, location, imageSrc, manager, store, status) {
       			data: {username: userToFind},
       			success: function(data) {
       				userPhp = JSON.parse(data);
-      				userObj = new User(userPhp.username, userPhp.email, userPhp.icon, userPhp.name, userPhp.password, userPhp.status);
+      				userObj = new User(userPhp.username, userPhp.email, userPhp.icon, userPhp.name, userPhp.password, userPhp.status, userPhp.sex);
 	    			resolve(userObj);
       			}
 			});

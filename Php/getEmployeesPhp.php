@@ -26,7 +26,7 @@
 	$result = mysqli_query($conn, $query);
 	while (($row = mysqli_fetch_array($result))) {
 		$recruitmentDay = $row['RecruitmentDay'];
-		$formatedRecruitmentDay = date("d/m/Y", strtotime($recruitmentDay));  
+		//$formatedRecruitmentDay = date("d/m/Y", strtotime($recruitmentDay));  
 		
 		$user = array(
 			'username' => $row['Username'],
@@ -35,8 +35,9 @@
    			'icon' => $row['Icon'],
 			'branchId' => $row['BranchId'],
 			'status' => $row['Status'],
+			'sex' => $row['Sex'],
 			'wage' => $row['Wage'],
-			'recruitmentDay' => $formatedRecruitmentDay
+			'recruitmentDay' => $recruitmentDay
 		);
 		array_push($users, $user);
 	}

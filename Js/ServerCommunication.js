@@ -1,15 +1,21 @@
 function ServerCommunication() {
 
-	this.UpdateInfoOfEmploye = function(panelOfEmployeeC, username, email, name, branchId, status, wage, recruitmentDay) {
+	this.UpdateInfoOfEmployee = function(panelOfEmployeeC, username, email, name, branchId, status, sex, wage, recruitmentDay) {
 		//CLOSE MENU IF IS OPENED
 		var leftC = document.getElementById("leftC");
 		var leftFixedC = document.getElementById("leftFixedC");
 		var menuSymbolC = document.getElementById("menuSymbolC");
 		var menuBtn = document.getElementById("menuBtn");
-		var editAlertBeforeEndTaskC = document.getElementById("editAlertBeforeEndTaskC");
-		var editAlertTextC = document.getElementById("editAlertTextC");
-		var editAlertOkBtn = document.getElementById("editAlertOkBtn");
-		var editAlertCancelBtn = document.getElementById("editAlertCancelBtn");
+		var coverPageHelperC = document.getElementById("coverPageHelperC");
+		var alertInfoForCreatNewBranchC = document.getElementById("alertInfoForCreatNewBranchC");
+		var alertInfoForCreatNewBranchTextC = document.getElementById("alertInfoForCreatNewBranchTextC");
+		var alertInfoForCreatNewBranchBtn = document.getElementById("alertInfoForCreatNewBranchBtn");
+		var alertAddNewInfoC = document.getElementById("alertAddNewInfoC");
+		var addNewInfoTextC = document.getElementById("addNewInfoTextC");
+		var yesAddNewInfoBtn = document.getElementById("yesAddNewInfoBtn");
+		var noAddNewInfoBtn = document.getElementById("noAddNewInfoBtn");
+
+		var impChange = 0;
 
 		if(leftFixedC.offsetWidth != 0) {
 			leftC.style.width = 0;
@@ -34,62 +40,6 @@ function ServerCommunication() {
 		var statusArray = ["Admin", "Employee Manager", "Agency Employee", "Store Manager"];
 		var statusNow = -10;
 		
-		//NO WHITE SPACE USERNAME BAR
-		function NoWhiteSpaceInUsernameBar() { 
-			var key = event.keyCode;
-			if (key === 32) {
-				event.preventDefault();
-			}
-		}
-
-		//ALLOW ONLY NUMBERS IN INPUT
-		function OnlyNumberKey(evt, symbol) {
-			var ASCIICode = (evt.which) ? evt.which : evt.keyCode
-			if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) {
-				if(symbol == "dot")	{
-					if(ASCIICode != 46) {
-						evt.preventDefault();
-					}
-				}
-				else {
-					evt.preventDefault();
-				}
-			}
-		}
-
-		//CONVERT DATE FORMAT TO INPUT DATE
-		function ConvertFromDate(recruitmentDayDate) {
-			var date = new Date(recruitmentDayDate);
-			var year = date.getFullYear() + "";
-			var month = date.getMonth() + 1 + "";
-			var day = date.getDate() + "";
-
-			if(month.length < 2) {
-				month = "0" + month;
-			}
-			
-			if(day.length < 2) {
-				day = "0" + day;
-			}
-			return (year + "-" + month + "-" + day);
-		}
-
-		function ConvertToDate(recruitmentDayDate) {
-			var date = new Date(recruitmentDayDate);
-			var year = date.getFullYear() + "";
-			var month = date.getMonth() + 1 + "";
-			var day = date.getDate() + "";
-
-			if(month.length < 2) {
-				month = "0" + month;
-			}
-			
-			if(day.length < 2) {
-				day = "0" + day;
-			}
-			return (month + "/" + day + "/" + year);
-		}
-
 		//CREATE THE OPTIONS MENU FOR STATUS
 		function CreateStatusOptions(select) {
 			var options = [];
@@ -158,7 +108,7 @@ function ServerCommunication() {
 		usernameEmployeeEditTextC.innerHTML = "Όνομα χρήστη";
 		var usernameEmployeeEditInpt = document.createElement("input");
 		usernameEmployeeEditInpt.id = "usernameEmployeeEditInpt";
-		usernameEmployeeEditInpt.addEventListener("keypress", NoWhiteSpaceInUsernameBar);
+		usernameEmployeeEditInpt.addEventListener("keypress", NoWhiteSpace);
 		usernameEmployeeEditInpt.oninput = function () {
 			if (this.value.length > 25) {
 				this.value = this.value.slice(0, 25); 
@@ -182,7 +132,7 @@ function ServerCommunication() {
 				this.value = this.value.slice(0, 35); 
 			}
 		}
-		emailEmployeeEditInpt.addEventListener("keypress", NoWhiteSpaceInUsernameBar);
+		emailEmployeeEditInpt.addEventListener("keypress", NoWhiteSpace);
 		emailEmployeeEditInpt.value = email;
 		emailEmployeeEditC.appendChild(emailEmployeeEditTextC);
 		emailEmployeeEditC.appendChild(emailEmployeeEditInpt);
@@ -196,7 +146,7 @@ function ServerCommunication() {
 		nameEmployeeEditTextC.innerHTML = "Ονοματεπώνυμο";
 		var nameEmployeeEditInpt = document.createElement("input");
 		nameEmployeeEditInpt.id = "nameEmployeeEditInpt";
-		nameEmployeeEditInpt.disabled = "true";
+		nameEmployeeEditInpt.disabled = true;
 		nameEmployeeEditInpt.oninput = function () {
 			if (this.value.length > 35) {
 				this.value = this.value.slice(0, 35); 
@@ -238,9 +188,14 @@ function ServerCommunication() {
 		var statusEmployeeEditSelect = document.createElement("select");
 		statusEmployeeEditSelect.id = "statusEmployeeEditSelect";
 		CreateStatusOptions(statusEmployeeEditSelect);
-		var currentSelected = GetStartingStatusOption("greek");
+		if(branchId != 0) {
+			statusEmployeeEditSelect.addEventListener("change", function() {
+				UpdateBranchAvailable();
+			});
+		}
+		var currentStatusSelected = GetStartingStatusOption("greek");
 		if(statusEmployeeEditSelect.value == "Γενικός Διαχειριστής") {
-			statusEmployeeEditSelect.disabled = "false";
+			statusEmployeeEditSelect.disabled = true;
 		}
 		statusEmployeeEditC.appendChild(statusEmployeeEditTextC);
 		statusEmployeeEditC.appendChild(statusEmployeeEditSelect);
@@ -252,25 +207,26 @@ function ServerCommunication() {
 		var branchIdEmployeeEditTextC = document.createElement("div");
 		branchIdEmployeeEditTextC.id = "branchIdEmployeeEditTextC";
 		branchIdEmployeeEditTextC.innerHTML = "Κωδικός καταστήματος";
-		var branchIdEmployeeEditInpt = document.createElement("input");
-		branchIdEmployeeEditInpt.id = "branchIdEmployeeEditInpt";
-		branchIdEmployeeEditInpt.type = "number";
-		branchIdEmployeeEditInpt.value = branchId;
-		if(branchIdEmployeeEditInpt.value.length < 4) {
-			branchIdEmployeeEditInpt.disabled = "true";
+		var branchIdEmployeeEditSlct = document.createElement("select");
+		branchIdEmployeeEditSlct.id = "branchIdEmployeeEditSlct";
+		branchIdEmployeeEditSlct.type = "number";
+		var currentBranchSelected = "";
+		if(branchId == 0) {
+			branchIdEmployeeEditSlct.disabled = true;
+
+			branchIdEmployeeEditSlct.innerHTML = "";
+			var adminOption = document.createElement("option");
+			adminOption.className = "optionsForBranch";
+			adminOption.innerHTML = branchId;
+			branchIdEmployeeEditSlct.appendChild(adminOption);
 		}
 		else {
-			branchIdEmployeeEditInpt.addEventListener("keypress", function() {
-				OnlyNumberKey(event, "");
-			});
-			branchIdEmployeeEditInpt.oninput = function () {
-				if (this.value.length > 4) {
-					this.value = this.value.slice(0,4); 
-				}
-			}
+			branchIdEmployeeEditSlct.disabled = false;
+			UpdateBranchAvailable();
 		}
+
 		branchIdEmployeeEditC.appendChild(branchIdEmployeeEditTextC);
-		branchIdEmployeeEditC.appendChild(branchIdEmployeeEditInpt);
+		branchIdEmployeeEditC.appendChild(branchIdEmployeeEditSlct);
 		editInfoGetterRightC.appendChild(branchIdEmployeeEditC);
 
 		//EMPLOYEE RECRUITMENTDAY EDIT WINDOW
@@ -283,8 +239,8 @@ function ServerCommunication() {
 		recruitmentDayEmployeeEditInpt.id = "recruitmentDayEmployeeEditInpt";
 		recruitmentDayEmployeeEditInpt.type = "text";
 		recruitmentDayEmployeeEditInpt.value = recruitmentDay;
-		//recruitmentDayEmployeeEditInpt.value = ConvertFromDate(recruitmentDay);
-		recruitmentDayEmployeeEditInpt.disabled = "true";
+		recruitmentDayEmployeeEditInpt.value = ConvertFromDate(recruitmentDay);
+		recruitmentDayEmployeeEditInpt.disabled = true;
 		recruitmentDayEmployeeEditC.appendChild(recruitmentDayEmployeeEditTextC);
 		recruitmentDayEmployeeEditC.appendChild(recruitmentDayEmployeeEditInpt);
 		editInfoGetterRightC.appendChild(recruitmentDayEmployeeEditC);
@@ -314,13 +270,56 @@ function ServerCommunication() {
 			}
 		}
 
-		function CreateAsyncEmployee(employeeStr) {
+		//WHEN ADMIN CHANGE STATUS OF EMPLOYEE, SHOWS AVAILABLE BRANCHES TO WORK
+		function UpdateBranchAvailable() {
+			var employee = {
+    			'username': usernameEmployeeEditInpt.value,
+    			'email': emailEmployeeEditInpt.value,
+   				'name': nameEmployeeEditInpt.value,
+    			'wage': wage,
+    			'status': TranslateStatusTo("english", statusEmployeeEditSelect.value),
+    			'branchId': branchIdEmployeeEditSlct.value
+    		};
+
 			$.ajax({
 				type: 'POST',
-				url: "../Php/updateEmployeesEditPhp.php",
-				data: {employee: employeeStr, key: username, userThatMakeChanges: userIn},
+				url: "../Php/updateEmployeeBranchesAvailablePhp.php",
+				data: {key: username, statusSearch: employee.status},
 				success: function(data) {
-					alert(data);
+					//CREATE OPTIONS FOR BRANCH IDS AVAILABLE FOR EACH STATUS
+					branchIdEmployeeEditSlct.innerHTML = "";
+					var availableBranchesArray = JSON.parse(data);
+					var idsOfAvailBranArray = [];
+					var locOfAvailBranArray = [];
+					var streetOfAvailBranArray = [];
+					for(var i = 0; i < availableBranchesArray.length; i++) {
+						idsOfAvailBranArray.push(availableBranchesArray[i].id);
+						locOfAvailBranArray.push(availableBranchesArray[i].location);
+						streetOfAvailBranArray.push(availableBranchesArray[i].street);
+					}
+					if(branchId == null) {
+						idsOfAvailBranArray.push(branchId);
+					}
+					for(var i = 0; i < idsOfAvailBranArray.length; i++) {
+						var option = document.createElement("option");
+						option.className = "optionsForBranch";
+						option.innerHTML = "#" + idsOfAvailBranArray[i] + " - " + locOfAvailBranArray[i] + " - " + streetOfAvailBranArray[i];
+						branchIdEmployeeEditSlct.appendChild(option);
+						if(branchId == idsOfAvailBranArray[i]) {
+							option.selected = "selected";
+							option.innerHTML += " (τωρινό)"
+						}
+						else {
+							option.style.color = "green";
+						}
+
+						if(idsOfAvailBranArray[i] == null) {
+							option.innerHTML = "Δεν έχει ορισθεί κατάστημα";
+							option.disabled = "disabled";
+							option.style.display = "none";
+						}
+					}
+					currentBranchSelected = branchIdEmployeeEditSlct.options[branchIdEmployeeEditSlct.selectedIndex].text;
 				}
 			});
 		}
@@ -330,10 +329,9 @@ function ServerCommunication() {
     			'username': usernameEmployeeEditInpt.value,
     			'email': emailEmployeeEditInpt.value,
    				'name': nameEmployeeEditInpt.value,
-    			'branchId': branchIdEmployeeEditInpt.value,
-    			'status': TranslateStatusTo("english", statusEmployeeEditSelect.value),
     			'wage': wage,
-    			'recruitmentDay': ConvertToDate(recruitmentDayEmployeeEditInpt.value)
+    			'status': TranslateStatusTo("english", statusEmployeeEditSelect.value),
+    			'branchId': branchIdEmployeeEditSlct.value
     		};
 
 			var continueNoError = 0;
@@ -341,52 +339,68 @@ function ServerCommunication() {
 			continueNoError += IfElementNotEmpty(emailEmployeeEditInpt);
 			continueNoError += IfElementNotEmpty(wageEmployeeEditInpt);
 			continueNoError += IfElementNotEmpty(statusEmployeeEditSelect);
-			continueNoError += IfElementNotEmpty(branchIdEmployeeEditInpt);
-			continueNoError += IfElementNotEmpty(recruitmentDayEmployeeEditInpt);
-			if(continueNoError == 6) {
-				editAlertBeforeEndTaskC.style.display = "block";
-				editAlertCancelBtn.addEventListener("click", function() {EmployeeApproveClickCancelBtn();});
-				if(username == usernameEmployeeEditInpt.value && email == emailEmployeeEditInpt.value && name == nameEmployeeEditInpt.value && branchId == branchIdEmployeeEditInpt.value && status == TranslateStatusTo("english", statusEmployeeEditSelect.value) && wage == wageEmployeeEditInpt.value) {
-					editAlertTextC.innerHTML = "Δεν έχει γίνει καμία αλλαγή!";
-					editAlertOkBtn.style.display = "none";
+			continueNoError += IfElementNotEmpty(branchIdEmployeeEditSlct);
+
+			if(continueNoError == 5) {
+				if(username == usernameEmployeeEditInpt.value && email == emailEmployeeEditInpt.value && wage == wageEmployeeEditInpt.value && status == TranslateStatusTo("english", statusEmployeeEditSelect.value) && branchIdEmployeeEditSlct.value.includes(branchId)) {
+					alertInfoForCreatNewBranchC.style.display = "table";
+					alertInfoForCreatNewBranchTextC.innerHTML = "Δεν έχει γίνει καμία αλλαγή!";
+					alertInfoForCreatNewBranchBtn.innerHTML = "Το κατάλαβα";
+					alertInfoForCreatNewBranchBtn.addEventListener("click", function() {
+						alertInfoForCreatNewBranchC.style.display = "none";
+					});
 				}
 				else {
 					var situationToStayAfterChange = "continue";
 
+					alertAddNewInfoC.style.display = "block";
+					alertInfoForCreatNewBranchC.style.display = "none";
+
 					ShowChangesOfEdit();
-					editAlertOkBtn.style.display = "block";
 					if((userIn == username) && (username != usernameEmployeeEditInpt.value || email != emailEmployeeEditInpt.value || TranslateStatusTo("greek", status) != statusEmployeeEditSelect.value)) {
-						editAlertTextC.innerHTML = "Η αλλαγή ενός εκ των βασικών σας στοιχείων (Όνομα χρήστη, Email ή/και Ρόλος), θα οδηγήσει σε αποσύνδεση. Βεβαιωθείτε ότι θυμάστε τα στοιχεία που αλλάξατε. Να ολοκληρωθεί η διαδικασία;";
+						addNewInfoTextC.innerHTML = "Η αλλαγή ενός εκ των βασικών σας στοιχείων (Όνομα χρήστη ή/και Email), θα οδηγήσει σε αποσύνδεση. Βεβαιωθείτε ότι θυμάστε τα στοιχεία που αλλάξατε. Να ολοκληρωθεί η διαδικασία;";
 						situationToStayAfterChange = "exit";
 					}
 					else {
-						editAlertTextC.innerHTML = "Είστε σίγουρος για την ολοκλήρωση της διαδικασίας;";
+						addNewInfoTextC.innerHTML = "Η αλλαγή των προσωπικών στοιχείων ενός υπαλλήλου, μπορούν να προκαλέσουν προβλήματα στην λειτουργία των καταστημάτων.<br>Βεβαιωθείτε πρώτα, ότι έχετε ενημερώσει τον υπάλληλο και τον μάνατζερ του καταστήματος. <br>Θέλετε να ολοκληρώσετε την διαδικασία; (τα αλλαγμένα πεδία φαίνονται με πράσινο)<br>Η σελίδα θα ανανεωθεί αυτόματα αφού ολοκληρωθεί η διαδικασία.";
 						situationToStayAfterChange = "continue";
 					}
-					editAlertOkBtn.addEventListener("click", function() {EmployeeApproveClickOkBtn(employee, situationToStayAfterChange);});
-					NewEmployeeInfoApprovedAndAddBack(employee);
+					yesAddNewInfoBtn.addEventListener("click", function() {EmployeeApproveClickOkBtn(employee, situationToStayAfterChange);});
+					noAddNewInfoBtn.addEventListener("click", function() {EmployeeClickCancelBtn();});
 				}
 			}
 		}
 
 		function ShowChangesOfEdit() {
 			if(username != usernameEmployeeEditInpt.value) {
-				usernameEmployeeEditInpt.style.borderColor = "blue";
+				usernameEmployeeEditInpt.style.borderColor = "green";
 			}
+
 			if(email != emailEmployeeEditInpt.value) {
-				emailEmployeeEditInpt.style.borderColor = "blue";
+				emailEmployeeEditInpt.style.borderColor = "green";
 			}
+
 			if(name != nameEmployeeEditInpt.value) {
-				nameEmployeeEditInpt.style.borderColor = "blue";
+				nameEmployeeEditInpt.style.borderColor = "green";
 			}
+
 			if(wage != wageEmployeeEditInpt.value) {
-				wageEmployeeEditInpt.style.borderColor = "blue";
+				wageEmployeeEditInpt.style.borderColor = "green";
 			}
+
 			if(status != TranslateStatusTo("english", statusEmployeeEditSelect.value)) {
-				statusEmployeeEditSelect.style.borderColor = "blue";
+				statusEmployeeEditSelect.style.borderColor = "green";
 			}
-			if(branchId != branchIdEmployeeEditInpt.value) {
-				branchIdEmployeeEditInpt.style.borderColor = "blue";
+
+			if(branchId == null) {
+				if(branchIdEmployeeEditSlct.value.includes("#")) {
+					branchIdEmployeeEditSlct.style.borderColor = "green";
+				}
+			}
+			else {
+				if(!branchIdEmployeeEditSlct.value.includes(branchId)) {
+					branchIdEmployeeEditSlct.style.borderColor = "green";
+				}
 			}
 		}
 
@@ -396,65 +410,59 @@ function ServerCommunication() {
 			nameEmployeeEditInpt.style.borderColor = "rgb(13, 18, 24)";
 			wageEmployeeEditInpt.style.borderColor = "rgb(13, 18, 24)";
 			statusEmployeeEditSelect.style.borderColor = "rgb(13, 18, 24)";
-			branchIdEmployeeEditInpt.style.borderColor = "rgb(13, 18, 24)";
+			branchIdEmployeeEditSlct.style.borderColor = "rgb(13, 18, 24)";
 		}
 
 		async function EmployeeApproveClickOkBtn(employee, situation) {
-			var employeeStr = JSON.stringify(employee);
-			await CreateAsyncEmployee(employeeStr);
-			/*if(situation == "exit") {
+			var messagesArray = await CreateAsyncEmployee(employee);
+
+			if(situation == "exit") {
 				document.getElementById("logOutBtn").click();
 			}
 			else {
 				BackToWaitingEditPanel();
-			}*/
+				if(situation == "continue") {
+					location.reload();
+				}
+			}
 		}
 
-		function EmployeeApproveClickCancelBtn() {
-			editAlertBeforeEndTaskC.style.display = "none";
-			usernameEmployeeEditInpt.value = username;
-			emailEmployeeEditInpt.value = email;
-			nameEmployeeEditInpt.value = name;
-			wageEmployeeEditInpt.value = wage;
-			statusEmployeeEditSelect.value = currentSelected;
-			branchIdEmployeeEditInpt.value = branchId;
-			BackToWaitingEditPanel();
-		}
+		function CreateAsyncEmployee(employee) {
+			if(!employee.branchId.includes("#")) {
+				employee.branchId = "";
+			}
+			else {
+				employee.branchId = employee.branchId .substring(1, 5);
+				if((employee.status != status || employee.branchId != branchId) && status == "Employee Manager") {
+    				impChange = 1;
+    			}
+			}
 
-		function NewEmployeeInfoApprovedAndAddBack(employeeNewInfo) {
-			panelOfEmployeeC.querySelector("#employeeUsernameTextC").innerHTML = employeeNewInfo.username;
-			panelOfEmployeeC.querySelector("#employeeEmailTextC").innerHTML = employeeNewInfo.email;
-			panelOfEmployeeC.querySelector("#employeeBranchTextC").innerHTML = employeeNewInfo.branchId;
-			panelOfEmployeeC.querySelector("#employeeWageTextC").innerHTML = employeeNewInfo.wage;
-		}
-		//**
-	}
+			var employeeStr = JSON.stringify(employee);
 
-	this.CheckIfNewBranchHas = function(panelOfEmployeeC) {
-		var branchId = branchId;
-		var branchObj = [];
-
-		function CreateAsync() {
 			return new Promise ((resolve, reject) => {
 				$.ajax({
 					type: 'POST',
-					url: "../Php/findBranchPhp.php",
-					data: {branch: branchId},
-					datatype: text,
+					url: "../Php/updateEmployeesEditPhp.php",
+					data: {employee: employeeStr, key: username, userThatMakeChanges: userIn, importantChange: impChange, previousBranch: branchId},
 					success: function(data) {
-						branchObj = JSON.parse(data);
-						resolve(branchObj);
+						//alert(data);
+						resolve(data);
 					}
 				});
 			});
 		}
 
-		async function CallAsync() {
-			branchObj = await CreateAsync();
-			panelOfEmployeeC.querySelector("#employeeBranchTextC").innerHTML = branchObj.id + " - " + branchObj.location + " - " + branchObj.street;
-			panelOfEmployeeC.querySelector("#employeeBranchTextC").title = branchObj.type;
+		function EmployeeClickCancelBtn() {
+			alertAddNewInfoC.style.display = "none";
+			usernameEmployeeEditInpt.value = username;
+			emailEmployeeEditInpt.value = email;
+			nameEmployeeEditInpt.value = name;
+			wageEmployeeEditInpt.value = wage;
+			statusEmployeeEditSelect.value = currentStatusSelected;
+			branchIdEmployeeEditSlct.value = currentBranchSelected;
+			BackToWaitingEditPanel();
 		}
-
-		CallAsync();
+		//**
 	}
 }

@@ -45,7 +45,7 @@ async function ServerEmployee() {
 function phpObjectConvertToJsObject(employeesArray) {
 	for(var i = 0; i < employeesArray.length; i++) {
 		var employee = new Employee(employeesArray[i].username, employeesArray[i].email, employeesArray[i].name,
-					employeesArray[i].icon, employeesArray[i].branchId, employeesArray[i].status,
+					employeesArray[i].icon, employeesArray[i].branchId, employeesArray[i].status, employeesArray[i].sex,
 					employeesArray[i].wage, employeesArray[i].recruitmentDay);
 
 		employeesObjSArray.push(employee);

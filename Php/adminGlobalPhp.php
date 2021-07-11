@@ -4,6 +4,7 @@
 	var userInObject = "";
 </script>
 
+<script type="text/javascript" src="../Js/generalFunctionsForSite.js"></script>
 <script type="text/javascript" src="../Js/ServerCommunication.js"></script>
 <script type="text/javascript" src="../Js/User.js"></script>
 <script type="text/javascript" src="../Js/Bus.js"></script>

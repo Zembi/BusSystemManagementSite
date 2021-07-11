@@ -15,12 +15,22 @@
 	if(!mysqli_select_db($conn, $db)) {
 		echo "Database Not Selected";
 	}
-	$branchToFind = $_POST['branch'];
-	$branchFound = "";
-	$query = "SELECT * FROM branches WHERE Id = '$branchToFind'";
 
-	$result = mysqli_query($conn, $query);
-	while (($row = mysqli_fetch_array($result))) {
+	$availableBranchIdArray = [];
+
+	$key = $_POST['key'];
+	$statusToSearch = $_POST['statusSearch'];
+
+	if($statusToSearch == "Employee Manager") {
+		$sqlGetAllBranches = "SELECT * FROM branches WHERE Manager IS NULL OR Manager = '$key'";
+	}
+	else {
+		$sqlGetAllBranches = "SELECT * FROM branches";
+	}
+
+	$resultBranchId = mysqli_query($conn, $sqlGetAllBranches);
+
+	while(($row = mysqli_fetch_array($resultBranchId))) {
 		$branchFound = array(
 			'id' => $row['Id'],
 			'type' => $row['Type'],
@@ -29,10 +39,13 @@
    			'image' => $row['Image'],
 			'manager' => $row['Manager'],
 			'storeId' => $row['StoreId'],
-			'status' => $row['Status'] );
+			'status' => $row['Status']
+		);
+
+		array_push($availableBranchIdArray, $branchFound);
 	}
-	
-	echo json_encode($branchFound);
+
+	echo json_encode($availableBranchIdArray);
 
 	mysqli_close($conn);
 

@@ -25,7 +25,7 @@ class ButtonListener {
 	AddEventsToButtons() {
 			
 		//EXIT EDIT BUTTON
-		exitEditBtn.addEventListener("click", this.ExitEditButtonListener);
+		exitEditBtn.addEventListener("click", this.ExitEditBtnButtonListener);
 		if(this.type == "ADMIN") {
 			//IF CLASS IS BEING CALLED FROM ADMIN SITE
 			homeBtn.addEventListener("click", this.HomeButtonListener);
@@ -43,11 +43,9 @@ class ButtonListener {
 	}
 
 	//EXIT EDIT BUTTON EVENT
-	ExitEditButtonListener() {
+	ExitEditBtnButtonListener() {
 		var editWindowC = document.getElementById("editWindowC");
 		editWindowC.style.display = "none";
-		var editAlertBeforeEndTaskC = document.getElementById("editAlertBeforeEndTaskC");
-		editAlertBeforeEndTaskC.style.display = "none";
 	}
 
 	//MENU BUTTON EVENTS

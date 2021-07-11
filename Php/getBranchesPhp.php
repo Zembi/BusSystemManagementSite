@@ -25,14 +25,14 @@
 	$result = mysqli_query($conn, $query);
 	while (($row = mysqli_fetch_array($result))) {
 		$branch = array(
-			'username' => $row['Username'],
-			'email' => $row['Email'],
-			'name' => $row['Name'],
-   			'icon' => $row['Icon'],
-			'branchId' => $row['BranchId'],
-			'status' => $row['Status'],
-			'wage' => $row['Wage'],
-			'recruitmentDay' => $formatedRecruitmentDay
+			'id' => $row['Id'],
+			'type' => $row['Type'],
+			'street' => $row['Street'],
+   			'location' => $row['Location'],
+			'image' => $row['Image'],
+			'manager' => $row['Manager'],
+			'storeId' => $row['StoreId'],
+			'status' => $row['Status']
 		);
 		array_push($branches, $branch);
 	}

@@ -56,6 +56,11 @@
  	?>
 
 	<div id="backgroundC">
+		<div id="coverPageHelperC"></div>
+		<div id="alertInfoForCreatNewBranchC">
+			<div id="alertInfoForCreatNewBranchTextC"></div>
+			<button id="alertInfoForCreatNewBranchBtn"></button>
+		</div>
 		<div id="editWindowC">
 			<div id="centerEditWindowC">
 				<div id="exitEditBtn">X</div>
@@ -63,17 +68,22 @@
 				<div id="editInfoGetterC">
 					<div id="editInfoGetterLeftC"></div>
 					<div id="editInfoGetterRightC"></div>
-					<div id="editAlertBeforeEndTaskC">
-						<div id="editAlertTextC"></div>
-						<div id="editApproveOrNotBtnC">
-							<button id="editAlertOkBtn">ΕΝΤΑΞΕΙ</button>
-							<button id="editAlertCancelBtn">ΑΚΥΡΩΣΗ</button>
-						</div>
+				</div>
+			</div>
+		</div>
+		<div id="alertAddNewInfoC">
+			<div id="centerAddNewInfoWindowC">
+				<div id="importantSymbolAddNewInfoC">!</div>
+				<div id="addNewInfoTitleC"><div id="addNewInfoTitleTextC"></div></div>
+				<div id="addNewInfoGetterC">
+					<div id="addNewInfoTextC"></div>
+					<div id="addNewInfoActionBtnC">
+						<button id="yesAddNewInfoBtn">ΝΑΙ</button>
+						<button id="noAddNewInfoBtn">ΟΧΙ</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div id="generalAlertWindowC"></div>
 		<div id="leftC">
 			<div id="leftFixedC">
 				<div id="menuSymbolC">

@@ -14,6 +14,11 @@ async function ServerStart() {
 	CheckAdminBeforeLoad();
 	userObj = await GetAdminInfoFromServer();
 	AdminInfoManage(userObj);
+
+	//EVENTS WHEN USER CLOSES WINDOW
+	window.addEventListener("unload", function(event) {
+    	document.getElementById("logOutBtn").click();
+	});
 }
 
 //GET THE TIME THAT THE NEXT UPDATE WILL HAPPEN
@@ -57,7 +62,7 @@ function GetAdminInfoFromServer(userObj) {
 }
 
 function AdminInfoManage(userObj) {
-	userInObject = new User(userObj.username, userObj.email, userObj.icon, userObj.name, userObj.password, userObj.status);
+	userInObject = new User(userObj.username, userObj.email, userObj.icon, userObj.name, userObj.password, userObj.status, userObj.sex);
 }
 
 function CheckIfSystemIsDownForThisUser() {

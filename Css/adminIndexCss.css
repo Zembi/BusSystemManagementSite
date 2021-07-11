@@ -16,6 +16,10 @@
 		padding: 0;
 	}
 
+	button {
+		font-family: Roboto Slab;
+	}
+
 	/* Chrome, Safari, Edge, Opera */
 	input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 		-webkit-appearance: none;
@@ -31,13 +35,68 @@
 		font-family: Roboto Slab;
 	}
 
+	/*FOR COVERING ALL PAGE SO USER CANT INTERACT*/
+	#coverPageHelperC {
+		display: none;
+		position: fixed;
+		width: 100%; height: 100%;
+		background: rgb(255, 255, 255, 0.2);
+		z-index: 10000000;
+	}
+
+	/*FOR ALERT MESSAGES*/
+	#alertInfoForCreatNewBranchC {
+		display: none;
+		position: fixed;
+		background: rgb(22, 36, 53, 0.8);
+		color: white;
+		top: 0; left: 50%;
+		font-size: 16px;
+		border: 2px solid rgb(255, 215, 0); border-top: none;
+		margin: auto;
+		padding: 20px 20px 15px 20px;
+		transform: translate(-50%, 0);
+		z-index: 1000000000;
+		transition: opacity 0.4s;
+	}
+
+	#alertInfoForCreatNewBranchTextC {
+		display: table;
+		background: transparent;
+		border-radius: 5px;
+		margin: auto; margin-bottom: 8px;
+		padding: 2px;
+	}
+	
+	#alertInfoForCreatNewBranchBtn {
+		position: relative;
+		display: table;
+		background: rgb(255, 215, 0);
+		color: rgb(13, 18, 24);
+		font-size: 16px;
+		cursor: pointer;
+		border-radius: 2px;
+		border: 2px solid rgb(13, 18, 24);
+		margin: auto;
+	}
+
+	#alertInfoForCreatNewBranchBtn:hover {
+		background: white;
+		color: rgb(37, 52, 69);
+	}
+
+	#alertInfoForCreatNewBranchBtn:active {
+		background: rgb(13, 18, 24);
+		color: rgb(22, 36, 53);
+	}
+
 	/*EDIT WINDOW*/
 	#editWindowC {
 		display: none;
 		position: fixed;
 		width: 100%; height: 100%;
 		background: rgb(255, 255, 255, 0.2);
-		z-index: 100000;
+		z-index: 100000000;
 	}
 
 	#centerEditWindowC {
@@ -111,46 +170,111 @@
 		padding: 10px;
 	}
 
-	#editAlertBeforeEndTaskC {
+	/*ADD NEW INFO ALERT*/
+	#alertAddNewInfoC {
 		display: none;
+		position: fixed;
+		width: 100%; height: 100%;
+		background: rgb(255, 255, 255, 0.2);
+		z-index: 10000000000;
+	}
+
+	#centerAddNewInfoWindowC {
 		position: absolute;
-		background: rgb(255, 215, 0);
-		top: 50%; left: 50%;
-		padding: 20px;
-		transform: translate(-50%, -50%);
-	}
-
-	#editAlertTextC {
-		display: table;
-		position: relative;
-		background: rgb(0, 0, 0, 0.2);
-	}
-
-	#editApproveOrNotBtnC {
-		display: table;
-		background: transparent;
-		margin: auto;
-	}
-
-	#editAlertOkBtn {
-		float: left;
-		position: relative;
-		color: rgb(13, 18, 24);
-		cursor: pointer;
-		left: 0; bottom: 0;
+		width: 60%;
+		min-width: 700px;
+		background: rgb(22, 36, 53);
+		color: white;
+		top: 10px; left: 50%;
 		border-radius: 4px;
 		border: 2px solid rgb(13, 18, 24);
-		margin-right: 10px;
+		transform: translate(-50%, 0);
 	}
 
-	#editAlertCancelBtn {
-		position: relative;
-		color: rgb(13, 18, 24);
-		cursor: pointer;
-		right: 0; bottom: 0;
-		border-radius: 4px;
-		border: 2px solid rgb(13, 18, 24);
+	#importantSymbolAddNewInfoC {
+		position: absolute;
+		background: rgb(0, 0, 0, 0.0);
+		color: red;
+		top: -10px; right: 10px;
+		font-size: 40px;
+		font-weight: bold;
+		user-select: none;
+		padding: 2px 6px 2px 6px;
+		z-index: 2;
 	}
+
+	#addNewInfoTitleC {
+		display: table;
+		margin: auto; margin-top: 5px; margin-bottom: 5px;
+	}
+
+	#addNewInfoTitleTextC {
+		display: table;
+		width: 100%;
+		color: rgb(255, 215, 0);
+		font-size: 22px;
+	}
+	
+	#addNewInfoGetterC {
+		display: table;
+		width: 100%;
+		padding: 0 40px 0 40px;
+	}
+
+		#addNewInfoTextC {
+			display: table;
+			margin: auto;
+		}
+
+		#addNewInfoActionBtnC {
+			display: table;
+			position: relative;
+			margin: auto; margin-top: 10px; margin-bottom: 10px;
+		}
+		
+			#yesAddNewInfoBtn {
+				display: table-cell;
+				position: relative;
+				background: rgb(255, 215, 0);
+				color: rgb(13, 18, 24);
+				font-size: 16px;
+				cursor: pointer;
+				border-radius: 2px;
+				border: 2px solid rgb(13, 18, 24);
+				margin: 0 10px 0 0;
+			}
+
+			#yesAddNewInfoBtn:hover {
+				background: green;
+				color: rgb(37, 52, 69);
+			}
+
+			#yesAddNewInfoBtn:active {
+				background: rgb(13, 18, 24);
+				color: rgb(22, 36, 53);
+			}
+			
+			#noAddNewInfoBtn {
+				display: table-cell;
+				position: relative;
+				background: rgb(255, 215, 0);
+				color: rgb(13, 18, 24);
+				font-size: 16px;
+				cursor: pointer;
+				border-radius: 2px;
+				border: 2px solid rgb(13, 18, 24);
+				margin: 0 0 0 10px;
+			}
+
+			#noAddNewInfoBtn:hover {
+				background: red;
+				color: rgb(37, 52, 69);
+			}
+
+			#noAddNewInfoBtn:active {
+				background: rgb(13, 18, 24);
+				color: rgb(22, 36, 53);
+			}
 	/**/
 
 	#leftC {

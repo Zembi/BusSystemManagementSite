@@ -1,4 +1,12 @@
 
+	body {
+		font-family: Roboto Slab;
+	}
+
+	button {
+		font-family: Roboto Slab;
+	}
+
 /*INFO FOR ID CSS*/
 	#userIdC {
 		display: block;
@@ -19,7 +27,6 @@
 		background: transparent;
 		color: white;
 		text-align: center;
-		font-family: Arial;
 		font-size: 20px;
 		overflow: hidden;
 		border-radius: 8px 8px 0 0;

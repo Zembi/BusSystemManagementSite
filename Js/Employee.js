@@ -1,5 +1,5 @@
 
-function Employee(username, email, name, icon,  branchId, status, wage, recruitmentDay) {
+function Employee(username, email, name, icon,  branchId, status, sex, wage, recruitmentDay) {
 	this.username = username;
 	this.email = email;
 	this.name = name;
@@ -7,6 +7,7 @@ function Employee(username, email, name, icon,  branchId, status, wage, recruitm
 	this.branchId = branchId;
 	this.branchObj = [];
 	this.status = status;
+	this.sex = sex;
 	this.wage = wage;
 	this.recruitmentDay = recruitmentDay;
 	this.lock;
@@ -35,6 +36,10 @@ function Employee(username, email, name, icon,  branchId, status, wage, recruitm
 		return this.status;
 	}
 
+	this.getSex = function() {
+		return this.sex;
+	}
+
 	this.getWage = function() {
 		return this.wage;
 	}
@@ -55,7 +60,7 @@ function Employee(username, email, name, icon,  branchId, status, wage, recruitm
 		else if(this.status == "Agency Employee") {
 			translateStatus = "Υπάλληλος Πρακτορείου";
 		}
-		else if(this.status == "Store Employee") {
+		else if(this.status == "Store Manager") {
 			translateStatus = "Υπεύθυνος Αποθήκης";
 		}
 
@@ -194,27 +199,38 @@ function Employee(username, email, name, icon,  branchId, status, wage, recruitm
 		var branchId = this.getBranchId();
 		var branchObj = [];
 
-		function CreateAsync() {
-			return new Promise ((resolve, reject) => {
-				$.ajax({
-					type: 'POST',
-					url: "../Php/findBranchPhp.php",
-					data: {branch: branchId},
-					success: function(data) {
-						branchObj = JSON.parse(data);
-						resolve(branchObj);
-					}
+		if(branchId != null) {
+			function CreateAsync() {
+				return new Promise ((resolve, reject) => {
+					$.ajax({
+						type: 'POST',
+						url: "../Php/findBranchPhp.php",
+						data: {branch: branchId},
+						success: function(data) {
+							branchObj = JSON.parse(data);
+							resolve(branchObj);
+						}
+					});
 				});
-			});
-		}
+			}
 
-		async function CallAsync() {
-			branchObj = await CreateAsync();
-			panelOfEmployeeC.querySelector("#employeeBranchTextC").innerHTML = branchObj.id + " - " + branchObj.location + " - " + branchObj.street;
-			panelOfEmployeeC.querySelector("#employeeBranchTextC").title = branchObj.type;
-		}
+			async function CallAsync() {
+				branchObj = await CreateAsync();
+				panelOfEmployeeC.querySelector("#employeeBranchTextC").innerHTML = branchObj.id + " - " + branchObj.location + " - " + branchObj.street;
+				panelOfEmployeeC.querySelector("#employeeBranchTextC").title = branchObj.type;
+			}
 
-		CallAsync();
+			CallAsync();
+		}
+		else {
+			panelOfEmployeeC.querySelector("#employeeBranchTextC").innerHTML = "Δεν ανήκει σε κάποιο κατάστημα";
+			panelOfEmployeeC.style.background = "rgb(255, 215, 0, 0.0)";
+			//ADD * TO HEADER EMPLOYEES WITHOUT BRANCHES
+			var headerHelp = panelOfEmployeeC.querySelector("#employeeStatusC").innerHTML;
+			panelOfEmployeeC.querySelector("#employeeStatusC").innerHTML = "* " + headerHelp + " *";
+			panelOfEmployeeC.querySelector("#employeeBranchTextC").style.color = "rgb(255, 215, 0)";
+			panelOfEmployeeC.querySelector("#employeeBranchTextC").title = "στην αναμονή";
+		}
 	}
 
 	this.CreateSlideShowView = function(parentElmnt, id) {
@@ -224,6 +240,7 @@ function Employee(username, email, name, icon,  branchId, status, wage, recruitm
 		var name = this.getName();
 		var branchId = this.getBranchId();
 		var status = this.getStatus();
+		var sex = this.getSex();
 		var wage = this.getWage();
 		var recruitmentDay = this.getRecruitmentDay();
 
@@ -237,7 +254,7 @@ function Employee(username, email, name, icon,  branchId, status, wage, recruitm
 		var employeeEditInfoBtn = document.createElement("button");
 		employeeEditInfoBtn.id = "employeeEditInfoBtn";
 		employeeEditInfoBtn.addEventListener("click", function() {
-			serverCommun.UpdateInfoOfEmploye(panelOfEmployeeC, username, email, name, branchId, status, wage, recruitmentDay);
+			serverCommun.UpdateInfoOfEmployee(panelOfEmployeeC, username, email, name, branchId, status, sex, wage, recruitmentDay);
 		});
 		var employeeEditInfoImg = document.createElement("img");
 		employeeEditInfoImg.id = "employeeEditInfoImg";
@@ -388,13 +405,6 @@ function Employee(username, email, name, icon,  branchId, status, wage, recruitm
 		else {
 			employeeBranchTextC.innerHTML = this.getBranchId() + " - " + "Περιφέρεια Μακεδονίας";
 			employeeBranchTextC.title = "Διαχειριστική γραμμή"
-		}
-
-		//WAGE DOTS AND COMMAS
-		function numberWithCommas(x) {
-			var parts = x.toString().split(".");
-			parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,".");
-			return (parts.join(","));
 		}
 	}
 

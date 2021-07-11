@@ -13,11 +13,24 @@
 		padding: 0;
 	}
 
+	button {
+		font-family: Roboto Slab;
+	}
+
+	input:disabled {
+		background: rgb(255, 255, 255, 0.4);
+	}
+
+	select:disabled {
+		background: rgb(255, 255, 255, 0.4);
+	}
+
 	#branchesContentC {
 		position: relative;
 		width: 100%; height: auto;
 		overflow: hidden;
 		background: transparent;
+		font-family: Roboto Slab;
 		user-select: none;
 		z-index: 1;
 	}
@@ -51,7 +64,6 @@
 		color: white;
 		background: transparent;
 		font-size: 20px;
-		font-family: "Times New Roman", Times, serif;
 		font-style: italic;
 		font-weight: bold;
 		user-select: text;
@@ -148,7 +160,6 @@
 		background: rgb(0, 0, 0, 0.3);
 		color: white;
 		font-size: 30px;
-		font-family: "Times New Roman", Times, serif;
 		font-weight: bold;
 		cursor: pointer;
 	}
@@ -210,7 +221,6 @@
 		width: 100%; height: auto;
 		background: white;
 		font-size: 20px;
-		font-family: Advent Pro, serif;
 		border: 4px solid rgb(22, 28,34);
 		overflow: hidden;
 		padding: 5px 5px 0 5px;
@@ -431,28 +441,62 @@
 		outline: 2px solid rgb(255, 215, 0);
 	}
 
+	#titleOfNewBranchC {
+		display: table;
+		background: rgb(255, 255, 255, 0.5);
+		color: white;
+		font-size: 25px;
+		border-radius: 0 0 5px 5px;
+		margin: auto; margin-top: 0px;
+		padding: 10px 8px 10px 8px;	
+	}
+
 	/*NEW BRANCH CSS*/
 	#createNewBranchC {
-		display: table;
+		display: block;
 		position: relative;
 		width: 100%;
 		background: transparent;
-		font-family: Roboto Slab;
+		color: rgb(13, 18, 24);
+		padding: 0;
 	}
 
 	/*LEFT SIDE*/
 	#leftPanelBranchC {
-		display: table-cell;
+		float: left;
+		display: block;
 		position: relative;
 		width: 600px;
 		background: transparent;
-		margin: auto;
 		padding: 30px 100px 100px 100px;
 	}
 
+	#branchIdNewBranchInptC {
+		width: 220px;
+		margin: auto; margin-top: 20px;
+	}
+
+		#branchIdNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+	
+		#branchIdNewBranchInpt {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 20px;
+			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
+			padding: 1px 3px 1px 3px;
+
+		}
+
 	#categoryNewBranchInptC {
-		width: 100%;
-		margin-top: 20px;
+		width: 80%;
+		margin: auto; margin-top: 20px;
 	}
 
 		#categoryNewBranchTitleC {
@@ -463,10 +507,12 @@
 			margin-bottom: 5px;
 		}
 	
-		#categoryNewBranchInpt {
+		#categoryNewBranchSlct {
 			width: 100%;
+			color: rgb(13, 18, 24);
 			font-size: 20px;
 			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
 			padding: 1px 3px 1px 3px;
 		}
 	
@@ -485,8 +531,10 @@
 
 		#locationNewBranchInpt {
 			width: 100%;
+			color: rgb(13, 18, 24);
 			font-size: 20px;
 			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
 			padding: 1px 3px 1px 3px;
 		}
 	
@@ -505,28 +553,10 @@
 
 		#addressNewBranchInpt {
 			width: 100%;
+			color: rgb(13, 18, 24);
 			font-size: 20px;
 			text-align: center;
-			padding: 1px 3px 1px 3px;
-		}
-
-	#managerNewBranchInptC {
-		width: 100%;
-		margin-top: 20px;
-	}
-
-		#managerNewBranchTitleC {
-			width: 100%;
-			color: white;
-			font-size: 18px;
-			text-align: center;
-			margin-bottom: 5px;
-		}
-
-		#managerNewBranchInpt {
-			width: 100%;
-			font-size: 20px;
-			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
 			padding: 1px 3px 1px 3px;
 		}
 
@@ -545,8 +575,10 @@
 
 		#imageNewBranchInpt {
 			width: 100%;
+			color: rgb(13, 18, 24);
 			font-size: 20px;
 			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
 			padding: 1px 3px 1px 3px;
 		}
 
@@ -563,16 +595,71 @@
 			margin-bottom: 5px;
 		}
 
-		#managerNewBranchInpt {
+		#managerNewBranchSlct {
 			width: 100%;
+			color: rgb(13, 18, 24);
 			font-size: 20px;
 			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
 			padding: 1px 3px 1px 3px;
 		}
 
+	#statusNewBranchInptC {
+		width: 80%;
+		margin: auto; margin-top: 20px;
+	}
+
+		#statusNewBranchTitleC {
+			width: 100%;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
+
+		#statusNewBranchSlct {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 20px;
+			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
+			padding: 1px 3px 1px 3px;
+		}
+
+
+	#storeSizeBranchInptC {
+		width: 220px;
+		margin: auto; margin-top: 20px;
+	}
+
+		#storeSizeNewBranchTitleC {
+			display: table;
+			color: white;
+			font-size: 18px;
+			text-align: center;
+			margin: auto; margin-bottom: 5px;
+		}
+	
+		#storeSizeNewBranchInpt {
+			display: block;
+			width: 100%;
+			font-size: 20px;
+			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
+			margin: auto;
+			padding: 1px 3px 1px 3px;
+		}
+
+	/*RIGHT SIDE*/
+	#rightPanelBranchC {
+		position: relative;
+		background: transparent;
+		overflow: hidden;
+	}
+
 	#storeIdNewBranchInptC {
-		width: 100%;
-		margin-top: 20px;
+		width: 200px;
+		margin: auto; margin-top: 50px;
 	}
 
 		#storeIdNewBranchTitleC {
@@ -585,72 +672,183 @@
 
 		#storeIdNewBranchInpt {
 			width: 100%;
+			color: rgb(13, 18, 24);
 			font-size: 20px;
 			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
 			padding: 1px 3px 1px 3px;
 		}
-
-	#conveniencesNewBranchInptC {
-		width: 100%;
-		margin-top: 20px;
-	}
-
-		#conveniencesNewBranchTitleC {
-			width: 100%;
-			color: white;
-			font-size: 18px;
-			text-align: center;
-			margin-bottom: 5px;
-		}
-
-		#conveniencesNewBranchInpt {
-			width: 100%;
-			font-size: 20px;
-			text-align: center;
-			padding: 1px 3px 1px 3px;
-		}
-
-	#statusNewBranchInptC {
-		width: 100%;
-		margin-top: 20px;
-	}
-
-		#statusNewBranchTitleC {
-			width: 100%;
-			color: white;
-			font-size: 18px;
-			text-align: center;
-			margin-bottom: 5px;
-		}
-
-		#statusNewBranchInpt {
-			width: 100%;
-			font-size: 20px;
-			text-align: center;
-			padding: 1px 3px 1px 3px;
-		}
-
-	/*RIGHT SIDE*/
-	#rightPanelBranchC {
-		display: table-cell;
-		position: relative;
-		width: 600px; height: 100px;
-		background: red;
-		overflow: hidden;
-
-	}
 
 	#otherBranchesConnectedC {
-		
+		display: block;
+		position: relative;
+		width: 500px;
+		background: transparent;
+		margin: auto; margin-top: 15px;
 	}
 
-		#otherBranchesConnectedSlct {
+		#otherBranchesConnectedTitleC {
+			width: 100%;
+			color: white;
+			font-size: 20px;
+			text-align: center;
+			margin-bottom: 5px;
+		}
 
+		#otherBranchesConnectedSlct {
+			display: block;
+			position: relative;
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 20px;
+			text-align: center;
+			border: 1px solid rgb(22, 36, 53);
+			padding: 1px 3px 1px 3px;
+		}
+
+		.optionsOnCreateBranchForBranches {
+
+		}
+
+		#branchesSelectViewBtn {
+			display: block;
+			position: relative;
+			background: white;
+			font-size: 16px;
+			cursor: pointer;
+			border: 2px solid rgb(13, 18, 24);
+			margin: auto; margin-top: 20px;
+			padding: 4px;
+		}
+
+		#branchesSelectViewBtn:hover {
+			background: rgb(255, 255, 255, 0.7);
+		}
+
+		#branchesSelectViewBtn:active {
+			background: rgb(13, 22, 32);
+			color: white;
 		}
 	
 		#otherBranchesConnectedShowC {
-			
+			display: block;
+			position: relative;
+			width: 100%; height: 262px;
+			overflow: auto;
+			border-radius: 10px 2px 2px 2px;
+			border: 2px solid white;
+			margin: auto; margin-top: 20px;
 		}
+
+		/* width */
+		#otherBranchesConnectedShowC::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		/* Track */
+		#otherBranchesConnectedShowC::-webkit-scrollbar-track {
+			background: #f1f1f1; 
+		}
+		
+		/* Handle */
+		#otherBranchesConnectedShowC::-webkit-scrollbar-thumb {
+			background: rgb(255, 215, 0);
+		}
+
+		/* Handle on hover */
+		#otherBranchesConnectedShowC::-webkit-scrollbar-thumb:hover {
+			background: #555; 
+		}
+
+			#otherBranchesConnectedShowTitleC {
+				display: block;
+				position: sticky;
+				background: rgb(13, 18, 24);
+				color: white;
+				top: 0;
+				text-align: center;
+				border: none;
+				margin: 0;
+				padding: 4px;
+				z-index: 10;
+			}
+
+			#otherBranchesConnectedShowPanelC {
+				display: block;
+				position: relative;
+				width: 100%;
+				background: rgb(186, 162, 16);
+				color: rgb(13, 18, 24);
+				margin: 0;
+			}
+
+			#emptyConnectBrancListInfoC {
+				display: table;
+				position: relative;
+				width: 100%;
+				background: transparent;
+				color: white;
+				font-size: 16px;
+				padding: 4px 10px 4px 10px;
+			}
+
+			.lineConnectShowBranchesC {
+				float: left;
+				position: relative;
+				width: 100%;
+				background: rgb(255, 255, 255, 0.8);
+				color: rgb(13, 18, 24);
+				font-size: 16px;
+				border: 1px solid white;
+				padding: 4px 10px 4px 10px;
+			}
+
+			.lineConnectShowBranchesTextC {
+				float: left;
+				position: relative;
+				background: transparent;
+			}
+
+			.nextToLineConnectShowBranchesDeleteBtn {
+				float: right;
+				position: relative;
+				width: 22px; height: 22px;
+				overflow: hidden;
+				cursor: pointer;
+				padding: 0;
+			}
+
+			.nextToLineConnectShowBranchesDeleteBtnImg {
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_trash_20px.png);
+			}
+
+			.nextToLineConnectShowBranchesDeleteBtn:active {
+				background: rgb(255, 215, 0);
+			}
+
+	#confirmNewBranchBtn {
+		display: block;
+		position: relative;
+		background: white;
+		color: rgb(13, 18, 24);
+		font-size: 22px;
+		cursor: pointer;
+		border-radius: 4px;
+		border: 1px solid rgb(13, 18, 24);
+		margin: auto; margin-top: 50px;
+		padding: 12px 6px 12px 6px;
+	}
+
+	#confirmNewBranchBtn:hover {
+		background: rgb(186, 190, 195);
+	}
+
+	#confirmNewBranchBtn:active {
+		background: rgb(13, 18, 24);
+		color: white;
+	}
+
 
 	/*MEDIA FOR LOWER PIXEL SCREEN*/
 	@media screen and (max-width: 1300px) {

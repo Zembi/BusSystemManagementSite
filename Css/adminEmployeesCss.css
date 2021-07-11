@@ -13,7 +13,15 @@
 		padding: 0;
 	}
 
+	button {
+		font-family: Roboto Slab;
+	}
+
 	input:disabled {
+		background: rgb(255, 255, 255, 0.4);
+	}
+
+	select:disabled {
 		background: rgb(255, 255, 255, 0.4);
 	}
 
@@ -503,7 +511,7 @@
 		background: transparent;
 		left: 0;
 		white-space: nowrap;
-		transition: left 0.7s;
+		transition: left 0.3s;
 	}
 
 	.panelOfEmployeeC {
@@ -619,7 +627,7 @@
 
 	#employeeNameTitleC {
 		position: relative;
-		color: rgb(13, 18, 24);
+		color: grey;
 		font-size: 13px;
 		margin: 0 0 0 10px;
 	}
@@ -643,7 +651,7 @@
 
 	#employeeUsernameTitleC {
 		position: relative;
-		color: rgb(13, 18, 24);
+		color: grey;
 		font-size: 13px;
 		margin: 0 0 0 10px;
 	}
@@ -687,7 +695,7 @@
 		position: relative;
 		width: 100%; height: 100%;
 		transform-origin: left;
-		transform: translate(32%, 52%) rotateZ(-45deg);
+		transform: translate(36%, 52%) rotateZ(-45deg);
 		transition: transform 0.3s;
 	}
 
@@ -718,7 +726,7 @@
 
 	#employeeEmailTitleC {
 		position: relative;
-		color: rgb(13, 18, 24);
+		color: grey;
 		font-size: 13px;
 		margin: 0 0 0 10px;
 	}
@@ -747,7 +755,7 @@
 
 	#employeeBranchTitleC {
 		position: relative;
-		color: rgb(13, 18, 24);
+		color: grey;
 		font-size: 13px;
 		margin: 0 0 0 10px;
 	}
@@ -775,7 +783,7 @@
 
 	#employeeWageTitleC {
 		position: relative;
-		color: rgb(13, 18, 24);
+		color: grey;
 		font-size: 13px;
 		margin: 0 0 0 10px;
 	}
@@ -803,7 +811,7 @@
 
 	#employeeRecruitmentDayTitleC {
 		position: relative;
-		color: rgb(13, 18, 24);
+		color: grey;
 		font-size: 13px;
 		margin: 0 0 0 10px;
 	}
@@ -967,10 +975,6 @@
 		padding: 2px 4px 2px 4px;
 	}
 
-	.optionsForStatus {
-		text-align: center;
-	}
-
 	#statusEmployeeEditC {
 		display: table;
 		position: relative;
@@ -998,6 +1002,10 @@
 		padding: 2px 4px 2px 4px;
 	}
 
+	.optionsForStatus {
+		text-align: center;
+	}
+
 	#branchIdEmployeeEditC {
 		display: table;
 		position: relative;
@@ -1015,18 +1023,25 @@
 		user-select: none;
 	}
 
-	#branchIdEmployeeEditInpt {
+	#branchIdEmployeeEditSlct {
+		display: block;
+		position: relative;
 		width: 100%;
 		color: rgb(13, 18, 24);
 		font-size: 18px;
 		text-align: center;
 		border-radius: 4px;
 		border: 2px solid rgb(13, 18, 24);
+		margin: auto;
 		padding: 2px 4px 2px 4px;
 	}
 
-	#branchIdEmployeeEditInpt:focus {
+	#branchIdEmployeeEditSlct:focus {
 		outline: none;
+	}
+
+	.optionsForBranch {
+		text-align: center;
 	}
 
 	#recruitmentDayEmployeeEditC {

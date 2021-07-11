@@ -7,11 +7,20 @@
 </head>
 <body>
 
+
+<div id="titleOfNewBranchC">ΔΗΜΙΟΥΡΓΙΑ ΝΕΟΥ ΚΑΤΑΣΤΗΜΑΤΟΣ</div>
 	<div id="createNewBranchC">
 		<div id="leftPanelBranchC">
+			<div id="branchIdNewBranchInptC">
+				<div id="branchIdNewBranchTitleC">Κωδικός Καταστήματος</div>
+				<input id="branchIdNewBranchInpt" maxlength="11">
+			</div>
 			<div id="categoryNewBranchInptC">
 				<div id="categoryNewBranchTitleC">Κατηγορία</div>
-				<input id="categoryNewBranchInpt" maxlength="15">
+				<select id="categoryNewBranchSlct" maxlength="15">
+					<option>Σταθμός</option>
+					<option>Απλό κατάστημα</option>
+				</select>
 			</div>
 			<div id="locationNewBranchInptC">
 				<div id="locationNewBranchTitleC">Τοποθεσία</div>
@@ -27,27 +36,42 @@
 			</div>
 			<div id="managerNewBranchInptC">
 				<div id="managerNewBranchTitleC">Μάνατζερ</div>
-				<input id="managerNewBranchInpt" maxlength="25">
-			</div>
-			<div id="storeIdNewBranchInptC">
-				<div id="storeIdNewBranchTitleC">Αποθήκη</div>
-				<input id="storeIdNewBranchInpt" maxlength="11">
+				<select id="managerNewBranchSlct" maxlength="25"></select>
 			</div>
 			<div id="statusNewBranchInptC">
 				<div id="statusNewBranchTitleC">Κατάσταση</div>
-				<input id="statusNewBranchInpt">
+				<select id="statusNewBranchSlct">
+					<option id="statusActiveOptn">Ενεργό</option>
+					<option id="statusUnderROptn">Υπό-επισκευή</option>
+					<option id="statusUnderCOptn">Υπό-κατασκευή</option>
+					<option id="statusProblemOptn">Μη ενεργό</option>
+				</select>
+			</div>
+			<div id="storeSizeBranchInptC">
+				<div id="storeSizeNewBranchTitleC">Χωρητικότητα Αποθήκης</div>
+				<input id="storeSizeNewBranchInpt" maxlength="4">
 			</div>
 		</div>
 		<div id="rightPanelBranchC">
+			<div id="storeIdNewBranchInptC">
+				<div id="storeIdNewBranchTitleC">Κωδικός Αποθήκης</div>
+				<input id="storeIdNewBranchInpt" maxlength="11">
+			</div>
 			<div id="otherBranchesConnectedC">
 				<div id="otherBranchesConnectedC">
+					<div id="otherBranchesConnectedTitleC">Καταστήματα για σύνδεση</div>
 					<select id="otherBranchesConnectedSlct"></select>
 				</div>
+				<button id="branchesSelectViewBtn">ΣΥΝΔΕΣΗ</button>
 				<div id="otherBranchesConnectedShowC">
+					<div id="otherBranchesConnectedShowTitleC">ΣΥΝΔΕΔΕΜΕΝΑ ΚΑΤΑΣΤΗΜΑΤΑ</div>
+					<div id="otherBranchesConnectedShowPanelC">
+						<div id="otherBranchesConnectedShowPanelListC">
+						</div>
+					</div>
 				</div>
 			</div>
-			<div id="placesThatStopC"></div>
-			<div id="firstRoutePlanC"></div>
+			<button id="confirmNewBranchBtn">ΔΗΜΙΟΥΡΓΙΑ ΝΕΟΥ ΚΑΤΑΣΤΗΜΑΤΟΣ</button>
 		</div>
 	</div>
 

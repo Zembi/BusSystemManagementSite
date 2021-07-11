@@ -64,8 +64,8 @@
 					
 				session_start();
 
-				$_SESSION['user'] = $row['Username'];
-				$_SESSION['userStatus'] = $row['Status'];
+				$_SESSION['user'] = $username;
+				$_SESSION['userStatus'] = $status;
 
 				$good = 1;
 			}
