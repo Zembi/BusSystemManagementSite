@@ -217,7 +217,7 @@ function ServerCommunication() {
 			branchIdEmployeeEditSlct.innerHTML = "";
 			var adminOption = document.createElement("option");
 			adminOption.className = "optionsForBranch";
-			adminOption.innerHTML = branchId;
+			adminOption.innerHTML = "#" + branchId;
 			branchIdEmployeeEditSlct.appendChild(adminOption);
 		}
 		else {
@@ -329,7 +329,7 @@ function ServerCommunication() {
     			'username': usernameEmployeeEditInpt.value,
     			'email': emailEmployeeEditInpt.value,
    				'name': nameEmployeeEditInpt.value,
-    			'wage': wage,
+    			'wage': wageEmployeeEditInpt.value,
     			'status': TranslateStatusTo("english", statusEmployeeEditSelect.value),
     			'branchId': branchIdEmployeeEditSlct.value
     		};
@@ -346,6 +346,7 @@ function ServerCommunication() {
 					alertInfoForCreatNewBranchC.style.display = "table";
 					alertInfoForCreatNewBranchTextC.innerHTML = "Δεν έχει γίνει καμία αλλαγή!";
 					alertInfoForCreatNewBranchBtn.innerHTML = "Το κατάλαβα";
+					alertInfoForCreatNewBranchBtn.focus();
 					alertInfoForCreatNewBranchBtn.addEventListener("click", function() {
 						alertInfoForCreatNewBranchC.style.display = "none";
 					});
@@ -365,7 +366,8 @@ function ServerCommunication() {
 						addNewInfoTextC.innerHTML = "Η αλλαγή των προσωπικών στοιχείων ενός υπαλλήλου, μπορούν να προκαλέσουν προβλήματα στην λειτουργία των καταστημάτων.<br>Βεβαιωθείτε πρώτα, ότι έχετε ενημερώσει τον υπάλληλο και τον μάνατζερ του καταστήματος. <br>Θέλετε να ολοκληρώσετε την διαδικασία; (τα αλλαγμένα πεδία φαίνονται με πράσινο)<br>Η σελίδα θα ανανεωθεί αυτόματα αφού ολοκληρωθεί η διαδικασία.";
 						situationToStayAfterChange = "continue";
 					}
-					yesAddNewInfoBtn.addEventListener("click", function() {EmployeeApproveClickOkBtn(employee, situationToStayAfterChange);});
+					yesAddNewInfoBtn.focus();
+					jQuery('#yesAddNewInfoBtn').one("click", function() {EmployeeApproveClickOkBtn(employee, situationToStayAfterChange);});
 					noAddNewInfoBtn.addEventListener("click", function() {EmployeeClickCancelBtn();});
 				}
 			}
@@ -414,20 +416,71 @@ function ServerCommunication() {
 		}
 
 		async function EmployeeApproveClickOkBtn(employee, situation) {
-			var messagesArray = await CreateAsyncEmployee(employee);
+			var errorMessages = 0;
+			errorMessages = await CreateAsyncEmployee(employee);
 
-			if(situation == "exit") {
-				document.getElementById("logOutBtn").click();
+			if(errorMessages == 0) {
+				if(situation == "exit") {
+					document.getElementById("logOutBtn").click();
+				}
+				else {
+					BackToWaitingEditPanel();
+					if(situation == "continue") {
+						location.reload();
+					}
+				}
 			}
 			else {
-				BackToWaitingEditPanel();
-				if(situation == "continue") {
-					location.reload();
-				}
+				$.ajax({
+					type: 'POST',
+					url: "../Php/getEmployeesPhp.php",
+					data: {},
+					success: function(data) {
+						var allEmployees = JSON.parse(data);
+						var errorUsername = 0;
+						var errorEmail = 0;
+
+						for(var i = 0; i < allEmployees.length; i++) {
+							if(allEmployees[i].username == usernameEmployeeEditInpt.value && usernameEmployeeEditInpt.value != username) {
+								errorUsername = 1;
+								break;
+							}
+						}
+
+						for(var i = 0; i < allEmployees.length; i++) {
+							if(allEmployees[i].email == emailEmployeeEditInpt.value && emailEmployeeEditInpt.value != email) {
+								errorEmail = 1;
+								break;
+							}
+						}
+
+						alertAddNewInfoC.style.display = "none";
+						alertInfoForCreatNewBranchC.style.display = "table";
+						//IF BOTH, USERNAME AND EMAIL, ARE CHANGED
+						if(errorUsername && errorEmail) {
+							alertInfoForCreatNewBranchTextC.innerHTML = "Το email και το username υπάρχουν ήδη!<br>Ξαναπροσπαθήστε με διαφορετικά στοιχεία.";
+						}
+						//IF EMAIL IS CHANGED AND USERNAME IS THE SAME
+						else if(errorEmail) {
+							alertInfoForCreatNewBranchTextC.innerHTML = "Υπάρχει ήδη υπάλληλος με το ίδιο email!<br>Ξαναπροσπαθήστε με διαφορετικό email.";
+						}
+						//IF USERNAME IS CHANGED AND EMAIL IS THE SAME
+						else {
+							alertInfoForCreatNewBranchTextC.innerHTML = "Υπάρχει ήδη υπάλληλος με το ίδιο username!<br>Ξαναπροσπαθήστε με διαφορετικό username.";
+						}
+
+						alertInfoForCreatNewBranchBtn.innerHTML = "Το κατάλαβα";
+						alertInfoForCreatNewBranchBtn.focus();
+						alertInfoForCreatNewBranchBtn.addEventListener("click", function() {
+							alertInfoForCreatNewBranchC.style.display = "none";
+							EmployeeClickCancelBtn();
+						});
+					}
+				});
 			}
 		}
 
-		function CreateAsyncEmployee(employee) {
+		function CreateAsyncEmployee(employee, e) {
 			if(!employee.branchId.includes("#")) {
 				employee.branchId = "";
 			}
@@ -446,7 +499,7 @@ function ServerCommunication() {
 					url: "../Php/updateEmployeesEditPhp.php",
 					data: {employee: employeeStr, key: username, userThatMakeChanges: userIn, importantChange: impChange, previousBranch: branchId},
 					success: function(data) {
-						//alert(data);
+						alert(data);
 						resolve(data);
 					}
 				});

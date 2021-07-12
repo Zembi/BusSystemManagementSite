@@ -1101,6 +1101,249 @@
 		background: rgb(13, 18, 24);
 	}
 
+	/*IN THIS DIV WILL LOAD ALL THE CONTENT FOR RECRUITMENT OF EMPLOYEE*/
+	#recruitNewEmployeeC {
+		background: red;
+		padding: 20px;
+	}
+
+	/*CENTER BASIC CONTAINER*/
+	#centerAllInputRecruitEmployeeC {
+		display: table;
+		background: green;
+		padding: 20px;
+	}
+
+	/*ALL TITLES OF INPUT OF RECRUITMENT*/
+	.titleInputsRecruitC {
+
+	}
+
+	/*ALL ALERT FOR PROBLEM DIVS OF RECRUITMENT*/
+	.problemInputsRecruitC {
+
+	}
+
+	/*USERNAME INPUT RECRUITMENT CONTAINER*/
+	#usernameRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#usernameTitleRecruitC {
+
+		}
+
+		#usernameProblemC {
+
+		}
+
+		#usernameInput {
+
+		}
+
+	/*EMAIL INPUT RECRUITMENT CONTAINER*/
+	#emailRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#emailTitleRecruitC {
+
+		}
+
+		#emailProblemC {
+
+		}
+
+		#emailInput {
+
+		}
+
+	/*NAME INPUT RECRUITMENT CONTAINER*/
+	#nameRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#nameTitleRecruitC {
+
+		}
+
+		#nameProblemC {
+
+		}
+
+		#nameInput {
+
+		}
+
+	/*ICON INPUT RECRUITMENT CONTAINER*/
+	#iconRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#iconTitleRecruitC {
+
+		}
+
+		#iconProblemC {
+
+		}
+
+		#iconInput {
+
+		}
+
+	/*BRANCH ID INPUT RECRUITMENT CONTAINER*/
+	#branchIdRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#branchIdTitleRecruitC {
+
+		}
+
+		#branchIdProblemC {
+
+		}
+
+		#branchIdInput {
+
+		}
+
+	/*STATUS INPUT RECRUITMENT CONTAINER*/
+	#statusRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#statusTitleRecruitC {
+
+		}
+
+		#statusProblemC {
+
+		}
+
+		#statusInput {
+
+		}
+
+	/*SEX INPUT RECRUITMENT CONTAINER*/
+	#sexRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#sexTitleRecruitC {
+
+		}
+
+		#sexProblemC {
+
+		}
+
+		#sexInput {
+
+		}
+
+	/*WAGE INPUT RECRUITMENT CONTAINER*/
+	#wageRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#wageTitleRecruitC {
+
+		}
+
+		#wageProblemC {
+
+		}
+
+		#wageInput {
+
+		}
+
+	/*RECRUITMENT DAY INPUT RECRUITMENT CONTAINER*/
+	#recruitmentDayRecruit {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#recruitmentDayTitleRecruitC {
+
+		}
+
+		#recruitmentDayProblemC {
+
+		}
+
+		#recruitmentDayInput {
+
+		}
+
+	/*PASSWORD INPUT RECRUITMENT CONTAINER*/
+	#passwordRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#passwordTitleRecruitC {
+
+		}
+
+		#passwordProblemC {
+
+		}
+
+		#passwordInput {
+
+		}
+
+	/*PASSWORD RETYPE INPUT RECRUITMENT CONTAINER*/
+	#passwordRepeatRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 33%;
+	}
+
+		#passwordRepeatTitleRecruitC {
+
+		}
+
+		#passwordRepeatProblemC {
+
+		}
+
+		#passwordRepeatInput {
+
+		}
+
 	/*MEDIA FOR LOWER PIXEL SCREEN*/
 	@media screen and (max-width: 1200px) {
 	}

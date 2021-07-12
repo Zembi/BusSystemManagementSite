@@ -56,6 +56,7 @@ function phpObjectConvertToJsObject(employeesArray) {
 function StartEmployeeScreen() {
 	if((sessionStorage.getItem("Load") != "On") && (lastAction != "StartView")) {
 		ChangeScreen("ShowEmployees");
+		//ChangeScreen("RecruitNewEmployee");
 		currentAction = "StartView";
 	}
 	lastAction = currentAction;

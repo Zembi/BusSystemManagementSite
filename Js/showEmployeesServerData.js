@@ -32,18 +32,14 @@ function showEmployeesStart() {
 }
 
 function FindTitleAndEmployeesAndCreateView() {
-	titleOfContentC.innerHTML = "ΠΡΟΒΟΛΗ ΣΤΟΙΧΕΙΩΝ ΥΠΑΛΛΗΛΩΝ";
+	titleOfContentC.innerHTML = "ΠΡΟΒΟΛΗ ΚΑΙ ΕΠΕΞΕΡΓΑΣΙΑ ΣΤΟΙΧΕΙΩΝ ΥΠΑΛΛΗΛΩΝ";
 }
 
 function StartSearchBarFunctions() {
 	searchEmployeeBtn.addEventListener("click", ShowViewEmployeesSearchBar);
 }
 
-/*function RecruitNewEmployeeSearchBar() {
-
-}
-
-function DischargeEmployeeSearchBar() {
+/*function DischargeEmployeeSearchBar() {
 
 }
 
