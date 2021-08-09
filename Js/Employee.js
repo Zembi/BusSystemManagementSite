@@ -1,5 +1,5 @@
 
-function Employee(username, email, name, icon,  branchId, status, sex, wage, recruitmentDay) {
+function Employee(username, email, name, icon,  branchId, status, sex, wage, recruitmentDay, afm, amka) {
 	this.username = username;
 	this.email = email;
 	this.name = name;
@@ -8,8 +8,11 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 	this.branchObj = [];
 	this.status = status;
 	this.sex = sex;
-	this.wage = wage;
+	//MAKE NUMBER HAVE ALWAYS 2 DECIMALS
+	this.wage = RoundDecimal(wage, 2);
 	this.recruitmentDay = recruitmentDay;
+	this.afm = afm;
+	this.amka = amka;
 	this.lock;
 
 	this.getUsername = function() {
@@ -48,23 +51,12 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		return this.recruitmentDay;
 	}
 
-	this.giveStatusTranslate = function() {
-		var translateStatus = "";
+	this.getAFM = function() {
+		return this.afm;
+	}
 
-		if(this.status == "Admin") {
-			translateStatus = "Γενικός Διαχειριστής";
-		}
-		else if(this.status == "Employee Manager") {
-			translateStatus = "Υπεύθυνος Διαχείρισης";
-		}
-		else if(this.status == "Agency Employee") {
-			translateStatus = "Υπάλληλος Πρακτορείου";
-		}
-		else if(this.status == "Store Manager") {
-			translateStatus = "Υπεύθυνος Αποθήκης";
-		}
-
-		return translateStatus;
+	this.getAMKA = function() {
+		return this.amka;
 	}
 
 	this.getUserImageSrc = function() {
@@ -114,7 +106,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 
 		var statusIdC = document.createElement("div");
 		statusIdC.id = "statusIdC";
-		statusIdC.innerHTML = this.giveStatusTranslate();
+		statusIdC.innerHTML = TranslateStatusTo("greek", this.status);
 		userIdC.appendChild(statusIdC);
 
 		var imgIdC = document.createElement("div");
@@ -160,6 +152,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		}
 	}
 
+	//FUNCTION RETURNING THE TIME, THE EMPLOYEE IS WORKING FOR THE COMPANY
 	this.getDateDifferenceFromWhenEmployeeHired = function(type) {
 		var dateStart = new Date();
 		var dateNow = new Date(this.recruitmentDay);
@@ -195,6 +188,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		}
 	}
 
+	//FUNCTION RETURN THE BRANCH THAT EMPLOYEE IS CURRENTLY WORKING OR NOT
 	this.GetBranchThatWork = function(panelOfEmployeeC) {
 		var branchId = this.getBranchId();
 		var branchObj = [];
@@ -233,16 +227,29 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		}
 	}
 
-	this.CreateSlideShowView = function(parentElmnt, id) {
+	//CREATE THE PANEL OF THE EMPLOYEE WITH ALL HIS/HER INFO AND ADD IT TO THE PARENT ELEMENT SLIDE VIEW
+	this.CreatePanelShowViewOfEmployee = function(parentElmnt, id) {
 		var serverCommun = new ServerCommunication();
 		var username = this.getUsername();
 		var email = this.getEmail();
 		var name = this.getName();
+		var icon = this.getIcon();
 		var branchId = this.getBranchId();
 		var status = this.getStatus();
 		var sex = this.getSex();
 		var wage = this.getWage();
 		var recruitmentDay = this.getRecruitmentDay();
+		var afm = this.getAFM();
+		var amka = this.getAMKA();
+
+		var alertInfoForCreatNewItemC = document.getElementById("alertInfoForCreatNewItemC");
+		var alertInfoForCreatNewItemTextC = document.getElementById("alertInfoForCreatNewItemTextC");
+		var alertInfoForCreatNewItemBtn = document.getElementById("alertInfoForCreatNewItemBtn");
+		var alertAddNewInfoC = document.getElementById("alertAddNewInfoC");
+		var addNewInfoTitleTextC = document.getElementById("addNewInfoTitleTextC");
+		var addNewInfoTextC = document.getElementById("addNewInfoTextC");
+		var yesAddNewInfoBtn = document.getElementById("yesAddNewInfoBtn");
+		var noAddNewInfoBtn = document.getElementById("noAddNewInfoBtn");
 
 		var panelOfEmployeeC = document.createElement("div");
 		panelOfEmployeeC.id = this.username + " ++++ " + id;
@@ -262,9 +269,33 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeEditInfoC.appendChild(employeeEditInfoBtn);
 		panelOfEmployeeC.appendChild(employeeEditInfoC);
 
+		var employeeAskInfoC = document.createElement("div");
+		employeeAskInfoC.id = "employeeAskInfoC";
+		var employeeAskInfoBtn = document.createElement("button");
+		employeeAskInfoBtn.id = "employeeAskInfoBtn";
+		employeeAskInfoBtn.addEventListener("click", function() {
+			alertInfoForCreatNewItemC.style.display = "table";
+			if(panelOfEmployeeC.id.includes(userInObject.getUsername())) {
+				alertInfoForCreatNewItemTextC.innerHTML = "Δεν μπορείτε να απολυθείτε ή να παραιτηθείτε, μέσα από τον δικό σας λογαριασμό.<br>Κάποιος άλλος Admin, μπορεί να εκτελέσει αυτές τις ενέργειες, για εσάς.";	
+			}
+			else {
+				alertInfoForCreatNewItemTextC.innerHTML = "Κάνοντας διπλό κλικ, πάνω στην καρτέλα του κάθε υπαλλήλου, μπορείτε να δείτε το μενού με βασικές ενέργειες.";
+			}
+			alertInfoForCreatNewItemBtn.focus();
+			alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+			alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+				alertInfoForCreatNewItemC.style.display = "none";
+			});
+		});
+		var employeeAskInfoImg = document.createElement("img");
+		employeeAskInfoImg.id = "employeeAskInfoImg";
+		employeeAskInfoBtn.appendChild(employeeAskInfoImg);
+		employeeAskInfoC.appendChild(employeeAskInfoBtn);
+		panelOfEmployeeC.appendChild(employeeAskInfoC);
+
 		var employeeStatusC = document.createElement("div");
 		employeeStatusC.id = "employeeStatusC";
-		employeeStatusC.innerHTML = this.giveStatusTranslate();
+		employeeStatusC.innerHTML = TranslateStatusTo("greek", status);
 		panelOfEmployeeC.appendChild(employeeStatusC);
 
 		var employeeLockUnclockBtn = document.createElement("button");
@@ -354,8 +385,8 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeWageC.appendChild(employeeWageTitleC);
 		var employeeWageTextC = document.createElement("div");
 		employeeWageTextC.id = "employeeWageTextC";
-		var wage = parseInt(this.getWage());
-		employeeWageTextC.innerHTML = numberWithCommas((wage).toFixed(2)) + " €";
+		var wage = this.getWage();
+		employeeWageTextC.innerHTML = wage + " €";
 		employeeWageC.appendChild(employeeWageTextC);
 		panelOfEmployeeC.appendChild(employeeWageC);
 
@@ -377,6 +408,30 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		var days = this.getDateDifferenceFromWhenEmployeeHired("days");
 		employeeRecruitmentDayTextC.innerHTML = newDate;
 		employeeRecruitmentDayTextC.title = "" + days + " ημέρες";
+
+		var employeeAFMC = document.createElement("div");
+		employeeAFMC.id = "employeeAFMC";
+		var employeeAFMTitleC = document.createElement("div");
+		employeeAFMTitleC.id = "employeeAFMTitleC";
+		employeeAFMTitleC.innerHTML = "ΑΦΜ";
+		employeeAFMC.appendChild(employeeAFMTitleC);
+		var employeeAFMTextC = document.createElement("div");
+		employeeAFMTextC.id = "employeeAFMTextC";
+		employeeAFMTextC.innerHTML = afm;
+		employeeAFMC.appendChild(employeeAFMTextC);
+		panelOfEmployeeC.appendChild(employeeAFMC);
+
+		var employeeAMKAC = document.createElement("div");
+		employeeAMKAC.id = "employeeAMKAC";
+		var employeeAMKATitleC = document.createElement("div");
+		employeeAMKATitleC.id = "employeeAMKATitleC";
+		employeeAMKATitleC.innerHTML = "ΑΜΚΑ";
+		employeeAMKAC.appendChild(employeeAMKATitleC);
+		var employeeAMKATextC = document.createElement("div");
+		employeeAMKATextC.id = "employeeAMKATextC";
+		employeeAMKATextC.innerHTML = amka;
+		employeeAMKAC.appendChild(employeeAMKATextC);
+		panelOfEmployeeC.appendChild(employeeAMKAC);
 
 		parentElmnt.appendChild(panelOfEmployeeC);
 
@@ -403,11 +458,284 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 			this.GetBranchThatWork(panelOfEmployeeC);
 		}
 		else {
-			employeeBranchTextC.innerHTML = this.getBranchId() + " - " + "Περιφέρεια Μακεδονίας";
-			employeeBranchTextC.title = "Διαχειριστική γραμμή"
+			if(this.getSex() == "Male") {
+				employeeBranchTextC.innerHTML = this.getBranchId() + " - Διαχειριστής";
+			}
+			else {
+				employeeBranchTextC.innerHTML = this.getBranchId() + " - Διαχειρίστρια";
+			}
+			employeeBranchTextC.title = "Διαχειριστική γραμμή";
+		}
+		var dblCounter = 0;
+
+		//DOUBLE CLICK CONTAINER CREATE EVENT OPTIONS AS DISCHARGE AND RESIGN
+		panelOfEmployeeC.title = "Διπλό κλικ για περισσότερες ενέργειες";
+		panelOfEmployeeC.addEventListener("dblclick", function() {
+			var allGood = 1;
+
+			if(dblCounter == 0 && !panelOfEmployeeC.id.includes(userInObject.getUsername())) {
+				//CREATE GENERAL CONTAINER
+				var dischOrResignOptionC = document.createElement("div");
+				dischOrResignOptionC.id = "dischOrResignOptionC";
+
+				var closeDOrROptionBtn = document.createElement("button");
+				closeDOrROptionBtn.id = "closeDOrROptionBtn";
+				closeDOrROptionBtn.innerHTML = "X";
+				closeDOrROptionBtn.addEventListener("click", function() {
+					panelOfEmployeeC.querySelector("#dischOrResignOptionC").remove();
+		
+					dblCounter = 0;
+				});
+				closeDOrROptionBtn.addEventListener("mouseover", function() {
+					showButtonFunctionC.style.display = "table";
+					showButtonFunctionC.innerHTML = "Κλείσιμο";
+				});
+				closeDOrROptionBtn.addEventListener("mouseout", function() {
+					showButtonFunctionC.style.display = "none";
+					showButtonFunctionC.innerHTML = "";
+				});
+
+				var reasonToActC = document.createElement("div");
+				reasonToActC.id = "reasonToActC";
+
+				var reasonToActTitleC = document.createElement("div");
+				reasonToActTitleC.id = "reasonToActTitleC";
+				if(sex == "Male") {
+					reasonToActTitleC.innerHTML = "Αιτιολογία για την αποδεύσμευση του <br>" + name;
+				}
+				else {
+					reasonToActTitleC.innerHTML = "Αιτιολογία για την αποδεύσμευση της <br>" + name;
+				}
+
+				var reasonToActTxtAr = document.createElement("textarea");
+				reasonToActTxtAr.id = "reasonToActTxtAr";
+				reasonToActTxtAr.oninput = function () {
+					if (this.value.length > 500) {
+						this.value = this.value.slice(0, 500); 
+					}
+				}
+				reasonToActTxtAr.placeholder = "Γράψτε εδώ ....";
+
+				reasonToActC.appendChild(reasonToActTitleC);
+				reasonToActC.appendChild(reasonToActTxtAr);
+
+				var showButtonFunctionC = document.createElement("div");
+				showButtonFunctionC.id = "showButtonFunctionC";
+
+				var dischOrResignOptionCenterC = document.createElement("div");
+				dischOrResignOptionCenterC.id = "dischOrResignOptionCenterC";
+
+				//CREATE DISCHARGE CONTAINER
+				var dischargeEmployeesC = document.createElement("div");
+				dischargeEmployeesC.id = "dischargeEmployeesC";
+				dischargeEmployeesC.className = "employeesMenuC";
+
+				var dischargeEmployeeBtn = document.createElement("button");
+				dischargeEmployeeBtn.id = "dischargeEmployeeBtn";
+				dischargeEmployeeBtn.addEventListener("mouseover", function() {
+					showButtonFunctionC.style.display = "table";
+					showButtonFunctionC.innerHTML = "Απόλυση";
+				});
+				dischargeEmployeeBtn.addEventListener("mouseout", function() {
+					showButtonFunctionC.style.display = "none";
+					showButtonFunctionC.innerHTML = "";
+				});
+				//DISCHARGE BUTTON ACTIONS
+				dischargeEmployeeBtn.addEventListener("click", function() {
+					if(IfElmntNotEmpty(reasonToActTxtAr)) {
+						alertInfoForCreatNewItemC.style.display = "none";
+						alertAddNewInfoC.style.display = "block";
+						addNewInfoTitleTextC.innerHTML = "ΑΠΟΛΥΣΗ ΥΠΑΛΛΗΛΟΥ";
+						if(branchId == null) {
+							addNewInfoTextC.innerHTML = "Η αποδεύσμευση ενός υπαλλήλου μπορεί να προκαλέσει προβλήματα στην λειτουργία του καταστήματος. Ωστόσο, ο συγκεκριμένος υπάλληλος δεν δουλεύει, προς το παρόν, σε κάποιο κατάστημα.<br>Βεβαιωθείτε, ότι έχετε επικοινωνήσει και ενημερώσει, τον υπάλληλο.<br>Είστε σίγουρος, για την απόλυση του υπαλλήλου || " + name + " || ;<br>(Η σελίδα θα ανανεωθεί αυτομάτα, στην συνέχεια της διαδικασίας)";
+						}
+						else {
+							addNewInfoTextC.innerHTML = "Η αποδεύσμευση ενός υπαλλήλου μπορεί να προκαλέσει προβλήματα στην λειτουργία του καταστήματος #" + branchId + ".<br>Βεβαιωθείτε, ότι έχετε επικοινωνήσει και ενημερώσει, τον υπάλληλο, τον υπεύθυνο του καταστήματος #" + branchId + ", καθώς και τον μάνατζερ.<br>Είστε σίγουρος, για την απόλυση του υπαλλήλου || " + name + " || ;<br>(Η σελίδα θα ανανεωθεί αυτομάτα, στην συνέχεια της διαδικασίας)";
+						}
+
+						//CLEAR YES BUTTON EVENTS FIRST, EVERYTIME DISCHARGE BUTTON IS OPENING
+						var oldYesAddNewInfoBtn = document.getElementById("yesAddNewInfoBtn");
+						var newYesAddNewInfoBtn = oldYesAddNewInfoBtn.cloneNode(true);
+						oldYesAddNewInfoBtn.parentNode.replaceChild(newYesAddNewInfoBtn, oldYesAddNewInfoBtn);
+						newYesAddNewInfoBtn.addEventListener("click", function() {
+							var endDay = ConvertFromDate(new Date());
+
+							var exEmpl = {
+								'username' : username,
+								'name' : name,
+								'email' : email,
+								'icon' : icon,
+								'lastBranchId' : branchId,
+								'lastStatus' : status,
+								'lastWage' : wage,
+								'sex' : sex,
+								'recruitmentDay' : recruitmentDay,
+								'endDay' : endDay,
+								'wayOutOfCompany' : "Discharge",
+								'afm' : afm,
+								'amka' : amka,
+								'reason' : reasonToActTxtAr.value
+							};
+							exEmpl = JSON.stringify(exEmpl);
+
+							$.ajax({
+								type: 'POST',
+								url: "../Php/dischargeOrResignEmployeePhp.php",
+								data: {exEmployee: exEmpl},
+								success: function(data) {
+									//alert(data);
+									//EVERYTHING OKAY
+									if(data == "0") {
+										location.reload();
+									}
+									//SOMETHING WRONG
+									else {
+										alertAddNewInfoC.style.display = "none";
+										alertInfoForCreatNewItemC.style.display = "table";
+										alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος, κατά την διαδικασία της αποδεύσμευσης του υπαλλήλου || " + name + " ||<br>Επαναλάβετε αργότερα, καθώς το σύστημα αντιμετωπίζει κάποιο πρόβλημα !";
+										alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+										alertInfoForCreatNewItemBtn.focus();
+									}
+								}
+							});
+						});
+						newYesAddNewInfoBtn.focus();
+						noAddNewInfoBtn.addEventListener("click", function() {
+							alertAddNewInfoC.style.display = "none";
+
+						});
+					}
+				});
+
+				var menuEmployeeTextC1 = document.createElement("div");
+				menuEmployeeTextC1.className = "menuEmployeeTextC";
+				dischargeEmployeeBtn.appendChild(menuEmployeeTextC1);
+
+				var img1 = document.createElement("img");
+				dischargeEmployeeBtn.appendChild(img1);
+
+				dischargeEmployeesC.appendChild(dischargeEmployeeBtn);
+
+				//CREATE RESIGN CONTAINER
+				var resignationEmployeesC = document.createElement("div");
+				resignationEmployeesC.id = "resignationEmployeesC";
+				resignationEmployeesC.className = "employeesMenuC";
+
+				var resignationEmployeeBtn = document.createElement("button");
+				resignationEmployeeBtn.id = "resignationEmployeeBtn";
+				resignationEmployeeBtn.addEventListener("mouseover", function() {
+					showButtonFunctionC.style.display = "table";
+					showButtonFunctionC.innerHTML = "Παραίτηση";
+				});
+				resignationEmployeeBtn.addEventListener("mouseout", function() {
+					showButtonFunctionC.style.display = "none";
+					showButtonFunctionC.innerHTML = "";
+				});
+				//RESIGN BUTTON ACTIONS
+				resignationEmployeeBtn.addEventListener("click", function() {
+					if(IfElmntNotEmpty(reasonToActTxtAr)) {
+						alertInfoForCreatNewItemC.style.display = "none";
+						alertAddNewInfoC.style.display = "block";
+						addNewInfoTitleTextC.innerHTML = "ΠΑΡΑΙΤΗΣΗ ΥΠΑΛΛΗΛΟΥ";
+						if(branchId == null) {
+							addNewInfoTextC.innerHTML = "Η αποδεύσμευση ενός υπαλλήλου μπορεί να προκαλέσει προβλήματα στην λειτουργία του καταστήματος. Ωστόσο, ο συγκεκριμένος υπάλληλος δεν δουλεύει, προς το παρόν, σε κάποιο κατάστημα. <br>Βεβαιωθείτε, ότι έχετε επικοινωνήσει και ενημερώσει, τον υπάλληλο.<br>Είστε σίγουρος, για την αποδεύσμευση του υπαλλήλου || " + name + " ||, έπειτα από αίτημα παραίτησης ;<br>(Η σελίδα θα ανανεωθεί αυτομάτα, στην συνέχεια της διαδικασίας)";
+						}
+						else {
+							addNewInfoTextC.innerHTML = "Η αποδεύσμευση ενός υπαλλήλου μπορεί να προκαλέσει προβλήματα στην λειτουργία του καταστήματος #" + branchId + ".<br>Βεβαιωθείτε, ότι έχετε επικοινωνήσει και ενημερώσει, τον υπάλληλο, τον υπεύθυνο του καταστήματος #" + branchId + ", καθώς και τον μάνατζερ.<br>Είστε σίγουρος, για την αποδεύσμευση του υπαλλήλου || " + name + " ||, έπειτα από αίτημα παραίτησης ;<br>(Η σελίδα θα ανανεωθεί αυτομάτα, στην συνέχεια της διαδικασίας)";
+						}
+
+						//CLEAR YES BUTTON EVENTS FIRST, EVERYTIME RESIGN BUTTON IS OPENING
+						var oldYesAddNewInfoBtn = document.getElementById("yesAddNewInfoBtn");
+						var newYesAddNewInfoBtn = oldYesAddNewInfoBtn.cloneNode(true);
+						oldYesAddNewInfoBtn.parentNode.replaceChild(newYesAddNewInfoBtn, oldYesAddNewInfoBtn);
+						newYesAddNewInfoBtn.addEventListener("click", function() {
+							var endDay = ConvertFromDate(new Date());
+
+							var exEmpl = {
+								'name' : name,
+								'email' : email,
+								'icon' : icon,
+								'lastBranchId' : branchId,
+								'lastStatus' : status,
+								'lastWage' : wage,
+								'sex' : sex,
+								'recruitmentDay' : recruitmentDay,
+								'endDay' : endDay,
+								'wayOutOfCompany' : "Resign",
+								'afm' : afm,
+								'amka' : amka,
+								'reason' : reasonToActTxtAr.value
+							};
+							
+							exEmpl = JSON.stringify(exEmpl);
+
+							$.ajax({
+								type: 'POST',
+								url: "../Php/dischargeOrResignEmployeePhp.php",
+								data: {exEmployee: exEmpl},
+								success: function(data) {
+									//alert(data);
+									//EVERYTHING OKAY
+									if(data == "0") {
+										location.reload();
+									}
+									//SOMETHING WRONG
+									else {
+										alertAddNewInfoC.style.display = "none";
+										alertInfoForCreatNewItemC.style.display = "table";
+										alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος, κατά την διαδικασία της αποδεύσμευσης του υπαλλήλου || " + name + " ||<br>Επαναλάβετε αργότερα, καθώς το σύστημα αντιμετωπίζει κάποιο πρόβλημα !";
+										alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+										alertInfoForCreatNewItemBtn.focus();
+									}
+								}
+							});
+						});
+						newYesAddNewInfoBtn.focus();
+						noAddNewInfoBtn.addEventListener("click", function() {
+							alertAddNewInfoC.style.display = "none";
+						});
+					}
+				});
+
+				var menuEmployeeTextC2 = document.createElement("div");
+				menuEmployeeTextC2.className = "menuEmployeeTextC";
+				resignationEmployeeBtn.appendChild(menuEmployeeTextC2);
+
+				var img2 = document.createElement("img");
+				resignationEmployeeBtn.appendChild(img2);
+
+				resignationEmployeesC.appendChild(resignationEmployeeBtn);
+
+				//ADD MAIN CONTAINERS TO GENERAL CONTAINER
+				dischOrResignOptionCenterC.appendChild(dischargeEmployeesC);
+				dischOrResignOptionCenterC.appendChild(resignationEmployeesC);
+				dischOrResignOptionC.appendChild(closeDOrROptionBtn);
+				dischOrResignOptionC.appendChild(reasonToActC);
+				dischOrResignOptionC.appendChild(showButtonFunctionC);
+				dischOrResignOptionC.appendChild(dischOrResignOptionCenterC);
+				panelOfEmployeeC.appendChild(dischOrResignOptionC);
+				
+				dblCounter = 1;
+			}
+		});
+
+		function IfElmntNotEmpty(element) {
+			if(element.value == "") {
+				element.style.borderColor = "red";
+				element.style.borderWidth = "3px";
+				element.placeholder = "Το πεδίο είναι κενό!";
+				return 0;
+			}
+			else {
+				element.style.borderColor = "rgb(22, 36, 53)";
+				element.style.borderWidth = "2px";
+				element.placeholder = "";
+				return 1;
+			}
 		}
 	}
 
+	//CURRENT LOCK STATUS OF EMPLOYEE
 	this.HideOrShowInfoLock = function(parentElement) {
 		var employeeLockUnclockBtn = parentElement.querySelector("#employeeLockUnclockBtn");
 		var employeeLockUnclockImg = parentElement.querySelector("#employeeLockUnclockImg");
@@ -416,6 +744,8 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		var employeeEmailTextC = parentElement.querySelector("#employeeEmailTextC");
 		var employeeWageTextC = parentElement.querySelector("#employeeWageTextC");
 		var employeeRecruitmentDayTextC = parentElement.querySelector("#employeeRecruitmentDayTextC");
+		var employeeAFMTextC = parentElement.querySelector("#employeeAFMTextC");
+		var employeeAMKATextC = parentElement.querySelector("#employeeAMKATextC");
 
 		if(sessionStorage.getItem("lockCheck") === null) {
 			this.lock = "unlocked";
@@ -451,7 +781,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		}
 
 		function HideInfo() {
-			employeeLockUnclockBtn.title = "Ξεκλείδωμα";
+			employeeLockUnclockBtn.title = "Ξεκλείδωμα προσωπικών στοιχείων υπαλλήλου";
 			employeeLockUnclockImg.style.content = "url(../Assets/icons8_lock_50px.png)";
 			employeeLockUnclockBtn.addEventListener("mouseover", function() {
 				employeeLockUnclockImg.style.content = "url(../Assets/icons8_lock_50px_2.png)";
@@ -468,13 +798,19 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 			employeeWageTextC.style.background = "rgb(13, 18, 24)";
 			employeeWageTextC.style.color = "rgb(13, 18, 24)";
 			employeeWageTextC.style.userSelect = "none";
-			employeeRecruitmentDayTextC.style.background = "rgb(13, 18, 24)";
+			/*employeeRecruitmentDayTextC.style.background = "rgb(13, 18, 24)";
 			employeeRecruitmentDayTextC.style.color = "rgb(13, 18, 24)";
-			employeeRecruitmentDayTextC.style.userSelect = "none";
+			employeeRecruitmentDayTextC.style.userSelect = "none";*/
+			employeeAFMTextC.style.background = "rgb(13, 18, 24)";
+			employeeAFMTextC.style.color = "rgb(13, 18, 24)";
+			employeeAFMTextC.style.userSelect = "none";
+			employeeAMKATextC.style.background = "rgb(13, 18, 24)";
+			employeeAMKATextC.style.color = "rgb(13, 18, 24)";
+			employeeAMKATextC.style.userSelect = "none";
 		}
 
 		function ShowInfo() {
-			employeeLockUnclockBtn.title = "Κλείδωμα";
+			employeeLockUnclockBtn.title = "Κλείδωμα προσωπικών στοιχείων υπαλλήλου";
 			employeeLockUnclockImg.style.content = "url(../Assets/icons8_unlock_50px.png)";
 			employeeLockUnclockBtn.addEventListener("mouseover", function() {
 				employeeLockUnclockImg.style.content = "url(../Assets/icons8_unlock_50px_2.png)";
@@ -491,9 +827,15 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 			employeeWageTextC.style.background = "transparent";
 			employeeWageTextC.style.color = "white";
 			employeeWageTextC.style.userSelect = "text";
-			employeeRecruitmentDayTextC.style.background = "transparent";
+			/*employeeRecruitmentDayTextC.style.background = "transparent";
 			employeeRecruitmentDayTextC.style.color = "white";
-			employeeRecruitmentDayTextC.style.userSelect = "text";
+			employeeRecruitmentDayTextC.style.userSelect = "text";*/
+			employeeAFMTextC.style.background = "transparent";
+			employeeAFMTextC.style.color = "white";
+			employeeAFMTextC.style.userSelect = "text";
+			employeeAMKATextC.style.background = "transparent";
+			employeeAMKATextC.style.color = "white";
+			employeeAMKATextC.style.userSelect = "text";
 		}
 	}
 }

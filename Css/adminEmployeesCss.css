@@ -15,10 +15,19 @@
 
 	button {
 		font-family: Roboto Slab;
+		user-select: none;
+	}
+
+	input {
+		font-family: Roboto Slab;
 	}
 
 	input:disabled {
 		background: rgb(255, 255, 255, 0.4);
+	}
+
+	input::-ms-reveal, input::-ms-clear {
+		display: none;
 	}
 
 	select:disabled {
@@ -106,9 +115,9 @@
 
 	/*ALL MENU MAIN CONTAINERS*/
 	#employeesBtnInfoC {
+		display: table;
 		position: absolute;
 		background: transparent;
-		width: 420px;
 		left: 50%;
 		transform: translate(-50%, 0);
 	}
@@ -178,48 +187,6 @@
 
 	#recruitmentEmployeeBtn:hover img {
 		content: url(../Assets/icons8_send_job_list_50px_2.png);
-	}
-
-	/*DISCHARGE EMPLOYEES AND SEE THE RECORD OF DISHARCED EMPLOYEES*/
-	#dischargeEmployeeBtn {
-		position: relative;
-		width: 100%; height: 100%;
-		background: transparent;
-		cursor: pointer;
-		border: none;
-		padding: 0;
-	}
-
-	#dischargeEmployeeBtn img {
-		width: 100%; height: 100%;
-		content: url(../Assets/icons8_retirement_50px.png);
-	}
-
-	#dischargeEmployeeBtn:hover img {
-		content: url(../Assets/icons8_retirement_50px_2.png);
-	}
-
-	/*RESIGN EMPLOYEES AND SEE THE RECORD OF RESIGNED EMPLOYEES*/
-	#resignationEmployeesC {
-		margin: 0 0 0 30px;
-	}
-
-	#resignationEmployeeBtn {
-		position: relative;
-		width: 100%; height: 100%;
-		background: transparent;
-		cursor: pointer;
-		border: none;
-		padding: 0;
-	}
-
-	#resignationEmployeeBtn img {
-		width: 100%; height: 100%;
-		content: url(../Assets/icons8_leave_50px.png);
-	}
-
-	#resignationEmployeeBtn:hover img {
-		content: url(../Assets/icons8_leave_50px_2.png);
 	}
 
 	/*ONLINE EMPLOYEES*/
@@ -353,14 +320,13 @@
 	#searchEmployeeBtn {
 		float: right;
 		position: absolute;
-		width: 50px; height: 96%;
+		width: 55px; height: 45px;
 		background: transparent;
-		top: 50%; right: 1px;
+		top: 1px; right: 1px;
 		cursor: pointer;
 		outline: none;
-		border-radius: 2px;
+		border-radius: 0 2px 2px 0;
 		border: none;
-		transform: translate(0, -50%);
 	}
 
 	#searchEmployeeBtn:hover {
@@ -378,6 +344,53 @@
 	#searchEmployeeBtn img {
 		width: 100%; height: 100%;
 		content: url(../Assets/icons8_search_64px.png);
+	}
+
+	#typeOfSearchEmployeeC {
+		display: table;
+		position: relative;
+		background: transparent;
+		overflow: hidden;
+		border-radius: 0 0 2px 2px;
+		margin: auto;
+	}
+
+	#searchBarUsernameBtn {
+		background: white;
+		color: rgb(13, 18, 24);
+		font-size: 15px;
+		border: none;
+		cursor: pointer;
+		margin-right: 10px;
+	}
+
+	#searchBarUsernameBtn:hover {
+		background: rgb(255, 215, 0);
+	}
+	
+	#searchBarAFMBtn {
+		background: white;
+		color: rgb(13, 18, 24);
+		font-size: 15px;
+		border: none;
+		cursor: pointer;
+	}
+
+	#searchBarAFMBtn:hover {
+		background: rgb(255, 215, 0);
+	}
+
+	#searchBarAMKABtn {
+		background: white;
+		color: rgb(13, 18, 24);
+		font-size: 15px;
+		border: none;
+		cursor: pointer;
+		margin-left: 10px;
+	}
+
+	#searchBarAMKABtn:hover {
+		background: rgb(255, 215, 0);
 	}
 
 	/*IN THIS DIV WILL LOAD ALL THE CONTENT FOR EMPLOYEE*/
@@ -403,12 +416,14 @@
 		margin-bottom: 0px;
 		padding: 4px 6px 4px 6px;
 		box-shadow: 0px 2px 5px black;
+		z-index: 1;
 		transform: translate(-50%, 0);
 	}
 
 	/*SHOW START SCREEN OF EMPLOYEES CSS*/
 	#showEmployeesC {
 		background: transparent;
+		width: 100%;
 		user-select: none;
 		padding: 30px 0 25px 0;
 	}
@@ -420,6 +435,7 @@
 		overflow: hidden;
 		border-radius: 2px;
 		margin: auto;
+		margin-bottom: 50px;
 		padding: 10px 0 80px 0;
 		transition: box-shadow 0.3s;
 		box-shadow: 0px 0px 3px black;
@@ -442,6 +458,7 @@
 	}
 
 	#leftClickEmployeesBtn {
+		display: block;
 		position: absolute;
 		background: rgb(0, 0, 0, 0.4);
 		color: white;
@@ -449,8 +466,8 @@
 		font-size: 40px;
 		border: none;
 		cursor: pointer;
-		z-index: 10;
-		padding: 1px 5px 1px 5px;
+		z-index: 25;
+		padding: 1px 5px 10px 5px;
 		transform: translate(0, -50%);
 	}
 
@@ -475,8 +492,8 @@
 		font-size: 40px;
 		border: none;
 		cursor: pointer;
-		z-index: 10;
-		padding: 1px 5px 1px 5px;
+		z-index: 25;
+		padding: 1px 5px 10px 5px;
 		transform: translate(0, -50%);
 	}
 
@@ -493,9 +510,9 @@
 	}
 
 	#centerShowContentC {
-		display: table;
+		display: block;
 		position: relative;
-		width: 800px; height: 450px;
+		width: 1260px; height: 550px;
 		background: transparent;
 		overflow: hidden;
 		border-radius: 2px;
@@ -506,8 +523,9 @@
 
 	/*EMPLOYEES VIEW CSS*/
 	#allElementsC {
+		display: block;
 		position: relative;
-		height: 100%;
+		width: 100%; height: 100%;
 		background: transparent;
 		left: 0;
 		white-space: nowrap;
@@ -517,7 +535,7 @@
 	.panelOfEmployeeC {
 		display: inline-block;
 		position: relative;
-		width: 33.33%; height: 100%;
+		width: 33.333333%; height: 100%;
 		background: rgb(22, 36, 53);
 		overflow: auto;
 		user-select: none;
@@ -529,6 +547,37 @@
 
 	.panelOfEmployeeC:hover {
 		border-color: rgb(255, 215, 0);
+	}
+
+	#employeeAskInfoC {
+		position: absolute;
+		display: block;
+		width: 32px; height: 30px;
+		background: transparent;
+		left: 6px;
+		padding: 4px 6px 4px 6px;
+		z-index: 13;
+	}
+	
+	#employeeAskInfoBtn {
+		width: 100%; height: 100%;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		padding: 0;
+	}
+
+	#employeeAskInfoBtn:hover img {
+		content: url(../Assets/icons8_question_mark_30px_2.png);
+	}
+
+	#employeeAskInfoBtn:active img {
+		content: url(../Assets/icons8_question_mark_30px_3.png);
+	}
+
+	#employeeAskInfoImg {
+		width: 100%; height: 100%;
+		content: url(../Assets/icons8_question_mark_30px.png);
 	}
 
 	#employeeEditInfoC {
@@ -571,6 +620,7 @@
 		text-align: center;
 		padding: 4px;
 		z-index: 12;
+		transition: height 0.5s;
 	}
 
 	#employeeLockUnclockBtn {
@@ -583,7 +633,6 @@
 		margin: auto; margin-top: -60px; margin-bottom: 45px;
 		padding: 0;
 		transition: margin 0.3s;
-		z-index: 11;
 	}
 
 	.panelOfEmployeeC:hover #employeeLockUnclockBtn {
@@ -823,6 +872,234 @@
 		user-select: text;
 	}
 
+	#employeeAFMC {
+		float: left;
+		position: relative;
+		width: 90%;
+		background: transparent;
+		color: white;
+		font-size: 16px;
+		white-space: initial;
+		text-align: center;
+		border-radius: 5px;
+		margin: 10px 4% 0 4%;
+		padding: 1px;
+	}
+
+	#employeeAFMTitleC {
+		position: relative;
+		color: grey;
+		font-size: 13px;
+		margin: 0 0 0 10px;
+	}
+	
+	#employeeAFMTextC {
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+		user-select: text;
+	}
+
+	#employeeAMKAC {
+		float: left;
+		position: relative;
+		width: 90%;
+		background: transparent;
+		color: white;
+		font-size: 16px;
+		white-space: initial;
+		text-align: center;
+		border-radius: 5px;
+		margin: 10px 4% 0 4%;
+		padding: 1px;
+	}
+
+	#employeeAMKATitleC {
+		position: relative;
+		color: grey;
+		font-size: 13px;
+		margin: 0 0 0 10px;
+	}
+	
+	#employeeAMKATextC {
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+		user-select: text;
+	}
+
+	/*OTHER EVENTS LIKE DISCHARGE AND RESIGN WITH HOTKEY DOUBLE CLICK*/
+	#dischOrResignOptionC {
+		display: block;
+		position: absolute;
+		width: 100%; height: 100%;
+		background: rgb(255, 255, 255, 0.7);
+		top: 0;
+		z-index: 20;
+	}
+
+	/*CLOSE PANEL BUTTON*/
+	#closeDOrROptionBtn {
+		display: block;
+		position: absolute;
+		background: transparent;
+		top: 30px; left: 50%;
+		font-size: 30px;
+		font-weight: bold;
+		cursor: pointer;
+		border: none;
+		transform: translate(-50%, 0);
+		z-index: 1;
+	}
+
+	#closeDOrROptionBtn:hover {
+		color: rgb(255, 215, 0);
+	}
+
+	#reasonToActC {
+		display: block;
+		position: absolute;
+		width: 100%;
+		background: red;
+		top: 100px;
+		overflow: hidden;
+	}
+
+	#reasonToActTitleC {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: rgb(22, 36, 53);
+		color: white;
+		text-align: center;
+		font-size: 20px;
+		padding: 6px;
+	}
+
+	#reasonToActTxtAr {
+		display: block;
+		position: relative;
+		width: 100%; height: 200px;
+		background: white;
+		color: rgb(22, 36, 53);
+		letter-spacing: 1px;
+		font-size: 20px;
+		resize: none;
+		padding: 10px 5px 4px 5px;
+	}
+
+	/*WIDTH*/
+	#reasonToActTxtAr::-webkit-scrollbar {
+	  width: 20px;
+	}
+
+	/*TRACK*/
+	#reasonToActTxtAr::-webkit-scrollbar-track {
+	  box-shadow: inset 0 0 5px grey;
+	  border-radius: 2px;
+	}
+	 
+	/*HANDLE*/
+	#reasonToActTxtAr::-webkit-scrollbar-thumb {
+	  background: rgb(22, 36, 53);
+	  border-radius: 2px;
+	  border: 1px solid white; border-top: none; border-bottom: none;
+	}
+
+	/*HANDLE HOVER*/
+	#reasonToActTxtAr::-webkit-scrollbar-thumb:hover {
+	  background: rgb(255, 215, 0); 
+	}
+
+	#showButtonFunctionC {
+		display: table;
+		position: absolute;
+		background: transparent;
+		color: rgb(13, 18, 24);
+		top: 71%; left: 50%;
+		font-size: 35px;
+		padding: 4px;
+		transform: translate(-50%, -50%);
+	}
+
+	#dischOrResignOptionCenterC {
+		display: table;
+		position: absolute;
+		width: 40%;
+		background: rgb(255, 215, 0);
+		bottom: 0px; left: 50%;
+		border-radius: 2px;
+		border: 4px solid white;
+		padding: 0;
+		transform: translate(-50%, 0);
+	}
+
+	/*DISCHARGE EMPLOYEES AND SEE THE RECORD OF DISHARCED EMPLOYEES*/
+	#dischargeEmployeesC {
+		display: table-cell;
+		position: relative;
+		width: 50%; height: 100%;
+		background: transparent;
+		left: 0;
+		border-right: 2px solid white;
+		margin: 0;
+	}
+
+	#dischargeEmployeeBtn {
+		position: relative;
+		width: 100%; height: 100%;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		padding: 4px;
+	}
+
+	#dischargeEmployeeBtn:hover {
+		background: rgb(13, 18, 24);
+	}
+
+	#dischargeEmployeeBtn img {
+		width: 100%; height: 100%;
+		content: url(../Assets/icons8_retirement_50px.png);
+	}
+
+	#dischargeEmployeeBtn:hover img {
+		content: url(../Assets/icons8_retirement_50px_2.png);
+	}
+
+	/*RESIGN EMPLOYEES AND SEE THE RECORD OF RESIGNED EMPLOYEES*/
+	#resignationEmployeesC {
+		display: table-cell;
+		position: relative;
+		width: 50%; height: 100%;
+		background: transparent;
+		left: 0;
+		border-left: 2px solid white;
+		margin: 0;
+	}
+
+	#resignationEmployeeBtn {
+		position: relative;
+		width: 100%; height: 100%;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		padding: 4px;
+	}
+
+	#resignationEmployeeBtn:hover {
+		background: rgb(13, 18, 24);
+	}
+
+	#resignationEmployeeBtn img {
+		width: 100%; height: 100%;
+		content: url(../Assets/icons8_leave_50px.png);
+	}
+
+	#resignationEmployeeBtn:hover img {
+		content: url(../Assets/icons8_leave_50px_2.png);
+	}
+
 	/*COUNTER OF EMPLOYEE VIEW*/
 	#downShowEmployeesCountC {
 		position: absolute;
@@ -885,6 +1162,85 @@
 	}
 
 	#usernameEmployeeEditInpt {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+	}
+
+	.showPassword2Btn {
+		position: absolute;
+		z-index: 10;
+		width: 30px; height: 23px;
+		background: transparent;
+		top: 35px;
+		outline: none;
+		cursor: pointer;
+		border: none;
+		margin-left: -11%; 
+	}
+
+	.showPassword2Img {
+		width: 30px; height: 30px;
+		user-select: none;
+		content: url("../Assets/passwdEyeClosed2.png");
+		margin-top: -4px; margin-left: -6px;
+	}
+
+	.showPassword2Img:hover {
+		content: url("../Assets/passwdEyeClosedHover.png");
+	}
+
+	#passwordEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#passwordEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+
+	#passwordEmployeeEditInpt {
+		width: 100%;
+		color: rgb(13, 18, 24);
+		font-size: 18px;
+		text-align: center;
+		border-radius: 4px;
+		border: 2px solid rgb(13, 18, 24);
+		padding: 2px;
+	}
+
+	#passwordRepeatEmployeeEditC {
+		display: table;
+		position: relative;
+		width: 100%;
+		width: 100%;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+	#passwordRepeatEmployeeEditTextC {
+		position: relative;
+		font-size: 22px;
+		text-align: center;
+		user-select: none;
+	}
+	
+	#passwordRepeatEmployeeEditInpt {
 		width: 100%;
 		color: rgb(13, 18, 24);
 		font-size: 18px;
@@ -1101,35 +1457,659 @@
 		background: rgb(13, 18, 24);
 	}
 
+	/*DISCHARGE VIEW OF EMPLOYEES*/
+	#dischargeTitleOfContentC {
+		display: inline-block;
+		position: relative;
+		background: rgb(13, 18, 24);
+		color: white;
+		left: 50%;
+		font-size: 25px;
+		border-radius: 4px 4px 0 0;
+		user-select: auto;
+		margin: auto;
+		margin-bottom: 0px;
+		padding: 4px 6px 4px 6px;
+		box-shadow: 0px 2px 5px black;
+		z-index: 1;
+		transform: translate(-50%, 0);
+	}
+
+	#dischargeContentC {
+		position: relative;
+		width: 99%; height: auto;
+		background: rgb(37, 52, 69);
+		color: white;
+		overflow: hidden;
+		border-radius: 2px;
+		margin: auto;
+		margin-bottom: 50px;
+		padding: 50px 20px 50px 20px;
+		transition: box-shadow 0.3s;
+		box-shadow: 0px 0px 3px black;
+	}
+
+	#dischargeCenterContentC {
+		display: flex;
+		flex-direction: row;
+		background: rgb(23, 23, 23);
+		overflow: auto;
+		border: 2px solid rgb(13, 18, 24);
+		user-select: text;
+	}
+
+	/*WIDTH*/
+	#dischargeCenterContentC::-webkit-scrollbar {
+	  width: 22px;
+	  background: white;
+	}
+
+	/*TRACK*/
+	#dischargeCenterContentC::-webkit-scrollbar-track {
+	  box-shadow: inset 0 0 5px grey;
+	}
+	 
+	/*HANDLE*/
+	#dischargeCenterContentC::-webkit-scrollbar-thumb {
+	  background: rgb(22, 36, 53);
+	  border: 1px solid white;
+	}
+
+	/*HANDLE HOVER*/
+	#dischargeCenterContentC::-webkit-scrollbar-thumb:hover {
+	  background: rgb(255, 215, 0);
+	}
+
+	.dischargeRowC {
+		display: block;
+		position: relative;
+		width: 100%; height: 50px;
+		border-top: 2px solid white;
+	}
+
+	/*RESIGN VIEW OF EMPLOYEES*/
+	#resignTitleOfContentC {
+		display: inline-block;
+		position: relative;
+		background: rgb(13, 18, 24);
+		color: white;
+		left: 50%;
+		font-size: 25px;
+		border-radius: 4px 4px 0 0;
+		user-select: auto;
+		margin: auto;
+		margin-bottom: 0px;
+		padding: 4px 6px 4px 6px;
+		box-shadow: 0px 2px 5px black;
+		z-index: 1;
+		transform: translate(-50%, 0);
+	}
+
+	.infoAboutDblClickBtn {
+		display: block;
+		position: absolute;
+		width: 35px; height: 35px;
+		background: transparent;
+		left: 50%;
+		cursor: pointer;
+		border-radius: 10%;
+		border: none;
+		margin-top: 8px;
+		padding: 8px; padding-left: 6px;
+		z-index: 10;
+		transform: translate(-50%, 0);
+	}
+
+	.infoAboutDblClickBtn:hover img {
+		content: url(../Assets/icons8_question_mark_30px_2.png);
+	}
+
+	.infoAboutDblClickBtn:active img {
+		content: url(../Assets/icons8_question_mark_30px_3.png);
+	}
+
+	.infoAboutDblClickBtn img {
+		width: 100%; height: 100%;
+		content: url(../Assets/icons8_question_mark_30px.png);
+	}
+
+	#resignContentC {
+		position: relative;
+		width: 99%; height: auto;
+		background: rgb(37, 52, 69);
+		color: white;
+		overflow: hidden;
+		border-radius: 2px;
+		margin: auto;
+		margin-bottom: 50px;
+		padding: 50px 20px 50px 20px;
+		transition: box-shadow 0.3s;
+		box-shadow: 0px 0px 3px black;
+	}
+
+	#resignCenterContentC {
+		display: flex;
+		flex-direction: row;
+		background: rgb(23, 23, 23);
+		overflow: auto;
+		border: 2px solid rgb(13, 18, 24);
+		user-select: text;
+	}
+
+	/*WIDTH*/
+	#resignCenterContentC::-webkit-scrollbar {
+	  width: 22px;
+	  background: white;
+	}
+
+	/*TRACK*/
+	#resignCenterContentC::-webkit-scrollbar-track {
+	  box-shadow: inset 0 0 5px grey;
+	}
+	 
+	/*HANDLE*/
+	#resignCenterContentC::-webkit-scrollbar-thumb {
+	  background: rgb(22, 36, 53);
+	  border: 1px solid white;
+	}
+
+	/*HANDLE HOVER*/
+	#resignCenterContentC::-webkit-scrollbar-thumb:hover {
+	  background: rgb(255, 215, 0);
+	}
+
+	.resignRowC {
+		display: block;
+		position: relative;
+		width: 100%; height: 50px;
+		border-top: 2px solid white;
+	}
+
+	/*DISCHARGE AND RESIGN VIEWS*/
+	.nameExEmployeeViewC {
+		display: block;
+		position: relative;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-right: none;
+		padding: 2px;
+	}
+
+		.nameTitleViewC {
+			position: relative;
+			height: 50px;
+			line-height: 45px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 40px 2px 40px;
+		}
+
+		.rowNameC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.emailExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.emailTitleViewC {
+			display: block;
+			height: 50px;
+			line-height: 45px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 40px 2px 40px;
+		}
+
+		.rowEmailC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.iconExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.iconTitleViewC {
+			display: block;
+			height: 50px;
+			line-height: 45px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 20px 2px 20px;
+		}
+
+		.rowIconC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.lastBranchIdExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.lastBranchIdTitleViewC {
+			display: block;
+			height: 50px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 20px 2px 20px;
+		}
+
+		.rowLastBranchIdC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.lastStatusExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.lastStatusTitleViewC {
+			display: block;
+			height: 50px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 20px 2px 20px;
+		}
+
+		.rowLastStatusC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.lastWageExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.lastWageTitleViewC {
+			display: block;
+			height: 50px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 30px 2px 30px;
+		}
+
+		.rowLastWageC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.sexExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.sexTitleViewC {
+			display: block;
+			height: 50px;
+			line-height: 45px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 24px 2px 24px;
+		}
+
+		.rowSexC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.recruitmentDayExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.recruitmentDayTitleViewC {
+			display: block;
+			height: 50px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 20px 2px 20px;
+		}
+
+		.rowRecruitmentDayC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.endDayExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.endDayTitleViewC {
+			display: block;
+			height: 50px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 20px 2px 20px;
+		}
+
+		.rowEndDayC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.wayOutOfCompanyExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.wayOutOfCompanyTitleViewC {
+			display: block;
+			height: 50px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 20px 2px 20px;
+		}
+
+		.rowWayOutOfCompanyC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.afmExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.afmTitleViewC {
+			display: block;
+			height: 50px;
+			line-height: 45px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 20px 2px 20px;
+		}
+
+		.rowAfkC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.amkaExEmployeeViewC {
+		display: block;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none; border-right: none;
+		padding: 2px;
+	}
+
+		.amkaTitleViewC {
+			display: block;
+			height: 50px;
+			line-height: 45px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 30px 2px 30px;
+		}
+
+		.rowAmkaC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.reasonExEmployeeViewC {
+		display: block;
+		max-width: 600px;
+		background: transparent;
+		text-align: center;
+		border: 1px solid white; border-left: none;
+		padding: 2px;
+	}
+
+		.reasonTitleViewC {
+			display: block;
+			height: 50px;
+			line-height: 45px;
+			background: transparent;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 2px solid white;
+			padding: 2px 20px 2px 20px;
+		}
+
+		.rowReasonC {
+			display: block;
+			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-top: 2px solid white;
+			padding: 10px;
+		}
+
+	.helperForHiringC {
+		display: block;
+		position: absolute;
+		width: 100%; height: 100%;
+		background: rgb(255, 255, 255, 0.6);
+		top: 0; left: 0;
+	}
+
+	/*HIRE BACK EDIT INPUT*/
+	
+
+
 	/*IN THIS DIV WILL LOAD ALL THE CONTENT FOR RECRUITMENT OF EMPLOYEE*/
 	#recruitNewEmployeeC {
-		background: red;
-		padding: 20px;
+		background: transparent;
+		user-select: none;
+		padding: 30px 0 25px 0;
+	}
+
+	/*PASSWORD IMAGES*/
+	.showMePasswdImageBtn {
+		position: absolute;
+		z-index: 10;
+		width: 30px; height: 23px;
+		background: transparent;
+		top: 27.5px;
+		outline: none;
+		cursor: pointer;
+		border: none;
+		margin-left: -11%; 
+	}
+
+	.showMePasswdImg {
+		width: 30px; height: 30px;
+		user-select: none;
+		content: url("../Assets/passwdEyeClosed3.png");
+		margin-top: -4px; margin-left: -6px;
+	}
+
+	.showMePasswdImg:hover {
+		content: url("../Assets/passwdEyeClosedHover.png");
 	}
 
 	/*CENTER BASIC CONTAINER*/
-	#centerAllInputRecruitEmployeeC {
+	#recruitNewEmployeeContentC {
 		display: table;
-		background: green;
+		position: relative;
+		width: 99%;
+		background: rgb(37, 52, 69);
+		border-radius: 4px;
+		border: 1px solid rgb(13, 18, 24);
+		box-shadow: 0px 1px 5px black;
+		margin: auto;
 		padding: 20px;
+	}
+
+	/*ALL CONTAINERS OF INPUT OF RECRUITMENT*/
+	.inputRecruitC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 28.3%; height: 50px;
+		background: transparent;
+		margin: 15px 2% 25px 2%;
 	}
 
 	/*ALL TITLES OF INPUT OF RECRUITMENT*/
 	.titleInputsRecruitC {
-
+		color: white;
+		font-size: 16px;
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 2px;
 	}
 
 	/*ALL ALERT FOR PROBLEM DIVS OF RECRUITMENT*/
 	.problemInputsRecruitC {
+		color: red;
+		font-size: 11px;
+		margin-bottom: 5px;
+		padding-left: 5px;
+	}
 
+	/*ALL INPUTS FOR RECRUITMENT INFO*/
+	.inptsOfRecruitInput {
+		width: 100%;
+		background: rgb(13, 18, 24);
+		color: white;
+		font-size: 20px;
+		text-align: center;
+		letter-spacing: 1px;
+		border-radius: 2px;
+		border: 1px solid white;
+		padding: 4px 0 4px 0; padding-left: 6px; padding-right: 6px;
+
+	}
+
+	.inptsOfRecruitInput:focus {
+		border: 1px solid rgb(255, 215, 0);
+		outline: 1px solid rgb(255, 215, 0);
+		box-shadow: 0 0 4px 0 grey;
+	}
+
+	/*ALL OPTIONS OF SELECTS RECRUITMENT INFO*/
+	.inputRecruitOptions {
+		color: white;
 	}
 
 	/*USERNAME INPUT RECRUITMENT CONTAINER*/
 	#usernameRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#usernameTitleRecruitC {
@@ -1138,6 +2118,7 @@
 
 		#usernameProblemC {
 
+		height: 1px;
 		}
 
 		#usernameInput {
@@ -1146,10 +2127,7 @@
 
 	/*EMAIL INPUT RECRUITMENT CONTAINER*/
 	#emailRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#emailTitleRecruitC {
@@ -1166,10 +2144,7 @@
 
 	/*NAME INPUT RECRUITMENT CONTAINER*/
 	#nameRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#nameTitleRecruitC {
@@ -1186,10 +2161,7 @@
 
 	/*ICON INPUT RECRUITMENT CONTAINER*/
 	#iconRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#iconTitleRecruitC {
@@ -1200,16 +2172,39 @@
 
 		}
 
-		#iconInput {
+		#iconSlct {
 
+		}
+
+		#iconMenuC {
+			display: none;
+			position: fixed;
+			background: rgb(255, 215, 0);
+			color: rgb(13, 18, 24);
+			top: 0; left: 50px;
+			font-size: 18px;
+			text-align: center;
+			border: 2px solid white;
+			padding: 10px;
+			z-index: 100;
+		}
+
+		#iconMenuTitleC {
+			border-bottom: 2px solid rgb(13, 18, 24);
+		}
+
+		#iconMenuContentC {
+			width: 90px; height: 90px;
+			background: rgb(13, 18, 24);
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			margin: auto; margin-top: 10px;
 		}
 
 	/*BRANCH ID INPUT RECRUITMENT CONTAINER*/
 	#branchIdRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#branchIdTitleRecruitC {
@@ -1220,16 +2215,13 @@
 
 		}
 
-		#branchIdInput {
+		#branchIdSlct {
 
 		}
 
 	/*STATUS INPUT RECRUITMENT CONTAINER*/
 	#statusRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#statusTitleRecruitC {
@@ -1240,16 +2232,13 @@
 
 		}
 
-		#statusInput {
+		#statusSlct {
 
 		}
 
 	/*SEX INPUT RECRUITMENT CONTAINER*/
 	#sexRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#sexTitleRecruitC {
@@ -1260,16 +2249,13 @@
 
 		}
 
-		#sexInput {
+		#sexSlct {
 
 		}
 
 	/*WAGE INPUT RECRUITMENT CONTAINER*/
 	#wageRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#wageTitleRecruitC {
@@ -1286,10 +2272,7 @@
 
 	/*RECRUITMENT DAY INPUT RECRUITMENT CONTAINER*/
 	#recruitmentDayRecruit {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#recruitmentDayTitleRecruitC {
@@ -1306,10 +2289,7 @@
 
 	/*PASSWORD INPUT RECRUITMENT CONTAINER*/
 	#passwordRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#passwordTitleRecruitC {
@@ -1321,15 +2301,12 @@
 		}
 
 		#passwordInput {
-
+			padding-right: 38px;
 		}
 
 	/*PASSWORD RETYPE INPUT RECRUITMENT CONTAINER*/
 	#passwordRepeatRecruitC {
-		float: left;
-		display: block;
-		position: relative;
-		width: 33%;
+
 	}
 
 		#passwordRepeatTitleRecruitC {
@@ -1341,8 +2318,56 @@
 		}
 
 		#passwordRepeatInput {
+			padding-right: 38px;
+		}
+
+	/*AFM INPUT RECRUITMENT CONTAINER*/
+	#afmRecruitC {
+
+	}
+
+		#afmTitleRecruitC {
 
 		}
+
+		#afmInput {
+
+		}
+
+		#afmProblemC {
+
+		}
+	
+	/*AMKA INPUT RECRUITMENT CONTAINER*/
+	#amkaRecruitC {
+
+	}
+		
+		#amkaTitleRecruitC {
+
+		}
+		
+		#amkaInput {
+
+		}
+
+		#amkaProblemC {
+
+		}
+
+	/*CONFIRM RECRUIT EMPLOYEE*/
+	#confirmRecruitEmployeeBtn {
+		float: left;
+		display: block;
+		position: relative;
+		width: 15.3%;
+		background: rgb(13, 18, 24);
+		color: white;
+		font-size: 24px;
+		cursor: pointer;
+		margin: 15px 9% 20px 9%;
+		padding: 5px;
+	}
 
 	/*MEDIA FOR LOWER PIXEL SCREEN*/
 	@media screen and (max-width: 1200px) {

@@ -8,62 +8,103 @@
 <body>
 
 	<div id="recruitNewEmployeeC">
-		<div id="centerAllInputRecruitEmployeeC">
-			<div id="usernameRecruitC">
-				<div id="usernameTitleRecruitC" class="titleInputsRecruitC"></div>
+		<div id="titleOfContentC">ΠΡΟΣΛΗΨΗ ΥΠΑΛΛΗΛΟΥ</div>
+		<div id="recruitNewEmployeeContentC">
+		<div id="iiii">
+			<div id="usernameRecruitC" class="inputRecruitC">
+				<div id="usernameTitleRecruitC" class="titleInputsRecruitC">Όνομα Χρήστη</div>
+				<input id="usernameInput" name="Username" class="inptsOfRecruitInput" maxlength="25" spellcheck="false">
 				<div id="usernameProblemC" class="problemInputsRecruitC"></div>
-				<input id="usernameInput" maxlength="25">
 			</div>
-			<div id="emailRecruitC">
-				<div id="emailTitleRecruitC" class="titleInputsRecruitC"></div>
+			<div id="emailRecruitC" class="inputRecruitC">
+				<div id="emailTitleRecruitC" class="titleInputsRecruitC">Email</div>
+				<input id="emailInput" name="Email" class="inptsOfRecruitInput" maxlength="50" spellcheck="false">
 				<div id="emailProblemC" class="problemInputsRecruitC"></div>
-				<input id="emailInput" maxlength="35">
 			</div>
-			<div id="nameRecruitC">
-				<div id="nameTitleRecruitC" class="titleInputsRecruitC"></div>
+			<div id="nameRecruitC" class="inputRecruitC">
+				<div id="nameTitleRecruitC" class="titleInputsRecruitC">Ονοματεπώνυμο</div>
+				<input id="nameInput" name="Name" class="inptsOfRecruitInput" maxlength="35" spellcheck="false">
 				<div id="nameProblemC" class="problemInputsRecruitC"></div>
-				<input id="nameInput" maxlength="35">
 			</div>
-			<div id="iconRecruitC">
-				<div id="iconTitleRecruitC" class="titleInputsRecruitC"></div>
-				<div id="iconProblemC" class="problemInputsRecruitC"></div>
-				<input id="iconInput" maxlength="50">
-			</div>
-			<div id="branchIdRecruitC">
-				<div id="branchIdTitleRecruitC" class="titleInputsRecruitC"></div>
-				<div id="branchIdProblemC" class="problemInputsRecruitC"></div>
-				<input id="branchIdInput" maxlength="11">
-			</div>
-			<div id="statusRecruitC">
-				<div id="statusTitleRecruitC" class="titleInputsRecruitC"></div>
-				<div id="statusProblemC" class="problemInputsRecruitC"></div>
-				<input id="statusInput" maxlength="25">
-			</div>
-			<div id="sexRecruitC">
-				<div id="sexTitleRecruitC" class="titleInputsRecruitC"></div>
+		</div>
+		<div>
+			<div id="sexRecruitC" class="inputRecruitC">
+				<div id="sexTitleRecruitC" class="titleInputsRecruitC">Φύλο</div>
+				<select id="sexSlct" class="inptsOfRecruitInput" maxlength="10">
+					<option>Άνδρας</option>
+					<option>Γυναίκα</option>
+				</select>
 				<div id="sexProblemC" class="problemInputsRecruitC"></div>
-				<input id="sexInput" maxlength="10">
 			</div>
-			<div id="wageRecruitC">
-				<div id="wageTitleRecruitC" class="titleInputsRecruitC"></div>
+			<div id="statusRecruitC" class="inputRecruitC">
+				<div id="statusTitleRecruitC" class="titleInputsRecruitC">Ρόλος στην Εταιρεία</div>
+				<select id="statusSlct" class="inptsOfRecruitInput" maxlength="25">
+					<option>Γενικός Διαχειριστής</option>
+					<option>Υπεύθυνος Διαχείρισης</option>
+					<option>Υπάλληλος Πρακτορείου</option>
+					<option>Υπεύθυνος Αποθήκης</option>
+					<option>Οδηγός</option>
+					<option>Φύλακας</option>
+					<option>Καθαριστής</option>
+				</select>
+				<div id="statusProblemC" class="problemInputsRecruitC"></div>
+			</div>
+			<div id="branchIdRecruitC" class="inputRecruitC">
+				<div id="branchIdTitleRecruitC" class="titleInputsRecruitC">Κατάστημα Απασχόλησης</div>
+				<select id="branchIdSlct" class="inptsOfRecruitInput" classmaxlength="11"></select>
+				<div id="branchIdProblemC" class="problemInputsRecruitC"></div>
+			</div>
+		</div>
+		<div>
+			<div id="iconRecruitC" class="inputRecruitC">
+				<div id="iconTitleRecruitC" class="titleInputsRecruitC">Εικόνα Χρήστη</div>
+				<select id="iconSlct" class="inptsOfRecruitInput" maxlength="50"></select>
+				<div id="iconProblemC" class="problemInputsRecruitC"></div>
+				<div id="iconMenuC">
+					<div id="iconMenuTitleC">ΕΙΚΟΝΑ</div>
+					<div id="iconMenuContentC"></div>
+				</div>
+			</div>
+			<div id="wageRecruitC" class="inputRecruitC">
+				<div id="wageTitleRecruitC" class="titleInputsRecruitC">Μηνιαίος Μισθός (σε €)</div>
+				<input id="wageInput" name="Wage" step=".01" class="inptsOfRecruitInput" maxlength="15" type="number" spellcheck="false">
 				<div id="wageProblemC" class="problemInputsRecruitC"></div>
-				<input id="wageInput" maxlength="15">
 			</div>
-			<div id="recruitmentDayRecruitC">
-				<div id="recruitmentDayTitleRecruitC" class="titleInputsRecruitC"></div>
+			<div id="recruitmentDayRecruitC" class="inputRecruitC">
+				<div id="recruitmentDayTitleRecruitC" class="titleInputsRecruitC">Ημερομηνία Πρόσληψης</div>
+				<input id="recruitmentDayInput" class="inptsOfRecruitInput">
 				<div id="recruitmentDayProblemC" class="problemInputsRecruitC"></div>
-				<input id="recruitmentDayInput">
 			</div>
-			<div id="passwordRecruitC">
-				<div id="passwordTitleRecruitC" class="titleInputsRecruitC"></div>
+		</div>
+		<div>
+			<div id="passwordRecruitC" class="inputRecruitC">
+				<div id="passwordTitleRecruitC" class="titleInputsRecruitC">Κωδικός Χρήστη (6-25 ψηφία)</div>
+				<input id="passwordInput" name="Password" class="inptsOfRecruitInput" type="password" maxlength="25" spellcheck="false">
+				<button id="passwordImgBtn" class="showMePasswdImageBtn" tabindex="-1" title="Click&See">
+						<img id="passwordImg" class="showMePasswdImg">
+				</button>
 				<div id="passwordProblemC" class="problemInputsRecruitC"></div>
-				<input id="passwordInput" maxlength="25">
 			</div>
-			<div id="passwordRepeatRecruitC">
-				<div id="passwordRepeatTitleRecruitC" class="titleInputsRecruitC"></div>
+			<div id="passwordRepeatRecruitC" class="inputRecruitC">
+				<div id="passwordRepeatTitleRecruitC" class="titleInputsRecruitC">Επιβεβαίωση Κωδικού</div>
+				<input id="passwordRepeatInput" name="PasswordRe" class="inptsOfRecruitInput" type="password" maxlength="25" spellcheck="false">
+				<button id="retypePasswordImgBtn" class="showMePasswdImageBtn" tabindex="-1" title="Click&See">
+					<img id="retypePasswordImg" class="showMePasswdImg">
+				</button>
 				<div id="passwordRepeatProblemC" class="problemInputsRecruitC"></div>
-				<input id="passwordRepeatInput" maxlength="25">
 			</div>
+			<div id="afmRecruitC" class="inputRecruitC">
+				<div id="afmTitleRecruitC" class="titleInputsRecruitC">ΑΦΜ Χρήστη</div>
+				<input id="afmInput" name="AFM" class="inptsOfRecruitInput" maxlength="9" type="number" spellcheck="false">
+				<div id="afmProblemC" class="problemInputsRecruitC"></div>
+			</div>
+		</div>
+			<div id="amkaRecruitC" class="inputRecruitC">
+				<div id="amkaTitleRecruitC" class="titleInputsRecruitC">ΑΜΚΑ Χρήστη</div>
+				<input id="amkaInput" name="AMKA" class="inptsOfRecruitInput" maxlength="11" type="number" spellcheck="false">
+				<div id="amkaProblemC" class="problemInputsRecruitC"></div>
+			</div>
+			<button id="confirmRecruitEmployeeBtn">ΠΡΟΣΛΗΨΗ</button>
 		</div>
 	</div>
 

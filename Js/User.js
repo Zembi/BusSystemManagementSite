@@ -1,11 +1,12 @@
 
-function User(username, email, icon, name, password, status) {
+function User(username, email, icon, name, password, status, sex) {
 	this.username = username;
 	this.email = email;
 	this.icon = icon;
 	this.name = name;
-	this.status = status;
 	this.password = password;
+	this.status = status;
+	this.sex = sex;
 
 	this.getUsername = function() {
 		return this.username;
@@ -29,6 +30,10 @@ function User(username, email, icon, name, password, status) {
 
 	this.getStatus = function() {
 		return this.status;
+	}
+
+	this.getSex = function() {
+		return this.password;
 	}
 
 	this.giveStatusTranslate = function() {

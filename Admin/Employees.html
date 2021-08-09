@@ -27,18 +27,6 @@
 							<img>
 						</button>
 					</div>
-					<div id="dischargeEmployeesC" class="employeesMenuC">
-						<button id="dischargeEmployeeBtn" title="Απόλυση υπαλλήλων">
-							<div class="menuEmployeeTextC">ΑΠΟΛΥΣΗ</div>
-							<img>
-						</button>
-					</div>
-					<div id="resignationEmployeesC" class="employeesMenuC">
-						<button id="resignationEmployeeBtn" title="Παραίτηση υπαλλήλων">
-							<div class="menuEmployeeTextC">ΠΑΡΑΙΤΗΣΗ</div>
-							<img>
-						</button>
-					</div>
 				</div>
 				<div id="onlineEmployeesC">
 					<img id="onlineEmployeesImg" title="Ενεργοί Υπάλληλοι">
@@ -51,10 +39,15 @@
 		<div id="loadEmployeesC"></div>
 		<!--HERE ALL THE DATA AND ACTIONS WILL LOAD FROM SUB-HTML FILES-->
 		<div id="searchEmployeeC">
-			<input id="searchEmployeeInpt" placeholder="Ψάξε έναν υπάλληλο με το username του" maxlength="25">
+			<input id="searchEmployeeInpt" maxlength="25">
 			<button id="searchEmployeeBtn">
 				<img>
 			</button>
+			<div id="typeOfSearchEmployeeC">
+				<button id="searchBarUsernameBtn">USERN</button>
+				<button id="searchBarAFMBtn">ΑΦΜ</button>
+				<button id="searchBarAMKABtn">ΑΜΚΑ</button>
+			</div>
 		</div>
 		<div id="employeeContentC"></div>
 	</div>

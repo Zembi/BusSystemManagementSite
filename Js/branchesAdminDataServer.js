@@ -8,14 +8,17 @@ var lastAction = "none";
 listOfBranchesBtn.addEventListener("click", StartBranchScreen);
 newBranchBtn.addEventListener("click", NewBranchBtnListener);
 
+//MAIN FUNCTION
 ServerBranch();
 
+//*(1)START OF BRANCHES SERVER
 function ServerBranch() {
   StartBranchScreen();
 }
 
-function StartBranchScreen() {
 
+//(1)->IF BRANCHES SHOWVIEW BUTTON IS PRESSED, LOAD ShowBranches.html AND HIDE THE BUTTON
+function StartBranchScreen() {
   if((sessionStorage.getItem("Load") != "On") && (lastAction != "Start")) {
     //ChangeScreen("ShowBranches");
     ChangeScreen("ShowBranches");
@@ -26,8 +29,8 @@ function StartBranchScreen() {
   lastAction = currentAction;
 }
 
+//(1)->IF CREATE A NEW BRANCH BUTTON IS PRESSED, LOAD CreateNewBranch.html AND HIDE THE BUTTON
 function NewBranchBtnListener() {
-
   if((sessionStorage.getItem("Load") != "On") && (lastAction != "NewBranch")) {
     ChangeScreen("CreateNewBranch");
     currentAction = "NewBranch";
@@ -37,6 +40,7 @@ function NewBranchBtnListener() {
   lastAction = currentAction;
 }
 
+//(1)->FUNCTION THAT IS BEING CALLED WHEN BUTTON IS PRESSED, TO CHANGE BRANCHES CONTENT SCREEN
 function ChangeScreen(action) {
 	//FILE CALL
 	var file = "BranchesScreens/" + action + ".html";

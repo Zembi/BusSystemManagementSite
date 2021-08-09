@@ -57,9 +57,9 @@
 
 	<div id="backgroundC">
 		<div id="coverPageHelperC"></div>
-		<div id="alertInfoForCreatNewBranchC">
-			<div id="alertInfoForCreatNewBranchTextC"></div>
-			<button id="alertInfoForCreatNewBranchBtn"></button>
+		<div id="alertInfoForCreatNewItemC">
+			<div id="alertInfoForCreatNewItemTextC"></div>
+			<button id="alertInfoForCreatNewItemBtn"></button>
 		</div>
 		<div id="editWindowC">
 			<div id="centerEditWindowC">
@@ -69,7 +69,9 @@
 					<div id="editInfoGetterLeftC"></div>
 					<div id="editInfoGetterRightC"></div>
 				</div>
+				<div id="coverEditC"></div>
 			</div>
+			<div id="downContainerOfEditC"></div>
 		</div>
 		<div id="alertAddNewInfoC">
 			<div id="centerAddNewInfoWindowC">
@@ -161,6 +163,7 @@
 							<button id="centerScreenBtn" title="Κεντρική θέαση">
 								<img>
 							</button>
+							<button id="notifcationSendBtn">Νέα Ειδοποίηση</button>
 							<button id="requestsBtn" name="Requests">
 								<img>
 								<div id="numberOfRequestsC">

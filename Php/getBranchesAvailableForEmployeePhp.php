@@ -22,7 +22,12 @@
 	$statusToSearch = $_POST['statusSearch'];
 
 	if($statusToSearch == "Employee Manager") {
-		$sqlGetAllBranches = "SELECT * FROM branches WHERE Manager IS NULL OR Manager = '$key'";
+		if($key != "") {
+			$sqlGetAllBranches = "SELECT * FROM branches WHERE Manager IS NULL OR Manager = '$key'";
+		}
+		else {
+			$sqlGetAllBranches = "SELECT * FROM branches WHERE Manager IS NULL";
+		}
 	}
 	else {
 		$sqlGetAllBranches = "SELECT * FROM branches";

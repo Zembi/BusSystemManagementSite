@@ -16,6 +16,7 @@
 
 	button {
 		font-family: Roboto Slab;
+		user-select: none;
 	}
 
 	input::-ms-reveal, input::-ms-clear {

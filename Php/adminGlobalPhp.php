@@ -4,6 +4,7 @@
 	var userInObject = "";
 </script>
 
+<script type="text/javascript" src="../Js/getUserInInfo.js"></script>
 <script type="text/javascript" src="../Js/generalFunctionsForSite.js"></script>
 <script type="text/javascript" src="../Js/ServerCommunication.js"></script>
 <script type="text/javascript" src="../Js/User.js"></script>
@@ -16,3 +17,4 @@
 <?php include("../Php/exitBtnPhp.php")?>
 <script type="text/javascript" src="../Js/fixesStyle.js"></script>
 <script type="text/javascript" src="../Js/serverAdmin.js"></script>
+<script type="text/javascript" src="../Js/checkForNotificationsAndUpdates.js"></script>

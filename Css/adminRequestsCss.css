@@ -1,0 +1,630 @@
+
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+		background: rgb(22, 36, 53);
+	}
+
+	body {
+		height: 100%;
+		min-width: 1500px;
+		background: rgb(22, 36, 53);
+		margin: 0;
+		padding: 0;
+	}
+
+	button {
+		font-family: Roboto Slab;
+		user-select: none;
+	}
+
+	/* Chrome, Safari, Edge, Opera */
+	input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	#requestsContentC {
+		display: block;
+		position: relative;
+
+	}
+
+	#requestsHeaderCountC {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: rgb(13, 18, 24);
+		color: white;
+		font-size: 40px;
+		text-align: center;
+		padding: 10px 0 10px 0;
+		user-select: none;
+	}
+
+	#requestsMainC {
+		display: block;
+		position: relative;
+		height: 1200px;
+	}
+
+	/*LEFT SPLIT CONTAINER*/
+	#showFullMessageC {
+		float: left;
+		display: none;
+		position: relative;
+		width: 0%; height: 100%;
+		background: rgb(0, 0, 0, 0.4);
+		border-right: 4px solid rgb(13, 18, 24); border-left: 4px solid rgb(13, 18, 24); border-bottom: 8px solid rgb(13, 18, 24);
+	}
+
+	#fullMessageC {
+		display: table;
+		position: sticky;
+		width: 100%; height: 600px;
+		background: transparent;
+		color: rgb(13, 18, 24);
+		top: 90px;
+		overflow: hidden;
+		margin-top: 10px;
+	}
+
+	#fullMsgLineC {
+		width: 100%; height: 41px;
+		background: transparent;
+	}
+
+	#exitFullMsgBtn {
+		display: block;
+		position: absolute;
+		background: transparent;
+		color: red;
+		left: 50%;
+		font-size: 30px;
+		font-weight: bold;
+		cursor: pointer;
+		border: none;
+		padding: 0 2px 0 2px;
+		z-index: 2;
+		transform: translate(-50%, 0);
+	}
+
+	#exitFullMsgBtn:hover {
+		color: rgb(255, 215, 0);
+	}
+
+	#senderMsgC {
+		display: block;
+		position: relative;
+		width: 100%;
+		max-height: 72px;
+		background: rgb(13, 18, 24);
+		color: rgb(58, 65, 89);
+		font-size: 18px;
+		font-weight: bold;
+		text-align: center;
+		text-overflow: ellipsis;
+		word-break: break-all;
+		overflow: hidden;
+		border-top: 2px solid grey; border-bottom: 2px solid grey;
+		padding: 10px 10px 10px 10px;
+	}
+
+	#typeMsgC {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: rgb(13, 18, 24);
+		color: rgb(255, 215, 0);
+		font-size: 20px;
+		text-align: center;
+		word-break: break-word;
+		border-bottom: 2px solid grey;
+		padding: 10px;
+	}
+
+	#onlyMsgC {
+		display: block;
+		position: absolute;
+		width: 100%;
+		background: white;
+		top: 147px; bottom: 50px;
+		font-size: 16px;
+		word-break: break-all;
+		overflow: auto;
+		border-left: 2px solid grey; border-right: 2px solid grey; border-bottom: 2px solid grey;
+		padding: 10px;
+	}
+
+	/*WIDTH*/
+	#onlyMsgC::-webkit-scrollbar {
+	  width: 20px;
+	  background: white;
+	}
+
+	/*TRACK*/
+	#onlyMsgC::-webkit-scrollbar-track {
+	  box-shadow: inset 0 0 5px grey;
+	}
+	 
+	/*HANDLE*/
+	#onlyMsgC::-webkit-scrollbar-thumb {
+	  background: rgb(22, 36, 53);
+	  border: 1px solid white;
+	}
+
+	/*HANDLE HOVER*/
+	#onlyMsgC::-webkit-scrollbar-thumb:hover {
+	  background: rgb(255, 215, 0); 
+	}
+
+	#dateMsgC {
+		display: table;
+		position: absolute;
+		background: white;
+		bottom: 20px; left: 50%;
+		border-radius: 0 0 4px 4px;
+		padding: 5px 10px 5px 10px;
+		transform: translate(-50%, 0);
+	}
+	/**/
+	
+	/*RIGHT SPLIT CONTAINER*/
+	#requestsShowAllMsgsC {
+		float: right;
+		display: block;
+		position: relative;
+		width: 100%; height: 100%;
+		background: rgb(0, 0, 0, 0.2);
+		overflow: auto;
+		border-right: 4px solid rgb(13, 18, 24); border-left: 4px solid rgb(13, 18, 24); border-bottom: 8px solid rgb(13, 18, 24);
+		padding: 0 10px 0 10px;
+	}
+
+	/*WIDTH*/
+	#requestsShowAllMsgsC::-webkit-scrollbar {
+	  width: 20px;
+	  background: white;
+	}
+
+	/*TRACK*/
+	#requestsShowAllMsgsC::-webkit-scrollbar-track {
+	  box-shadow: inset 0 0 5px grey;
+	}
+	 
+	/*HANDLE*/
+	#requestsShowAllMsgsC::-webkit-scrollbar-thumb {
+	  background: rgb(22, 36, 53);
+	  border: 1px solid white;
+	}
+
+	/*HANDLE HOVER*/
+	#requestsShowAllMsgsC::-webkit-scrollbar-thumb:hover {
+	  background: rgb(255, 215, 0); 
+	}
+	
+	#menuBtnsRequestC {
+		display: table;
+		margin: auto; margin-top: 30px; margin-bottom: 40px;
+	}
+	
+	#receivedNotifBtn {
+		position: relative;
+		background : rgb(13, 18, 24);
+		color: white;
+		font-size: 24px;
+		cursor: pointer;
+		border: 1px solid white;
+		margin-right: 5px;
+		user-select: none;
+	}
+
+	#receivedMsgCounterC {
+		float: left;
+		display: block;
+		position: relative;
+		margin-right: 4px;
+		user-select: none;
+	}
+
+	#sentNotifBtn {
+		position: relative;
+		background : rgb(13, 18, 24);
+		color: white;
+		font-size: 24px;
+		cursor: pointer;
+		border: 1px solid white;
+		margin-left: 5px;
+		user-select: none;
+	}
+
+	#sentMsgCounterC {
+		float: left;
+		display: block;
+		position: relative;
+		margin-right: 4px;
+		user-select: none;
+	}
+
+	#notifcationsPlaceC {
+		display: block;
+		position: relative;
+		background: transparent;
+		overflow: hidden;
+	}
+
+	/*RECEIVED MESSAGES*/
+	.oustideRecNotifC {
+		display: block;
+		position: relative;
+		background: transparent;
+		margin-bottom: 10px;
+		user-select: none;
+	}
+
+	.titleTextTypeRecC {
+		display: table;
+		position: relative;
+		background: rgb(13, 18, 24);
+		color: rgb(255, 215, 0);
+		font-size: 20px;
+		border: 2px solid rgb(13, 18, 24);
+		margin: auto;
+		padding: 1px 4px 1px 4px;
+		z-index: 2;
+	}
+
+	.contentRecC {
+		display: block;
+		position: relative;
+		width: 100%; height: 70px;
+		overflow: visible;
+		border: 2px solid rgb(13, 18, 24); border-left: 50px solid rgb(13, 18, 24);
+		margin-top: -8px;
+		padding: 0;
+		z-index: 1;
+		user-select: none;
+	}
+
+	.numberRecC {
+		float: left;
+		display: table;
+		position: relative;
+		width: 50px;
+		background: rgb(13, 18, 24);
+		color: white;
+		top: 0;
+		font-size: 20px;
+		text-align: center;
+		overflow: visible;
+		border: none;
+		margin: 0; margin-left: -50px;
+		padding: 20px 0 20px 0;
+		z-index: 10;
+	}
+
+	.typeRecImgC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 50px; height: 50px;
+		background: transparent;
+		top: 50%;
+		border: 2px solid rgb(13, 18, 24); border-left: none;
+		padding: 4px;
+		transform: translate(0, -50%);
+	}
+
+		.typeRecImg {
+			display: block;
+			position: relative;
+			width: 100%; height: 100%;
+			background: transparent;
+			padding: 0;
+		}
+
+	.senderAndMsgRecC {
+		display: block;
+		position: relative;
+		height: 50%;
+		background: transparent;
+		top: 50%;
+		overflow: hidden;
+		box-shadow: 0px 0px 1px black;
+		border: none;
+		margin-left: 70px; margin-right: 20px;
+		padding: 0;
+		transform: translate(0, -50%);
+	}
+
+	.senderAndMsgRecC:hover {
+		box-shadow: 0px 0px 5px black;
+		transition: box-shadow 0.3s;
+	}
+
+		.senderAndMsgRecBtn {
+			width: 100%; height: 100%;
+			background: transparent;
+			color: white;
+			cursor: pointer;
+			border: none;
+			padding: 0;
+		}
+
+		.senderAndMsgRecBtn:hover {
+			color: rgb(13, 18, 24);
+		}
+
+		.senderRecC {
+			float: left;
+			display: block;
+			position: relative;
+			width: 200px; height: 100%;
+			font-size: 18px;
+			font-weight: bold;
+			font-style: italic;
+			text-align: center;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-right: 2px solid rgb(13, 18, 24);
+			padding: 6px 6px 0 6px;
+		}
+
+		.messageRecC {
+			display: block;
+			position: relative;
+			height: 100%;
+			background: transparent;
+			font-size: 18px;
+			text-overflow: ellipsis;
+			text-align: left;
+			white-space: nowrap;
+			overflow: hidden;
+			padding: 6px 120px 0 30px;
+		}
+
+		.dateRecC {
+			display: block;
+			position: absolute;
+			height: 100%;
+			background: transparent;
+			top: 0; right: 0px;
+			font-size: 16px;
+			overflow: hidden;
+			border-left: 2px solid rgb(13, 18, 24);
+			padding: 6px 10px 0 10px;
+		}
+	/**/
+
+	/*SENT MESSAGES*/
+	.oustideSendNotifC {
+		display: block;
+		position: relative;
+		background: transparent;
+		margin-bottom: 10px;
+		user-select: none;
+	}
+
+	.titleTextTypeSendC {
+		display: table;
+		position: relative;
+		background: rgb(13, 18, 24);
+		color: rgb(255, 215, 0);
+		font-size: 20px;
+		border: 2px solid rgb(13, 18, 24);
+		margin: auto;
+		padding: 1px 4px 1px 4px;
+		z-index: 2;
+	}
+
+	.contentSendC {
+		display: block;
+		position: relative;
+		width: 100%; height: 70px;
+		overflow: visible;
+		border: 2px solid rgb(13, 18, 24); border-left: 50px solid rgb(13, 18, 24);
+		margin-top: -8px;
+		padding: 0;
+		z-index: 1;
+		user-select: none;
+	}
+
+	.numberDeleteSendC {
+		float: left;
+		display: table;
+		position: relative;
+		width: 50px; height: 100%;
+		background: rgb(13, 18, 24);
+		color: white;
+		top: 0;
+		font-size: 24px;
+		text-align: center;
+		overflow: hidden;
+		border: none;
+		margin: 0; margin-left: -50px;
+		padding: 16px 0 20px 0;
+		z-index: 10;
+	}
+
+	.numberDeleteSendC:hover > .numberSendC {
+		margin-top: -150px;
+	}
+
+	.numberDeleteSendC:hover > .deleteSendBtn {
+		margin-top: 3px;
+	}
+
+	.numberSendC {
+		display: block;
+		position: relative;
+		width: 100%; height: 100%;
+		background: rgb(255, 215, 0);
+		color: rgb(13, 18, 24);
+		font-size: 20px;
+		border-left: 2px solid rgb(13, 18, 24); border-right: 4px solid rgb(13, 18, 24);
+		margin-top: 0px;
+		padding-top: 1px;
+		transition: margin-top 0.3s;
+	}
+
+	.deleteSendBtn {
+		display: block;
+		position: absolute;
+		background: red;
+		width: 100%; height: 90%;
+		top: 0;
+		cursor: pointer;
+		border: 1px solid rgb(13, 18, 24); border-left: 2px solid rgb(13, 18, 24); border-right: 4px solid rgb(13, 18, 24);
+		margin-top: 150px;
+		transition: margin-top 0.3s;
+	}
+
+	.deleteSendBtn:active {
+		background: rgb(255, 215, 0);
+	}
+
+	.deleteSendBtnImg {
+		width: 100%; height: 55%;
+		content: url(../Assets/icons8_trash_50px.png);
+	}
+
+	.typeSendImgC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 50px; height: 50px;
+		background: transparent;
+		top: 50%;
+		border: 2px solid rgb(13, 18, 24); border-left: none;
+		padding: 4px;
+		transform: translate(0, -50%);
+	}
+
+		.typeSendImg {
+			display: block;
+			position: relative;
+			width: 100%; height: 100%;
+			background: transparent;
+			padding: 0;
+		}
+
+	.receiversAndMsgSendC {
+		display: block;
+		position: relative;
+		height: 50%;
+		background: transparent;
+		top: 50%;
+		overflow: hidden;
+		box-shadow: 0px 0px 1px black;
+		border: none;
+		margin-left: 70px; margin-right: 20px;
+		padding: 0;
+		transform: translate(0, -50%);
+	}
+
+	.receiversAndMsgSendC:hover {
+		box-shadow: 0px 0px 5px black;
+		transition: box-shadow 0.3s;
+	}
+
+		.receiversAndMsgSendBtn {
+			width: 100%; height: 100%;
+			background: transparent;
+			color: white;
+			cursor: pointer;
+			border: none;
+			padding: 0;
+		}
+
+		.receiversAndMsgSendBtn:hover {
+			color: rgb(13, 18, 24);
+		}
+
+		.receiversSendC {
+			float: left;
+			display: block;
+			position: relative;
+			width: 200px; height: 100%;
+			font-size: 16px;
+			font-weight: bold;
+			font-style: italic;
+			text-align: left;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			border-right: 2px solid rgb(13, 18, 24);
+			padding: 8px 6px 0 6px;
+		}
+
+		.messageSendC {
+			display: block;
+			position: relative;
+			height: 100%;
+			background: transparent;
+			font-size: 18px;
+			text-overflow: ellipsis;
+			text-align: left;
+			white-space: nowrap;
+			overflow: hidden;
+			padding: 6px 120px 0 30px;
+		}
+
+		.dateSendC {
+			display: block;
+			position: absolute;
+			height: 100%;
+			background: transparent;
+			top: 0; right: 0px;
+			font-size: 16px;
+			overflow: hidden;
+			border-left: 2px solid rgb(13, 18, 24);
+			padding: 6px 10px 0 10px;
+		}
+	/**/
+
+
+	/**/
+	
+
+/*SCREEN WIDTH UNDER 420px*/
+	@media only screen and (max-width: 420px) {
+		
+	}
+
+	/*SCREEN WIDTH UNDER 380px*/
+	@media only screen and (max-width: 380px) {
+		
+		
+	}
+
+	/*SCREEN WIDTH UNDER 374px*/
+	@media only screen and (max-width: 374px) {
+		
+		
+	}
+
+	/*SCREEN WIDTH UNDER 300px*/
+	@media only screen and (max-width: 300px) {
+		
+		
+	}
+
+	/*SCREEN WIDTH UNDER 1200px*/
+	@media only screen and (max-width: 1200px) {
+	
+	}
+/**/
+
+/*ANIMATIONS*/
+	@keyframes spinOnLoading {
+		from { 
+			transform: rotate(0deg); 
+		} to { 
+			transform: rotate(360deg); 
+		}
+	}
+/**/

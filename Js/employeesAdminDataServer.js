@@ -7,8 +7,6 @@ var searchEmployeeInpt = document.getElementById("searchEmployeeInpt");
 var newBranchBtn = document.getElementById("newBranchBtn");
 var viewEmployeeBtn = document.getElementById("viewEmployeeBtn");
 var recruitmentEmployeeBtn = document.getElementById("recruitmentEmployeeBtn");
-var dischargeEmployeeBtn = document.getElementById("dischargeEmployeeBtn");
-var resignationEmployeeBtn = document.getElementById("resignationEmployeeBtn");
 var currentAction = "StartView";
 var lastAction = "none";
 var employeesObjSArray = [];
@@ -19,73 +17,32 @@ var employeeContentC = document.getElementById("employeeContentC");
 
 viewEmployeeBtn.addEventListener("click", StartEmployeeScreen);
 recruitmentEmployeeBtn.addEventListener("click", RecruitmentEmployeeScreen);
-dischargeEmployeeBtn.addEventListener("click", DischargeEmployeeScreen);
-resignationEmployeeBtn.addEventListener("click", ResignationEmployeeScreen);
 
+//MAIN FUNCTION
 ServerEmployee();
 
+//*(1)EMPLOYEES SERFVER START FROM HERE(ALL MAIN FUNCTIONS IS BEING CALLED)
 async function ServerEmployee() {
 	StartLoaderOnMainInfo();
 	ClearStatusData();
 	StartLoadingStatusInfo();
 	//MAKE OBJECTS FROM SERVER EMPLOYEES OBJECTS
-	phpObjectConvertToJsObject(await GetAllEmployees());
+	PhpObjectConvertToJsObject(await GetAllEmployees());
 	await new Promise(wait => setTimeout(wait, 1000));
 	StopLoaderOnMainInfo();
 	GetUsersIn();
 	StopLoadingStatusInfo();
 	NoWhiteSpaceInSearchBar();
 	StartEmployeeScreen();
-
+	//RecruitmentEmployeeScreen();
+	
 	setInterval(async function() {
 		GetUsersIn();
 	}, 15000);
 }
 
-function phpObjectConvertToJsObject(employeesArray) {
-	for(var i = 0; i < employeesArray.length; i++) {
-		var employee = new Employee(employeesArray[i].username, employeesArray[i].email, employeesArray[i].name,
-					employeesArray[i].icon, employeesArray[i].branchId, employeesArray[i].status, employeesArray[i].sex,
-					employeesArray[i].wage, employeesArray[i].recruitmentDay);
 
-		employeesObjSArray.push(employee);
-	}
-	//alert(employee.getDateDifferenceFromWhenEmployeeHired("months"));
-}
-
-function StartEmployeeScreen() {
-	if((sessionStorage.getItem("Load") != "On") && (lastAction != "StartView")) {
-		ChangeScreen("ShowEmployees");
-		//ChangeScreen("RecruitNewEmployee");
-		currentAction = "StartView";
-	}
-	lastAction = currentAction;
-}
-
-function RecruitmentEmployeeScreen() {
-	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Recruit")) {
-		ChangeScreen("RecruitNewEmployee");
-		currentAction = "Recruit";
-	}
-	lastAction = currentAction;
-}
-
-function DischargeEmployeeScreen() {
-	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Discharge")) {
-		ChangeScreen("DischargeEmployee");
-		currentAction = "Discharge";
-	}
-	lastAction = currentAction;
-}
-
-function ResignationEmployeeScreen() {
-	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Resign")) {
-		ChangeScreen("ResignEmployee");
-		currentAction = "Resign";
-	}
-	lastAction = currentAction;
-}
-
+//*(2)START LOADING SCREEN
 function StartLoaderOnMainInfo() {
 	var loaderC = document.createElement("div");
 	loaderC.id = "loaderC";
@@ -96,6 +53,18 @@ function StartLoaderOnMainInfo() {
 	sessionStorage.setItem("Load", "On");
 }
 
+//(2)->STOP LOADER WHEN ALL EMPLOYEES ARE LOADED TO CLIENT SIDE
+function StopLoaderOnMainInfo() {
+	var loaderC = document.getElementById("loaderC");
+	loadEmployeesC.innerHTML = "";
+	searchEmployeeC.style.display = "block";
+	employeeContentC.style.display = "block";
+	loadEmployeesC.style.display = "none";
+	sessionStorage.setItem("Load", "Off");
+}
+
+
+//*(3)CLEAR ONLINE EMPLOYEES CONTAINERS FROM ANY PREVIOUS VALUE
 function ClearStatusData() {
 	onlineAdminTextC.innerHTML = "";
 	onlineEmployeeTextC.innerHTML = "";
@@ -103,11 +72,31 @@ function ClearStatusData() {
 	lastUpdateInfoC.innerHTML = "";
 }
 
+//(3)->LOADING ONLINE EMPLOYEES CONTAINERS
 function StartLoadingStatusInfo() {
 	onlineAdminTextC.style.animation = "roundBorderToRight 1s linear infinite";
 	onlineEmployeeTextC.style.animation = "roundBorderToLeft 1s linear infinite";
 }
 
+//(3)->STOP LOADING USERS ONLINE INFO 
+function StopLoadingStatusInfo() {
+	onlineAdminTextC.style.animation = "none";
+	onlineEmployeeTextC.style.animation = "none";
+}
+
+
+//*(4)GET ALL EMPLOYEES FROM SERVER SIDE AND CONVERT IT TO EMPLOYEE OBJECTS
+function PhpObjectConvertToJsObject(employeesArray) {
+	for(var i = 0; i < employeesArray.length; i++) {
+		var employee = new Employee(employeesArray[i].username, employeesArray[i].email, employeesArray[i].name,
+					employeesArray[i].icon, employeesArray[i].branchId, employeesArray[i].status, employeesArray[i].sex,
+					employeesArray[i].wage, employeesArray[i].recruitmentDay, employeesArray[i].AFM, employeesArray[i].AMKA);
+
+		employeesObjSArray.push(employee);
+	}
+}
+
+//(4)->GET ALL EMPLOYEES FROM SERVER, TO SEND TO PhpObjectConvertToJsObject FUNCTION
 function GetAllEmployees() {
 	var emplArray = [];
 	return new Promise((resolve, reject) => {
@@ -124,6 +113,8 @@ function GetAllEmployees() {
 	});
 }
 
+
+//*(6)GET USERS THAT ARE SIGN IN. SPLIT IN TWO CATEGORIES, ADMINS AND REST OF EMPLOYEES(MANAGER, AGENCY AND STORE EMPLOYEES)
 function GetUsersIn() {
 	//USER ADMINS ONLINE
 	$.ajax({
@@ -146,6 +137,7 @@ function GetUsersIn() {
 	lastUpdateInfoC.innerHTML = UpdateChange();
 }
 
+//(6)->INFORM WHEN LAST UPDATE CHANGE HAS BEEN DONE, ABOUT USERS ONLINE INFO
 function UpdateChange() {
 	var currentDate = new Date();
 	var extraH = "";
@@ -165,20 +157,41 @@ function UpdateChange() {
 	return dateTime;
 }
 
-function StopLoaderOnMainInfo() {
-	var loaderC = document.getElementById("loaderC");
-	loadEmployeesC.innerHTML = "";
-	searchEmployeeC.style.display = "block";
-	employeeContentC.style.display = "block";
-	loadEmployeesC.style.display = "none";
-	sessionStorage.setItem("Load", "Off");
+
+//*(7)NOT ALLOW WHITE SPACE IN SEARCH BAR
+function NoWhiteSpaceInSearchBar() {
+	$("#searchEmployeeInpt").on({
+  		keydown: function(e) {
+    	if (e.which === 32)
+      		return false;
+  		},
+  		change: function() {
+    		this.value = this.value.replace(/\s/g, "");
+  		}
+	});
 }
 
-function StopLoadingStatusInfo() {
-	onlineAdminTextC.style.animation = "none";
-	onlineEmployeeTextC.style.animation = "none";
+
+//*(8)WHEN viewEmployeeBtn BUTTON IS TRIGGERED, LOAD ShowEmployees.html (DEFAULT SCREEN)
+function StartEmployeeScreen() {
+	if((sessionStorage.getItem("Load") != "On") && (lastAction != "StartView")) {
+		ChangeScreen("ShowEmployees");
+		currentAction = "StartView";
+	}
+	lastAction = currentAction;
 }
 
+
+//*(9)WHEN recruitmentEmployeeBtn BUTTON IS TRIGGERED, LOAD RecruitNewEmployee.html
+function RecruitmentEmployeeScreen() {
+	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Recruit")) {
+		ChangeScreen("RecruitNewEmployee");
+		currentAction = "Recruit";
+	}
+	lastAction = currentAction;
+}
+
+//(8)(9)->FUNCTION THAT IS BEING CALLED WHEN BUTTON IS PRESSED, TO CHANGE EMPLOYEES CONTENT SCREEN
 function ChangeScreen(action) {
 	//FILE CALL
 	var file = "EmployeesScreens/" + action + ".html";
@@ -190,17 +203,4 @@ function ChangeScreen(action) {
         	}
     	})
   });
-}
-
-//NO WHITE SPACE IN SEARCH BAR
-function NoWhiteSpaceInSearchBar() {
-	$("#searchEmployeeInpt").on({
-  		keydown: function(e) {
-    	if (e.which === 32)
-      		return false;
-  		},
-  		change: function() {
-    		this.value = this.value.replace(/\s/g, "");
-  		}
-	});
 }

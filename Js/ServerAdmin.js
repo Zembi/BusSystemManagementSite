@@ -3,22 +3,18 @@
 ServerStart();
 
 async function ServerStart() {
-
-//	if(new Date() == )
+	document.body.style.zoom = 0.9;
 
 	var btnListener = new ButtonListener("ADMIN");
 	btnListener.AddEventsToButtons();
-	userObj = new Array();
 
 	sessionStorage.setItem("Load", "Off");
 	CheckAdminBeforeLoad();
-	userObj = await GetAdminInfoFromServer();
-	AdminInfoManage(userObj);
 
 	//EVENTS WHEN USER CLOSES WINDOW
-	window.addEventListener("unload", function(event) {
+	/*window.addEventListener("unload", function(event) {
     	document.getElementById("logOutBtn").click();
-	});
+	});*/
 }
 
 //GET THE TIME THAT THE NEXT UPDATE WILL HAPPEN
@@ -33,6 +29,7 @@ function InformTheWebAboutUpdate() {
 	});
 }
 
+//MAKE SURE RIGHT WINDOW IS SAVED BEFORE RELOAD
 function CheckAdminBeforeLoad() {
 	var action = window.location.hash;
 	action = action.substring(1);
@@ -46,28 +43,24 @@ function CheckAdminBeforeLoad() {
 	menuScrnA.ChooseFromActionId();
 }
 
-function GetAdminInfoFromServer(userObj) {
-	return new Promise((resolve, reject) => {
-		$.ajax({
-      		type: 'POST',
-      		url: "../Php/findUserPhp.php",
-      		data: {username: userIn},
-      		success: function(data) {
-      			userObj = JSON.parse(data);
-   				userNameC.children[0].innerHTML = userObj.name;
-	    		resolve(userObj);
-      		}
-		});
-	});
-}
-
-function AdminInfoManage(userObj) {
-	userInObject = new User(userObj.username, userObj.email, userObj.icon, userObj.name, userObj.password, userObj.status, userObj.sex);
-}
-
+//CHECK IF THERE IS UPDATE WHILE USER IS SIGNED IN, IN THE SYSTEM
 function CheckIfSystemIsDownForThisUser() {
 	var userNameCC = document.getElementById("userNameC").childNodes[1];
 	if(userNameCC.innerHTML == "" || userNameCC.innerHTML == null) {
 		document.getElementById("logOutBtn").click();
 	}
+}
+
+//UPDATE AND NOTIFICATIONS CHECKS
+ServerUpdateAndNotifications();
+
+function ServerUpdateAndNotifications() {
+	NotificationsCheck();
+	setTimeout(function (){
+		NotificationsCheck();
+	}, 15000);
+}
+
+function NotificationsCheck() {
+
 }

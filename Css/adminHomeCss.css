@@ -15,6 +15,7 @@
 
 	button {
 		font-family: Roboto Slab;
+		user-select: none;
 	}
 
 	#homeContentC {

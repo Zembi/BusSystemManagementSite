@@ -5,6 +5,7 @@
 
 	button {
 		font-family: Roboto Slab;
+		user-select: none;
 	}
 
 /*INFO FOR ID CSS*/

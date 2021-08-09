@@ -10,7 +10,7 @@
 
 	body {
 		height: 100%;
-		min-width: 1300px;
+		min-width: 1500px;
 		background: rgb(22, 36, 53);
 		margin: 0;
 		padding: 0;
@@ -18,6 +18,7 @@
 
 	button {
 		font-family: Roboto Slab;
+		user-select: none;
 	}
 
 	/* Chrome, Safari, Edge, Opera */
@@ -41,11 +42,11 @@
 		position: fixed;
 		width: 100%; height: 100%;
 		background: rgb(255, 255, 255, 0.2);
-		z-index: 10000000;
+		z-index: 1000000000;
 	}
 
 	/*FOR ALERT MESSAGES*/
-	#alertInfoForCreatNewBranchC {
+	#alertInfoForCreatNewItemC {
 		display: none;
 		position: fixed;
 		background: rgb(22, 36, 53, 0.8);
@@ -60,7 +61,7 @@
 		transition: opacity 0.4s;
 	}
 
-	#alertInfoForCreatNewBranchTextC {
+	#alertInfoForCreatNewItemTextC {
 		display: table;
 		background: transparent;
 		border-radius: 5px;
@@ -68,7 +69,7 @@
 		padding: 2px;
 	}
 	
-	#alertInfoForCreatNewBranchBtn {
+	#alertInfoForCreatNewItemBtn {
 		position: relative;
 		display: table;
 		background: rgb(255, 215, 0);
@@ -80,12 +81,12 @@
 		margin: auto;
 	}
 
-	#alertInfoForCreatNewBranchBtn:hover {
+	#alertInfoForCreatNewItemBtn:hover {
 		background: white;
 		color: rgb(37, 52, 69);
 	}
 
-	#alertInfoForCreatNewBranchBtn:active {
+	#alertInfoForCreatNewItemBtn:active {
 		background: rgb(13, 18, 24);
 		color: rgb(22, 36, 53);
 	}
@@ -102,7 +103,7 @@
 	#centerEditWindowC {
 		position: absolute;
 		width: 60%;
-		min-width: 700px;
+		min-width: 800px;
 		background: rgb(22, 36, 53);
 		color: white;
 		top: 50%; left: 50%;
@@ -134,11 +135,12 @@
 		float: left;
 		display: block;
 		position: relative;
-		width: 100%;
+		width: 100%; height: 37px;
 		background: rgb(255, 255, 255, 0.2);
 		font-size: 28px;
 		text-align: center;
 		user-select: none;
+		z-index: 1;
 	}
 
 	#editTitleTextC {
@@ -170,6 +172,178 @@
 		padding: 10px;
 	}
 
+	#coverEditC {
+		display: none;
+		position: absolute;
+		width: 100%; height: calc(100% - 37px);
+		background: rgb(22, 36, 53);
+		top: 37px;
+		overflow: hidden;
+		border-radius: 0 0 1px 1px;
+		border-top: 2px solid rgb(13, 18, 24);
+	}
+
+	#backReceiverBtn {
+		display: block;
+		background: rgb(13, 18, 24);
+		color: white;
+		font-size: 30px;
+		cursor: pointer;
+		border: 2px solid white;
+		margin: auto; margin-top: 7px;
+	}
+
+	#backReceiverBtn:hover {
+		background: rgb(255, 215, 0);
+	}
+
+	#backReceiverBtn:active {
+		background: white;
+		color: rgb(13, 18, 24);
+		border-color: rgb(13, 18, 24);
+	}
+
+	#receiverListContentC {
+		position: absolute;
+		width: 100%;
+		background: rgb(255, 215, 0);
+		top: 60px; bottom: 0;
+		border-radius: 4px;
+		border-top: 2px solid rgb(13, 18, 24);
+		padding: 5px;
+	}
+
+	#receiverCenterListContentC {
+		width: 100%; height: 100%;
+		background: white;
+		overflow: auto;
+		border-radius: 4px;
+		border: 2px solid rgb(22, 36, 53);
+	}
+
+	/*WIDTH*/
+	#receiverCenterListContentC::-webkit-scrollbar {
+	  width: 22px;
+	  background: white;
+	}
+
+	/*TRACK*/
+	#receiverCenterListContentC::-webkit-scrollbar-track {
+	  box-shadow: inset 0 0 5px grey;
+	}
+	 
+	/*HANDLE*/
+	#receiverCenterListContentC::-webkit-scrollbar-thumb {
+	  background: rgb(22, 36, 53);
+	  border: 1px solid white;
+	}
+
+	/*HANDLE HOVER*/
+	#receiverCenterListContentC::-webkit-scrollbar-thumb:hover {
+	  background: rgb(255, 215, 0);
+	}
+
+	.placeForBranchC {
+		background: transparent;
+		border: 2px solid black;
+	}
+
+	.titleBranchC {
+		font-size: 22px;
+		border-bottom: 2px solid rgb(13, 18, 24);
+	}
+
+	.titleBranchC > button {
+		font-size: 22px;
+	}
+
+	.titleRecC {
+		position: relative;
+		background: transparent;
+		font-size: 18px;
+		margin-left: 10px;
+	}
+
+	.titleRecC > button {
+		font-size: 20px;
+	}
+
+	.titleRecCheckBox {
+		cursor: pointer;
+	}
+
+	.titleRecCheckBox:hover + .titleRecBtn {
+		color: rgb(255, 215, 0);
+	}
+
+	.titleRecBtn {
+		position: relative;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+	}
+
+	.titleRecBtn:hover {
+		color: rgb(255, 215, 0);
+	}
+
+	.managerEmpContentC {
+		margin-left: 30px;
+	}
+
+	.agencyEmpContentC {
+		margin-left: 30px;
+	}
+
+	.storeEmpContentC {
+		margin-left: 30px;
+	}
+
+	.checkBoxC {
+	}
+
+	.checkBox {
+		cursor: pointer;
+	}
+
+	.checkBox:hover + .checkBoxBtn {
+		color: rgb(255, 215, 0);
+	}
+
+	.checkBoxBtn {
+		position: relative;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		top: -2px;
+	}
+
+	.checkBoxBtn:hover {
+		color: rgb(255, 215, 0);
+	}
+
+	#downContainerOfEditC {
+		display: none;
+		position: fixed;
+		width: 90%;
+		max-height: 300px;
+		background: rgb(235, 235, 235);
+		bottom: 0; left: 50%;
+		overflow: hidden;
+		border-radius: 2px 2px 0 0;
+		padding: 3px;
+		transform: translate(-50%, 0);
+	}
+
+	.receiverC {
+		float: left;
+		display: table;
+		background: lightgrey;
+		border-radius: 6px;
+		margin: 4px 5px 4px 5px;
+		padding: 4px 9px 4px 9px;
+	}
+
 	/*ADD NEW INFO ALERT*/
 	#alertAddNewInfoC {
 		display: none;
@@ -189,6 +363,7 @@
 		border-radius: 4px;
 		border: 2px solid rgb(13, 18, 24);
 		transform: translate(-50%, 0);
+		z-index: 1;
 	}
 
 	#importantSymbolAddNewInfoC {
@@ -506,7 +681,7 @@
 		float: right;
 		position: relative;
 		height: 100%;
-		min-width: 1200px;
+		min-width: 1430px;
 		background: rgb(22, 36, 53);
 		overflow: visible;
 		transition: width 0.3s;
@@ -670,7 +845,7 @@
 			position: relative;
 			height: 100%;
 			overflow: hidden;
-			user-select: text;
+			user-select: none;
 		}
 
 		#pathTextC div {
@@ -696,12 +871,226 @@
 			transform: translate(-50%, -50%);
 		}
 
+		#notifcationSendBtn {
+			float: right;
+			position: absolute;
+			height: 70%;
+			background: rgb(13, 18, 24);
+			color: white;
+			top: 50%; right: 90px;
+			font-size: 19px;
+			cursor: pointer;
+			border-color: rgb(255, 215, 0);
+			transform: translate(0, -50%);
+		}
+
+		#notifcationSendBtn:hover {
+			background: rgb(255, 215, 0);
+			color: rgb(13, 18, 24);
+			border-color: rgb(13, 18, 24);
+		}
+
+		#notifcationSendBtn:active {
+			background: rgb(255, 200, 0);
+			color: white;
+			border-color: rgb(13, 18, 24);
+		}
+
+			/*NOTIFICATIONS WINDOW ELEMENTS*/
+			/*ID OF NOTIFICATION WINDOW*/
+			#idNotifInptC {
+				display: block;
+				position: relative;
+				width: 100%; height: 73.33px;
+				background: transparent;
+				overflow: hidden;
+				margin: auto; margin-top: 5px; margin-bottom: 20px;
+				padding: 2px;
+			}
+
+			#idNotifTextC {
+				position: relative;
+				font-size: 22px;
+				text-align: center;
+				user-select: none;
+				margin-bottom: 10px;
+			}
+
+			#idNotifInpt {
+				width: 100%;
+				color: rgb(13, 18, 24);
+				font-size: 18px;
+				text-align: center;
+				border-radius: 4px;
+				border: 2px solid rgb(13, 18, 24);
+				padding: 2px;
+			}
+
+			/*TYPE OF NOTIFICATION WINDOW*/
+			#typeNotifInptC {
+				display: block;
+				position: relative;
+				width: 100%; height: 73.33px;
+				background: transparent;
+				overflow: hidden;
+				margin: auto; margin-top: 5px; margin-bottom: 10px;
+				padding: 2px;
+			}
+
+			#typeNotifTextC {
+				position: relative;
+				font-size: 22px;
+				text-align: center;
+				user-select: none;
+				margin-bottom: 10px;
+			}
+
+			#typeNotifSlct {
+				width: 100%;
+				color: rgb(13, 18, 24);
+				font-size: 18px;
+				text-align: center;
+				border-radius: 4px;
+				border: 2px solid rgb(13, 18, 24);
+				padding: 2px;
+			}
+
+			/*RECEIVER OF NOTIFICATION WINDOW*/
+			#receiverNotifInptC {
+				display: block;
+				position: relative;
+				width: 100%;
+				background: transparent;
+				overflow: hidden;
+				margin: auto; margin-top: 0px; margin-bottom: 10px;
+				padding: 2px;
+			}
+
+			#receiverNotifBtn {
+				display: block;
+				width: 100%;
+				background: rgb(13, 18, 24);
+				color: white;
+				font-size: 18px;
+				text-align: center;
+				border-radius: 4px;
+				border: 2px solid white;
+				cursor: pointer;
+				margin: auto;
+				padding: 2px;
+			}
+
+			#receiverNotifBtn:hover {
+				background: rgb(255, 215, 0);
+				color: rgb(13, 18, 24);
+				border-color: rgb(255, 215, 0);
+			}
+
+			#receiverNotifBtn:active {
+				background: white;
+				color: rgb(13, 18, 24);
+				border-color: rgb(13, 18, 24);
+			}
+
+			#receiverNotifContentC {
+				display: block;
+				position: fixed;
+				max-width: 700px;
+				background: red;
+				bottom: 0; left: 50%;
+				font-size: 22px;
+				text-align: center;
+				user-select: none;
+				border: 1px solid rgb(13, 18, 24);
+				margin-bottom: 10px;
+				z-index: 3;
+				transform: translate(-50%, 0);
+			}
+
+			/*SEND NOTIFY */
+			#sendNotifbtn {
+				display: block;
+				position: relative;
+				width: 50%; height: 50px;
+				background: rgb(22, 36, 53);
+				color: white;
+				font-size: 22px;
+				text-align: center;
+				overflow: hidden;
+				cursor: pointer;
+				border-color: white;
+				margin: auto; margin-top: 45px;
+				padding: 2px;
+			}
+
+			#sendNotifbtn:hover {
+				color: rgb(255, 215, 0);
+				border-color: rgb(255, 215, 0);
+			}
+
+			/*TEXT OF NOTIFICATION WINDOW*/
+			#textNotifInptC {
+				display: block;
+				position: relative;
+				width: 100%; height: 350px;
+				background: transparent;
+				overflow: hidden;
+				margin: auto; margin-top: 15px; margin-bottom: 25px;
+				padding: 2px;
+			}
+
+			#textNotifTextC {
+				position: relative;
+				height: 30px;
+				font-size: 22px;
+				text-align: center;
+				user-select: none;
+			}
+
+			#textNotifTextAr {
+				display: block;
+				position: relative;
+				width: 100%; height: 90%;
+				background: white;
+				color: rgb(22, 36, 53);
+				letter-spacing: 1px;
+				font-size: 18px;
+				resize: none;
+				border: 2px solid rgb(118, 118, 118);
+				padding: 5px 5px 4px 5px;
+			}
+
+			/*WIDTH*/
+			#textNotifiedITextAr::-webkit-scrollbar {
+			  width: 20px;
+			}
+
+			/*TRACK*/
+			#textNotifiedITextAr::-webkit-scrollbar-track {
+			  box-shadow: inset 0 0 5px grey;
+			  border-radius: 2px;
+			}
+			 
+			/*HANDLE*/
+			#textNotifiedITextAr::-webkit-scrollbar-thumb {
+			  background: rgb(22, 36, 53);
+			  border-radius: 2px;
+			  border: 1px solid white; border-top: none; border-bottom: none;
+			}
+
+			/*HANDLE HOVER*/
+			#textNotifiedITextAr::-webkit-scrollbar-thumb:hover {
+			  background: rgb(255, 215, 0); 
+			}
+			/**/
+
 		#requestsBtn {
 			float: right;
 			position: relative;
 			width: 40px; height: 35px;
 			cursor: pointer;
 			background: rgb(6, 9, 12);
+			right: 10px;
 			outline: none;
 			border: none;
 			border-radius: 50%;
@@ -746,10 +1135,10 @@
 		#showPanelC {
 			position: relative;
 			width: 100%;
-			min-width: 100%;
+			min-width: 1100px;
 			background: transparent;
 			border-radius: 0 0 2px 2px;
-			overflow: hidden;
+			overflow: visible;
 		}
 
 
@@ -785,9 +1174,9 @@
 /*ANIMATIONS*/
 	@keyframes spinOnLoading {
 		from { 
-            transform: rotate(0deg); 
-        } to { 
-            transform: rotate(360deg); 
-        }
+			transform: rotate(0deg); 
+		} to { 
+			transform: rotate(360deg); 
+		}
 	}
 /**/

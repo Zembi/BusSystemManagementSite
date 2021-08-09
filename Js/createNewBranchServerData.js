@@ -1,5 +1,8 @@
 
 var coverPageHelperC = document.getElementById("coverPageHelperC");
+var alertInfoForCreatNewItemC = document.getElementById("alertInfoForCreatNewItemC");
+var alertInfoForCreatNewItemTextC = document.getElementById("alertInfoForCreatNewItemTextC");
+var alertInfoForCreatNewItemBtn = document.getElementById("alertInfoForCreatNewItemBtn");
 var alertAddNewInfoC = document.getElementById("alertAddNewInfoC");
 var addNewInfoTitleTextC = document.getElementById("addNewInfoTitleTextC");
 var addNewInfoTextC = document.getElementById("addNewInfoTextC");
@@ -71,15 +74,10 @@ async function InitializeAndKeyPressCheckEvents() {
 	confirmNewBranchBtn.addEventListener("click", function() {
 		ConfirmButtonCheck();
 	});
-
-	alertInfoForCreatNewBranchBtn.addEventListener("click", function() {UnderstandAlertMessageBtn();});
-
-	//DELETE
-	locationNewBranchInpt.value = "lllklk";
-	addressNewBranchInpt.value = "llkllk";
-	imageNewBranchInpt.value = ";l,fl,fl,f";
-	storeSizeNewBranchInpt.value = "1212";
 	
+	alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+		UnderstandAlertMessageBtn();
+	});
 }
 
 function GetAllBranches() {
@@ -194,9 +192,9 @@ function SearchManagerOptions() {
 		success: function(data) {
 			var unemployedEmployees = JSON.parse(data);
 			if(unemployedEmployees.length == 0) {
-				alertInfoForCreatNewBranchC.style.display = "table";
-				alertInfoForCreatNewBranchTextC.innerHTML = "Δεν υπάρχει διαθέσιμος υπάλληλος για την Διαχείριση νέου Καταστήματος.<br>Το κατάστημα δεν μπορεί να ορισθεί ως Ενεργό ή ως Υπό-επισκευή, μέχρις ότου, να προσληφθεί ένας υπεύθυνος.";
-				alertInfoForCreatNewBranchBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Δεν υπάρχει διαθέσιμος υπάλληλος για την Διαχείριση νέου Καταστήματος.<br>Το κατάστημα δεν μπορεί να ορισθεί ως Ενεργό ή ως Υπό-επισκευή, μέχρις ότου, να προσληφθεί ένας υπεύθυνος.";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
 				document.getElementById("statusActiveOptn").disabled = true;
 				document.getElementById("statusUnderROptn").disabled = true;
 				SelectValue("statusNewBranchSlct", "Υπό-κατασκευή");
@@ -204,7 +202,7 @@ function SearchManagerOptions() {
 				managerFound = 0;
 			}
 			else {
-				alertInfoForCreatNewBranchC.style.display = "none";
+				alertInfoForCreatNewItemC.style.display = "none";
 				document.getElementById("statusActiveOptn").disabled = false;
 				document.getElementById("statusUnderROptn").disabled = false;
 				SelectValue("statusNewBranchSlct", "Ενεργό");
@@ -222,7 +220,7 @@ function SearchManagerOptions() {
 
 //EVENT WHEN CLICK BUTTON FROM ALERT MESSAGES
 function UnderstandAlertMessageBtn() {
-	alertInfoForCreatNewBranchC.style.display = "none";
+	alertInfoForCreatNewItemC.style.display = "none";
 	if(insertedBranch) {
 		location.reload();
 	}
@@ -316,27 +314,6 @@ function ConfirmButtonCheck() {
 	}
 }
 
-//TRANSLATE STATUS
-function TranslateStatusTo(language, statusOption) {
-	var p = 0;
-	if(language == "greek") {
-		for(var i = 0; i < statusBranchArray.length; i++) {
-			if(statusOption == statusBranchArrayTranslate[i]) {
-				p = i;
-			}
-		}
-		return statusBranchArrayTranslate[p];
-	}
-	else if(language == "english") { 
-		for(var i = 0; i < statusBranchArrayTranslate.length; i++) {
-			if(statusOption == statusBranchArrayTranslate[i]) {
-				p = i;
-			}
-		}
-		return statusBranchArray[p];
-	}
-}
-
 //GET IDS OF CONNECTED BRANCHES
 function GetIdsOfConnectedBranches() {
 	var ids = "(";
@@ -365,15 +342,15 @@ function SendNewBranchInfoToServer() {
 				insertedBranch = 1;
 				coverPageHelperC.style.display = "block";
 				alertAddNewInfoC.style.display = "none";
-				alertInfoForCreatNewBranchC.style.display = "table";
-				alertInfoForCreatNewBranchTextC.innerHTML = "Η ΔΙΑΔΙΚΑΣΙΑ ΟΛΟΚΛΗΡΩΘΗΚΕ ΕΠΙΤΥΧΩΣ(η σελίδα θα ανανεωθεί )";
-				alertInfoForCreatNewBranchBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Η ΔΙΑΔΙΚΑΣΙΑ ΟΛΟΚΛΗΡΩΘΗΚΕ ΕΠΙΤΥΧΩΣ(η σελίδα θα ανανεωθεί )";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
 			}
 			else {
 				alertAddNewInfoC.style.display = "none";
-				alertInfoForCreatNewBranchC.style.display = "table";
-				alertInfoForCreatNewBranchTextC.innerHTML = "ΚΑΤΙ ΠΗΓΕ ΛΑΘΟΣ";
-				alertInfoForCreatNewBranchBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "ΚΑΤΙ ΠΗΓΕ ΛΑΘΟΣ";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
 			}
 		}
 	});

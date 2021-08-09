@@ -37,10 +37,14 @@
 			'status' => $row['Status'],
 			'sex' => $row['Sex'],
 			'wage' => $row['Wage'],
-			'recruitmentDay' => $recruitmentDay
+			'recruitmentDay' => $row['RecruitmentDay'],
+			'AFM' => $row['ΑΦΜ'],
+			'AMKA' => $row['ΑΜΚΑ']
 		);
 		array_push($users, $user);
 	}
+
+	//echo $row['Wage'];
   	echo json_encode($users);
 
 	mysqli_close($conn);
