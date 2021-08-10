@@ -75,6 +75,7 @@ async function InitializeAndKeyPressCheckEvents() {
 		ConfirmButtonCheck();
 	});
 	
+
 	alertInfoForCreatNewItemBtn.addEventListener("click", function() {
 		UnderstandAlertMessageBtn();
 	});
@@ -195,6 +196,7 @@ function SearchManagerOptions() {
 				alertInfoForCreatNewItemC.style.display = "table";
 				alertInfoForCreatNewItemTextC.innerHTML = "Δεν υπάρχει διαθέσιμος υπάλληλος για την Διαχείριση νέου Καταστήματος.<br>Το κατάστημα δεν μπορεί να ορισθεί ως Ενεργό ή ως Υπό-επισκευή, μέχρις ότου, να προσληφθεί ένας υπεύθυνος.";
 				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.focus();
 				document.getElementById("statusActiveOptn").disabled = true;
 				document.getElementById("statusUnderROptn").disabled = true;
 				SelectValue("statusNewBranchSlct", "Υπό-κατασκευή");
@@ -265,7 +267,7 @@ function ConfirmButtonCheck() {
 	//continueNoError += IfElementNotEmpty(managerNewBranchSlct);
 	continueNoError += IfElementNotEmpty(storeSizeNewBranchInpt);
 
-	var statusEnglish = TranslateStatusTo("english", statusNewBranchSlct.value);
+	var statusEnglish = TranslateBranchStatusTo("english", statusNewBranchSlct.value);
 	var connectedBranchesIdString = GetIdsOfConnectedBranches();
 
 	newBranchObject = {
@@ -311,6 +313,7 @@ function ConfirmButtonCheck() {
 			addNewInfoTextC.innerHTML = "Είστε σίγουρος για την δημιουργία ενός νέου καταστήματος χωρίς υπεύθυνο, στην περιοχή "
 										+ locationNewBranchInpt.value + ", σε κατάσταση " + statusNewBranchSlct.value + ";";
 		}
+		yesAddNewInfoBtn.focus();
 	}
 }
 
@@ -331,11 +334,10 @@ function GetIdsOfConnectedBranches() {
 	return ids;
 }
 
-function SendNewBranchInfoToServer() {
-	$.ajax({
+function SendNewBranchInfoToServer() {$.ajax({
 		type: 'POST',
 		url: "../Php/createNewBranchPhp.php",
-		data: {newBranch: newBranchObject},
+		data: {newBranch: newBranchObject, user: userIn},
 		success: function(data) {
 			if(data == 1) {
 				//ALERT MESSAGE
@@ -349,9 +351,10 @@ function SendNewBranchInfoToServer() {
 			else {
 				alertAddNewInfoC.style.display = "none";
 				alertInfoForCreatNewItemC.style.display = "table";
-				alertInfoForCreatNewItemTextC.innerHTML = "ΚΑΤΙ ΠΗΓΕ ΛΑΘΟΣ";
+				alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος.<br>Παρακαλώ ανανεώστε.";
 				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
 			}
+			alertInfoForCreatNewItemBtn.focus();
 		}
 	});
 }

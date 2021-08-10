@@ -17,4 +17,4 @@
 <?php include("../Php/exitBtnPhp.php")?>
 <script type="text/javascript" src="../Js/fixesStyle.js"></script>
 <script type="text/javascript" src="../Js/serverAdmin.js"></script>
-<script type="text/javascript" src="../Js/checkForNotificationsAndUpdates.js"></script>
+<!--<script type="text/javascript" src="../Js/checkForNotificationsAndUpdates.js"></script>-->

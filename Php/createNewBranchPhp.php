@@ -18,17 +18,18 @@
 	}
 
 	$newBranch = $_POST['newBranch'];
+	$adminControl = $_POST['user'];
 	
 	$newBranchDecoded = json_decode($newBranch);
 	if(empty($newBranchDecoded->manager)) {
-		$sqlInsertNewBranch = "INSERT INTO branches (Id, Type, Street, Location, Image, Manager, StoreId, Status) 
+		$sqlInsertNewBranch = "INSERT INTO branches (Id, Type, Street, Location, Image, Manager, StoreId, Status, AdminControl) 
 							VALUES ('$newBranchDecoded->id', '$newBranchDecoded->type', '$newBranchDecoded->street', '$newBranchDecoded->location', 
-							'$newBranchDecoded->image', NULL, '$newBranchDecoded->storeId', '$newBranchDecoded->status')";
+							'$newBranchDecoded->image', NULL, '$newBranchDecoded->storeId', '$newBranchDecoded->status', '$adminControl')";
 	}
 	else {
-		$sqlInsertNewBranch = "INSERT INTO branches (Id, Type, Street, Location, Image, Manager, StoreId, Status) 
+		$sqlInsertNewBranch = "INSERT INTO branches (Id, Type, Street, Location, Image, Manager, StoreId, Status, AdminControl) 
 							VALUES ('$newBranchDecoded->id', '$newBranchDecoded->type', '$newBranchDecoded->street', '$newBranchDecoded->location', 
-							'$newBranchDecoded->image', '$newBranchDecoded->manager', '$newBranchDecoded->storeId', '$newBranchDecoded->status')";
+							'$newBranchDecoded->image', '$newBranchDecoded->manager', '$newBranchDecoded->storeId', '$newBranchDecoded->status', '$	')";
 	}
 
 	if(mysqli_query($conn, $sqlInsertNewBranch)) {

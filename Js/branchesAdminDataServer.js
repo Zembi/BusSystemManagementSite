@@ -4,6 +4,10 @@ var listOfBranchesBtn = document.getElementById("listOfBranchesBtn");
 var newBranchBtn = document.getElementById("newBranchBtn");
 var currentAction = "Start";
 var lastAction = "none";
+//BRANCHES ARRAY
+var branchArray = [];
+//ARRAY TO CHECK IF BRANCHES INFO ARE IN OPENED OR CLOSED SITUATION
+var branchSituationArray = [];
 
 listOfBranchesBtn.addEventListener("click", StartBranchScreen);
 newBranchBtn.addEventListener("click", NewBranchBtnListener);
@@ -12,10 +16,35 @@ newBranchBtn.addEventListener("click", NewBranchBtnListener);
 ServerBranch();
 
 //*(1)START OF BRANCHES SERVER
-function ServerBranch() {
+async function ServerBranch() {
+  var branchHelperArray = await GetAllBranches();
+  ConvertBranchArrayToBranchObjArray(branchHelperArray);
   StartBranchScreen();
 }
 
+//(1)->
+function GetAllBranches() {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: 'POST',
+      url: "../Php/getBranchesPhp.php",
+      data: {},
+      success: function(data) {
+        //alert(data);
+        array = JSON.parse(data);
+        resolve(array);
+      }
+    });
+  });
+}
+
+//(1)->
+function ConvertBranchArrayToBranchObjArray(array) {
+  for(var i = 0; i < array.length; i++) {
+    branchArray.push(new Branch(array[i].id, array[i].type, array[i].street, array[i].location, array[i].image, array[i].manager, array[i].storeId, array[i].status, array[i].adminControl));
+    branchSituationArray.push(0);
+  }
+}
 
 //(1)->IF BRANCHES SHOWVIEW BUTTON IS PRESSED, LOAD ShowBranches.html AND HIDE THE BUTTON
 function StartBranchScreen() {

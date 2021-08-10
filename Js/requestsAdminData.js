@@ -30,8 +30,12 @@ function CheckIfOkToContinueToNotificationsScreen() {
 
 //START OF SERVER AND ACTIONS FOR NOTIFICATIONS
 async function ServerNotifications() {
-	receivedNotifications = await ReceivedNotif("Receiver", userInObject.getUsername());
-	sentNotifications = await SentNotif("Sender", userInObject.getUsername());
+	receivedNotifications = await ReceivedNotif("Receiver", userIn);
+	sentNotifications = await SentNotif("Sender", userIn);
+
+	//NOTIFICATION ALERT STOP
+	alertNotifInfoC.style.display = "table";
+	alertNotifInfoC.innerHTML = "";
 
 	StartNotificationsScreen();
 	receivedNotifBtn.addEventListener("click", function() {
@@ -121,8 +125,14 @@ function SentNotif(type, userIn) {
 //*(2)CONTENT FOR RECEIVER NOTIFICATIONS
 async function ScreenReceivedNotifcations() {
 	var receivedMsgCounterC = document.getElementById("receivedMsgCounterC");
+	var alertNotifInfoC = document.getElementById("alertNotifInfoC");
+	var requestsBtnImg = document.getElementById("requestsBtnImg");
 	var notifcationsPlaceC = document.getElementById("notifcationsPlaceC");
 	notifcationsPlaceC.innerHTML = "";
+	alertNotifInfoC.style.display = "none";
+	alertNotifInfoC.style.marginTop = "0px";
+	alertNotifInfoC.style.animation = "none";
+	requestsBtnImg.style.animation = "none";
 
 	receivedNotifications = await ReceivedNotif("Receiver", userInObject.getUsername());
 
@@ -131,6 +141,8 @@ async function ScreenReceivedNotifcations() {
 	AddEventsToReceivedAndSentBtns(statusScreenNow);
 
 	receivedMsgCounterC.innerHTML = "(" + receivedNotifications.length + ")";
+
+	var senderNotifAr = [];
 
 	//CREATE THE NOTIFICATIONS CONTAINER FOR RECEIVED SCREEN
 	for(var i = 0; i < receivedNotifications.length; i++) {
@@ -144,6 +156,7 @@ async function ScreenReceivedNotifcations() {
 
 		var contentRecC = document.createElement("div");
 		contentRecC.className = "contentRecC";
+		contentRecC.id = "contentRecC" + receivedNotifications[i].id;
 
 		var numberRecC = document.createElement("numberRecC");
 		numberRecC.className = "numberRecC";
@@ -162,21 +175,21 @@ async function ScreenReceivedNotifcations() {
 
 		var senderAndMsgRecBtn = document.createElement("button");
 		senderAndMsgRecBtn.name = i;
-		senderAndMsgRecBtn.id = receivedNotifications[i].id + "senderAndMsgRecBtn";
+		senderAndMsgRecBtn.id = receivedNotifications[i].id;
 		senderAndMsgRecBtn.className = "senderAndMsgRecBtn";
 		senderAndMsgRecC.appendChild(senderAndMsgRecBtn);
-		senderAndMsgRecBtn.addEventListener("click", function() {
-			var notif = receivedNotifications[this.name];
-			OpenNotification(notif.id, senderNotifAr[this.name], notif.type, notif.textArea, notif.dateTimeSend, notif.status);
-		});
 
 		var senderRecC = document.createElement("div");
 		senderRecC.className = "senderRecC";
 		senderRecC.innerHTML = "Από: " + receivedNotifications[i].sender;
-		var senderNotifAr = [];
-		senderNotifAr[i] = senderRecC.innerHTML;
+		senderNotifAr[i] = "Από: " + receivedNotifications[i].sender;
 		senderRecC.title = receivedNotifications[i].sender;
 		senderAndMsgRecBtn.appendChild(senderRecC);
+
+		senderAndMsgRecBtn.addEventListener("click", function() {
+			var notif = receivedNotifications[this.name];
+			OpenNotification(notif.id, senderNotifAr[this.name], notif.type, notif.textArea, notif.dateTimeSend, notif.status, document.getElementById("contentRecC" + this.id));
+		});
 
 		var messageRecC = document.createElement("div");
 		messageRecC.className = "messageRecC";
@@ -218,8 +231,8 @@ async function ScreenReceivedNotifcations() {
 	}
 }
 
-//(2)->SEND NOTIFICATIONS INFO TO SCREEN WHEN NOTIF BUTTON IS PRESSED
-async function OpenNotification(id, sender, type, message, dateTime, status) {
+//(2)(3)->SEND NOTIFICATIONS INFO TO SCREEN WHEN NOTIF BUTTON IS PRESSED
+async function OpenNotification(id, sender, type, message, dateTime, status, elmnt) {
 	var senderMsgC = document.getElementById("senderMsgC");
 	var typeMsgC = document.getElementById("typeMsgC");
 	var onlyMsgC = document.getElementById("onlyMsgC");
@@ -239,8 +252,15 @@ async function OpenNotification(id, sender, type, message, dateTime, status) {
 	dateMsgC.innerHTML = dateTime;
 
 	if(status == 0) {
+		elmnt.style.background = "rgb(58, 65, 89)";
+		elmnt.addEventListener("mouseover", function() {
+			this.style.background = "rgb(111, 143, 171, 0.2)";
+		});
+		elmnt.addEventListener("mouseout", function() {
+			elmnt.style.background = "rgb(58, 65, 89)";
+		});
+		
 		await SendOpenStatusUser(id, userInObject.getUsername());
-		CheckScreenNowAndLoadIfNecessary();
 	}
 }
 
@@ -259,9 +279,14 @@ function ExitFromFullMessage() {
 //*(3)CONTENT FOR SENDER NOTIFICATIONS
 async function ScreenSentNotifcations() {
 	var sentMsgCounterC = document.getElementById("sentMsgCounterC");
+	var alertNotifInfoC = document.getElementById("alertNotifInfoC");
+	var requestsBtnImg = document.getElementById("requestsBtnImg");
 	var notifcationsPlaceC = document.getElementById("notifcationsPlaceC");
 	notifcationsPlaceC.innerHTML = "";
-	//alert("kkfk");
+	alertNotifInfoC.style.display = "none";
+	alertNotifInfoC.style.marginTop = "0px";
+	alertNotifInfoC.style.animation = "none";
+	requestsBtnImg.style.animation = "none";
 
 	sentNotifications = await SentNotif("Sender", userInObject.getUsername());
 
@@ -297,6 +322,7 @@ async function ScreenSentNotifcations() {
 
 		var contentSendC = document.createElement("div");
 		contentSendC.className = "contentSendC";
+		contentSendC.id = "contentSendC" + sentNotifications[i].id;
 		contentSendC.style.background = "rgb(58, 65, 89)";
 
 		var numberDeleteSendC = document.createElement("div");
@@ -333,7 +359,7 @@ async function ScreenSentNotifcations() {
 
 		var receiversAndMsgSendBtn = document.createElement("button");
 		receiversAndMsgSendBtn.name = i;
-		receiversAndMsgSendBtn.id = sentNotifications[i].id + "receiversAndMsgSendBtn";
+		receiversAndMsgSendBtn.id = sentNotifications[i].id;
 		receiversAndMsgSendBtn.className = "receiversAndMsgSendBtn";
 		receiversAndMsgSendC.appendChild(receiversAndMsgSendBtn);
 
@@ -364,7 +390,7 @@ async function ScreenSentNotifcations() {
 		globalReceiversMessageArray[i] = startMsg + finalMsg;
 		receiversAndMsgSendBtn.addEventListener("click", function() {
 			var notif = sentNotifications[this.name];
-			OpenNotification(notif.id, globalReceiversMessageArray[this.name], notif.type, notif.textArea, notif.dateTimeSend, "");
+			OpenNotification(notif.id, globalReceiversMessageArray[this.name], notif.type, notif.textArea, notif.dateTimeSend, 10,  document.getElementById("contentSendC" + this.id));
 		});
 
 		var messageSendC = document.createElement("div");

@@ -1099,29 +1099,28 @@
 			padding: 2px;
 		}
 
-		#requestsBtn img {
-			float: left;
-			position: absolute;
+		#requestsBtnImg {
+			position: relative;
 			width: 80%; height: 80%;
-			top: 50%; left: 50%;
 			border-radius: 50%;
+			margin: auto;
 			content: url(../Assets/icons8_notification_50px.png);
-			transform: translate(-50%, -50%);
 		}
 
-		#requestsBtn:hover img {
+		#requestsBtn:hover #requestsBtnImg {
 			width: 70%; height: 70%;
 			content: url(../Assets/icons8_notification_50px_2.png);
 		}
 
 		#numberOfRequestsC{
+			display: table;
 			position: absolute;
 			background: rgb(240, 40, 73);
 			color: white;
 			font-size: 12px;
 			top: -3px; left: -9px;
 			overflow: hidden;
-			border-radius: 50%;
+			border-radius: 4px 4px 2px 4px;
 			overflow: hidden;
 			padding: 1px 4px 1px 4px;
 		}
@@ -1129,6 +1128,24 @@
 		#numberOfRequestsC div {
 			position: relative;
 			font-weight: bold;
+			padding: 1px;
+		}
+
+		/*ALERT CONTAINER WHEN */
+		#alertNotifInfoC {
+			display: none;
+			position: absolute;
+			background: brown;
+			color: rgb(255, 215, 0);
+			top: 0; left: 65%;
+			font-size: 16px;
+			border: 2px solid grey;
+			margin-top: 0;
+			padding: 4px;
+			transform: translate(-50%, 0);
+			user-select: none;
+			z-index: 24;
+			transition: margin-top 0.4s;
 		}
 
 		/*BOTTOM PANEL WITH INFO IN MAIN PANEL*/
@@ -1178,5 +1195,13 @@
 		} to { 
 			transform: rotate(360deg); 
 		}
+	}
+
+	@keyframes triggerBellWhenNotificationsChange {
+		0% { transform: rotate(0deg); }
+		25% { transform: rotate(35deg); }
+		50% { transform: rotate(-35deg); }
+		75% { transform: rotate(35deg); }
+		100% { transform: rotate(-35deg); }
 	}
 /**/

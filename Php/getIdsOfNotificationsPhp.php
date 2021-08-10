@@ -19,13 +19,43 @@
 		echo "Database Not Selected";
 	}
 
+	$type = $_POST['type'];
+	$user = $_POST['user'];
 	$notifIds = [];
 
-	$query = "SELECT Id FROM notifications";
+	if($type == "All") {
+		$query = "SELECT Id FROM notifications";
+		$result = mysqli_query($conn, $query);
+		
+		while (($row = mysqli_fetch_array($result))) {
+			array_push($notifIds, $row['Id']);
+		}
+	}
+	else if($type == "Receive") {
+		$query = "SELECT Id, Receiver FROM notifications WHERE Sender <> '$user' ORDER BY `DateTimeSend` DESC";
+		$result = mysqli_query($conn, $query);
+		
+		while (($row = mysqli_fetch_array($result))) {
+			$receivers = $row['Receiver'];
+			$receiverSlices = explode("#", $receivers);
 
-	$result = mysqli_query($conn, $query);
-	while (($row = mysqli_fetch_array($result))) {
-		array_push($notifIds, $row['Id']);
+			foreach ($receiverSlices as $value) {
+				$receiverUsername = explode("$", $value);
+
+				if($receiverUsername[0] == $user) {
+					array_push($notifIds, $row['Id']);
+					break;
+				}
+			}
+		}
+	}
+	else if($type == "Send") {
+		$query = "SELECT Id, Sender FROM notifications WHERE Sender = '$user' ORDER BY `DateTimeSend` DESC";
+		$result = mysqli_query($conn, $query);
+		
+		while (($row = mysqli_fetch_array($result))) {
+			array_push($notifIds, $row['Id']);
+		}
 	}
 
 	echo json_encode($notifIds);

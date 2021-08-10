@@ -21,7 +21,7 @@
 
 	$branches = [];
 
-	$query = "SELECT * FROM branches";
+	$query = "SELECT * FROM branches ORDER BY `Location`";
 	$result = mysqli_query($conn, $query);
 	while (($row = mysqli_fetch_array($result))) {
 		$branch = array(
@@ -32,7 +32,8 @@
 			'image' => $row['Image'],
 			'manager' => $row['Manager'],
 			'storeId' => $row['StoreId'],
-			'status' => $row['Status']
+			'status' => $row['Status'],
+			'adminControl' => $row['AdminControl']
 		);
 		array_push($branches, $branch);
 	}

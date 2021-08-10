@@ -646,7 +646,7 @@ class ButtonListener {
 				$.ajax({
 					type: 'POST',
 					url: "../Php/getIdsOfNotificationsPhp.php",
-					data: {},
+					data: {type: "All", user: userInObject.getUsername()},
 					success: function(data) {
 						data = JSON.parse(data);
 						resolve(data);

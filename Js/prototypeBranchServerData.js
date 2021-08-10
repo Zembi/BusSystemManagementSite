@@ -4,6 +4,7 @@ var topPartC;
 var midPartC;
 var midRightPartC;
 var bottomPartC;
+var problemWithManager = 0;
 
 FindThisBranch();
 
@@ -30,7 +31,9 @@ function AddInfoTop() {
 	//#uniqueIdBrViewC
 	topPartC.children[2].innerHTML = "#" + branchArray[countBranch].getId();
 	//#editBrViewBtn
-	topPartC.children[3].addEventListener("click", function() {EditInfoOfThisBranch(id, document.getElementsByClassName("prototypeBranchViewC")[id]);});
+	topPartC.children[3].addEventListener("click", function() {
+		EditInfoOfThisBranch(id, document.getElementsByClassName("prototypeBranchViewC")[id]);
+	});
 }
 
 function StatusChooseIcon() {
@@ -74,15 +77,27 @@ async function AddInfoMiddle() {
 	//#hiddenInfoManagerC
 	var hiddenInfoManagerC = document.getElementsByClassName("hiddenInfoManagerC")[id];
 	//#managerNameC
-	var manager = await FindUser(branchArray[id].getManager());
-	manager.createId("name", hiddenInfoManagerC, midRightPartC.children[1]);
-	midRightPartC.children[1].children[1].innerHTML = manager.getName();
-	ManagerChooseIcon(manager);
+	if(branchArray[id].getManager() == null) {
+		midRightPartC.children[1].children[1].innerHTML = "Δεν έχει ορισθεί υπεύθυνος διαχείρισης !";
+		ManagerChooseIcon(null);
+		problemWithManager = 1;
+	}
+	else {
+		var manager = await FindUser(branchArray[id].getManager());
+		manager.createId("name", hiddenInfoManagerC, midRightPartC.children[1]);
+		midRightPartC.children[1].children[1].innerHTML = manager.getName();
+		ManagerChooseIcon(manager);
+	}
 }
 
 async function ManagerChooseIcon(manager) {
-	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
-	midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/" + manager.getUserImageSrc() + ")";
+	if(manager != null) {
+		var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
+		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/" + manager.getUserImageSrc() + ")";
+	}
+	else {
+		midRightPartC.children[1].children[0].style.content = "url(../Assets/PersonType/icons8_puzzled_40px_1.png)";
+	}
 }
 
 async function FindUser(userToFind) {
@@ -93,8 +108,17 @@ async function FindUser(userToFind) {
 function AddInfoBottom() {
 	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
 	//#branchInfoBtn
-	bottomPartC.children[0].children[0].innerHTML = "Πληροφορίες για το κατάστημα: " + branchArray[id].getLocation();
-	bottomPartC.children[0].children[0].addEventListener("click", function() {OpenBranchInfo(id, document.getElementsByClassName("prototypeBranchViewC")[id]);});
+	bottomPartC.children[0].children[0].addEventListener("click", function() {
+		OpenBranchInfo(id, document.getElementsByClassName("prototypeBranchViewC")[id]);
+	});
+	if(problemWithManager) {
+		bottomPartC.children[0].children[0].innerHTML = "Ανενεργό, λόγω μη εύρεσης manager !";
+		bottomPartC.children[0].children[0].disabled = true;
+		bottomPartC.children[0].children[0].style.background = "grey";
+	}
+	else {
+		bottomPartC.children[0].children[0].innerHTML = "Πληροφορίες για το κατάστημα: " + branchArray[id].getLocation();
+	}
 }
 
 function OpenBranchInfo(id, element) {

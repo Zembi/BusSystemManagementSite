@@ -165,12 +165,13 @@
 							</button>
 							<button id="notifcationSendBtn">Νέα Ειδοποίηση</button>
 							<button id="requestsBtn" name="Requests">
-								<img>
+								<img id="requestsBtnImg">
 								<div id="numberOfRequestsC">
-									<div>10</div>
+									<div id="numberOfRequestsTextC">-</div>
 								</div>
 							</button>
 						</div>
+						<div id="alertNotifInfoC"></div>
 						<div id="showPanelC">
 						
 						</div>

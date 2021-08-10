@@ -150,6 +150,30 @@ function ValidateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
+//TRANSLATE BRANCH STATUS
+function TranslateBranchStatusTo(language, statusOption) {
+	var statusBranchArTransl = ["Ενεργό", "Υπό-επισκευή", "Υπό-κατασκευή", "Μη ενεργό"];
+	var statusBranchAr = ["Active", "Under_R", "Under_C", "Problem"];
+	
+	var p = 0;
+	if(language == "greek") {
+		for(var i = 0; i < statusBranchAr.length; i++) {
+			if(statusOption == statusBranchArTransl[i]) {
+				p = i;
+			}
+		}
+		return statusBranchArTransl[p];
+	}
+	else if(language == "english") { 
+		for(var i = 0; i < statusBranchArTransl.length; i++) {
+			if(statusOption == statusBranchArTransl[i]) {
+				p = i;
+			}
+		}
+		return statusBranchAr[p];
+	}
+}
+
 //TRANSLATE STATUS VALUE
 function TranslateStatusTo(language, statusOption) {
 	var arrayGr = ["Γενικός Διαχειριστής", "Υπεύθυνος Διαχείρισης", "Υπάλληλος Πρακτορείου", "Υπεύθυνος Αποθήκης", "Οδηγός", "Φύλακας", "Καθαριστής"];

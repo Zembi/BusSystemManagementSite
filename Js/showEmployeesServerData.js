@@ -592,8 +592,8 @@ DischargeEmployeesStart();
 function DischargeEmployeesStart() {
 	TitleCCreateDischargeView();
 	CreateDischargeOrResignView("Discharge");
-	BtnListenerForDischargeEmployees();
-	DischargeSearchBarFunctions();	
+	//BtnListenerForDischargeEmployees();
+	//DischargeSearchBarFunctions();	
 }
 
 
@@ -889,8 +889,8 @@ ResignEmployeesStart();
 function ResignEmployeesStart() {
 	TitleCCreateResignView();
 	CreateDischargeOrResignView("Resign");
-	BtnListenerForResignEmployees();
-	ResignSearchBarFunctions();	
+	//BtnListenerForResignEmployees();
+	//ResignSearchBarFunctions();	
 }
 
 

@@ -21,7 +21,7 @@
 
 	$users = [];
 
-	$query = "SELECT * FROM employees";
+	$query = "SELECT * FROM employees  ORDER BY `BranchId`, `Wage`";
 
 	$result = mysqli_query($conn, $query);
 	while (($row = mysqli_fetch_array($result))) {
