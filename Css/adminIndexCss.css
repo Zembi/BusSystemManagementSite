@@ -21,6 +21,14 @@
 		user-select: none;
 	}
 
+	input {
+		font-family: Roboto Slab;
+	}
+
+	select {
+		font-family: Roboto Slab;
+	}
+
 	/* Chrome, Safari, Edge, Opera */
 	input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 		-webkit-appearance: none;
@@ -299,6 +307,10 @@
 		margin-left: 30px;
 	}
 
+	.adminEmpContentC {
+		margin-left: 10px;
+	}
+
 	.checkBoxC {
 	}
 
@@ -438,7 +450,7 @@
 				cursor: pointer;
 				border-radius: 2px;
 				border: 2px solid rgb(13, 18, 24);
-				margin: 0 0 0 10px;
+				margin: 0 10px 0 10px;
 			}
 
 			#noAddNewInfoBtn:hover {
@@ -450,6 +462,29 @@
 				background: rgb(13, 18, 24);
 				color: rgb(22, 36, 53);
 			}
+
+	#deleteInfoBtn {
+		display: none;
+		position: absolute;
+		background: darkred;
+		color: rgb(13, 18, 24);
+		bottom: 10px; right: 20px;
+		font-size: 16px;
+		cursor: pointer;
+		border-radius: 2px;
+		border: 2px solid rgb(13, 18, 24);
+		margin: 0 0 0 10px;
+	}
+
+	#deleteInfoBtn:hover {
+		background: red;
+		color: rgb(37, 52, 69);
+	}
+
+	#deleteInfoBtn:active {
+		background: rgb(13, 18, 24);
+		color: rgb(22, 36, 53);
+	}
 	/**/
 
 	#leftC {
@@ -740,6 +775,7 @@
 			position: relative;
 			background: rgb(0, 0, 0, 0.5);
 			right: 5%;
+			overflow: hidden;
 			border-radius: 0 0 2px 2px;
 			user-select: none;
 			padding: 10px;
@@ -1007,6 +1043,32 @@
 				transform: translate(-50%, 0);
 			}
 
+			/*CHECKBOX FOR ANSWERS CONFIRM*/
+			#checkForAnswerC {
+				display: table;
+				position: relative;
+				background: transparent;
+				user-select: none;
+				margin: auto; margin-top: 25px;
+			}
+
+			#checkBoxOfAnswerOrNotInpt {
+				cursor: pointer;
+				margin-right: 6px;
+			}
+			
+			#checkBoxOfAnswerOrNotLabel {
+			}
+
+			#checkBoxOfAnswerOrNotBtn {
+				background: transparent;
+				color: white;
+				font-size: 16px;
+				cursor: pointer;
+				border: none;
+				padding: 0;
+			}
+
 			/*SEND NOTIFY */
 			#sendNotifbtn {
 				display: block;
@@ -1019,7 +1081,7 @@
 				overflow: hidden;
 				cursor: pointer;
 				border-color: white;
-				margin: auto; margin-top: 45px;
+				margin: auto; margin-top: 35px;
 				padding: 2px;
 			}
 
@@ -1157,6 +1219,7 @@
 			border-radius: 0 0 2px 2px;
 			overflow: visible;
 		}
+
 
 
 /*SCREEN WIDTH UNDER 420px*/

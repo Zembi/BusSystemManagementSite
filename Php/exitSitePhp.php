@@ -6,7 +6,7 @@
 	$db = "bussystemmanagement";
 
 	session_start();
-	$username = $_SESSION['user'];
+	$idOfUserIn = $_SESSION['userId'];
 	$_SESSION['userStatus'] = "null";
 
 	$conn = mysqli_connect($servername, $user, $password);
@@ -21,7 +21,7 @@
 		echo "Database Not Selected";
 	}
 
-	$query = "DELETE FROM usersonline WHERE Username='$username'";
+	$query = "DELETE FROM usersonline WHERE Id = '$idOfUserIn'";
 	mysqli_query($conn, $query);
 
 

@@ -14,11 +14,13 @@ var countBranch = 0;
 //MAIN FUNCTION HERE
 FindBranchesStatusAndCreateView();
 
+
 //*(1)START OF BRANCHES SERVER
 async function FindBranchesStatusAndCreateView() {
 	StartLoaderOnMainInfo();
 	ClearStatusData();
 	StartLoadingStatusInfo();
+	TitleAndBasicActionsOfBranches();
 	for(var i = 0; i < branchArray.length; i++) {
 		var id = "branches" + i + "C";
 		CreateElementForBranch(id);
@@ -29,6 +31,7 @@ async function FindBranchesStatusAndCreateView() {
 	StopLoadingStatusInfo();
 	StopLoaderOnMainInfo();
 }
+
 
 
 //*(2)START LOADING SCREEN
@@ -49,6 +52,7 @@ function StopLoaderOnMainInfo() {
 	loadBranchesC.style.display = "none";
 	sessionStorage.setItem("Load", "Off");
 }
+
 
 
 //*(3)CLEAR ONLINE EMPLOYEES CONTAINERS FROM ANY PREVIOUS VALUE
@@ -77,7 +81,24 @@ function StopLoadingStatusInfo() {
 	problemBranchNumC.style.animation = "none";
 }
 
-//*(4)CREATE DIV ELEMENTS FOR EACH BRANCH
+
+
+//*(4)TITLE OF THIS SHOW VIEW AND CREATE ACTIONS FOR ALL BRANCHES
+function TitleAndBasicActionsOfBranches() {
+	var titleShowBranchesC = document.getElementById("titleShowBranchesC");
+
+	titleShowBranchesC.innerHTML = "ΠΡΟΒΟΛΗ ΚΑΤΑΣΤΗΜΑΤΩΝ";
+	ActionOfOpeningAndClosingAllBranchesInfo();
+}
+
+//(4)->CREATE ACTION OF OPENING AND CLOSING ALL BRANCHES INFO, WITH ONE BUTTON
+function ActionOfOpeningAndClosingAllBranchesInfo() {
+
+}
+
+
+
+//*(5)CREATE DIV ELEMENTS FOR EACH BRANCH
 function CreateElementForBranch(id) {
 	var div = document.createElement("div");
 	div.id = id;
@@ -85,7 +106,7 @@ function CreateElementForBranch(id) {
 	showBranchesC.appendChild(div);
 }
 
-//(4)FUNCTION THAT IS USED, TO CHANGE FULLFILL ELEMENTS, THAT HAVE BEEN CREATED FROM CreateElementForBranch FUNCTION, WITH PrototypeBranchView.html ELEMENTS
+//(5)->FUNCTION THAT IS USED, TO CHANGE FULLFILL ELEMENTS, THAT HAVE BEEN CREATED FROM CreateElementForBranch FUNCTION, WITH PrototypeBranchView.html ELEMENTS
 function PrototypeOfBranchList(action, id) {
 	return new Promise ((resolve, reject) => {
 	//FILE CALL
@@ -104,7 +125,8 @@ function PrototypeOfBranchList(action, id) {
 }
 
 
-//*(5)CHECK STATUS INFO OF BRANCH
+
+//*(6)CHECK STATUS INFO OF BRANCH
 function StatusInfo() {
 	var a = 0;
 	var u_R = 0;
@@ -133,7 +155,8 @@ function StatusInfo() {
 }
 
 
-//*(6)INFORM WHEN LAST UPDATE CHANGE HAS BEEN DONE, ABOUT BRANCHES STATUS INFO
+
+//*(7)INFORM WHEN LAST UPDATE CHANGE HAS BEEN DONE, ABOUT BRANCHES STATUS INFO
 function UpdateChange() {
 	var currentDate = new Date();
 	var extraH = "";

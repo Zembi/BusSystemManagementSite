@@ -86,7 +86,7 @@ callme();*/
 
 //BEING CALLED EVERY 5 SECS, UPDATE THE NOTIFICATIONS NUMBER
 async function NotificationsCheck(type) {
-	var notifsIdsArray = await IdsNotif(type, userIn);
+	var notifsIdsArray = await IdsNotif(type, userUsernameIn);
 	var numberOfRequestsTextC = document.getElementById("numberOfRequestsTextC");
 	var requestsBtnImg = document.getElementById("requestsBtnImg");
 	var alertNotifInfoC = document.getElementById("alertNotifInfoC");
@@ -104,6 +104,7 @@ async function NotificationsCheck(type) {
 			requestsBtnImg.style.animation = "2s linear 0s infinite alternate triggerBellWhenNotificationsChange";
 			
 			if(sessionStorage.getItem('lastOpenedAction') == "Requests") {
+				document.getElementById("receivedMsgCounterC").innerHTML = "(*" + notifsIdsArray.length + ")";
 				alertNotifInfoC.innerHTML = "Εντοπίσθηκε αλλαγή στις ειδοποιήσεις!<br>Κάντε ανανέωση της σελίδας ή ξαναμπείτε στα εισερχόμενα.";
 			}
 			else {
@@ -112,6 +113,8 @@ async function NotificationsCheck(type) {
 					alertNotifInfoC.style.marginTop = "0";
 				}, 2000);*/
 			}
+
+			sessionStorage.setItem('lastOpenedAction', "---");
 		}
 	}
 
@@ -122,12 +125,12 @@ async function NotificationsCheck(type) {
 }
 
 //GET ALL RECEIVED NOTIFICATIONS THAT MATCH USER THAT HAS BEEN SIGNED IN
-function IdsNotif(typeNotif, userIn) {
+function IdsNotif(typeNotif, userUsernameIn) {
 	return new Promise ((resolve, reject) => {
 		$.ajax({
 			type: 'POST',
 			url: "../Php/getIdsOfNotificationsPhp.php",
-			data: {type: typeNotif, user: userIn},
+			data: {type: typeNotif, user: userUsernameIn},
 			success: function(data) {
 				var notifObj = JSON.parse(data);
 				resolve(notifObj);

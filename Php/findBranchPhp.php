@@ -29,7 +29,9 @@
    			'image' => $row['Image'],
 			'manager' => $row['Manager'],
 			'storeId' => $row['StoreId'],
-			'status' => $row['Status'] );
+			'status' => $row['Status'],
+			'adminControl' => $row['AdminControl']
+		);
 	}
 	
 	echo json_encode($branchFound);

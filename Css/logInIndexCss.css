@@ -19,8 +19,16 @@
 		user-select: none;
 	}
 
+	input {
+		font-family: Roboto Slab;
+	}
+
 	input::-ms-reveal, input::-ms-clear {
 		display: none;
+	}
+
+	select {
+		font-family: Roboto Slab;
 	}
 
 	#mainC {

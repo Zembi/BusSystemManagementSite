@@ -19,11 +19,11 @@
 	$sqlFindUpdate = "SELECT * FROM updates WHERE Activity = 'Α'";
 	$result = mysqli_query($conn, $sqlFindUpdate);
 	while (($row = mysqli_fetch_array($result))) {
-		$update = array(
+		/*$update = array(
 			'username' => $row['Username'],
 			'email' => $row['Email'],
 			'name' => $row['Name'],
-   			'icon' => $row['Icon'],
+   			'icon' => $row['Icon'],*/
 	}
 	
 	mysqli_close($conn);

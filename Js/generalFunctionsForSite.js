@@ -117,8 +117,6 @@ function ConvertToTime(givenDate) {
 		seconds = "0" + seconds;
 	}
 
-	alert(seconds.length);
-
 	time = hours + ":" + minutes + ":" + seconds;
 
 	return time;
@@ -158,7 +156,7 @@ function TranslateBranchStatusTo(language, statusOption) {
 	var p = 0;
 	if(language == "greek") {
 		for(var i = 0; i < statusBranchAr.length; i++) {
-			if(statusOption == statusBranchArTransl[i]) {
+			if(statusOption == statusBranchAr[i]) {
 				p = i;
 			}
 		}
@@ -292,4 +290,130 @@ function TranslateWayOutOfCompanyTo(language, wayOutOfCompOption) {
 		}
 		return arrayEng[c];
 	}
+}
+
+//CONVERT A STRING TO AN ARRAY
+function ConvertStringToArray(string, separator) {
+	string = string.replace(/\s/g, '');
+
+	var stringArr = string.split(separator);
+
+    //FOR DEBUGGING
+    /*for(var i = 0; i < stringArr.length; i++) {
+		console.log(stringArr[i]);
+    }*/
+
+    return stringArr;
+}
+
+//GET STRING LENGTH OF CHILD ELEMENTS
+function GetStringLengthOfAllChildElements(parent) {
+	var nodesOfSenders = parent.childNodes;
+	var fullLength = 0;
+
+	for(var i = 0; i < nodesOfSenders.length; i++) {
+		fullLength += nodesOfSenders[i].innerHTML.length;
+	}
+
+	return fullLength;
+}
+
+//CONVERT A SIMPLE OBJECT TO AN EMPLOYEE OBJECT AND RERURN IT
+function ConvertObjectToEmployeeObj(item) {
+	return new Employee(item.id, item.username, item.email, item.name, item.icon, item.branchId, item.status, item.sex, item.wage, item.recruitmentDay, item.afm, item.amka, item.password);
+}
+
+//CONVERT A SIMPLE OBJECT TO AN EMPLOYEE OBJECT AND RERURN IT
+function ConvertObjectsArrayToEmployeeObjsArray(itemsArray) {
+	var employeesArray = [];
+
+	for(var i = 0; i < itemsArray.length; i++) {
+		employeesArray.push(new Employee(itemsArray[i].id, itemsArray[i].username, itemsArray[i].email, itemsArray[i].name, itemsArray[i].icon, itemsArray[i].branchId, itemsArray[i].status, itemsArray[i].sex, itemsArray[i].wage, itemsArray[i].recruitmentDay, itemsArray[i].afm, itemsArray[i].amka, itemsArray[i].password));
+	}
+	
+	return employeesArray;
+}
+
+//CONVERT A SIMPLE OBJECT TO A BRANCH OBJECT AND RERURN IT
+function ConvertObjectToBranchObj(item) {
+	return new Branch(item.id, item.type, item.street, item.location, item.image, item.manager, item.storeId, item.status, item.adminControl);
+}
+
+//CONVERT A SIMPLE OBJECT TO A BRANCH OBJECT AND RERURN IT
+function ConvertObjectsArrayToBranchObjsArray(itemsArray) {
+	var branchesArray = [];
+
+	for(var i = 0; i < itemsArray.length; i++) {
+		branchesArray.push(new Branch(itemsArray[i].id, itemsArray[i].type, itemsArray[i].street, itemsArray[i].location, itemsArray[i].image, itemsArray[i].manager, itemsArray[i].storeId, itemsArray[i].status, itemsArray[i].adminControl));
+	}
+	
+	return branchesArray;
+}
+
+//CLOSE MESSAGE ALERTS WHEN THIS FUNCTION IS BEING CALLED
+function CloseAlertMessages() {
+	var alertInfoForCreatNewItemC = document.getElementById("alertInfoForCreatNewItemC");
+	alertInfoForCreatNewItemC.style.display = "none";
+}
+
+//GIVE ARTICLE TO A WORD, DEPENDING ON ITS ENDING
+function WordEndingGiveArticles(word, type) {
+	var ending = word.slice(-1);
+	var article = "";
+	var finalWord = "";
+
+	if(ending = "η") {
+		if(type = 0) {
+			article = "της ";
+		}
+		else {
+			article = "στην ";
+		}
+	}
+
+	finalWord = article + word;
+
+	return finalWord;
+}
+
+//REMOVE SPECIFIC OBJECT FROM ARRAY
+function RemoveObjectFromArray(object, array) {
+	for(var i = 0; i < array.length; i++) {
+		if(JSON.stringify(object) === JSON.stringify(array[i])) {
+			array.splice(i, 1);
+		}
+	}
+
+	return array;
+}
+
+//REMOVE SPECIFIC ITEM FROM ARRAY
+function RemoveItemFromArray(item, array) {
+	for(var i = 0; i < array.length; i++) {
+		if(item == array[i]) {
+			array.splice(i, 1);
+		}
+	}
+
+	return array;
+}
+
+//REMOVE SPECIFIC ITEM FROM ARRAY
+function RemoveItemFromArray(item, array) {
+	for(var i = 0; i < array.length; i++) {
+		if(item == array[i]) {
+			array.splice(i, 1);
+		}
+	}
+
+	return array;
+}
+
+//ADD SPECIFIC ITEM TO ARRAY
+function AddItemToAnArray(item, array) {
+	if(!array.includes(item)) {
+		array.push(item);
+	}
+
+	return array;
 }

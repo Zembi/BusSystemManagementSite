@@ -18,19 +18,19 @@
 
 	$availableBranchIdArray = [];
 
-	$key = $_POST['key'];
+	$IdKey = $_POST['key'];
 	$statusToSearch = $_POST['statusSearch'];
 
 	if($statusToSearch == "Employee Manager") {
-		if($key != "") {
-			$sqlGetAllBranches = "SELECT * FROM branches WHERE Manager IS NULL OR Manager = '$key'";
+		if($IdKey != "") {
+			$sqlGetAllBranches = "SELECT * FROM branches WHERE Manager IS NULL OR Manager = '$IdKey'";
 		}
 		else {
 			$sqlGetAllBranches = "SELECT * FROM branches WHERE Manager IS NULL";
 		}
 	}
 	else {
-		$sqlGetAllBranches = "SELECT * FROM branches";
+		$sqlGetAllBranches = "SELECT * FROM branches WHERE Manager IS NOT NULL";
 	}
 
 	$resultBranchId = mysqli_query($conn, $sqlGetAllBranches);
@@ -44,7 +44,8 @@
    			'image' => $row['Image'],
 			'manager' => $row['Manager'],
 			'storeId' => $row['StoreId'],
-			'status' => $row['Status']
+			'status' => $row['Status'],
+			'adminControl' => $row['AdminControl']
 		);
 
 		array_push($availableBranchIdArray, $branchFound);

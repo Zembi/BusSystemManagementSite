@@ -46,6 +46,7 @@ class ButtonListener {
 
 	//EXIT EDIT BUTTON EVENT
 	ExitEditBtnButtonListener() {
+		CloseAlertMessages();
 		var editWindowC = document.getElementById("editWindowC");
 		editWindowC.style.display = "none";
 		var coverEditC = document.getElementById("coverEditC");
@@ -58,6 +59,7 @@ class ButtonListener {
 
 	//MENU BUTTON EVENTS
 	MenuButtonListener() {
+		//CloseAlertMessages();
 		var leftC = document.getElementById("leftC");
 		var leftFixedC = document.getElementById("leftFixedC");
 		var menuSymbolC = document.getElementById("menuSymbolC");
@@ -102,36 +104,42 @@ class ButtonListener {
 
 	//HOME BUTTON ADMIN EVENTS
 	HomeButtonListener() {
+		CloseAlertMessages();
 		var menuScrnA = new MenuScreenAdmin(homeBtn.name);
 		menuScrnA.ChooseFromActionId();
 	}
 
 	//BRANCHES BUTTON ADMIN EVENTS
 	BranchesButtonListenerAdmin() {
+		CloseAlertMessages();
 		var menuScrnA = new MenuScreenAdmin(branchesBtn.name);
 		menuScrnA.ChooseFromActionId();
 	}
 
 	//EMPLOYEES BUTTON ADMIN EVENTS
 	EmployeesButtonListenerAdmin() {
+		CloseAlertMessages();
 		var menuScrnA = new MenuScreenAdmin(employeesBtn.name);
 		menuScrnA.ChooseFromActionId();
 	}
 	
 	//ROUTES BUTTON ADMIN EVENTS
 	RoutesButtonListenerAdmin() {
+		CloseAlertMessages();
 		var menuScrnA = new MenuScreenAdmin(routesBtn.name);
 		menuScrnA.ChooseFromActionId();
 	}
 
 	//BUSES BUTTON ADMIN EVENTS
 	BusesButtonListenerAdmin() {
+		CloseAlertMessages();
 		var menuScrnA = new MenuScreenAdmin(busesBtn.name);
 		menuScrnA.ChooseFromActionId();
 	}
 
 	//CENTER SCREEN BUTTON ADMIN EVENTS
 	CenterScreenButtonListenerAdmin() {
+		CloseAlertMessages();
 		if(leftFixedC.offsetWidth != 0) {
 		}
 		else {
@@ -142,6 +150,7 @@ class ButtonListener {
 
 	//NOTIFICATIONS BUTTON ADMIN EVENTS
 	NotifcationsSendButtonListenerAdmin() {
+		CloseAlertMessages();
 		var editWindowC = document.getElementById("editWindowC");
 		var editTitleTextC = document.getElementById("editTitleTextC");
 		var editInfoGetterLeftC = document.getElementById("editInfoGetterLeftC");
@@ -211,7 +220,6 @@ class ButtonListener {
 		editInfoGetterLeftC.appendChild(typeNotifInptC);
 
 		//RECEIVER OF NOTIFICATION
-		var downContainerOfEditC = document.getElementById("downContainerOfEditC");
 		downContainerOfEditC.style.display = "block";
 
 		var receiverNotifInptC = document.createElement("div");
@@ -256,12 +264,67 @@ class ButtonListener {
 		async function CreateListOfReceiverOptions() {
 			var receiverBranchesOptions = await GetBranchesThatAdminControl();
 
+			await AddNewRowToOptionReceiverList(0, "Γενικός Διαχειριστής");
 			for(var i = 0; i < receiverBranchesOptions.length; i++) {
-				var branchTitle = "#" + receiverBranchesOptions[i].id + " - " + receiverBranchesOptions[i].street + " - " + receiverBranchesOptions[i].location;
-				AddNewRowToOptionReceiverList(receiverBranchesOptions[i].id, branchTitle);
+				if(receiverBranchesOptions[i].manager == null) {
+
+				}
+				else {
+					var branchTitle = "#" + receiverBranchesOptions[i].id + " - " + receiverBranchesOptions[i].street + " - " + receiverBranchesOptions[i].location;
+					await AddNewRowToOptionReceiverList(receiverBranchesOptions[i].id, branchTitle);
+				}
 			}
 		}
 		
+		//CHECKBOX THAT ALLOWS CONFIRMATION OR NOT
+		var checkForAnswerC = document.createElement("id");
+		checkForAnswerC.id = "checkForAnswerC";
+
+		var checkBoxOfAnswerOrNotInpt = document.createElement("input");
+		checkBoxOfAnswerOrNotInpt.id = "checkBoxOfAnswerOrNotInpt";
+		checkBoxOfAnswerOrNotInpt.type = "checkbox";
+
+		checkForAnswerC.appendChild(checkBoxOfAnswerOrNotInpt);
+
+		var checkBoxOfAnswerOrNotLabel = document.createElement("label");
+		checkBoxOfAnswerOrNotLabel.id = "checkBoxOfAnswerOrNotLabel";
+		checkBoxOfAnswerOrNotLabel.for = "checkBoxOfAnswerOrNotInpt";
+
+		var checkBoxOfAnswerOrNotBtn = document.createElement("button");
+		checkBoxOfAnswerOrNotBtn.id = "checkBoxOfAnswerOrNotBtn";
+		checkBoxOfAnswerOrNotBtn.innerHTML = "Επιβεβαίωση από παραλήπτη";
+		checkBoxOfAnswerOrNotBtn.addEventListener("click", function() {
+			checkBoxOfAnswerOrNotInpt.click();
+		});
+		checkBoxOfAnswerOrNotLabel.appendChild(checkBoxOfAnswerOrNotBtn);
+
+		checkForAnswerC.appendChild(checkBoxOfAnswerOrNotLabel);
+
+		editInfoGetterLeftC.appendChild(checkForAnswerC);
+
+		var checkboxOpen = true;
+		CheckChosenTypeOfNotifToTriggerCheckBox();
+		typeNotifSlct.addEventListener("change", function() {
+			CheckChosenTypeOfNotifToTriggerCheckBox();
+		});
+
+		function CheckChosenTypeOfNotifToTriggerCheckBox() {
+			if(typeNotifSlct.value == "Γενική ενημέρωση συστήματος" || typeNotifSlct.value == "Πληροφόρηση" || typeNotifSlct.value == "Κρίσιμη πληροφόρηση") {
+				checkForAnswerC.style.display = "none";
+				checkboxOpen = false;
+				receiverNotifInptC.style.marginBottom = "50px";
+				//checkBoxOfAnswerOrNotInpt.disabled = true;
+				//checkBoxOfAnswerOrNotBtn.style.color = "darkgrey";
+			}
+			else {
+				checkForAnswerC.style.display = "table";
+				checkboxOpen = true;
+				receiverNotifInptC.style.marginBottom = "0";
+				//checkBoxOfAnswerOrNotInpt.disabled = false;
+				//checkBoxOfAnswerOrNotBtn.style.color = "white";
+			}
+		}
+
 		//BUTTON 
 		var sendNotifbtn = document.createElement("button");
 		sendNotifbtn.id = "sendNotifbtn";
@@ -324,12 +387,21 @@ class ButtonListener {
 				});
 			}
 			else {
+				var approve;
+				if(checkBoxOfAnswerOrNotInpt.checked && checkboxOpen) {
+					approve = true;
+				}
+				else {
+					approve = false;
+				}
+
 				alertAddNewInfoC.style.display = "block";
 				addNewInfoTitleTextC.innerHTML = "ΕΠΙΚΥΡΩΣΗ ΑΠΟΣΤΟΛΗΣ";
 				addNewInfoTextC.innerHTML = "Είστε σίγουρος για την αποστολή νέου μυνήματος, με θέμα | " + typeNotifSlct.value + " |.<br>Μετά την αποστολή, δεν μπορεί να ανακληθεί το μήνυμα, οπότε σιγούρεψτε, πρώτα, τα στοιχεία που έχετε συμπληρώσει. ";
+				
 				yesAddNewInfoBtn.addEventListener("click", function() {
 					alertAddNewInfoC.style.display = "none";
-					SendNotificationToServer(idNotifInpt.value, typeNotifSlct.value, receiverUsernameArray, textNotifTextAr.value);
+					SendNotificationToServer(approve, idNotifInpt.value, typeNotifSlct.value, receiverUsernameArray, textNotifTextAr.value);
 				});
 				yesAddNewInfoBtn.focus();
 				noAddNewInfoBtn.addEventListener("click", function() {
@@ -340,7 +412,7 @@ class ButtonListener {
 
 		async function AddNewRowToOptionReceiverList(id, title) {
 			var employeesUsersArray = await GetUsersThatWorkInThisBranch(id);
-			var allArray = [];
+			var adminArray = [];
 			var managerEmplArray = [];
 			var agencyEmplArray = [];
 			var storeEmplArray = [];
@@ -412,198 +484,251 @@ class ButtonListener {
 
 			placeForBranchC.appendChild(titleOfBranchC);
 
+			if(id != 0) {
 
-			var managerEmpTitleC = document.createElement("div");
-			managerEmpTitleC.className = "titleRecC";
-			managerEmpTitleC.id = id;
-			var managerEmpTitleCheckBox = document.createElement("input");
-			managerEmpTitleCheckBox.className = "titleRecCheckBox";
-			managerEmpTitleCheckBox.type = "checkbox";
-			managerEmpTitleC.appendChild(managerEmpTitleCheckBox);
-			var managerEmplTitleBtn = document.createElement("button");
-			managerEmplTitleBtn.className = "titleRecBtn";
-			managerEmplTitleBtn.innerHTML = "Υπεύθυνος Διαχείρισης";
-			managerEmpTitleC.appendChild(managerEmplTitleBtn);
+				var managerEmpTitleC = document.createElement("div");
+				managerEmpTitleC.className = "titleRecC";
+				managerEmpTitleC.id = id;
+				var managerEmpTitleCheckBox = document.createElement("input");
+				managerEmpTitleCheckBox.className = "titleRecCheckBox";
+				managerEmpTitleCheckBox.type = "checkbox";
+				managerEmpTitleC.appendChild(managerEmpTitleCheckBox);
+				var managerEmplTitleBtn = document.createElement("button");
+				managerEmplTitleBtn.className = "titleRecBtn";
+				managerEmplTitleBtn.innerHTML = "Υπεύθυνος Διαχείρισης";
+				managerEmpTitleC.appendChild(managerEmplTitleBtn);
 
-			managerEmpTitleCheckBox.id = "EmploManag" + id + "ALL";
-			managerEmpTitleCheckBox.name = id;
-			managerEmplTitleBtn.name = managerEmpTitleCheckBox.id;
-			managerEmpTitleCheckBox.addEventListener("change", function () {
-				if(this.checked == true) {
-					EnableOrDisableCheckBoxes("Disable", "EmploManag", managerEmplArray, id);
-					for(var i = 0; i < managerEmplArray.length; i++) {
-						var helper = "EmploManag" + id + specialSymbol + managerEmplArray[i].username;
-						var index = receiverArray.indexOf(helper);
-						if(index == -1) {
-							receiverArray.push(helper);
+				managerEmpTitleCheckBox.id = "EmploManag" + id + "ALL";
+				managerEmpTitleCheckBox.name = id;
+				managerEmplTitleBtn.name = managerEmpTitleCheckBox.id;
+				managerEmpTitleCheckBox.addEventListener("change", function () {
+					if(this.checked == true) {
+						EnableOrDisableCheckBoxes("Disable", "EmploManag", managerEmplArray, id);
+						for(var i = 0; i < managerEmplArray.length; i++) {
+							var helper = "EmploManag" + id + specialSymbol + managerEmplArray[i].username;
+							var index = receiverArray.indexOf(helper);
+							if(index == -1) {
+								receiverArray.push(helper);
+							}
 						}
 					}
-				}
-				else {
-					EnableOrDisableCheckBoxes("Enable", "EmploManag", managerEmplArray, id);
-					for(var i = 0; i < managerEmplArray.length; i++) {
-						var helper = "EmploManag" + id + specialSymbol + managerEmplArray[i].username;
-						var index = receiverArray.indexOf(helper);
-						receiverArray.splice(index, 1);
-					}
-				}
-				SendInfoFromReceiverArrayToDownContainer(id);
-			});
-			managerEmplTitleBtn.addEventListener("click", function() {
-				$("#" + this.name).trigger("click");
-			});
-			
-			var managerEmpContentC = document.createElement("div");
-			managerEmpContentC.className = "managerEmpContentC";
-
-			placeForBranchC.appendChild(managerEmpTitleC);
-			placeForBranchC.appendChild(managerEmpContentC);
-
-
-			var agencyEmpTitleC = document.createElement("div");
-			agencyEmpTitleC.className = "titleRecC";
-			agencyEmpTitleC.id = id;
-			var agencyEmpTitleCheckBox = document.createElement("input");
-			agencyEmpTitleCheckBox.className = "titleRecCheckBox";
-			agencyEmpTitleCheckBox.type = "checkbox";
-			agencyEmpTitleC.appendChild(agencyEmpTitleCheckBox);
-			var agencyEmplTitleBtn = document.createElement("button");
-			agencyEmplTitleBtn.className = "titleRecBtn";
-			agencyEmplTitleBtn.innerHTML = "Υπάλληλοι Πρακτορείου";
-			agencyEmpTitleC.appendChild(agencyEmplTitleBtn);
-
-			agencyEmpTitleCheckBox.id = "AgencyEmpl" + id + "ALL";
-			agencyEmpTitleCheckBox.name = id;
-			agencyEmplTitleBtn.name = agencyEmpTitleCheckBox.id;
-			agencyEmpTitleCheckBox.addEventListener("change", function () {
-				if(this.checked == true) {
-					EnableOrDisableCheckBoxes("Disable", "AgencyEmpl", agencyEmplArray, id);
-					for(var i = 0; i < agencyEmplArray.length; i++) {
-						var helper = "AgencyEmpl" + id + specialSymbol + agencyEmplArray[i].username;
-						var index = receiverArray.indexOf(helper);
-						if(index == -1) {
-							receiverArray.push(helper);
-						}
-					}
-				}
-				else {
-					EnableOrDisableCheckBoxes("Enable", "AgencyEmpl", agencyEmplArray, id);
-					for(var i = 0; i < agencyEmplArray.length; i++) {
-						var helper = "AgencyEmpl" + id + specialSymbol + agencyEmplArray[i].username;
-						var index = receiverArray.indexOf(helper);
-						receiverArray.splice(index, 1);
-					}
-				}
-				SendInfoFromReceiverArrayToDownContainer(id);
-			});
-			agencyEmplTitleBtn.addEventListener("click", function() {
-				$("#" + this.name).trigger("click");
-			});
-
-			var agencyEmpContentC = document.createElement("div");
-			agencyEmpContentC.className = "agencyEmpContentC";
-
-			placeForBranchC.appendChild(agencyEmpTitleC);
-			placeForBranchC.appendChild(agencyEmpContentC);
-
-
-			var storeEmplTitleC = document.createElement("div");
-			storeEmplTitleC.className = "titleRecC";
-			storeEmplTitleC.id = id;
-			var storeEmplTitleCheckBox = document.createElement("input");
-			storeEmplTitleCheckBox.className = "titleRecCheckBox";
-			storeEmplTitleCheckBox.type = "checkbox";
-			storeEmplTitleC.appendChild(storeEmplTitleCheckBox);
-			var storeEmplTitleBtn = document.createElement("button");
-			storeEmplTitleBtn.className = "titleRecBtn";
-			storeEmplTitleBtn.innerHTML = "Υπεύθυνοι Αποθήκης";
-			storeEmplTitleC.appendChild(storeEmplTitleBtn);
-
-			storeEmplTitleCheckBox.id = "StoreEmpl" + id + "ALL";
-			storeEmplTitleCheckBox.name = id;
-			storeEmplTitleBtn.name = storeEmplTitleCheckBox.id;
-			storeEmplTitleCheckBox.addEventListener("change", function () {
-				if(this.checked == true) {
-					EnableOrDisableCheckBoxes("Disable", "StoreEmpl", storeEmplArray, id);
-					for(var i = 0; i < storeEmplArray.length; i++) {
-						var helper = "StoreEmpl" + id + specialSymbol + storeEmplArray[i].username;
-						var index = receiverArray.indexOf(helper);
-						if(index == -1) {
-							receiverArray.push(helper);
-						}
-					}
-				}
-				else {
-					EnableOrDisableCheckBoxes("Enable", "StoreEmpl", storeEmplArray, id);
-					for(var i = 0; i < storeEmplArray.length; i++) {
-						var helper = "StoreEmpl" + id + specialSymbol + storeEmplArray[i].username;
-						var index = receiverArray.indexOf(helper);
-						receiverArray.splice(index, 1);
-					}
-				}
-				SendInfoFromReceiverArrayToDownContainer(id);
-			});
-			storeEmplTitleBtn.addEventListener("click", function() {
-				$("#" + this.name).trigger("click");
-			});
-
-			var storeEmpContentC = document.createElement("div");
-			storeEmpContentC.className = "storeEmpContentC";
-
-			placeForBranchC.appendChild(storeEmplTitleC);
-			placeForBranchC.appendChild(storeEmpContentC);
-
-
-			for(var i = 0; i < employeesUsersArray.length; i++) {
-				if(employeesUsersArray[i].username != userInObject.getUsername()) {
-					var checkBoxC = document.createElement("div");
-					checkBoxC.className = "checkBoxC";
-
-					var checkBox = document.createElement("input");
-					checkBox.className = "checkBox";
-					checkBox.type = "checkBox";
-					checkBoxC.appendChild(checkBox);
-
-					var checkBoxBtn = document.createElement("button");
-					checkBoxBtn.className = "checkBoxBtn";
-					checkBoxBtn.innerHTML = employeesUsersArray[i].name + "  (" + employeesUsersArray[i].username + ")";
-					checkBoxC.appendChild(checkBoxBtn);
-
-					var h = "";
-					if(employeesUsersArray[i].status == "Employee Manager") {
-						managerEmpContentC.appendChild(checkBoxC);
-						managerEmplArray.push(employeesUsersArray[i]);
-						h = "EmploManag";
-					}
-					else if(employeesUsersArray[i].status == "Agency Employee") {
-						agencyEmpContentC.appendChild(checkBoxC);
-						agencyEmplArray.push(employeesUsersArray[i]);
-						h = "AgencyEmpl";
-					}
-					else if(employeesUsersArray[i].status == "Store Employee") {
-						storeEmpContentC.appendChild(checkBoxC);
-						storeEmplArray.push(employeesUsersArray[i]);
-						h = "StoreEmpl";
-					}
-
-					//IMPORTANT PART THAT PUTS IN ARRAY RECEIVER ID
-					checkBox.id = h + id + specialSymbol + employeesUsersArray[i].username;
-					checkBoxBtn.name = checkBox.id;
-					checkBox.addEventListener("change", function () {
-						if(this.checked == true) {
-							receiverArray.push(this.id);
-						}
-						else {
-							var index = receiverArray.indexOf(this.id);
+					else {
+						EnableOrDisableCheckBoxes("Enable", "EmploManag", managerEmplArray, id);
+						for(var i = 0; i < managerEmplArray.length; i++) {
+							var helper = "EmploManag" + id + specialSymbol + managerEmplArray[i].username;
+							var index = receiverArray.indexOf(helper);
 							receiverArray.splice(index, 1);
 						}
-						SendInfoFromReceiverArrayToDownContainer(id);
-					});
-					checkBoxBtn.addEventListener("click", function() {
-						$("#" + this.name).trigger("click");
-					});
+					}
+					SendInfoFromReceiverArrayToDownContainer(id);
+				});
+				managerEmplTitleBtn.addEventListener("click", function() {
+					$("#" + this.name).trigger("click");
+				});
+				
+				var managerEmpContentC = document.createElement("div");
+				managerEmpContentC.className = "managerEmpContentC";
+
+				placeForBranchC.appendChild(managerEmpTitleC);
+				placeForBranchC.appendChild(managerEmpContentC);
+
+
+				var agencyEmpTitleC = document.createElement("div");
+				agencyEmpTitleC.className = "titleRecC";
+				agencyEmpTitleC.id = id;
+				var agencyEmpTitleCheckBox = document.createElement("input");
+				agencyEmpTitleCheckBox.className = "titleRecCheckBox";
+				agencyEmpTitleCheckBox.type = "checkbox";
+				agencyEmpTitleC.appendChild(agencyEmpTitleCheckBox);
+				var agencyEmplTitleBtn = document.createElement("button");
+				agencyEmplTitleBtn.className = "titleRecBtn";
+				agencyEmplTitleBtn.innerHTML = "Υπάλληλοι Πρακτορείου";
+				agencyEmpTitleC.appendChild(agencyEmplTitleBtn);
+
+				agencyEmpTitleCheckBox.id = "AgencyEmpl" + id + "ALL";
+				agencyEmpTitleCheckBox.name = id;
+				agencyEmplTitleBtn.name = agencyEmpTitleCheckBox.id;
+				agencyEmpTitleCheckBox.addEventListener("change", function () {
+					if(this.checked == true) {
+						EnableOrDisableCheckBoxes("Disable", "AgencyEmpl", agencyEmplArray, id);
+						for(var i = 0; i < agencyEmplArray.length; i++) {
+							var helper = "AgencyEmpl" + id + specialSymbol + agencyEmplArray[i].username;
+							var index = receiverArray.indexOf(helper);
+							if(index == -1) {
+								receiverArray.push(helper);
+							}
+						}
+					}
+					else {
+						EnableOrDisableCheckBoxes("Enable", "AgencyEmpl", agencyEmplArray, id);
+						for(var i = 0; i < agencyEmplArray.length; i++) {
+							var helper = "AgencyEmpl" + id + specialSymbol + agencyEmplArray[i].username;
+							var index = receiverArray.indexOf(helper);
+							receiverArray.splice(index, 1);
+						}
+					}
+					SendInfoFromReceiverArrayToDownContainer(id);
+				});
+				agencyEmplTitleBtn.addEventListener("click", function() {
+					$("#" + this.name).trigger("click");
+				});
+
+				var agencyEmpContentC = document.createElement("div");
+				agencyEmpContentC.className = "agencyEmpContentC";
+
+				placeForBranchC.appendChild(agencyEmpTitleC);
+				placeForBranchC.appendChild(agencyEmpContentC);
+
+
+				var storeEmplTitleC = document.createElement("div");
+				storeEmplTitleC.className = "titleRecC";
+				storeEmplTitleC.id = id;
+				var storeEmplTitleCheckBox = document.createElement("input");
+				storeEmplTitleCheckBox.className = "titleRecCheckBox";
+				storeEmplTitleCheckBox.type = "checkbox";
+				storeEmplTitleC.appendChild(storeEmplTitleCheckBox);
+				var storeEmplTitleBtn = document.createElement("button");
+				storeEmplTitleBtn.className = "titleRecBtn";
+				storeEmplTitleBtn.innerHTML = "Υπεύθυνοι Αποθήκης";
+				storeEmplTitleC.appendChild(storeEmplTitleBtn);
+
+				storeEmplTitleCheckBox.id = "StoreEmpl" + id + "ALL";
+				storeEmplTitleCheckBox.name = id;
+				storeEmplTitleBtn.name = storeEmplTitleCheckBox.id;
+				storeEmplTitleCheckBox.addEventListener("change", function () {
+					if(this.checked == true) {
+						EnableOrDisableCheckBoxes("Disable", "StoreEmpl", storeEmplArray, id);
+						for(var i = 0; i < storeEmplArray.length; i++) {
+							var helper = "StoreEmpl" + id + specialSymbol + storeEmplArray[i].username;
+							var index = receiverArray.indexOf(helper);
+							if(index == -1) {
+								receiverArray.push(helper);
+							}
+						}
+					}
+					else {
+						EnableOrDisableCheckBoxes("Enable", "StoreEmpl", storeEmplArray, id);
+						for(var i = 0; i < storeEmplArray.length; i++) {
+							var helper = "StoreEmpl" + id + specialSymbol + storeEmplArray[i].username;
+							var index = receiverArray.indexOf(helper);
+							receiverArray.splice(index, 1);
+						}
+					}
+					SendInfoFromReceiverArrayToDownContainer(id);
+				});
+				storeEmplTitleBtn.addEventListener("click", function() {
+					$("#" + this.name).trigger("click");
+				});
+
+				var storeEmpContentC = document.createElement("div");
+				storeEmpContentC.className = "storeEmpContentC";
+
+				placeForBranchC.appendChild(storeEmplTitleC);
+				placeForBranchC.appendChild(storeEmpContentC);
+
+
+				for(var i = 0; i < employeesUsersArray.length; i++) {
+					if(employeesUsersArray[i].username != userInObject.getUsername()) {
+						var checkBoxC = document.createElement("div");
+						checkBoxC.className = "checkBoxC";
+
+						var checkBox = document.createElement("input");
+						checkBox.className = "checkBox";
+						checkBox.type = "checkBox";
+						checkBoxC.appendChild(checkBox);
+
+						var checkBoxBtn = document.createElement("button");
+						checkBoxBtn.className = "checkBoxBtn";
+						checkBoxBtn.innerHTML = employeesUsersArray[i].name + "  (" + employeesUsersArray[i].username + ")";
+						checkBoxC.appendChild(checkBoxBtn);
+
+						var h = "";
+						if(employeesUsersArray[i].status == "Employee Manager") {
+							managerEmpContentC.appendChild(checkBoxC);
+							managerEmplArray.push(employeesUsersArray[i]);
+							h = "EmploManag";
+						}
+						else if(employeesUsersArray[i].status == "Agency Employee") {
+							agencyEmpContentC.appendChild(checkBoxC);
+							agencyEmplArray.push(employeesUsersArray[i]);
+							h = "AgencyEmpl";
+						}
+						else if(employeesUsersArray[i].status == "Store Employee") {
+							storeEmpContentC.appendChild(checkBoxC);
+							storeEmplArray.push(employeesUsersArray[i]);
+							h = "StoreEmpl";
+						}
+
+						//IMPORTANT PART THAT PUTS IN ARRAY RECEIVER ID
+						checkBox.id = h + id + specialSymbol + employeesUsersArray[i].username;
+						checkBoxBtn.name = checkBox.id;
+						checkBox.addEventListener("change", function () {
+							if(this.checked == true) {
+								receiverArray.push(this.id);
+							}
+							else {
+								var index = receiverArray.indexOf(this.id);
+								receiverArray.splice(index, 1);
+							}
+							SendInfoFromReceiverArrayToDownContainer(id);
+						});
+						checkBoxBtn.addEventListener("click", function() {
+							$("#" + this.name).trigger("click");
+						});
+					}
 				}
 			}
+			else {
+				titleOfBranchCheckBox.style.opacity = 0;
+				titleOfBranchCheckBox.disabled = true;
+				for(var i = 0; i < employeesUsersArray.length; i++) {
+					if(employeesUsersArray[i].username != userInObject.getUsername()) {
+						var adminEmpContentC = document.createElement("div");
+						adminEmpContentC.className = "adminEmpContentC";
+
+						placeForBranchC.appendChild(adminEmpContentC);
+
+						var checkBoxC = document.createElement("div");
+						checkBoxC.className = "checkBoxC";
+
+						var checkBox = document.createElement("input");
+						checkBox.className = "checkBox";
+						checkBox.type = "checkBox";
+						checkBoxC.appendChild(checkBox);
+
+						var checkBoxBtn = document.createElement("button");
+						checkBoxBtn.className = "checkBoxBtn";
+						checkBoxBtn.innerHTML = employeesUsersArray[i].name + "  (" + employeesUsersArray[i].username + ")";
+						checkBoxC.appendChild(checkBoxBtn);
+
+						var h = "";
+						adminEmpContentC.appendChild(checkBoxC);
+						managerEmplArray.push(employeesUsersArray[i]);
+						h = "Admin";
+
+						//IMPORTANT PART THAT PUTS IN ARRAY RECEIVER ID
+						checkBox.id = h + id + specialSymbol + employeesUsersArray[i].username;
+						checkBoxBtn.name = checkBox.id;
+						checkBox.addEventListener("change", function () {
+							if(this.checked == true) {
+								receiverArray.push(this.id);
+							}
+							else {
+								var index = receiverArray.indexOf(this.id);
+								receiverArray.splice(index, 1);
+							}
+							SendInfoFromReceiverArrayToDownContainer(id);
+						});
+						checkBoxBtn.addEventListener("click", function() {
+							$("#" + this.name).trigger("click");
+						});
+					}
+					else {
+						placeForBranchC.style.display = "none";
+					}
+				}
+			}
+
 
 			receiverCenterListContentC.appendChild(placeForBranchC);
 		}
@@ -683,20 +808,28 @@ class ButtonListener {
 			});
 		}
 
-		function SendNotificationToServer(notifId, notifType, receivAr, notifText) {
+		function SendNotificationToServer(approveRep, notifId, notifType, receivAr, notifText) {
 			var receivMsg = "";
+			var answerDefaultStatus = "";
 			var dateTimeSend = ConvertFromDate(new Date()) + " " + ConvertToTime(new Date());
 
 			for(var i = 0; i < receivAr.length; i++) {
 				receivMsg += receivAr[i] + "$" + 0 + "#";
+				if(i != (receivAr.length - 1)) {
+					answerDefaultStatus += "0,";
+				}
+				else {
+					answerDefaultStatus += "0";
+				}
 			}
 
 			alertInfoForCreatNewItemC.style.display = "none";
 			$.ajax({
 				type: 'POST',
 				url: "../Php/sendNotificationToServerPhp.php",
-				data: {id: notifId, type: notifType, text: notifText, sender: userInObject.getUsername(), receiver: receivMsg, date: dateTimeSend},
+				data: {approve: approveRep, id: notifId, type: notifType, text: notifText, sender: userInObject.getUsername(), receiver: receivMsg, answer: answerDefaultStatus, date: dateTimeSend},
 				success: function(data) {
+					//alert(data);
 					if(data == 1) {
 						alertInfoForCreatNewItemTextC.innerHTML = "Το μήνυμα στάλθηκε επιτυχώς.";
 					}
@@ -717,6 +850,7 @@ class ButtonListener {
 
 	//REQUESTS BUTTON EVENTS
 	RequestsButtonListenerAdmin() {
+		CloseAlertMessages();
 		var menuScrnA = new MenuScreenAdmin(requestsBtn.name);
 		menuScrnA.ChooseFromActionId();
 	}

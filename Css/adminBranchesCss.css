@@ -18,10 +18,18 @@
 		user-select: none;
 	}
 
+	input {
+		font-family: Roboto Slab;
+	}
+
 	input:disabled {
 		background: rgb(255, 255, 255, 0.4);
 	}
 
+	select {
+		font-family: Roboto Slab;
+	}
+	
 	select:disabled {
 		background: rgb(255, 255, 255, 0.4);
 	}
@@ -203,6 +211,23 @@
 	}
 
 		/*SHOW BRANCHES CSS*/
+	#titleShowBranchesC {
+		display: inline-block;
+		position: relative;
+		background: rgb(13, 18, 24);
+		color: white;
+		left: 50%;
+		font-size: 28px;
+		border-radius: 4px 4px 0 0;
+		user-select: auto;
+		margin: auto;
+		margin-bottom: 0px;
+		padding: 4px 6px 4px 6px;
+		box-shadow: 0px 2px 5px black;
+		z-index: 1;
+		transform: translate(-50%, 0);
+	}
+
 	#showBranchesC {
 		position: relative;
 		padding: 30px 50px 30px 50px;
@@ -222,7 +247,7 @@
 		width: 100%; height: auto;
 		background: white;
 		font-size: 20px;
-		border: 4px solid rgb(22, 28,34);
+		border: 4px solid rgb(22, 28,34); border-bottom: 4px solid rgb(255, 215, 0);
 		overflow: hidden;
 		padding: 5px 5px 0 5px;
 		margin-top: 10px;
@@ -264,14 +289,216 @@
 		margin: 3px 0 0 4px;
 	}
 
-	#editBrViewBtn {
+	#connectBrViewBtn {
 		float: right;
 		position: relative;
-		width: 30px; height: 30px;
+		width: 35px; height: 35px;
 		background: transparent;
 		cursor: pointer;
 		border: none;
-		margin: 2px 2px 2px 0;
+		margin: 1px 15px 2px 0;
+		padding: 0;
+		transition: 0.1s;
+	}
+
+	#connectBrViewBtn:hover {
+		transform: rotate(-90deg);
+	}
+
+	#connectBrViewBtn img {
+		width: 100%; height: 100%;
+		background-size: 100%;
+		content: url(../Assets/icons8_connect_50px_1.png);
+	}
+
+	#connectBrViewBtn:hover img {
+		content: url(../Assets/icons8_connect_50px_4.png);
+	}
+
+	#connectBrViewBtn:active img {
+		content: url(../Assets/icons8_connect_50px_1.png);
+	}
+
+	/*CONNECT BRANCHES IN THIS SCREEN*/
+	#branchesConnectionsContentC {
+		position: absolute;
+		width: 100%;
+		background: darkgrey;
+		top: 0; bottom: 0;
+		border-radius: 4px;
+		border-top: 2px solid rgb(13, 18, 24);
+		padding: 5px;
+	}
+	
+	#allBranchesConnC {
+		width: 100%; height: 100%;
+		background: rgb(44, 50, 58);
+		overflow: auto;
+		border-radius: 4px;
+		border: 2px solid rgb(22, 36, 53);
+	}
+
+	#firstRowOfBrConnectionsContentC {
+		display: block;
+		width: 100%; height: 40px;
+		background: rgb(44, 50, 58);
+		color: rgb(13, 18, 24);
+		border-bottom: 2px solid rgb(255, 215, 0);
+	}
+
+		#titleConnectedBranchesC {
+			float: left;
+			display: table;
+			width: 44px; height: 100%;
+			background: transparent;
+			border-left: 2px solid rgb(255, 215, 0); border-right: 2px solid rgb(255, 215, 0);
+			margin-left: 4px;
+			padding: 4px;
+		}
+
+		#titleConnectedBranchesImg {
+			width: 100%; height: 100%;
+			content: url(../Assets/icons8_connected_50px.png);
+		}
+
+		#titleNotConnectedBranchesC {
+			float: left;
+			display: table;
+			width: 44px; height: 100%;
+			background: transparent;
+			border-left: 2px solid rgb(255, 215, 0); border-right: 2px solid rgb(255, 215, 0);
+			margin-left: 8px; margin-right: 8px;
+			padding: 4px;
+		}
+
+		#titleNotConnectedBranchesImg {
+			width: 100%; height: 100%;
+			content: url(../Assets/icons8_disconnected_50px_2.png);
+		}
+
+		#titleOfBranchesToConnC {
+			height: 100%;
+			background: transparent;
+			color: white;
+			font-size: 24px;
+			overflow: hidden;
+			text-align: center;
+			border-left: 2px solid rgb(255, 215, 0); border-right: 2px solid rgb(255, 215, 0);
+			margin-right: 4px;
+			padding-top: 3px;
+		}
+
+	.rowForConnBranchC {
+		display: block;
+		width: 100%; height: 40px;
+		background: rgb(69, 80, 93);
+		color: rgb(13, 18, 24);
+		margin-top: 6px;
+	}
+
+		.rowConnectForConnBranchC {
+			float: left;
+			display: table;
+			width: 44px; height: 100%;
+			background: transparent;
+			border-left: 2px solid rgb(255, 215, 0); border-right: 2px solid rgb(255, 215, 0);
+			margin-left: 4px;
+			padding: 4px;
+		}
+
+		.rowConnectForConnBranchBtn {
+			width: 100%; height: 100%;
+			background: transparent;
+			cursor: pointer;
+			border: none;
+			border-radius: 50%;
+			padding: 0;
+		}
+
+		.rowConnectForConnBranchBtn:hover {
+			background: lightgrey;
+		}
+
+		.rowConnectForConnBranchImg {
+			width: 100%; height: 100%;
+			content: url(../Assets/icons8_connection_status_on_50px_1.png);
+		}
+
+		.rowNotConnectForConnBranchC {
+			float: left;
+			display: table;
+			width: 44px; height: 100%;
+			background: transparent;
+			border-left: 2px solid rgb(255, 215, 0); border-right: 2px solid rgb(255, 215, 0);
+			margin-left: 8px; margin-right: 8px;
+			padding: 4px;
+		}
+
+		.rowNotConnectForConnBranchBtn {
+			width: 100%; height: 100%;
+			background: transparent;
+			cursor: pointer;
+			border: none;
+			border-radius: 50%;
+			padding: 0;
+		}
+
+		.rowNotConnectForConnBranchBtn:hover {
+			background: lightgrey;
+		}
+
+		.rowNotConnectForConnBranchImg {
+			width: 100%; height: 100%;
+			content: url(../Assets/icons8_connection_status_on_50px_1.png);
+		}
+
+		.rowBranchForConnBranchC {
+			height: 100%;
+			background: transparent;
+			font-size: 24px;
+			overflow: hidden;
+			text-align: left;
+			border-left: 2px solid rgb(255, 215, 0); border-right: 2px solid rgb(255, 215, 0);
+			margin-right: 4px;
+			padding-top: 3px; padding-left: 18px;
+		}
+
+
+	/**/
+	
+	#deleteBrViewBtn {
+		float: right;
+		position: relative;
+		width: 34px; height: 34px;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		margin: -1px 18px 2px 0;
+		padding: 0;
+	}
+
+	#deleteBrViewBtn img {
+		width: 100%; height: 100%;
+		background-size: 100%;
+		content: url(../Assets/icons8_delete_bin_50px.png);
+	}
+
+	#deleteBrViewBtn:hover img {
+		content: url(../Assets/icons8_delete_bin_50px_2.png);
+	}
+
+	#deleteBrViewBtn:active img {
+		content: url(../Assets/icons8_delete_bin_50px.png);
+	}
+
+	#editBrViewBtn {
+		float: right;
+		position: relative;
+		width: 32px; height: 32px;
+		background: transparent;
+		cursor: pointer;
+		border: none;
+		margin: 4px 6px 2px 0;
 		padding: 0;
 	}
 
@@ -322,7 +549,7 @@
 		display: table;
 		position: relative;
 		background: transparent;
-		margin: 10px 0 0 20px;
+		margin: 5px 0 0 20px;
 	}
 
 	#locationBranchC img {
@@ -355,7 +582,7 @@
 		background: transparent;
 		cursor: pointer;
 		border-radius: 5px;
-		margin: 15px 0 0 20px;
+		margin: 28px 0 0 20px;
 	}
 
 	#managerNameC img {
@@ -377,23 +604,34 @@
 		padding: 0 6px 0 0;
 	}
 
-	.hiddenInfoManagerC {
-		position: fixed;
-		background: rgb(13, 18, 24);
-		bottom: 1px; right: 2px;
-		opacity: 0;
-		border-radius: 10px;
-		border: 2px solid rgb(13, 18, 24);
-		overflow: visible;
-		box-shadow: 0px 0px 2px black;
-		z-index: -10;
-		transition: opacity 0.3s;
+	#numberOfEmployeesC {
+		position: absolute;
+		background: transparent;
+		color: rgb(22, 28, 34);
+		top: 14px; left: 500px;
+		font-size: 19px;
+		user-select: text;
+		padding: 0 6px 0 0;
+	}
+	
+	#numberOfBusesC {
+		position: absolute;
+		background: transparent;
+		color: rgb(22, 28, 34);
+		top: 76px; left: 500px;
+		font-size: 19px;
+		user-select: text;
+		padding: 0 6px 0 0;
 	}
 
-	#managerNameC:hover + .hiddenInfoManagerC {
-		display: block;
-		opacity: 1;
-		z-index: 100;
+	#adminControlsC {
+		position: absolute;
+		background: transparent;
+		color: rgb(22, 28, 34);
+		bottom: 20px; left: 30px;
+		font-size: 19px;
+		user-select: text;
+		padding: 0 6px 0 0;
 	}
 
 		/*DOWN PART OF ELEMENTS CSS*/
@@ -406,10 +644,10 @@
 
 	#downBranchThatGoesTopC {
 		display: block;
-		position: absolute;
+		position: relative;
 		width: 100%; height: auto;
 		background: rgb(93, 120, 144);
-		top: 10px;
+		top: 7px;
 		overflow: visible;
 		margin: auto;
 		transition: top 1s ease 0s;
@@ -431,7 +669,6 @@
 
 	#branchInfoBtn:hover {
 		background: rgb(93, 120, 144);
-		border-bottom: 2px solid rgb(13, 18, 24);
 	}
 
 	#branchInfoBtn:active {
@@ -442,17 +679,406 @@
 		outline: 2px solid rgb(255, 215, 0);
 	}
 
-	#titleOfNewBranchC {
-		display: table;
+	#branchInfoC {
+		display: block;
+		position: relative;
+		width: 100%;
 		background: rgb(255, 255, 255, 0.5);
 		color: white;
 		font-size: 25px;
+		overflow: hidden;
 		border-radius: 0 0 5px 5px;
 		margin: auto; margin-top: 0px;
-		padding: 10px 8px 10px 8px;	
+		padding: 2px 8px 10px 8px;	
 	}
 
+	.allContainerForBranchEmplC {
+		display: block;
+		position: relative;
+		width: 100%; height: 220px;
+		background: transparent;
+		overflow: scroll;
+		padding: 2px 4px 4px 0;
+	}
+
+	/*WIDTH*/
+	.allContainerForBranchEmplC::-webkit-scrollbar {
+		width: 15px;
+		background: transparent;
+	}
+
+	/*TRACK*/
+	.allContainerForBranchEmplC::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	
+	/*HANDLE*/
+	.allContainerForBranchEmplC::-webkit-scrollbar-thumb {
+		background: rgb(13, 18, 24);
+	}
+
+	/*HANDLE ON HOVER*/
+	.allContainerForBranchEmplC::-webkit-scrollbar-thumb:hover {
+		background: rgb(255, 215, 0);
+	}
+
+	.managerEmplForBranchViewC {
+		display: table;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		border-top: 4px solid rgb(13, 18, 24); border-left: 4px solid rgb(13, 18, 24); border-right: 4px solid rgb(13, 18, 24); border-bottom: 4px solid rgb(13, 18, 24);	
+		margin: 5px 0 0 0;
+	}
+
+		.managerEmplForBranchViewTitleC {
+			float: left;
+			font-size: 19px;
+			text-align: center;
+			background: rgb(255, 215, 0);
+			border-radius: 0 0 4px 0;
+			border-right: 2px solid rgb(13, 18, 24); border-bottom: 2px solid rgb(13, 18, 24);
+			padding: 0 4px 0 4px;
+		}
+
+		.managerEmplForBranchViewContentC {
+			display: block;
+			position: relative;
+			background: transparent;
+			font-size: 17px;
+			overflow: hidden;
+			margin-top: 3px;
+			padding-left: 10px;
+		}
+
+	.agencyEmplForBranchViewC {
+		display: table;
+		width: 100%;
+		background: transparent;
+		border-top: 4px solid rgb(13, 18, 24); border-left: 4px solid rgb(13, 18, 24); border-right: 4px solid rgb(13, 18, 24); border-bottom: 4px solid rgb(13, 18, 24);
+		margin: 5px 0 0 0;
+	}
+
+		.agencyEmplForBranchViewTitleC {
+			float: left;
+			background: rgb(255, 215, 0);
+			font-size: 19px;
+			text-align: center;
+			border-radius: 0 0 4px 0;
+			border-right: 2px solid rgb(13, 18, 24); border-bottom: 2px solid rgb(13, 18, 24);
+			padding: 0 4px 0 4px;
+		}
+
+		.agencyEmplForBranchViewContentC {
+			display: block;
+			position: relative;
+			background: transparent;
+			font-size: 17px;
+			overflow: hidden;
+			margin-top: 3px;
+			padding-left: 10px;
+		}
+
+	.storeEmplForBranchViewC {
+		display: table;
+		width: 100%;
+		background: transparent;
+		border-top: 4px solid rgb(13, 18, 24); border-left: 4px solid rgb(13, 18, 24); border-right: 4px solid rgb(13, 18, 24); border-bottom: 4px solid rgb(13, 18, 24);
+		margin: 5px 0 0 0;
+	}
+
+		.storeEmplForBranchViewTitleC {
+			float: left;
+			background: rgb(255, 215, 0);
+			font-size: 19px;
+			text-align: center;
+			border-radius: 0 0 4px 0;
+			border-right: 2px solid rgb(13, 18, 24); border-bottom: 2px solid rgb(13, 18, 24);
+			padding: 0 4px 0 4px;
+		}
+
+		.storeEmplForBranchViewContentC {
+			display: block;
+			position: relative;
+			background: transparent;
+			font-size: 17px;
+			overflow: hidden;
+			margin-top: 3px;
+			padding-left: 10px;
+		}
+
+	.driverForBranchViewC {
+		display: table;
+		width: 100%;
+		background: transparent;
+		border-top: 4px solid rgb(13, 18, 24); border-left: 4px solid rgb(13, 18, 24); border-right: 4px solid rgb(13, 18, 24); border-bottom: 4px solid rgb(13, 18, 24);
+		margin: 5px 0 0 0;
+	}
+
+		.driverForBranchViewTitleC {
+			float: left;
+			background: rgb(255, 215, 0);
+			font-size: 19px;
+			text-align: center;
+			border-radius: 0 0 4px 0;
+			border-right: 2px solid rgb(13, 18, 24); border-bottom: 2px solid rgb(13, 18, 24);
+			padding: 0 4px 0 4px;
+		}
+
+		.driverForBranchViewContentC {
+			display: block;
+			position: relative;
+			background: transparent;
+			font-size: 17px;
+			overflow: hidden;
+			margin-top: 3px;
+			padding-left: 10px;
+		}
+
+	.securityForBranchViewC {
+		display: table;
+		width: 100%;
+		background: transparent;
+		border-top: 4px solid rgb(13, 18, 24); border-left: 4px solid rgb(13, 18, 24); border-right: 4px solid rgb(13, 18, 24); border-bottom: 4px solid rgb(13, 18, 24);
+		margin: 5px 0 0 0;
+	}
+
+		.securityForBranchViewTitleC {
+			float: left;
+			background: rgb(255, 215, 0);
+			font-size: 19px;
+			text-align: center;
+			border-radius: 0 0 4px 0;
+			border-right: 2px solid rgb(13, 18, 24); border-bottom: 2px solid rgb(13, 18, 24);
+			padding: 0 4px 0 4px;
+		}
+
+		.securityForBranchViewContentC {
+			display: block;
+			position: relative;
+			background: transparent;
+			font-size: 17px;
+			overflow: hidden;
+			margin-top: 3px;
+			padding-left: 10px;
+		}
+
+	.cleanerForBranchViewC {
+		display: table;
+		width: 100%;
+		background: transparent;
+		border-top: 4px solid rgb(13, 18, 24); border-left: 4px solid rgb(13, 18, 24); border-right: 4px solid rgb(13, 18, 24); border-bottom: 4px solid rgb(13, 18, 24);
+		margin: 5px 0 0 0;
+	}
+
+		.cleanerForBranchViewTitleC {
+			float: left;
+			background: rgb(255, 215, 0);
+			font-size: 19px;
+			text-align: center;
+			border-radius: 0 0 4px 0;
+			border-right: 2px solid rgb(13, 18, 24); border-bottom: 2px solid rgb(13, 18, 24);
+			padding: 0 4px 0 4px;
+		}
+
+		.cleanerForBranchViewContentC {
+			display: block;
+			position: relative;
+			background: transparent;
+			font-size: 17px;
+			overflow: hidden;
+			margin-top: 3px;
+			padding-left: 10px;
+		}
+
+
+	.itemsInsideC {
+		float: left;
+		background: rgb(22, 36, 53);
+		border-radius: 4px;
+		margin-left: 4px; margin-right: 6px;
+		padding: 0 6px 0 6px;
+	}
+
+	.itemsInsideC:hover {
+		background: rgb(13, 18, 24);
+	}
+
+		.itemsInsideCImg {
+		}
+
+		.itemsInsideNameC {
+			background: transparent;
+			cursor: pointer;
+		}
+
+		/*EDIT BRANCHES INFO*/
+		#adminControlBrC {
+			display: block;
+			position: relative;
+			width: 100%;
+			background: transparent;
+			margin: 15px 0 30px 0;
+		}
+
+		#adminControlTitleBrC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+
+		}
+
+		#adminControlContentBrInpt {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			text-align: center;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 3px;
+		}
+
+		#statusBrC {
+			display: block;
+			position: relative;
+			width: 100%;
+			background: transparent;
+			margin: 15px 0 30px 0;
+		}
+
+		#statusTitleBrC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+
+		}
+
+		#statusContentBrSlct {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 2px;
+		}
+
+		#typeBrC {
+			display: block;
+			position: relative;
+			width: 100%;
+			background: transparent;
+			margin: 5px 0 30px 0;
+		}
+
+		#typeTitleBrC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+
+		}
+
+		#typeContentBrSlct {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 2px;
+		}
+
+		#streetBrC {
+			display: block;
+			position: relative;
+			width: 100%;
+			background: transparent;
+			margin: 5px 0 30px 0;
+		}
+
+		#streetTitleBrC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+
+		}
+
+		#streetContentBrInpt {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			text-align: center;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 3px;
+		}
+
+		#imageBrC {
+			display: block;
+			position: relative;
+			width: 100%;
+			background: transparent;
+			margin: 5px 0 30px 0;
+		}
+
+		#imageTitleBrC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+
+		}
+
+		#imageContentBrInpt {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			text-align: center;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 3px;
+		}
+
+		#sendToCheckEditBrBtn {
+			width: 100%;
+			background: rgb(13, 18, 24);
+			color: white;
+			font-size: 22px;
+			text-align: center;
+			cursor: pointer;
+			border-radius: 4px;
+			border: 2px solid white;
+			margin: 15px 0 0 0;
+			padding: 10px;
+		}
+
+		#sendToCheckEditBrBtn:hover {
+			background: rgb(255, 215, 0);
+			color: white;
+			border: 2px solid white;
+		}
+
+		#sendToCheckEditBrBtn:active {
+			background: rgb(13, 18, 24);
+			color: rgb(255, 215, 0);
+			border: 2px solid rgb(255, 215, 0);
+		}
+
 	/*NEW BRANCH CSS*/
+	#titleOfNewBranchC {
+		display: inline-block;
+		position: relative;
+		background: rgb(13, 18, 24);
+		color: white;
+		left: 50%;
+		font-size: 28px;
+		border-radius: 4px 4px 0 0;
+		user-select: auto;
+		margin: auto;
+		margin-bottom: 0px;
+		padding: 4px 6px 4px 6px;
+		box-shadow: 0px 2px 5px black;
+		z-index: -1;
+		transform: translate(-50%, 0);
+	}
+
 	#createNewBranchC {
 		display: block;
 		position: relative;
@@ -741,22 +1367,22 @@
 			margin: auto; margin-top: 20px;
 		}
 
-		/* width */
+		/*WIDTH*/
 		#otherBranchesConnectedShowC::-webkit-scrollbar {
 			width: 10px;
 		}
 
-		/* Track */
+		/*TRACK*/
 		#otherBranchesConnectedShowC::-webkit-scrollbar-track {
 			background: #f1f1f1; 
 		}
-		
-		/* Handle */
+	
+		/*HANDLE*/
 		#otherBranchesConnectedShowC::-webkit-scrollbar-thumb {
 			background: rgb(255, 215, 0);
 		}
 
-		/* Handle on hover */
+		/*HANDLE ON HOVER*/
 		#otherBranchesConnectedShowC::-webkit-scrollbar-thumb:hover {
 			background: #555; 
 		}

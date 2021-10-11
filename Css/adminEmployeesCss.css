@@ -30,6 +30,10 @@
 		display: none;
 	}
 
+	select {
+		font-family: Roboto Slab;
+	}
+
 	select:disabled {
 		background: rgb(255, 255, 255, 0.4);
 	}
@@ -549,6 +553,29 @@
 		border-color: rgb(255, 215, 0);
 	}
 
+	/*WIDTH*/
+	.panelOfEmployeeC::-webkit-scrollbar {
+		width: 20px;
+	}
+
+	/*TRACK*/
+	.panelOfEmployeeC::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 5px grey;
+		border-radius: 2px;
+	}
+	 
+	/*HANDLE*/
+	.panelOfEmployeeC::-webkit-scrollbar-thumb {
+		background: rgb(255, 215, 0);
+		border-radius: 2px;
+		border: 1px solid white; border-top: none; border-bottom: none;
+	}
+
+	/*HANDLE HOVER*/
+	.panelOfEmployeeC::-webkit-scrollbar-thumb:hover {
+		background: rgb(13, 18, 24); 
+	}
+
 	#employeeAskInfoC {
 		position: absolute;
 		display: block;
@@ -623,29 +650,78 @@
 		transition: height 0.5s;
 	}
 
-	#employeeLockUnclockBtn {
+	#easyFunctionsC {
 		display: block;
 		position: relative;
-		width: 30px; height: 30px;
+		width: 100%; height: 30px;
 		background: transparent;
 		cursor: pointer;
-		border: none;
-		margin: auto; margin-top: -60px; margin-bottom: 45px;
+		margin-top: -60px; margin-bottom: 45px;
 		padding: 0;
 		transition: margin 0.3s;
 	}
 
-	.panelOfEmployeeC:hover #employeeLockUnclockBtn {
-		margin-top: 5px; margin-bottom: 0px;
+	.panelOfEmployeeC:hover #easyFunctionsC {
+		margin-top: 5px; margin-bottom: 5px;
 	}
 
-	#employeeLockUnclockImg {
-		width: 100%; height: 100%;
+	#employeeLockUnlockC {
+		float: left;
+		display: block;
+		position: relative;
+		width: 50%; height: 100%;
+		background: transparent;
 	}
 
-	#employeeLockUnclockImg:hover {
-		content: url(../Assets/icons8_lock_50px_2.png);
+		#employeeLockUnclockBtn {
+			display: block;
+			position: relative;
+			cursor: pointer;
+			width: 30px; height: 100%;
+			background: transparent;
+			cursor: pointer;
+			border: none;
+			margin: auto; 
+			padding: 0;
+		}
+
+		#employeeLockUnclockImg {
+			width: 100%; height: 100%;
+		}
+
+		#employeeLockUnclockImg:hover {
+			content: url(../Assets/icons8_lock_50px_2.png);
+		}
+
+	#employeePasswdC {
+		float: right;
+		display: block;
+		position: relative;
+		width: 50%; height: 100%;
+		background: transparent;
+		padding: 0;
 	}
+
+		#employeePasswdBtn {
+			display: block;
+			position: relative;
+			cursor: pointer;
+			width: 30px; height: 100%;
+			background: transparent;
+			cursor: pointer;
+			border: none;
+			margin: auto; 
+			padding: 0;
+		}
+
+		#employeePasswdImg {
+			width: 100%; height: 100%;
+			content: url(../Assets/icons8_show_password_50px_1.png);
+		}
+
+		#employeePasswdImg:hover {
+			content: url(../Assets/icons8_show_password_50px_3.png);
+		}
 
 	#employeeUpColumnC {
 		display: table;
@@ -2352,6 +2428,22 @@
 		}
 
 		#amkaProblemC {
+
+		}
+
+	#emplIdRecruitC {
+		
+	}
+		
+		#emplIdTitleRecruitC {
+
+		}
+		
+		#emplIdInput {
+
+		}
+		
+		#emplIdProblemC {
 
 		}
 

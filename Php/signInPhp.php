@@ -17,17 +17,22 @@
 		echo "Database Not Selected";
 	}
 		
-	$usernameInput = $_POST['singInUsernameInput'];
-	$emailInput = $_POST['singInEmailInput'];
-	$passwdInput = $_POST['singInPasswordInput'];
-	$partNowOpened = $_POST['partNow'];
+	$userTryToSignIn = $_POST['userTryToSignIn'];
+	$userTryToSignIn = json_decode($userTryToSignIn);
+
+	$usernameInput = $userTryToSignIn->username;
+	$emailInput = $userTryToSignIn->email;
+	$passwdInput = $userTryToSignIn->password;
+	$partNowOpened = $userTryToSignIn->partNow;
+
+	$userInData = "";
 	$errorC = 0;
 	$good = 0;
-	$query1 = "";
+	$queryEmployees = "";
 
 	if($partNowOpened == 1) {
 		if(!empty($usernameInput)) {
-			$query1 = "SELECT * FROM users WHERE Username = '$usernameInput'";
+			$queryEmployees = "SELECT * FROM employees WHERE Username = '$usernameInput'";
 		}
 		else {
 			$errorC++;
@@ -35,7 +40,7 @@
 	}
 	else {
 		if(!empty($emailInput)) {
-			$query1 = "SELECT * FROM users WHERE Email = '$emailInput'";
+			$queryEmployees = "SELECT * FROM employees WHERE Email = '$emailInput'";
 		}
 		else {
 			$errorC++;
@@ -54,24 +59,35 @@
 	//echo 'Now: '.$passwdInput."<br>";
 
 	if($errorC == 0) {
-		$result = mysqli_query($conn, $query1);
-		while (($row = mysqli_fetch_array($result))) {
-			if($passwdInput == $row['Password']) {
-				$username = $row['Username'];
-				$status = $row['Status'];
-				$query2 = "INSERT INTO usersonline (Username, Status) VALUES ('$username', '$status')";
-				mysqli_query($conn, $query2);
-					
-				session_start();
+		$resultEmployees = mysqli_query($conn, $queryEmployees);
+		while (($rowEmployee = mysqli_fetch_array($resultEmployees))) {
+			$idOfEmployee = $rowEmployee['Id'];
+			$username = $rowEmployee['Username'];
+			$status = $rowEmployee['Status'];
 
-				$_SESSION['user'] = $username;
-				$_SESSION['userStatus'] = $status;
+			$queryUsers = "SELECT Password FROM users WHERE IdOfUser = '$idOfEmployee'";
+			$resultUsers = mysqli_query($conn, $queryUsers);
 
-				$good = 1;
+			while (($rowUser = mysqli_fetch_array($resultUsers))) {
+				$password = $rowUser['Password'];
+
+				if($passwdInput == $password) {
+					$queryUsersOnline = "INSERT INTO usersonline (Id, Status) VALUES ('$idOfEmployee', '$status')";
+					mysqli_query($conn, $queryUsersOnline);
+						
+					session_start();
+
+					$_SESSION['userId'] = $idOfEmployee;
+					$_SESSION['userUsername'] = $username;
+					$_SESSION['userStatus'] = $status;
+
+					$good = 1;
+				}
 			}
 		}
 	}
-   	echo $good;
+	
+	echo $good;
 
 	mysqli_close($conn);
 ?>

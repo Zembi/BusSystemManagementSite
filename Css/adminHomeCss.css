@@ -18,20 +18,194 @@
 		user-select: none;
 	}
 
+	input {
+		font-family: Roboto Slab;
+	}
+
+	select {
+		font-family: Roboto Slab;
+	}
+
 	#homeContentC {
 		position: relative;
 		width: 100%; height: 100%;
+		background: rgba(0, 0, 0, 0.2);
 		font-family: Roboto Slab;
 		overflow: hidden;
-		background: darkgrey;
 	}
 
-	#homeHeaderCountC {
+	/*LEFT PART OF HOME ADMIN SCREEN*/
+	#liveInfoOfRoutesC {
 		float: left;
+		display: block;
 		position: relative;
-		background: red;
-		left: 10%;
-		font-size: 40px;
-		font-style: italic;
+		width: 65%; height: 100%;
+		background: transparent;
+		border-top: 4px solid rgb(13, 18, 24);
+		border-right: 4px solid rgb(13, 18, 24);
+	}
+
+	#liveInfoTitleC {
+		display: table;
+		position: relative;
+		background: transparent;
+		color: white;
+		font-size: 24px;
+		user-select: none;
+		border: 1px solid white;
+		margin: auto; margin-top: 20px;
+		padding: 0 3% 0 3%;
+	}
+
+	#liveInfoContentC {
+		display: block;
+		width: 97%; height: 735px;
+		background: yellow;
+		overflow: auto;
+		margin: auto; margin-top: 20px;
+	}
+
+	/*WIDTH*/
+	#liveInfoContentC::-webkit-scrollbar {
+		width: 15px;
+		background: transparent;
+	}
+
+	/*TRACK*/
+	#liveInfoContentC::-webkit-scrollbar-track {
+		background: transparent;
+	}
+		
+	/*HANDLE*/
+	#liveInfoContentC::-webkit-scrollbar-thumb {
+		background: rgb(13, 18, 24);
+	}
+
+	/*HANDLE ON HOVER*/
+	#liveInfoContentC::-webkit-scrollbar-thumb:hover {
+		background: rgb(255, 215, 0);
+	}
+
+	/*RIGHT PART OF HOME ADMIN SCREEN*/
+	#infoAboutAdminFunctionsC {
+		float: right;
+		display: inline-block;
+		position: relative;
+		width: 35%; height: 100%;
+		background: transparent;
+		border-top: 4px solid rgb(13, 18, 24);
+		border-left: 4px solid rgb(13, 18, 24);
+		padding-bottom: 20px;
+	}
+
+	#infoAboutTitleC {
+		display: table;
+		position: relative;
+		background: transparent;
+		color: white;
+		font-size: 24px;
+		user-select: none;
+		border: 1px solid white;
+		margin: auto; margin-top: 20px;
+		padding: 0 3% 0 3%;
+	}
+
+	#infoAboutContentC {
+		display: block;
+		width: 95%; height: 735px;
+		background: rgba(255, 255, 255, 0.0);
+		overflow: auto;
+		border-top: 4px solid rgb(22, 36, 53);
+		border-bottom: 4px solid rgb(22, 36, 53);
+		margin: auto; margin-top: 8px;
+		padding: 8px;
+	}
+
+	/*WIDTH*/
+	#infoAboutContentC::-webkit-scrollbar {
+		width: 15px;
+		background: white;
+	}
+
+	/*TRACK*/
+	#infoAboutContentC::-webkit-scrollbar-track {
+		background: transparent;
+	}
+		
+	/*HANDLE*/
+	#infoAboutContentC::-webkit-scrollbar-thumb {
+		background: rgb(13, 18, 24);
+	}
+
+	/*HANDLE ON HOVER*/
+	#infoAboutContentC::-webkit-scrollbar-thumb:hover {
+		background: rgb(255, 215, 0);
+	}
+
+	/*PROTOTYPE OF EACH PARAGRAPH*/
+	.newContainerOfInfo {
+		display: block;
+		position: relative;
+		width: 98%;
+		background: transparent;
+		user-select: none;
+		border-radius: 2px;
+		box-shadow: 0 0 4px black;
+		margin: auto; margin-top: 60px;
+		padding: 5px;
+	}
+
+	.newContainerOfInfo:hover {
+		background: rgb(11, 18, 26);
+	}
+
+	.upperLineOfInfo {
+		display: block;
+		position: relative;
+		width: 30%; height: 2px;
+		background: white;
+		margin: auto; margin-bottom: 8px;
+	}
+	
+	.titleOfInfo {
+		display: block;
+		position: relative;
+		color: rgb(255, 215, 0);
+		font-size: 20px;
 		font-weight: bold;
+		user-select: text;
+		border-bottom: 2px solid rgb(13, 18, 24);
+		padding: 0 12px 4px 12px;
+		transition: font-size 0.3s;
+	}
+
+	.newContainerOfInfo:hover .titleOfInfo {
+		color: darkgrey;
+		font-size: 21px;
+		border-bottom: 2px solid white;
+	}
+	
+	.contentOfInfo {
+		display: block;
+		position: relative;
+		color: white;
+		font-size: 16px;
+		user-select: text;
+		border-top: 2px solid rgb(13, 18, 24);
+		padding-top: 6px;
+		padding: 4px 6px 0 6px;
+		transition: font-size 0.3s;
+	}
+
+	.newContainerOfInfo:hover .contentOfInfo {
+		font-size: 17px;
+		border-top: 2px solid white;
+	}
+
+	.downLineOfInfo {
+		display: block;
+		position: relative;
+		width: 30%; height: 2px;
+		background: white;
+		margin: auto; margin-top: 15px;
 	}

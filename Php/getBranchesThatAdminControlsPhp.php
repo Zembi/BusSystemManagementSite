@@ -19,7 +19,7 @@
 		echo "Database Not Selected";
 	}
 
-	$admin = $_POST['username'];
+	$admin = $_POST['id'];
 	$branches = [];
 
 	$query = "SELECT * FROM branches WHERE AdminControl = '$admin'";

@@ -4,11 +4,13 @@
 var alertInfoForCreatNewItemC = document.getElementById("alertInfoForCreatNewItemC");
 var alertInfoForCreatNewItemTextC = document.getElementById("alertInfoForCreatNewItemTextC");
 var alertInfoForCreatNewItemBtn = document.getElementById("alertInfoForCreatNewItemBtn");
+var coverPageHelperC = document.getElementById("coverPageHelperC");
 var alertAddNewInfoC = document.getElementById("alertAddNewInfoC");
 var addNewInfoTitleTextC = document.getElementById("addNewInfoTitleTextC");
 var addNewInfoTextC = document.getElementById("addNewInfoTextC");
 var yesAddNewInfoBtn = document.getElementById("yesAddNewInfoBtn");
 var noAddNewInfoBtn = document.getElementById("noAddNewInfoBtn");
+var deleteInfoBtn = document.getElementById("deleteInfoBtn");
 var exitEditBtn = document.getElementById("exitEditBtn");
 //SHOW EMPLOYEES VARIABLES
 var searchEmployeeC = document.getElementById("searchEmployeeC");
@@ -43,6 +45,7 @@ var sidesCounter = 0;
 var filterOption = "Username";
 var filterBtnCounter = [1, 0, 0];
 
+
 //NEW DIV WHERE EMPLOYEE DIVS WILL BE
 var allElementsC = document.createElement("div");
 allElementsC.id = "allElementsC";
@@ -62,10 +65,12 @@ function ShowEmployeesStart() {
 }
 
 
+
 //*(1)INIALITZE TITLE OF SHOW VIEW OF EMPLOYEES CONTENT
 function TitleCreateShowView() {
 	titleOfContentC.innerHTML = "ΠΡΟΒΟΛΗ ΚΑΙ ΕΠΕΞΕΡΓΑΣΙΑ ΣΤΟΙΧΕΙΩΝ ΥΠΑΛΛΗΛΩΝ";
 }
+
 
 
 //*(2)CREATE THE SHOW VIEW OF EMPLOYESS
@@ -138,6 +143,7 @@ function CreateTheLockButton() {
 		}
 	}
 }
+
 
 
 //*(3)LEFT AND RIGHT BTNS INITIALIZE FOR SHOW VIEW
@@ -239,6 +245,7 @@ function CounterForEmployeesAndShow() {
 		centerShowContentC.style.borderRight = "16px solid rgb(13, 18, 24)";
 	}
 }
+
 
 
 //*(4)SEARCH BAR FUNCTION OF SHOW VIEW EMPLOYEES / DECIDE IF SEARCH BAR WILL NEEDED IN THIS PAGE OR NOT
@@ -584,11 +591,11 @@ function LightPanelOfEmployee(idOfEmployeeFound) {
 
 
 
-
 // 2/3 PART OF THIS FILE FUNCTIONS
+//RESIGN AND DISCHARGE FUNCTIONS
 DischargeEmployeesStart();
 
-//HEART OF 1/3 FUNCTIONS IN THIS FILE (2/3 TOTAL TILL NOW)
+//HEART OF 1/3 FUNCTIONS IN THIS FILE
 function DischargeEmployeesStart() {
 	TitleCCreateDischargeView();
 	CreateDischargeOrResignView("Discharge");
@@ -597,10 +604,12 @@ function DischargeEmployeesStart() {
 }
 
 
+
 //*(1)INIALITZE TITLE OF DISCHARGE VIEW OF EMPLOYEES CONTENT
 function TitleCCreateDischargeView() {
 	dischargeTitleOfContentC.innerHTML = "ΑΡΧΕΙΟ ΑΠΟΛΥΜΕΝΩΝ";
 }
+
 
 
 //*(2)CREATE THE DISCHARGE VIEW OF EMPLOYESS
@@ -626,7 +635,7 @@ async function CreateDischargeOrResignView(type) {
 			btn1.style.display = "block";
 			btn1.addEventListener("click", function() {
 				alertInfoForCreatNewItemC.style.display = "table";
-				alertInfoForCreatNewItemTextC.innerHTML = "Κάνοντας διπλό κλικ, πάνω στα στοιχεία ενός πρώην υπαλλήλου, σας δίνεται η επιλογή να τον επαναπροσλάβετε .";
+				alertInfoForCreatNewItemTextC.innerHTML = "Κάνοντας διπλό κλικ, πάνω στα στοιχεία ενός πρώην υπαλλήλου, σας δίνεται η επιλογή να τον επαναπροσλάβετε, καθώς και να τον διαγράψετε οριστικά από το σύστημα.";
 				alertInfoForCreatNewItemBtn.focus();
 				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
 				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
@@ -639,7 +648,7 @@ async function CreateDischargeOrResignView(type) {
 			btn2.style.display = "block";
 			btn2.addEventListener("click", function() {
 				alertInfoForCreatNewItemC.style.display = "table";
-				alertInfoForCreatNewItemTextC.innerHTML = "Κάνοντας διπλό κλικ, πάνω στα στοιχεία ενός πρώην υπαλλήλου, σας δίνεται η επιλογή να τον επαναπροσλάβετε .";
+				alertInfoForCreatNewItemTextC.innerHTML = "Κάνοντας διπλό κλικ, πάνω στα στοιχεία ενός πρώην υπαλλήλου, σας δίνεται η επιλογή να τον επαναπροσλάβετε, καθώς και να τον διαγράψετε οριστικά από το σύστημα.";
 				alertInfoForCreatNewItemBtn.focus();
 				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
 				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
@@ -830,27 +839,55 @@ async function CreateDischargeOrResignView(type) {
 						addNewInfoTitleTextC.innerHTML = "ΕΠΑΝΑΠΡΟΣΛΗΨΗ ΥΠΑΛΛΗΛΟΥ";
 						addNewInfoTextC.innerHTML = "Θέλετε να επαναπροσλάβετε, τον πρώην υπάλληλο || " + exEmployee.name + " || ;<br>Η πρόσληψη ενός πρώην υπαλλήλου, μπορεί να προκαλέσει προβλήματα στην λειτουργία των καταστημάτων.<br>Βεβαιωθείτε πρώτα, ότι έχετε ενημερώσει τον πρώην υπάλληλο και τον μάνατζερ του καταστήματος. <br>Θα χρειαστεί να ορίσετε νέο όνομα χρήστη και να ενημερώσετε το κατάστημα που θα δουλεύει, την θέση την οποία θα έχει, καθώς και τον μισθό που θα παίρνει.";
 						yesAddNewInfoBtn.focus();
-						yesAddNewInfoBtn.addEventListener("click", function() {
+						yesAddNewInfoBtn.addEventListener("click", ServeCommunicateToHireBackExEmployee);
+
+						function ServeCommunicateToHireBackExEmployee() {
 							var editWindowC = document.getElementById("editWindowC");
 							var editTitleTextC = document.getElementById("editTitleTextC");
 							var editInfoGetterLeftC = document.getElementById("editInfoGetterLeftC");
 							var editInfoGetterRightC = document.getElementById("editInfoGetterRightC");
 
 							alertAddNewInfoC.style.display = "none";
+							deleteInfoBtn.style.display = "none";
 							editWindowC.style.display = "block";
 							var serverCommun = new ServerCommunication();
 							serverCommun.HireBackExEmployee(exEmployee);
-						});
+						}
+
 						noAddNewInfoBtn.addEventListener("click", function() {
 							alertAddNewInfoC.style.display = "none";
+							deleteInfoBtn.style.display = "none";
 							for(var h = 0; h < helper2.length; h++) {
 								helper2[h].remove();
 							}
 							openOptionForHiringBackCounter = 0;
 						});
+						deleteInfoBtn.style.display = "block";
+						deleteInfoBtn.addEventListener("click", function() {
+							alertAddNewInfoC.style.display = "none";
+							deleteInfoBtn.style.display = "none";
+							openOptionForHiringBackCounter = 1;
+							
+							//MAKE SURE BEFORE EMPLOYEE IS BEING DELETED
+							alertAddNewInfoC.style.display = "block";
+							addNewInfoTitleTextC.innerHTML = "ΔΙΑΓΡΑΦΗ ΠΡΩΗΝ ΥΠΑΛΛΗΛΟΥ";
+							addNewInfoTextC.innerHTML = "Θέλετε να διαγράψετε οριστικά, τον πρώην υπάλληλο || " + exEmployee.name + " || ;<br>Προσοχή, η διαγραφή του είναι οριστική!";
+							
+							yesAddNewInfoBtn.removeEventListener("click", ServeCommunicateToHireBackExEmployee);
+							yesAddNewInfoBtn.addEventListener("click", function() {
+								coverPageHelperC.style.display = "block";
+								var serverCommun = new ServerCommunication();
+								serverCommun.DeleteExEmployee(exEmployee.id);
+							});
+							noAddNewInfoBtn.focus();
+							noAddNewInfoBtn.addEventListener("click", function() {
+								alertAddNewInfoC.style.display = "none";
+							});
+						});
 
 						exitEditBtn.addEventListener("click", function() {
 							alertAddNewInfoC.style.display = "none";
+							deleteInfoBtn.style.display = "none";
 							for(var h = 0; h < helper2.length; h++) {
 								helper2[h].remove();
 							}
@@ -882,6 +919,7 @@ function GetExEmployees(type) {
 }
 
 
+
 // 3/3 PART OF THIS FILE FUNCTIONS
 ResignEmployeesStart();
 
@@ -894,7 +932,7 @@ function ResignEmployeesStart() {
 }
 
 
-//*(1)
+//*(1)INIALITZE TITLE OF RESIGN VIEW OF EMPLOYEES CONTENT
 function TitleCCreateResignView() {
 	resignTitleOfContentC.innerHTML = "ΑΡΧΕΙΟ ΠΑΡΑΙΤΗΘΕΝΤΩΝ";
 }

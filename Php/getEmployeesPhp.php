@@ -19,33 +19,33 @@
 		echo "Database Not Selected";
 	}
 
-	$users = [];
+	$employees = [];
 
-	$query = "SELECT * FROM employees  ORDER BY `BranchId`, `Wage`";
+	$queryEmpl = "SELECT * FROM employees ORDER BY `BranchId`, `Wage`";
 
-	$result = mysqli_query($conn, $query);
-	while (($row = mysqli_fetch_array($result))) {
-		$recruitmentDay = $row['RecruitmentDay'];
-		//$formatedRecruitmentDay = date("d/m/Y", strtotime($recruitmentDay));  
+	$resultEmpl = mysqli_query($conn, $queryEmpl);
+	while (($rowE = mysqli_fetch_array($resultEmpl))) {
+		//$formatedRecruitmentDay = date("d/m/Y", strtotime($recruitmentDay));
 		
-		$user = array(
-			'username' => $row['Username'],
-			'email' => $row['Email'],
-			'name' => $row['Name'],
-   			'icon' => $row['Icon'],
-			'branchId' => $row['BranchId'],
-			'status' => $row['Status'],
-			'sex' => $row['Sex'],
-			'wage' => $row['Wage'],
-			'recruitmentDay' => $row['RecruitmentDay'],
-			'AFM' => $row['ΑΦΜ'],
-			'AMKA' => $row['ΑΜΚΑ']
+		$employee = array(
+			'id' => $rowE['Id'],
+			'username' => $rowE['Username'],
+			'email' => $rowE['Email'],
+			'name' => $rowE['Name'],
+   			'icon' => $rowE['Icon'],
+			'branchId' => $rowE['BranchId'],
+			'status' => $rowE['Status'],
+			'sex' => $rowE['Sex'],
+			'wage' => $rowE['Wage'],
+			'recruitmentDay' => $rowE['RecruitmentDay'],
+			'AFM' => $rowE['ΑΦΜ'],
+			'AMKA' => $rowE['ΑΜΚΑ']
 		);
-		array_push($users, $user);
+		array_push($employees, $employee);
 	}
 
-	//echo $row['Wage'];
-  	echo json_encode($users);
+	//echo $rowE['Wage'];
+  	echo json_encode($employees);
 
 	mysqli_close($conn);
 ?>

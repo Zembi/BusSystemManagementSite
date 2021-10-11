@@ -18,8 +18,11 @@ var employeeContentC = document.getElementById("employeeContentC");
 viewEmployeeBtn.addEventListener("click", StartEmployeeScreen);
 recruitmentEmployeeBtn.addEventListener("click", RecruitmentEmployeeScreen);
 
+
 //MAIN FUNCTION
 ServerEmployee();
+
+
 
 //*(1)EMPLOYEES SERFVER START FROM HERE(ALL MAIN FUNCTIONS IS BEING CALLED)
 async function ServerEmployee() {
@@ -27,7 +30,8 @@ async function ServerEmployee() {
 	ClearStatusData();
 	StartLoadingStatusInfo();
 	//MAKE OBJECTS FROM SERVER EMPLOYEES OBJECTS
-	PhpObjectConvertToJsObject(await GetAllEmployees());
+	PhpObjectConvertToJsObject(await GetEmployeesWithPasswd());
+	employeesObjSArray.sort(SortBranchId);
 	await new Promise(wait => setTimeout(wait, 1000));
 	StopLoaderOnMainInfo();
 	GetUsersIn();
@@ -40,6 +44,7 @@ async function ServerEmployee() {
 		GetUsersIn();
 	}, 15000);
 }
+
 
 
 //*(2)START LOADING SCREEN
@@ -64,6 +69,7 @@ function StopLoaderOnMainInfo() {
 }
 
 
+
 //*(3)CLEAR ONLINE EMPLOYEES CONTAINERS FROM ANY PREVIOUS VALUE
 function ClearStatusData() {
 	onlineAdminTextC.innerHTML = "";
@@ -85,24 +91,25 @@ function StopLoadingStatusInfo() {
 }
 
 
+
 //*(4)GET ALL EMPLOYEES FROM SERVER SIDE AND CONVERT IT TO EMPLOYEE OBJECTS
-function PhpObjectConvertToJsObject(employeesArray) {
-	for(var i = 0; i < employeesArray.length; i++) {
-		var employee = new Employee(employeesArray[i].username, employeesArray[i].email, employeesArray[i].name,
-					employeesArray[i].icon, employeesArray[i].branchId, employeesArray[i].status, employeesArray[i].sex,
-					employeesArray[i].wage, employeesArray[i].recruitmentDay, employeesArray[i].AFM, employeesArray[i].AMKA);
+function PhpObjectConvertToJsObject(employees) {
+	for(var i = 0; i < employees.length; i++) {
+		var employee = new Employee(employees[i].id, employees[i].username, employees[i].email, employees[i].name,
+					employees[i].icon, employees[i].branchId, employees[i].status, employees[i].sex,
+					employees[i].wage, employees[i].recruitmentDay, employees[i].AFM, employees[i].AMKA, employees[i].password);
 
 		employeesObjSArray.push(employee);
 	}
 }
 
-//(4)->GET ALL EMPLOYEES FROM SERVER, TO SEND TO PhpObjectConvertToJsObject FUNCTION
-function GetAllEmployees() {
+//(4)->GET EMPLOYEES USERS FROM SERVER, TO SEND TO PhpObjectConvertToJsObject FUNCTION (THOSE WHO CAN CONNECT TO THE SYSTEM)
+function GetEmployeesWithPasswd() {
 	var emplArray = [];
 	return new Promise((resolve, reject) => {
 		$.ajax({
 			type: 'POST',
-			url: "../Php/getEmployeesPhp.php",
+			url: "../Php/getEmployeesWithPasswdPhp.php",
 			data: {},
 			success: function(data) {
 				//alert(data);
@@ -113,8 +120,14 @@ function GetAllEmployees() {
 	});
 }
 
+//(4)->SORT FUNCTION OF EMPLOYEES WITH BRANCH ID 
+function SortBranchId(a, b) {
+	return a.getBranchId() - b.getBranchId();
+}
 
-//*(6)GET USERS THAT ARE SIGN IN. SPLIT IN TWO CATEGORIES, ADMINS AND REST OF EMPLOYEES(MANAGER, AGENCY AND STORE EMPLOYEES)
+
+
+//*(5)GET USERS THAT ARE SIGN IN. SPLIT IN TWO CATEGORIES, ADMINS AND REST OF EMPLOYEES(MANAGER, AGENCY AND STORE EMPLOYEES)
 function GetUsersIn() {
 	//USER ADMINS ONLINE
 	$.ajax({
@@ -137,7 +150,7 @@ function GetUsersIn() {
 	lastUpdateInfoC.innerHTML = UpdateChange();
 }
 
-//(6)->INFORM WHEN LAST UPDATE CHANGE HAS BEEN DONE, ABOUT USERS ONLINE INFO
+//(5)->INFORM WHEN LAST UPDATE CHANGE HAS BEEN DONE, ABOUT USERS ONLINE INFO
 function UpdateChange() {
 	var currentDate = new Date();
 	var extraH = "";
@@ -158,7 +171,8 @@ function UpdateChange() {
 }
 
 
-//*(7)NOT ALLOW WHITE SPACE IN SEARCH BAR
+
+//*(6)NOT ALLOW WHITE SPACE IN SEARCH BAR
 function NoWhiteSpaceInSearchBar() {
 	$("#searchEmployeeInpt").on({
   		keydown: function(e) {
@@ -172,7 +186,8 @@ function NoWhiteSpaceInSearchBar() {
 }
 
 
-//*(8)WHEN viewEmployeeBtn BUTTON IS TRIGGERED, LOAD ShowEmployees.html (DEFAULT SCREEN)
+
+//*(7)WHEN viewEmployeeBtn BUTTON IS TRIGGERED, LOAD ShowEmployees.html (DEFAULT SCREEN)
 function StartEmployeeScreen() {
 	if((sessionStorage.getItem("Load") != "On") && (lastAction != "StartView")) {
 		ChangeScreen("ShowEmployees");
@@ -182,7 +197,8 @@ function StartEmployeeScreen() {
 }
 
 
-//*(9)WHEN recruitmentEmployeeBtn BUTTON IS TRIGGERED, LOAD RecruitNewEmployee.html
+
+//*(8)WHEN recruitmentEmployeeBtn BUTTON IS TRIGGERED, LOAD RecruitNewEmployee.html
 function RecruitmentEmployeeScreen() {
 	if((sessionStorage.getItem("Load") != "On") && (lastAction != "Recruit")) {
 		ChangeScreen("RecruitNewEmployee");
@@ -191,7 +207,7 @@ function RecruitmentEmployeeScreen() {
 	lastAction = currentAction;
 }
 
-//(8)(9)->FUNCTION THAT IS BEING CALLED WHEN BUTTON IS PRESSED, TO CHANGE EMPLOYEES CONTENT SCREEN
+//(7)(8)->FUNCTION THAT IS BEING CALLED WHEN BUTTON IS PRESSED, TO CHANGE EMPLOYEES CONTENT SCREEN
 function ChangeScreen(action) {
 	//FILE CALL
 	var file = "EmployeesScreens/" + action + ".html";

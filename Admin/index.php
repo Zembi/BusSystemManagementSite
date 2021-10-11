@@ -56,6 +56,7 @@
  	?>
 
 	<div id="backgroundC">
+		<div id="hiddenInfoForSecretIdsC">-</div>
 		<div id="coverPageHelperC"></div>
 		<div id="alertInfoForCreatNewItemC">
 			<div id="alertInfoForCreatNewItemTextC"></div>
@@ -84,6 +85,7 @@
 						<button id="noAddNewInfoBtn">ΟΧΙ</button>
 					</div>
 				</div>
+				<button id="deleteInfoBtn">ΔΙΑΓΡΑΦΗ</button>
 			</div>
 		</div>
 		<div id="leftC">

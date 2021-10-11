@@ -8,13 +8,41 @@
 		user-select: none;
 	}
 
+	input {
+		font-family: Roboto Slab;
+	}
+
+	select {
+		font-family: Roboto Slab;
+	}
+
+	/*EMPLOYEE ID CONTAINER*/
+
+	#hiddenInfoForSecretIdsC {
+		position: fixed;
+		background: rgb(255, 215, 0);
+		bottom: 1px; right: 2px;
+		opacity: 0;
+		border-radius: 10px;
+		border: 2px solid rgb(13, 18, 24);
+		box-shadow: 0px 0px 2px black;
+		padding: 1px;
+		z-index: -10;
+		transition: opacity 0.3s;
+	}
+
+	/*#hiddenInfoForSecretIdsC {
+		
+	}*/
+
 /*INFO FOR ID CSS*/
 	#userIdC {
 		display: block;
 		position: relative;
 		width: 342px; height: 186px;
+		top: 0;
 		background: rgb(13, 18, 24);
-		background-image: url("../Assets/id.png");
+		background-image: url("../Assets/idFront.png");
 		background-size: 100%;
 		background-repeat: no-repeat;
   		background-position: center;
@@ -67,6 +95,8 @@
 		font-size: 16px;
 		font-style: italic;
 		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		overflow: hidden;
 		padding: 1px 5px 0px 5px;
 		z-index: 10;
@@ -82,6 +112,8 @@
 		font-size: 16px;
 		font-style: italic;
 		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		overflow: hidden;
 		padding: 1px 5px 0px 5px;
 		z-index: 10;
@@ -97,6 +129,44 @@
 		font-size: 14px;
 		font-style: italic;
 		text-align: left;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		padding: 2px 4px 2px 4px;
+		z-index: 10;
+	}
+
+	/*BRANCH INFO PLACE TO ID CSS*/
+	#branchInfoIdC {
+		float: right;
+		position: absolute;
+		width: 305px;
+		background: transparent;
+		top: 61px; right: 19px;
+		font-size: 13px;
+		font-style: italic;
+		letter-spacing: 0.5px;
+		text-align: center;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		padding: 2px 4px 2px 4px;
+		z-index: 10;
+	}
+
+	/*EMPLOYEE ID PLACE TO ID CSS*/
+	#employeeIdC {
+		float: right;
+		position: absolute;
+		width: 173px;
+		background: transparent;
+		top: 117px; right: 84px;
+		font-size: 14px;
+		font-style: italic;
+		letter-spacing: 0.5px;
+		text-align: center;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 		overflow: hidden;
 		padding: 2px 4px 2px 4px;
 		z-index: 10;

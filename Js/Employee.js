@@ -1,5 +1,6 @@
 
-function Employee(username, email, name, icon,  branchId, status, sex, wage, recruitmentDay, afm, amka) {
+function Employee(id, username, email, name, icon, branchId, status, sex, wage, recruitmentDay, afm, amka, password) {
+	this.id = id;
 	this.username = username;
 	this.email = email;
 	this.name = name;
@@ -13,7 +14,12 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 	this.recruitmentDay = recruitmentDay;
 	this.afm = afm;
 	this.amka = amka;
+	this.password = password;
 	this.lock;
+
+	this.getId = function() {
+		return this.id;
+	}
 
 	this.getUsername = function() {
 		return this.username;
@@ -62,34 +68,34 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 	this.getUserImageSrc = function() {
 		var imgSrc = "";
 
-		if(this.icon == "male1") {
+		if(this.getIcon() == "male1") {
 			imgSrc = "icons8_male_no1_40px.png";
 		}
-		else if(this.icon == "male2") {
+		else if(this.getIcon() == "male2") {
 			imgSrc = "icons8_male_no2_40px.png";
 		}
-		else if(this.icon == "male3") {
+		else if(this.getIcon() == "male3") {
 			imgSrc = "icons8_male_no3_40px.png";
 		}
-		else if(this.icon == "male4") {
+		else if(this.getIcon() == "male4") {
 			imgSrc = "icons8_male_no4_40px.png";
 		}
-		else if(this.icon == "male5") {
+		else if(this.getIcon() == "male5") {
 			imgSrc = "icons8_male_no5_40px.png";
 		}
-		else if(this.icon == "female1") {
+		else if(this.getIcon() == "female1") {
 			imgSrc = "icons8_female_no1_40px.png";
 		}
-		else if(this.icon == "female2") {
+		else if(this.getIcon() == "female2") {
 			imgSrc = "icons8_female_no2_40px.png";
 		}
-		else if(this.icon == "female3") {
+		else if(this.getIcon() == "female3") {
 			imgSrc = "icons8_female_no3_40px.png";
 		}
-		else if(this.icon == "female4") {
+		else if(this.getIcon() == "female4") {
 			imgSrc = "icons8_female_no4_40px.png";
 		}
-		else if(this.icon == "female5") {
+		else if(this.getIcon() == "female5") {
 			imgSrc = "icons8_female_no5_40px.png";
 		}
 		else {
@@ -99,51 +105,174 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		return imgSrc; 
 	}
 
-	this.createId = function(mainHover, parentElmnt, flashThisElement) {
-		//MAIN INFO ID
-		var userIdC = document.createElement("div");
-		userIdC.id = "userIdC";
+	this.getLock = function() {
+		return this.lock;
+	}
 
-		var statusIdC = document.createElement("div");
-		statusIdC.id = "statusIdC";
-		statusIdC.innerHTML = TranslateStatusTo("greek", this.status);
-		userIdC.appendChild(statusIdC);
+	this.setLock = function(l) {
+		this.lock = l;
+	}
 
-		var imgIdC = document.createElement("div");
-		imgIdC.id = "imgIdC";
+	this.getPassword = function() {
+		return this.password;
+	}
 
-		var imgIdImg = document.createElement("img");
-		imgIdImg.id = "imgIdImg";
-		imgIdImg.style.content = "url(../Assets/PersonType/" + this.getUserImageSrc() + ")";
-		imgIdC.appendChild(imgIdImg);
-		userIdC.appendChild(imgIdC);
+	this.getBranchInfo = function() {
+		return new Promise((resolve, reject) => {
+			var branchPhp = new Array();
+			$.ajax({
+      			type: 'POST',
+      			url: "../Php/findBranchPhp.php",
+      			data: {branch: this.getBranchId()},
+      			success: function(data) {
+      				branchPhp = JSON.parse(data);
+      				var branchObj = ConvertObjectToBranchObj(branchPhp);
+	    			resolve(branchObj);
+      			}
+			});
+		});
+	}
 
-		var usernameIdC = document.createElement("div");
-		usernameIdC.id = "usernameIdC";
-		usernameIdC.innerHTML = this.username;
-		userIdC.appendChild(usernameIdC);
+	this.createId = async function(mainHover, elementHover, flashThisElement, textToCopy) {
+		var hiddenInfoForSecretIdsC = document.getElementById("hiddenInfoForSecretIdsC");
+		var employeeObj = this;
+		var branchObj = await this.getBranchInfo();
+		var counter = 0;
+	
+		elementHover.addEventListener("mouseover", function() {
+			hiddenInfoForSecretIdsC.style.display = "block";
+			hiddenInfoForSecretIdsC.style.opacity = "1";
+			hiddenInfoForSecretIdsC.style.zIndex = "100";
 
-		var nameIdC = document.createElement("div");
-		nameIdC.id = "nameIdC";
-		nameIdC.innerHTML = this.name;
-		userIdC.appendChild(nameIdC);
-		
-		var emailIdC = document.createElement("div");
-		emailIdC.id = "emailIdC";
-		emailIdC.innerHTML = this.email;
-		userIdC.appendChild(emailIdC);
+			ChooseAction();
+		});
 
-		parentElmnt.innerHTML = "";
-		parentElmnt.appendChild(userIdC);
+		elementHover.addEventListener("mouseout", function() {
+			hiddenInfoForSecretIdsC.style.display = "none";
+			hiddenInfoForSecretIdsC.style.opacity = "0";
+			hiddenInfoForSecretIdsC.style.zIndex = "-10";
 
-		if(mainHover == "username") {
-			usernameIdC.style.color = "rgb(230, 215, 0)";
+			ClearIdGUI();
+		});
+
+		elementHover.addEventListener("click", function() {
+			if(counter) {
+				counter = 0;
+			}
+			else {
+				counter = 1;
+			}
+			ChooseAction();
+		});
+
+		elementHover.addEventListener("dblclick", function() {
+			var alertInfoForCreatNewItemC = document.getElementById("alertInfoForCreatNewItemC");
+			var alertInfoForCreatNewItemTextC = document.getElementById("alertInfoForCreatNewItemTextC");
+			var alertInfoForCreatNewItemBtn = document.getElementById("alertInfoForCreatNewItemBtn");
+
+			navigator.clipboard.writeText(textToCopy);
+
+			alertInfoForCreatNewItemC.style.display = "block";
+			alertInfoForCreatNewItemTextC.innerHTML = "Αντιγράφθηκε το όνομα του υπαλλήλου";
+			alertInfoForCreatNewItemBtn.focus();
+			alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+			alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+				alertInfoForCreatNewItemC.style.display = "none";
+			});
+
+			setTimeout(function() {
+				alertInfoForCreatNewItemC.style.display = "none";
+			}, 2000);
+		});
+
+		//SHOW BACK OR FRONT OF ID
+		function ChooseAction() {
+			if(counter) {
+				BuildBackIdGUI(employeeObj);
+			}
+			else {
+				BuildFrontIdGUI(employeeObj);
+			}
 		}
-		else if(mainHover == "email") {
-			emailIdC.style.color = "rgb(230, 215, 0)";
+
+		//ID FRONT VIEW
+		function BuildFrontIdGUI(employeeObj) {
+			//MAIN INFO ID
+			var userIdC = document.createElement("div");
+			userIdC.id = "userIdC";
+
+			var statusIdC = document.createElement("div");
+			statusIdC.id = "statusIdC";
+			statusIdC.innerHTML = TranslateStatusTo("greek", employeeObj.getStatus());
+			userIdC.appendChild(statusIdC);
+
+			var imgIdC = document.createElement("div");
+			imgIdC.id = "imgIdC";
+
+			var imgIdImg = document.createElement("img");
+			imgIdImg.id = "imgIdImg";
+			imgIdImg.style.content = "url(../Assets/PersonType/" + employeeObj.getUserImageSrc() + ")";
+			imgIdC.appendChild(imgIdImg);
+			userIdC.appendChild(imgIdC);
+
+			var usernameIdC = document.createElement("div");
+			usernameIdC.id = "usernameIdC";
+			usernameIdC.innerHTML = employeeObj.getUsername();
+			userIdC.appendChild(usernameIdC);
+
+			var nameIdC = document.createElement("div");
+			nameIdC.id = "nameIdC";
+			nameIdC.innerHTML = employeeObj.getName();
+			userIdC.appendChild(nameIdC);
+			
+			var emailIdC = document.createElement("div");
+			emailIdC.id = "emailIdC";
+			emailIdC.innerHTML = employeeObj.getEmail();
+			userIdC.appendChild(emailIdC);
+
+			hiddenInfoForSecretIdsC.innerHTML = "";
+			hiddenInfoForSecretIdsC.appendChild(userIdC);
+
+			color = "brown";
+			if(mainHover == "username") {
+				usernameIdC.style.color = color;
+			}
+			else if(mainHover == "email") {
+				emailIdC.style.color = color;
+			}
+			else if(mainHover == "name") {
+				nameIdC.style.color = color;
+			}
 		}
-		else if(mainHover == "name") {
-			nameIdC.style.color = "rgb(230, 215, 0)";
+
+		//ID BACK VIEW
+		function BuildBackIdGUI(employeeObj) {
+			//MAIN INFO ID
+			var userIdC = document.createElement("div");
+			userIdC.id = "userIdC";
+			userIdC.style.backgroundImage = "url(../Assets/idBack.png)";
+
+			var statusIdC = document.createElement("div");
+			statusIdC.id = "statusIdC";
+			statusIdC.innerHTML = TranslateStatusTo("greek", employeeObj.getStatus());
+			userIdC.appendChild(statusIdC);
+
+			var branchInfoIdC = document.createElement("div");
+			branchInfoIdC.id = "branchInfoIdC";
+			branchInfoIdC.innerHTML = branchObj.getId() + " - " + branchObj.getLocation() + " - " + branchObj.getStreet();
+			userIdC.appendChild(branchInfoIdC);
+
+			var employeeIdC = document.createElement("div");
+			employeeIdC.id = "employeeIdC";
+			employeeIdC.innerHTML = employeeObj.getId();
+			userIdC.appendChild(employeeIdC);
+
+			hiddenInfoForSecretIdsC.innerHTML = "";
+			hiddenInfoForSecretIdsC.appendChild(userIdC);
+		}
+
+		function ClearIdGUI() {
+			hiddenInfoForSecretIdsC.innerHTML = "-";
 		}
 
 		//CHECK FOR ANIMATION TO TRIGGER
@@ -155,7 +284,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 	//FUNCTION RETURNING THE TIME, THE EMPLOYEE IS WORKING FOR THE COMPANY
 	this.getDateDifferenceFromWhenEmployeeHired = function(type) {
 		var dateStart = new Date();
-		var dateNow = new Date(this.recruitmentDay);
+		var dateNow = new Date(this.getRecruitmentDay());
 		var time = (dateNow.getTime() - dateStart.getTime()) / 1000;
 
 		var year  = Math.abs(Math.round((time / (60 * 60 * 24) / 365.25)));
@@ -228,8 +357,9 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 	}
 
 	//CREATE THE PANEL OF THE EMPLOYEE WITH ALL HIS/HER INFO AND ADD IT TO THE PARENT ELEMENT SLIDE VIEW
-	this.CreatePanelShowViewOfEmployee = function(parentElmnt, id) {
+	this.CreatePanelShowViewOfEmployee = function(parentElmnt, idOfParentElmnt) {
 		var serverCommun = new ServerCommunication();
+		var id = this.getId();
 		var username = this.getUsername();
 		var email = this.getEmail();
 		var name = this.getName();
@@ -241,6 +371,8 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		var recruitmentDay = this.getRecruitmentDay();
 		var afm = this.getAFM();
 		var amka = this.getAMKA();
+		var password = this.getPassword();
+		var thisEmployee = this;
 
 		var alertInfoForCreatNewItemC = document.getElementById("alertInfoForCreatNewItemC");
 		var alertInfoForCreatNewItemTextC = document.getElementById("alertInfoForCreatNewItemTextC");
@@ -252,16 +384,21 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		var noAddNewInfoBtn = document.getElementById("noAddNewInfoBtn");
 
 		var panelOfEmployeeC = document.createElement("div");
-		panelOfEmployeeC.id = this.username + " ++++ " + id;
+		panelOfEmployeeC.id = username + " ++++ " + idOfParentElmnt;
+		panelOfEmployeeC.name = id;
 		panelOfEmployeeC.className = "panelOfEmployeeC";
-		panelOfEmployeeC.style.left = (panelOfEmployeeC.offsetWidth * id) + "px";
+		panelOfEmployeeC.style.left = (panelOfEmployeeC.offsetWidth * idOfParentElmnt) + "px";
+		if(password == null) {
+			panelOfEmployeeC.style.background = "rgb(39, 75, 87)";
+		}
 
 		var employeeEditInfoC = document.createElement("div");
 		employeeEditInfoC.id = "employeeEditInfoC";
 		var employeeEditInfoBtn = document.createElement("button");
 		employeeEditInfoBtn.id = "employeeEditInfoBtn";
+		employeeEditInfoBtn.tabIndex = "-1";
 		employeeEditInfoBtn.addEventListener("click", function() {
-			serverCommun.UpdateInfoOfEmployee(panelOfEmployeeC, username, email, name, branchId, status, sex, wage, recruitmentDay);
+			serverCommun.UpdateInfoOfEmployee(panelOfEmployeeC, thisEmployee);
 		});
 		var employeeEditInfoImg = document.createElement("img");
 		employeeEditInfoImg.id = "employeeEditInfoImg";
@@ -273,13 +410,19 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeAskInfoC.id = "employeeAskInfoC";
 		var employeeAskInfoBtn = document.createElement("button");
 		employeeAskInfoBtn.id = "employeeAskInfoBtn";
+		employeeAskInfoBtn.tabIndex = "-1";
 		employeeAskInfoBtn.addEventListener("click", function() {
 			alertInfoForCreatNewItemC.style.display = "table";
-			if(panelOfEmployeeC.id.includes(userInObject.getUsername())) {
+			if(panelOfEmployeeC.id.includes(employeeIn.getUsername())) {
 				alertInfoForCreatNewItemTextC.innerHTML = "Δεν μπορείτε να απολυθείτε ή να παραιτηθείτε, μέσα από τον δικό σας λογαριασμό.<br>Κάποιος άλλος Admin, μπορεί να εκτελέσει αυτές τις ενέργειες, για εσάς.";	
 			}
 			else {
-				alertInfoForCreatNewItemTextC.innerHTML = "Κάνοντας διπλό κλικ, πάνω στην καρτέλα του κάθε υπαλλήλου, μπορείτε να δείτε το μενού με βασικές ενέργειες.";
+				if(password == null) {
+					alertInfoForCreatNewItemTextC.innerHTML = "Κάνοντας διπλό κλικ, πάνω στην καρτέλα του κάθε υπαλλήλου, μπορείτε να δείτε το μενού με βασικές ενέργειες.<br>Ο συγκεκριμένος υπάλληλος δεν έχει πρόσβαση στο σύστημα!";
+				}
+				else {
+					alertInfoForCreatNewItemTextC.innerHTML = "Κάνοντας διπλό κλικ, πάνω στην καρτέλα του κάθε υπαλλήλου, μπορείτε να δείτε το μενού με βασικές ενέργειες.";
+				}
 			}
 			alertInfoForCreatNewItemBtn.focus();
 			alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
@@ -298,13 +441,58 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeStatusC.innerHTML = TranslateStatusTo("greek", status);
 		panelOfEmployeeC.appendChild(employeeStatusC);
 
+		var easyFunctionsC = document.createElement("div");
+		easyFunctionsC.id = "easyFunctionsC";
+
+		var employeeLockUnlockC = document.createElement("div");
+		employeeLockUnlockC.id = "employeeLockUnlockC";
+
 		var employeeLockUnclockBtn = document.createElement("button");
 		employeeLockUnclockBtn.id = "employeeLockUnclockBtn";
 		employeeLockUnclockBtn.tabIndex = "-1";
 		var employeeLockUnclockImg = document.createElement("img");
 		employeeLockUnclockImg.id = "employeeLockUnclockImg";
 		employeeLockUnclockBtn.appendChild(employeeLockUnclockImg);
-		panelOfEmployeeC.appendChild(employeeLockUnclockBtn);
+		employeeLockUnlockC.appendChild(employeeLockUnclockBtn);
+		easyFunctionsC.appendChild(employeeLockUnlockC);
+
+		var employeePasswdC = document.createElement("div");
+		employeePasswdC.id = "employeePasswdC";
+
+		var employeePasswdBtn = document.createElement("button");
+		employeePasswdBtn.id = "employeePasswdBtn";
+		employeePasswdBtn.title = "Εμφάνιση κωδικού πρόσβασης χρήστη";
+		employeePasswdBtn.tabIndex = "-1";
+		employeePasswdBtn.addEventListener("click", function() {
+			if(password == null) {
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Δεν έχει ορισθεί κωδικός πρόσβασης για τους απλούς υπαλλήλους, που δεν έχουν πρόσβαση στο σύστημα!";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.focus();
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+				});
+				setTimeout(function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+				}, 5000);
+			}
+			else {
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Ο κωδικός πρόσβασης του χρήστη " + username + " (" + name + "), είναι ο " + password + " .";
+				alertInfoForCreatNewItemBtn.innerHTML = "Μάλιστα";
+				alertInfoForCreatNewItemBtn.focus();
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+				});
+			}
+		});
+		var employeePasswdImg = document.createElement("img");
+		employeePasswdImg.id = "employeePasswdImg";
+		employeePasswdBtn.appendChild(employeePasswdImg);
+		employeePasswdC.appendChild(employeePasswdBtn);
+		easyFunctionsC.appendChild(employeePasswdC);
+
+		panelOfEmployeeC.appendChild(easyFunctionsC);
 
 		var employeeUpColumnC = document.createElement("div");
 		employeeUpColumnC.id = "employeeUpColumnC";
@@ -320,7 +508,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeNameC.appendChild(employeeNameTitleC);
 		var employeeNameTextC = document.createElement("div");
 		employeeNameTextC.id = "employeeNameTextC";
-		employeeNameTextC.innerHTML = this.getName();
+		employeeNameTextC.innerHTML = name;
 		employeeNameC.appendChild(employeeNameTextC);
 		employeeLeftInfoC.appendChild(employeeNameC);	
 
@@ -332,7 +520,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeUsernameC.appendChild(employeeUsernameTitleC);
 		var employeeUsernameTextC = document.createElement("div");
 		employeeUsernameTextC.id = "employeeUsernameTextC";
-		employeeUsernameTextC.innerHTML = this.getUsername();
+		employeeUsernameTextC.innerHTML = username;
 		employeeUsernameC.appendChild(employeeUsernameTextC);
 		employeeLeftInfoC.appendChild(employeeUsernameC);
 		employeeUpColumnC.appendChild(employeeLeftInfoC);
@@ -362,7 +550,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeEmailC.appendChild(employeeEmailTitleC);
 		var employeeEmailTextC = document.createElement("div");
 		employeeEmailTextC.id = "employeeEmailTextC";
-		employeeEmailTextC.innerHTML = this.getEmail();
+		employeeEmailTextC.innerHTML = email;
 		employeeEmailC.appendChild(employeeEmailTextC);
 		panelOfEmployeeC.appendChild(employeeEmailC);
 
@@ -385,7 +573,6 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeWageC.appendChild(employeeWageTitleC);
 		var employeeWageTextC = document.createElement("div");
 		employeeWageTextC.id = "employeeWageTextC";
-		var wage = this.getWage();
 		employeeWageTextC.innerHTML = wage + " €";
 		employeeWageC.appendChild(employeeWageTextC);
 		panelOfEmployeeC.appendChild(employeeWageC);
@@ -400,7 +587,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		employeeRecruitmentDayTextC.id = "employeeRecruitmentDayTextC";
 		employeeRecruitmentDayC.appendChild(employeeRecruitmentDayTextC);
 		panelOfEmployeeC.appendChild(employeeRecruitmentDayC);
-		var date = new Date(this.getRecruitmentDay());
+		var date = new Date(recruitmentDay);
 		let year = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
 		let month = new Intl.DateTimeFormat('en', { month: 'short' }).format(date);
 		let day = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
@@ -437,7 +624,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 
 		panelOfEmployeeC.addEventListener("mouseover", function() {
 			for(var i = 0; i < idOfPanels.length; i++) {
-				if(idOfPanels[i] == id) {
+				if(idOfPanels[i] == idOfParentElmnt) {
 					var idOfEmployeeC = "no" + (i + 1) + "EmployeeC";
 					document.getElementById(idOfEmployeeC).style.border = "11px solid red";
 				}
@@ -445,7 +632,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		});
 		panelOfEmployeeC.addEventListener("mouseout", function() {
 			for(var i = 0; i < idOfPanels.length; i++) {
-				if(idOfPanels[i] == id) {
+				if(idOfPanels[i] == idOfParentElmnt) {
 					var idOfEmployeeC = "no" + (i + 1) + "EmployeeC";
 					document.getElementById(idOfEmployeeC).style.border = "11px solid rgb(255, 215, 0)";
 				}
@@ -454,15 +641,15 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 
 		this.HideOrShowInfoLock(panelOfEmployeeC);
 
-		if(this.getBranchId() != 0) {
+		if(branchId != 0) {
 			this.GetBranchThatWork(panelOfEmployeeC);
 		}
 		else {
-			if(this.getSex() == "Male") {
-				employeeBranchTextC.innerHTML = this.getBranchId() + " - Διαχειριστής";
+			if(sex == "Male") {
+				employeeBranchTextC.innerHTML = branchId + " - Διαχειριστής";
 			}
 			else {
-				employeeBranchTextC.innerHTML = this.getBranchId() + " - Διαχειρίστρια";
+				employeeBranchTextC.innerHTML = branchId + " - Διαχειρίστρια";
 			}
 			employeeBranchTextC.title = "Διαχειριστική γραμμή";
 		}
@@ -473,7 +660,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		panelOfEmployeeC.addEventListener("dblclick", function() {
 			var allGood = 1;
 
-			if(dblCounter == 0 && !panelOfEmployeeC.id.includes(userInObject.getUsername())) {
+			if(dblCounter == 0 && !panelOfEmployeeC.id.includes(employeeIn.getUsername())) {
 				//CREATE GENERAL CONTAINER
 				var dischOrResignOptionC = document.createElement("div");
 				dischOrResignOptionC.id = "dischOrResignOptionC";
@@ -561,6 +748,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 							var endDay = ConvertFromDate(new Date());
 
 							var exEmpl = {
+								'id' : id,
 								'username' : username,
 								'name' : name,
 								'email' : email,
@@ -652,6 +840,7 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 							var endDay = ConvertFromDate(new Date());
 
 							var exEmpl = {
+								'id': id,
 								'name' : name,
 								'email' : email,
 								'icon' : icon,
@@ -748,18 +937,18 @@ function Employee(username, email, name, icon,  branchId, status, sex, wage, rec
 		var employeeAMKATextC = parentElement.querySelector("#employeeAMKATextC");
 
 		if(sessionStorage.getItem("lockCheck") === null) {
-			this.lock = "unlocked";
+			this.setLock("unlocked");
 			sessionStorage.setItem("lockCheck", "unlocked");
 		}
 		else {
-			this.lock = sessionStorage.getItem("lockCheck");
+			this.setLock(sessionStorage.getItem("lockCheck"));
 		}
 
 		var statusLock = sessionStorage.getItem("lockCheck");
 
 		employeeLockUnclockBtn.addEventListener("click", function() {ChangeLockStatus(statusLock);});
 
-		CheckStatusLock(this.lock);
+		CheckStatusLock(this.getLock());
 
 		function ChangeLockStatus() {
 			if(statusLock == "locked") {

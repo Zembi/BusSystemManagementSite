@@ -29,6 +29,7 @@
 	while (($row = mysqli_fetch_array($result))) {
 		
 		$exEmployee = array(
+			'id' => $row['Id'],
 			'name' => $row['Name'],
 			'email' => $row['Email'],
    			'icon' => $row['Icon'],

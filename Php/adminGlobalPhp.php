@@ -1,7 +1,8 @@
 <!--GLOBAL ADMIN VARIABLE--> 
 <script type="text/javascript">
-	var userIn = "<?php echo $_SESSION['user']?>";
-	var userInObject = "";
+	var userIdIn = "<?php echo $_SESSION['userId']?>";
+	var userUsernameIn = "<?php echo $_SESSION['userUsername']?>";
+	var employeeIn = "";
 </script>
 
 <script type="text/javascript" src="../Js/getUserInInfo.js"></script>

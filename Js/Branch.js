@@ -37,17 +37,17 @@ function Branch(id, type, street, location, imageSrc, manager, store, status, ad
 		return this.manager;
 	}
 
-	this.findUserInfo = function(userToFind) {
+	this.findEmployeeInfo = function(employeeToFind) {
 		return new Promise((resolve, reject) => {
-			var userPhp = new Array();
+			var employeePhp = new Array();
 			$.ajax({
       			type: 'POST',
-      			url: "../Php/findUserPhp.php",
-      			data: {username: userToFind},
+      			url: "../Php/findEmployeePhp.php",
+      			data: {id: employeeToFind},
       			success: function(data) {
-      				userPhp = JSON.parse(data);
-      				userObj = new User(userPhp.username, userPhp.email, userPhp.icon, userPhp.name, userPhp.password, userPhp.status, userPhp.sex);
-	    			resolve(userObj);
+      				employeePhp = JSON.parse(data);
+      				var employeeObj = ConvertObjectToEmployeeObj(employeePhp);
+	    			resolve(employeeObj);
       			}
 			});
 		});
@@ -71,5 +71,38 @@ function Branch(id, type, street, location, imageSrc, manager, store, status, ad
 
 	this.getAdminControl = function() {
 		return this.adminControl;
+	}
+
+	this.getAdminControlEmployeeObj = function() {
+		var adminCntrl = this.getAdminControl();
+		return new Promise((resolve, reject) => {
+			var employeePhp = new Array();
+			$.ajax({
+      			type: 'POST',
+      			url: "../Php/findEmployeePhp.php",
+      			data: {id: adminCntrl},
+      			success: function(data) {
+      				employeePhp = JSON.parse(data);
+      				var employeeObj = ConvertObjectToEmployeeObj(employeePhp);
+	    			resolve(employeeObj);
+      			}
+			});
+		});
+	}
+
+	this.getConnectedBranches = function() {
+		var array = [];
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				type: 'POST',
+				url: "../Php/getConnectedBranchesPhp.php",
+				data: {id: id},
+				success: function(data) {
+					//alert(data);
+					array = JSON.parse(data);
+					resolve(array);
+				}
+			});
+		});
 	}
 }

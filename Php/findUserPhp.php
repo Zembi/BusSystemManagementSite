@@ -16,22 +16,16 @@
 		echo "Database Not Selected";
 	}
 
-	
-	$usernameToFind = $_POST['username'];
-	$query = "SELECT * FROM users WHERE Username = '$usernameToFind'";
+	$idToFind = $_POST['id'];
+	$query = "SELECT * FROM users WHERE IdOfUser = '$idToFind'";
 
 	$result = mysqli_query($conn, $query);
 	while (($row = mysqli_fetch_array($result))) {
 		$userFound = array(
-			'username' => $row['Username'],
-			'email' => $row['Email'],
-			'icon' => $row['Icon'],
-   			'name' => $row['Name'],
-			'password' => $row['Password'],
-			'status' => $row['Status'],
-			'sex' => $row['Sex']
+			'id' => $row['IdOfUser'],
+			'password' => $row['Password']
 		);
-		//var_dump($userFound);
+		
    		echo json_encode($userFound, JSON_UNESCAPED_UNICODE);
 	}
 

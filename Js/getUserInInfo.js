@@ -3,30 +3,26 @@ GetUserInfo();
 
 //GET USER THAT IS SIGN IN
 async function GetUserInfo() {
-	var userObj = [];
+	var employee = [];
 
-	userObj = await GetAdminInfoFromServer();
-	userInObject = AdminInfoManage(userObj);
+	employee = await GetAdminInfoFromServer();
+	
+	//CREATE OBJECT USER, FOR ADMIN THAT IS SIGNED IN
+	employeeIn = new Employee(employee.id, employee.username, employee.email, employee.name, employee.icon, employee.branchId, employee.status, employee.sex, employee.wage, employee.recruitmentDay, employee.afm, employee.amka);
 }
 
 //GET ADMIN INFO FROM SERVER
-function GetAdminInfoFromServer(userObj) {
+function GetAdminInfoFromServer() {
 	return new Promise((resolve, reject) => {
 		$.ajax({
       		type: 'POST',
-      		url: "../Php/findUserPhp.php",
-      		data: {username: userIn},
+      		url: "../Php/findEmployeePhp.php",
+      		data: {id: userIdIn},
       		success: function(data) {
-      			userObj = JSON.parse(data);
-   				userNameC.children[0].innerHTML = userObj.name;
-	    		resolve(userObj);
+      			employee = JSON.parse(data);
+   				userNameC.children[0].innerHTML = employee.name;
+	    		resolve(employee);
       		}
 		});
 	});
-}
-
-//CREATE OBJECT USER, FOR ADMIN THAT IS SIGNED IN
-function AdminInfoManage(userObj) {
-	var user = new User(userObj.username, userObj.email, userObj.icon, userObj.name, userObj.password, userObj.status, userObj.sex);
-	return user;
 }

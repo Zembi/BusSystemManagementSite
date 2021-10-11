@@ -18,11 +18,11 @@ ServerBranch();
 //*(1)START OF BRANCHES SERVER
 async function ServerBranch() {
   var branchHelperArray = await GetAllBranches();
-  ConvertBranchArrayToBranchObjArray(branchHelperArray);
+  branchArray = ConvertObjectsArrayToBranchObjsArray(branchHelperArray);
   StartBranchScreen();
 }
 
-//(1)->
+//(1)->GET ALL BRANCHES FROM THE SERVER
 function GetAllBranches() {
   return new Promise((resolve, reject) => {
     $.ajax({
@@ -38,16 +38,9 @@ function GetAllBranches() {
   });
 }
 
-//(1)->
-function ConvertBranchArrayToBranchObjArray(array) {
-  for(var i = 0; i < array.length; i++) {
-    branchArray.push(new Branch(array[i].id, array[i].type, array[i].street, array[i].location, array[i].image, array[i].manager, array[i].storeId, array[i].status, array[i].adminControl));
-    branchSituationArray.push(0);
-  }
-}
-
 //(1)->IF BRANCHES SHOWVIEW BUTTON IS PRESSED, LOAD ShowBranches.html AND HIDE THE BUTTON
 function StartBranchScreen() {
+  CloseAlertMessages();
   if((sessionStorage.getItem("Load") != "On") && (lastAction != "Start")) {
     //ChangeScreen("ShowBranches");
     ChangeScreen("ShowBranches");
@@ -60,6 +53,7 @@ function StartBranchScreen() {
 
 //(1)->IF CREATE A NEW BRANCH BUTTON IS PRESSED, LOAD CreateNewBranch.html AND HIDE THE BUTTON
 function NewBranchBtnListener() {
+  CloseAlertMessages();
   if((sessionStorage.getItem("Load") != "On") && (lastAction != "NewBranch")) {
     ChangeScreen("CreateNewBranch");
     currentAction = "NewBranch";

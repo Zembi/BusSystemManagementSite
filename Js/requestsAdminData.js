@@ -9,6 +9,8 @@ var statusScreenNow = "null";
 //STATUS THAT USER WAS IN (RECEIVER SCREEN OR SENDER SCREEN)
 var nextToBeStatus = "Receive";
 
+var intervalOnlineEmpl = "";
+
 CheckIfOkToContinueToNotificationsScreen();
 
 //CHECK FIRST IF EVERYTHING IS ALRIGHT AND THEN CONTINUE
@@ -55,7 +57,7 @@ function CheckScreenNowAndLoadIfNecessary() {
 			ScreenReceivedNotifcations();
 		}
 		else if(nextToBeStatus == "Send") {
-			ScreenSentNotifcations();
+			ScreenSentNotifications();
 		}
 	}
 }
@@ -66,7 +68,7 @@ function ReloadScreenOfNotifications() {
 		ScreenReceivedNotifcations();
 	}
 	else if(nextToBeStatus == "Send") {
-		ScreenSentNotifcations();
+		ScreenSentNotifications();
 	}
 }
 
@@ -97,9 +99,10 @@ function ReceivedNotif(type, userIn) {
 			url: "../Php/getNotificationsPhp.php",
 			data: {typeOfGet: type, user: userIn},
 			success: function(data) {
+				//alert(data);
 				var notifObj = JSON.parse(data);
 				resolve(notifObj);
-				//resolve(data);
+				//console.log(notifObj);
 			}
 		});
 	});
@@ -113,9 +116,10 @@ function SentNotif(type, userIn) {
 			url: "../Php/getNotificationsPhp.php",
 			data: {typeOfGet: type, user: userIn},
 			success: function(data) {
+				//alert(data);
 				var notifObj = JSON.parse(data);
 				resolve(notifObj);
-				//resolve(data);
+				//console.log(notifObj);
 			}
 		});
 	});
@@ -182,13 +186,13 @@ async function ScreenReceivedNotifcations() {
 		var senderRecC = document.createElement("div");
 		senderRecC.className = "senderRecC";
 		senderRecC.innerHTML = "Από: " + receivedNotifications[i].sender;
-		senderNotifAr[i] = "Από: " + receivedNotifications[i].sender;
+		//senderNotifAr[i] = "Από: " + receivedNotifications[i].sender;
 		senderRecC.title = receivedNotifications[i].sender;
 		senderAndMsgRecBtn.appendChild(senderRecC);
 
 		senderAndMsgRecBtn.addEventListener("click", function() {
 			var notif = receivedNotifications[this.name];
-			OpenNotification(notif.id, senderNotifAr[this.name], notif.type, notif.textArea, notif.dateTimeSend, notif.status, document.getElementById("contentRecC" + this.id));
+			OpenNotification("Receive", notif.id, receivedNotifications[this.name].sender, notif.type, notif.textArea, notif.dateTimeSend, notif.answer, notif.status, document.getElementById("contentRecC" + this.id));
 		});
 
 		var messageRecC = document.createElement("div");
@@ -231,12 +235,25 @@ async function ScreenReceivedNotifcations() {
 	}
 }
 
-//(2)(3)->SEND NOTIFICATIONS INFO TO SCREEN WHEN NOTIF BUTTON IS PRESSED
-async function OpenNotification(id, sender, type, message, dateTime, status, elmnt) {
+//(2)(4)->SEND NOTIFICATIONS INFO TO SCREEN WHEN NOTIF BUTTON IS PRESSED
+async function OpenNotification(requestType, id, sender, type, message, dateTime, answer, status, elmnt) {
 	var senderMsgC = document.getElementById("senderMsgC");
 	var typeMsgC = document.getElementById("typeMsgC");
 	var onlyMsgC = document.getElementById("onlyMsgC");
 	var dateMsgC = document.getElementById("dateMsgC");
+	var answerReceiveC = document.getElementById("answerReceiveC");
+	var answersBtnsC = document.getElementById("answersBtnsC");
+	var answerPositiveBtn = document.getElementById("answerPositiveBtn");
+	var answerNegativeBtn = document.getElementById("answerNegativeBtn");
+	var answerSendC = document.getElementById("answerSendC");
+	var answerIfSomeoneIsNegativeC = document.getElementById("answerIfSomeoneIsNegativeC");
+	senderMsgC.innerHTML = "";
+
+	//SPECIFIC ACTIONS DEPENDING ON THE TYPE OOF REQUEST THAT IS OPENED
+	//SHOWS ONLY WHEN USER IS THE SENDER OF THE REQUEST THAT ALLOWS ANSWERS
+	answerSendC.style.display = "none";
+	//SHOWS ONLY WHEN USER IS THE RECEIVER OF THE REQUEST AND NEEDS TO SEND AN ANSWER
+	answerReceiveC.style.display = "none";
 
 	var showFullMessageC = document.getElementById("showFullMessageC");
 	showFullMessageC.style.display = "table";
@@ -246,7 +263,58 @@ async function OpenNotification(id, sender, type, message, dateTime, status, elm
 	requestsShowAllMsgsC.style.display = "block";
 	requestsShowAllMsgsC.style.width = "60%";
 
-	senderMsgC.innerHTML = sender;
+	var numberLimit = 75;
+	senderMsgC.title = sender;
+
+	//IF RECEIVERS CONTAINER OVERFLOWS, HIDE THE REST OF THE USERNAMES AND SHOW ELLIPSIS
+	if(requestType == "Send") {
+		var spanStart = document.createElement("span");
+		spanStart.innerHTML = "Προς: ";
+		senderMsgC.appendChild(spanStart);
+
+		var receiversArr = ConvertStringToArray(sender, ",");
+
+		for(var i = 0; i < receiversArr.length; i++) {
+			var span = document.createElement("span");
+			span.id = receiversArr[i];
+			
+			var stringLength = GetStringLengthOfAllChildElements(senderMsgC);
+			if(stringLength <= numberLimit) {
+				if((stringLength + receiversArr[i].length) <= numberLimit) {
+					var spanStop = document.createElement("span");
+
+					if(i != (receiversArr.length - 1)) {
+						span.innerHTML = receiversArr[i] + ", ";
+					}
+					else {
+						span.innerHTML = receiversArr[i];
+					}
+				}
+				else {
+					spanStop.innerHTML = "...";
+					var c = numberLimit - stringLength;
+					var helper = receiversArr[i].substring(0, c);
+					span.innerHTML = helper;
+				}
+				senderMsgC.appendChild(span);
+				senderMsgC.appendChild(spanStop);
+			}
+		}
+	}
+	else {
+		var spanStart = document.createElement("span");
+		spanStart.innerHTML = "Από: " + sender;
+		senderMsgC.appendChild(spanStart);
+
+		var stringLength = GetStringLengthOfAllChildElements(senderMsgC);
+
+		if(stringLength >= numberLimit) {
+			var helper = spanStart.innerHTML.substring(0, numberLimit);
+			helper += "...";
+			spanStart.innerHTML = helper;
+		}
+	}
+
 	typeMsgC.innerHTML = type;
 	onlyMsgC.innerHTML = message;
 	dateMsgC.innerHTML = dateTime;
@@ -262,7 +330,81 @@ async function OpenNotification(id, sender, type, message, dateTime, status, elm
 		
 		await SendOpenStatusUser(id, userInObject.getUsername());
 	}
+
+	//STOP CALLING CONTINUOUSLY, THE FUNCTION THAT IS IN THE VARIABLE intervalOnlineEmpl
+	clearInterval(intervalOnlineEmpl);
+	//SERVER ACTIONS DEPENDING OF REQUEST TYPE
+	if(requestType == "Send") {
+		if(answer != null) {
+			TimeUpdateAnswer(id, receiversArr);
+			intervalOnlineEmpl = setInterval(async function() {
+				if(sessionStorage.getItem('action') == "Requests") {
+					TimeUpdateAnswer(id, receiversArr);
+				}
+				else {
+					clearInterval(intervalOnlineEmpl);
+				}
+			}, 500);
+		}
+	}
+	else {
+		if(answer != null) {
+			answerReceiveC.style.display = "block";
+
+			//GIVE EVENTS TO TRIGGER WHEN POSITIVE AND NEGATIVE BUTTON IS BEING PRESSED
+			//POSITIVE BUTTON
+			answerPositiveBtn.addEventListener('click', function() {
+				//AnswerActionToMessage(id, 1, userInObject);
+			});
+			
+			//NEGATIVE BUTTON
+			answerNegativeBtn.addEventListener('click', function() {
+				//AnswerActionToMessage(id, -1, );
+			});
+		}
+	}
 }
+
+//(2)->FUNCTION TO UPDATE SERVER FOR THE ANSWER(POSITIVE OR NEGATIVE) OF THE RECEIVER
+async function AnswerActionToMessage(idOfNotif, msg, receiver) {
+	if(msg == 1) {
+		//await PositiveAnswerToServer(, msg, );
+	}
+	else if(msg == -1) {
+		//await NegativeAnswerToServer();
+	}
+}
+
+//(2)->POSITIVE ANSWER SENT TO SERVER
+function PositiveAnswerToServer(idOfNotif, answerOfNotif, usernameOfReceiver) {
+	return new Promise ((resolve, reject) => {	
+		$.ajax({
+			type: 'POST',
+			url: "../Php/sentAnswerNotifPhp.php",
+			data: {id: idToDelete, answer: answerOfNotif, receiverUsername: usernameOfReceiver},
+			success: function(data) {
+				alert(data);
+				resolve(data);
+			}
+		});
+	});
+}
+
+//(2)->NEGATIVE ANSWER SENT TO SERVER
+function NegativeAnswerToServer(idOfNotif, answerOfNotif, usernameOfReceiver) {
+	return new Promise ((resolve, reject) => {	
+		$.ajax({
+			type: 'POST',
+			url: "../Php/sentAnswerNotifPhp.php",
+			data: {id: idToDelete, answer: answerOfNotif, receiverUsername: usernameOfReceiver},
+			success: function(data) {
+				alert(data);
+				resolve(data);
+			}
+		});
+	});
+}
+
 
 //*(3)EXIT FROM FULL MESSAGE
 function ExitFromFullMessage() {
@@ -273,11 +415,13 @@ function ExitFromFullMessage() {
 	var requestsShowAllMsgsC = document.getElementById("requestsShowAllMsgsC");
 	requestsShowAllMsgsC.style.display = "block";
 	requestsShowAllMsgsC.style.width = "100%";
+
+	clearInterval(intervalOnlineEmpl);
 }
 
 
-//*(3)CONTENT FOR SENDER NOTIFICATIONS
-async function ScreenSentNotifcations() {
+//*(4)CONTENT FOR SENDER NOTIFICATIONS
+async function ScreenSentNotifications() {
 	var sentMsgCounterC = document.getElementById("sentMsgCounterC");
 	var alertNotifInfoC = document.getElementById("alertNotifInfoC");
 	var requestsBtnImg = document.getElementById("requestsBtnImg");
@@ -387,10 +531,10 @@ async function ScreenSentNotifcations() {
 		else {
 			finalMsg = msg;
 		}
-		globalReceiversMessageArray[i] = startMsg + finalMsg;
+		globalReceiversMessageArray[i] = finalMsg;
 		receiversAndMsgSendBtn.addEventListener("click", function() {
 			var notif = sentNotifications[this.name];
-			OpenNotification(notif.id, globalReceiversMessageArray[this.name], notif.type, notif.textArea, notif.dateTimeSend, 10,  document.getElementById("contentSendC" + this.id));
+			OpenNotification("Send", notif.id, globalReceiversMessageArray[this.name], notif.type, notif.textArea, notif.dateTimeSend, notif.answer,10,  document.getElementById("contentSendC" + this.id));
 		});
 
 		var messageSendC = document.createElement("div");
@@ -415,7 +559,7 @@ async function ScreenSentNotifcations() {
 	}
 }
 
-//(3)->MAKE SURE THAT SENDER WANTS TO DELETE NOTIFICATION
+//(4)->MAKE SURE THAT SENDER WANTS TO DELETE NOTIFICATION
 function MakeSureToDeleteNotification(idToDelete) {
 	var alertAddNewInfoC = document.getElementById("alertAddNewInfoC");
 	var addNewInfoTitleTextC = document.getElementById("addNewInfoTitleTextC");
@@ -435,7 +579,7 @@ function MakeSureToDeleteNotification(idToDelete) {
 	noAddNewInfoBtn.focus();
 }
 
-//(3)->ASYNC CALL AFTER APPROVED TO DELETE NOTIFICATION
+//(4)->ASYNC CALL AFTER APPROVED TO DELETE NOTIFICATION
 async function AsyncDeleteNotif(idToDelete) {
 	var result = await DeleteNotification(idToDelete);
 
@@ -459,7 +603,7 @@ async function AsyncDeleteNotif(idToDelete) {
 	}
 }
 
-//(3)->DELETE NOTIFICATION
+//(4)->DELETE NOTIFICATIO
 function DeleteNotification(idToDelete) {
 	return new Promise ((resolve, reject) => {	
 		$.ajax({
@@ -473,7 +617,93 @@ function DeleteNotification(idToDelete) {
 	});
 }
 
-//(2)(3)->GIVE IMG, TO NOTIFICATION IMG DIV, ACCORDING OF THE TYPE OF THE NOTIFICATION
+//(4)->UPDATE ANSWERS TO SEE IF EVERYTHING CHANGE
+async function TimeUpdateAnswer(idOfNotif, receiversArr) {
+	var answersArray = await GetAllAnswers(idOfNotif);
+	var negativeArray = [];
+	var negativeAnswers = "";
+
+	for(var i = 0; i < answersArray.length; i++) {
+		if(answersArray[i] == 1) {
+			document.getElementById(receiversArr[i]).style.color = "green";
+			document.getElementById(receiversArr[i]).title = "Θετικό";
+		}
+		else if(answersArray[i] == -1) {
+			document.getElementById(receiversArr[i]).style.color = "red";
+			document.getElementById(receiversArr[i]).title = "Αρνητικό";
+			negativeArray.push(receiversArr[i]);
+		}
+		else {
+			document.getElementById(receiversArr[i]).title = "Αναμένεται";
+		}
+	}
+	for(var i = 0; i < negativeArray.length; i++) {
+		if(i != (negativeArray.length - 1)) {
+			negativeAnswers += negativeArray[i] + ", ";
+		}
+		else {
+			negativeAnswers += negativeArray[i];
+		}
+	}
+
+	//IF THERE ARE PEOPLE WHO GIVE NEGATIVE ANSWERS, INFORM SENDER AND SHOW THE WHO THEY ARE 
+	if(negativeArray.length != 0) {
+		document.getElementById("answerSendC").style.display = "block";
+		if(negativeArray.length == 1) {
+			document.getElementById("answerIfSomeoneIsNegativeImg").title = "Αρνητική απάντηση από τον υπάλληλο " + negativeAnswers;
+		}
+		else {
+			if(answersArray.length == negativeArray.length) {
+				document.getElementById("answerIfSomeoneIsNegativeImg").title = "Αρνητική απάντηση από όλους τους υπαλλήλους";
+			}
+			else {
+				document.getElementById("answerIfSomeoneIsNegativeImg").title = "Αρνητική απάντηση από τους υπάλληλους " + negativeAnswers;
+			}
+		}
+	}
+	else {
+		document.getElementById("answerSendC").style.display = "none";
+		document.getElementById("answerIfSomeoneIsNegativeImg").title = "";
+	}
+
+	var currentDate = new Date();
+	var extraH = "";
+	var extraM = "";
+	var extraS = "";
+	if(currentDate.getHours() < 10) {
+		extraH = 0;
+	}
+	if(currentDate.getMinutes() < 10) {
+		extraM = 0;
+	}
+	if(currentDate.getSeconds() < 10) {
+		extraS = 0;
+	}
+
+	var dateTime = "Τελευταία ενημέρωση: " + currentDate.getDate() + "/" + (currentDate.getMonth() + 1) + "/" + currentDate.getFullYear() + "  -  " 
+					+ extraH + currentDate.getHours() + ":" + extraM + currentDate.getMinutes() + ":" + extraS + currentDate.getSeconds();
+	return dateTime;
+}
+
+//(4)->FIND THE ANSWERS OF RECEIVERS AND INFORM THE SENDER ABOUT THEIR ANSWERS
+function GetAllAnswers(idOfNotif) {
+	return new Promise ((resolve, reject) => {
+		$.ajax({
+			type: 'POST',
+			url: "../Php/getAllAnswersForThisNotifPhp.php",
+			data: {id: idOfNotif},
+			success: function(data) {
+				//alert(data);
+				var notifAnswersObj = JSON.parse(data);
+				resolve(notifAnswersObj);
+				//console.log(notifAnswersObj);
+			}
+		});
+	});
+}
+
+
+//(2)(4)->GIVE IMG, TO NOTIFICATION IMG DIV, ACCORDING OF THE TYPE OF THE NOTIFICATION
 function GiveElementPic(type, element) {
 	if(type == "Γενική ενημέρωση συστήματος") {
 		element.style.content = "url(../Assets/icons8_update_left_rotation_50px.png)";
@@ -638,7 +868,7 @@ function AddEventsToReceivedAndSentBtns(statusNow) {
 	}
 }
 
-//(2)(3)->SEND USER'S NEW STATUS FOR NOTIFICATION
+//(2)(4)->SEND USER'S NEW STATUS FOR NOTIFICATION
 function SendOpenStatusUser(notifId, userIn) {
 	return new Promise ((resolve, reject) => {
 		$.ajax({

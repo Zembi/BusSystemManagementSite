@@ -27,9 +27,9 @@
 		$receiverSlices = explode("#", $receivers);
 
 		foreach ($receiverSlices as $value) {
-			$receiverUsername = explode("$", $value);
+			$receiverId = explode("$", $value);
 
-			if($receiverUsername[0] == $userIn) {
+			if($receiverId[0] == $userIn) {
 				$newReceivers = $receivers;
 				$newStatus = $userIn."$1";
 				$newReceivers = str_replace($value, $newStatus, $newReceivers);

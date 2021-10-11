@@ -29,6 +29,7 @@
 			$receivers = $row['Receiver'];
 			$receiverSlices = explode("#", $receivers);
 
+			$count = 0;
 			foreach ($receiverSlices as $value) {
 				$receiverUsername = explode("$", $value);
 
@@ -39,11 +40,13 @@
 						'textArea' => $row['TextArea'],
 			   			'sender' => $row['Sender'],
 			   			'status' => $receiverUsername[1],
+			   			'answer' => $row['Answer'],
 						'dateTimeSend' => $row['DateTimeSend']
 					);
 					array_push($notifs, $notifFound);
 					break;
 				}
+				$count++;
 			}
 		}
 	}
@@ -58,6 +61,7 @@
 				'textArea' => $row['TextArea'],
 	   			'sender' => $row['Sender'],
 	   			'receiver' => $row['Receiver'],
+	   			'answer' => $row['Answer'],
 				'dateTimeSend' => $row['DateTimeSend']
 			);
 			array_push($notifs, $notifFound);

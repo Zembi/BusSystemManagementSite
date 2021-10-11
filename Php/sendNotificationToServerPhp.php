@@ -16,14 +16,21 @@
 		echo "Database Not Selected";
 	}
 
+	$approveReply = $_POST['approve'];
 	$notifId = $_POST['id'];
 	$notifType = $_POST['type'];
 	$notifText = $_POST['text'];
 	$sender = $_POST['sender'];
 	$receiver = $_POST['receiver'];
+	$answer = $_POST['answer'];
 	$date = $_POST['date'];
-
-	$sqlAddNewNotification = "INSERT INTO notifications (Id, Type, TextArea, Sender, Receiver, DateTimeSend) VALUES ($notifId, '$notifType', '$notifText', '$sender', '$receiver', '$date')";
+	
+	if($approveReply == "true") {
+		$sqlAddNewNotification = "INSERT INTO notifications (Id, Type, TextArea, Sender, Receiver, Answer, DateTimeSend) VALUES ($notifId, '$notifType', '$notifText', '$sender', '$receiver', '$answer', '$date')";
+	}
+	else {
+		$sqlAddNewNotification = "INSERT INTO notifications (Id, Type, TextArea, Sender, Receiver, Answer, DateTimeSend) VALUES ($notifId, '$notifType', '$notifText', '$sender', '$receiver', NULL, '$date')";
+	}
 
 	if(mysqli_query($conn, $sqlAddNewNotification)) {
 		echo 1;

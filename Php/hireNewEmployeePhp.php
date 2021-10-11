@@ -16,30 +16,36 @@
 		echo "Database Not Selected";
 	}
 
+	$msg = 0;
 	$employee = $_POST['employeeHireObj'];
+	$branchId = NULL;
 	$employee = json_decode($employee);
 
-	$sqlAddNewEmployee = "INSERT INTO employees (Username, Email, Name, Icon, BranchId, Status, Wage, Sex, RecruitmentDay, ΑΦΜ, ΑΜΚΑ) 
-							VALUES ('$employee->username', '$employee->email', '$employee->name', '$employee->icon', 
-							'$employee->branchId', '$employee->status', '$employee->wage', '$employee->sex', '$employee->recruitmentDay',
-							'$employee->afm', '$employee->amka') ";
-	if(mysqli_query($conn, $sqlAddNewEmployee)) {
-		echo 1;
+	if($employee->branchId == "nothing") {
+		$sqlAddNewEmployee = "INSERT INTO employees (Id, Username, Email, Name, Icon, BranchId, Status, Wage, Sex, RecruitmentDay, ΑΦΜ, ΑΜΚΑ) VALUES ('$employee->id', '$employee->username', '$employee->email', '$employee->name', '$employee->icon', NULL, '$employee->status', '$employee->wage', '$employee->sex', '$employee->recruitmentDay', '$employee->afm', '$employee->amka') ";
 	}
 	else {
-		echo 0;
+		$sqlAddNewEmployee = "INSERT INTO employees (Id, Username, Email, Name, Icon, BranchId, Status, Wage, Sex, RecruitmentDay, ΑΦΜ, ΑΜΚΑ) VALUES ('$employee->id', '$employee->username', '$employee->email', '$employee->name', '$employee->icon', '$employee->branchId', '$employee->status', '$employee->wage', '$employee->sex', '$employee->recruitmentDay', '$employee->afm', '$employee->amka') ";
+	}
+
+	if(mysqli_query($conn, $sqlAddNewEmployee)) {
+		$msg = 1;
+	}
+	else {
+		$msg = 0;
 	}
 
 	if($employee->status == "Employee Manager") {
-		$sqlAddNewManagerToBranch = "UPDATE branches SET Manager = '$employee->username' WHERE Id = '$employee->branchId'";
+		$sqlAddNewManagerToBranch = "UPDATE branches SET Manager = '$employee->id' WHERE Id = '$employee->branchId'";
 		mysqli_query($conn, $sqlAddNewManagerToBranch);
 	}
 
-	if($employee->status == "Employee Manager" || $employee->status == "Employee Manager" || $employee->status == "Agency Employee" || $employee->status == "Store Employee") {
-		$sqlAddNewUser = "INSERT INTO users (Username, Email, Icon, Name, Password, Status, Sex) 
-							VALUES ('$employee->username', '$employee->email', '$employee->icon', '$employee->name', '$employee->password', '$employee->status', '$employee->sex') ";
+	if($employee->status == "Admin" || $employee->status == "Employee Manager" || $employee->status == "Agency Employee" || $employee->status == "Store Employee") {
+		$sqlAddNewUser = "INSERT INTO users (IdOfUser, Password) VALUES ('$employee->id', '$employee->password') ";
 		mysqli_query($conn, $sqlAddNewUser);
 	}
+
+	echo $msg;
 
 	mysqli_close($conn);
 

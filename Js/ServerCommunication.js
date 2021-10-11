@@ -1,7 +1,7 @@
 function ServerCommunication() {
 
 	//OPENING WINDOW FOR EDITING INFO OF EMPLOYEE, CHECK FOR ERRORS AND COMMUNICATE WITH THE SERVER TO SEND THE CHANGED INFO
-	this.UpdateInfoOfEmployee = function(panelOfEmployeeC, username, email, name, branchId, status, sex, wage, recruitmentDay) {
+	this.UpdateInfoOfEmployee = function(panelOfEmployeeC, thisEmployee) {
 		//CLOSE MENU IF IS OPENED
 		var leftC = document.getElementById("leftC");
 		var leftFixedC = document.getElementById("leftFixedC");
@@ -16,7 +16,6 @@ function ServerCommunication() {
 		var yesAddNewInfoBtn = document.getElementById("yesAddNewInfoBtn");
 		var noAddNewInfoBtn = document.getElementById("noAddNewInfoBtn");
 
-		var sex = this.sex;
 		var impChange = 0;
 
 		if(leftFixedC.offsetWidth != 0) {
@@ -49,6 +48,7 @@ function ServerCommunication() {
 		//CREATE THE OPTIONS MENU FOR STATUS
 		function CreateStatusOptions(select) {
 			var options = [];
+			var status = thisEmployee.getStatus();
 			
 			if(status == "Admin" || status == "Employee Manager" || status == "Agency Employee" || status == "Store Employee") {
 				for(var i = 0; i < statusArrayGr1.length; i++) {
@@ -126,7 +126,7 @@ function ServerCommunication() {
 				this.value = this.value.slice(0, 25); 
 			}
 		}
-		usernameEmployeeEditInpt.value = username;
+		usernameEmployeeEditInpt.value = thisEmployee.getUsername();
 		usernameEmployeeEditC.appendChild(usernameEmployeeEditTextC);
 		usernameEmployeeEditC.appendChild(usernameEmployeeEditInpt);
 		usernameEmployeeEditC.appendChild(usernameProblemC);
@@ -144,7 +144,7 @@ function ServerCommunication() {
 		var emailEmployeeEditInpt = document.createElement("input");
 		emailEmployeeEditInpt.id = "emailEmployeeEditInpt";
 		emailEmployeeEditInpt.addEventListener("keypress", NoWhiteSpace);
-		emailEmployeeEditInpt.value = email;
+		emailEmployeeEditInpt.value = thisEmployee.getEmail();
 		var emailProblemC = document.createElement("div");
 		emailProblemC.id = "emailProblemC";
 		emailProblemC.style.color = "red";
@@ -176,7 +176,7 @@ function ServerCommunication() {
 				this.value = this.value.slice(0, 35); 
 			}
 		}
-		nameEmployeeEditInpt.value = name;
+		nameEmployeeEditInpt.value = thisEmployee.getName();
 		nameEmployeeEditC.appendChild(nameEmployeeEditTextC);
 		nameEmployeeEditC.appendChild(nameEmployeeEditInpt);
 		editInfoGetterLeftC.appendChild(nameEmployeeEditC);
@@ -206,7 +206,7 @@ function ServerCommunication() {
 				this.value = this.value.slice(0, 15); 
 			}
 		}
-		wageEmployeeEditInpt.value = wage;
+		wageEmployeeEditInpt.value = thisEmployee.getWage();
 		wageEmployeeEditC.appendChild(wageEmployeeEditTextC);
 		wageEmployeeEditC.appendChild(wageEmployeeEditInpt);
 		wageEmployeeEditC.appendChild(wageProblemC);
@@ -242,23 +242,28 @@ function ServerCommunication() {
 		var branchIdEmployeeEditSlct = document.createElement("select");
 		branchIdEmployeeEditSlct.id = "branchIdEmployeeEditSlct";
 		branchIdEmployeeEditSlct.type = "text";
-		if(branchId == 0) {
+		if(thisEmployee.getBranchId() == 0) {
 			branchIdEmployeeEditSlct.disabled = true;
 
 			branchIdEmployeeEditSlct.innerHTML = "";
 			var adminOption = document.createElement("option");
 			adminOption.className = "optionsForBranch";
-			adminOption.innerHTML = TransformBranchTo("string", branchId);
+			adminOption.innerHTML = TransformBranchTo("string", thisEmployee.getBranchId());
 			branchIdEmployeeEditSlct.appendChild(adminOption);
 		}
 		else {
-			branchIdEmployeeEditSlct.disabled = false;
-			this.UpdateBranchAvailable(username, TranslateStatusTo("english", statusEmployeeEditSelect.value), branchId, branchIdEmployeeEditSlct);;
+			if(thisEmployee.getBranchId() == null) {
+				branchIdEmployeeEditSlct.disabled = true;
+			}
+			else {
+				branchIdEmployeeEditSlct.disabled = false;
+			}
+			this.UpdateBranchAvailable(thisEmployee.getId(), TranslateStatusTo("english", statusEmployeeEditSelect.value), thisEmployee.getBranchId(), branchIdEmployeeEditSlct);;
 		}
-		if(branchId != 0) {
+		if(thisEmployee.getBranchId() != 0) {
 			statusEmployeeEditSelect.addEventListener("change", function() {
 				var serverCommun = new ServerCommunication();
-				serverCommun.UpdateBranchAvailable(username, TranslateStatusTo("english", statusEmployeeEditSelect.value), branchId, branchIdEmployeeEditSlct);
+				serverCommun.UpdateBranchAvailable(thisEmployee.getId(), TranslateStatusTo("english", statusEmployeeEditSelect.value), thisEmployee.getBranchId(), branchIdEmployeeEditSlct);
 			});
 		}
 
@@ -277,8 +282,7 @@ function ServerCommunication() {
 		var recruitmentDayEmployeeEditInpt = document.createElement("input");
 		recruitmentDayEmployeeEditInpt.id = "recruitmentDayEmployeeEditInpt";
 		recruitmentDayEmployeeEditInpt.type = "text";
-		recruitmentDayEmployeeEditInpt.value = recruitmentDay;
-		recruitmentDayEmployeeEditInpt.value = ConvertFromDate(recruitmentDay);
+		recruitmentDayEmployeeEditInpt.value = ConvertFromDate(thisEmployee.getRecruitmentDay());
 		recruitmentDayEmployeeEditInpt.disabled = true;
 		recruitmentDayEmployeeEditC.appendChild(recruitmentDayEmployeeEditTextC);
 		recruitmentDayEmployeeEditC.appendChild(recruitmentDayEmployeeEditInpt);
@@ -354,8 +358,10 @@ function ServerCommunication() {
 			}
 		}
 
+		//FIRST TIME USER PRESSES BUTTON TO UPDATE THE INFO OF THE CHOSEN EMPLOYEE
 		function CallAsyncEmployee() {
-			var employee = {
+			var latestInfoEmployee = {
+				'id': thisEmployee.getId(),
     			'username': usernameEmployeeEditInpt.value,
     			'email': emailEmployeeEditInpt.value,
    				'name': nameEmployeeEditInpt.value,
@@ -372,7 +378,7 @@ function ServerCommunication() {
 			continueNoError += IfElementNoError(branchIdEmployeeEditSlct, "");
 
 			if(continueNoError == 5) {
-				if(username == usernameEmployeeEditInpt.value && email == emailEmployeeEditInpt.value && wage == wageEmployeeEditInpt.value && status == TranslateStatusTo("english", statusEmployeeEditSelect.value) && branchIdEmployeeEditSlct.value.includes(branchId)) {
+				if(thisEmployee.getUsername() == usernameEmployeeEditInpt.value && thisEmployee.getEmail() == emailEmployeeEditInpt.value && thisEmployee.getWage() == wageEmployeeEditInpt.value && thisEmployee.getStatus() == TranslateStatusTo("english", statusEmployeeEditSelect.value) && branchIdEmployeeEditSlct.value.includes(thisEmployee.getBranchId())) {
 					alertInfoForCreatNewItemC.style.display = "table";
 					alertInfoForCreatNewItemTextC.innerHTML = "Δεν έχει γίνει καμία αλλαγή!";
 					alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
@@ -388,7 +394,7 @@ function ServerCommunication() {
 					alertInfoForCreatNewItemC.style.display = "none";
 
 					ShowChangesOfEdit();
-					if((userIn == username) && (username != usernameEmployeeEditInpt.value || email != emailEmployeeEditInpt.value || TranslateStatusTo("greek", status) != statusEmployeeEditSelect.value)) {
+					if((userUsernameIn == thisEmployee.getUsername()) && (thisEmployee.getUsername() != usernameEmployeeEditInpt.value || thisEmployee.getEmail() != emailEmployeeEditInpt.value || TranslateStatusTo("greek", thisEmployee.getStatus()) != statusEmployeeEditSelect.value)) {
 						addNewInfoTitleTextC.innerHTML = "ΕΠΕΞΕΡΓΑΣΙΑ ΤΩΝ ΣΤΟΙΧΕΙΩΝ ΣΑΣ";
 						addNewInfoTextC.innerHTML = "Η αλλαγή ενός εκ των βασικών σας στοιχείων (Όνομα χρήστη ή/και Email), θα οδηγήσει σε αποσύνδεση. Βεβαιωθείτε ότι θυμάστε τα στοιχεία που αλλάξατε. Να ολοκληρωθεί η διαδικασία;";
 						situationToStayAfterChange = "exit";
@@ -399,45 +405,47 @@ function ServerCommunication() {
 						situationToStayAfterChange = "continue";
 					}
 					yesAddNewInfoBtn.focus();
-					jQuery('#yesAddNewInfoBtn').one("click", function() {EmployeeApproveClickOkBtn(employee, situationToStayAfterChange);});
+					jQuery('#yesAddNewInfoBtn').one("click", function() {EmployeeApproveClickOkBtn(latestInfoEmployee, situationToStayAfterChange);});
 					noAddNewInfoBtn.addEventListener("click", function() {EmployeeClickCancelBtn();});
 				}
 			}
 		}
 
+		//CHECK EVERY INPUT IF IT'S VALUE IS CHANGED AND SHOW IT WITH GREEN BORDER
 		function ShowChangesOfEdit() {
-			if(username != usernameEmployeeEditInpt.value) {
+			if(thisEmployee.getUsername() != usernameEmployeeEditInpt.value) {
 				usernameEmployeeEditInpt.style.borderColor = "green";
 			}
 
-			if(email != emailEmployeeEditInpt.value) {
+			if(thisEmployee.getEmail() != emailEmployeeEditInpt.value) {
 				emailEmployeeEditInpt.style.borderColor = "green";
 			}
 
-			if(name != nameEmployeeEditInpt.value) {
+			if(thisEmployee.getName() != nameEmployeeEditInpt.value) {
 				nameEmployeeEditInpt.style.borderColor = "green";
 			}
 
-			if(wage != wageEmployeeEditInpt.value) {
+			if(thisEmployee.getWage() != wageEmployeeEditInpt.value) {
 				wageEmployeeEditInpt.style.borderColor = "green";
 			}
 
-			if(status != TranslateStatusTo("english", statusEmployeeEditSelect.value)) {
+			if(thisEmployee.getStatus() != TranslateStatusTo("english", statusEmployeeEditSelect.value)) {
 				statusEmployeeEditSelect.style.borderColor = "green";
 			}
 
-			if(branchId == null) {
+			if(thisEmployee.getBranchId() == null) {
 				if(branchIdEmployeeEditSlct.value.includes("#")) {
 					branchIdEmployeeEditSlct.style.borderColor = "green";
 				}
 			}
 			else {
-				if(!branchIdEmployeeEditSlct.value.includes(branchId)) {
+				if(!branchIdEmployeeEditSlct.value.includes(thisEmployee.getBranchId())) {
 					branchIdEmployeeEditSlct.style.borderColor = "green";
 				}
 			}
 		}
 
+		//BACK TO EDITING SCREEN
 		function BackToWaitingEditPanel() {
 			usernameEmployeeEditInpt.style.borderColor = "rgb(13, 18, 24)";
 			emailEmployeeEditInpt.style.borderColor = "rgb(13, 18, 24)";
@@ -447,9 +455,11 @@ function ServerCommunication() {
 			branchIdEmployeeEditSlct.style.borderColor = "rgb(13, 18, 24)";
 		}
 
-		async function EmployeeApproveClickOkBtn(employee, situation) {
+		//FINAL CLICK THAT APPROVES UPDATE OF CHOSEN EMPLOYEE
+		async function EmployeeApproveClickOkBtn(newInfoEmployee, situation) {
 			var errorMessages = 0;
-			errorMessages = await CreateAsyncEmployee(employee);
+			console.log(newInfoEmployee);
+			errorMessages = await CreateAsyncEmployee(newInfoEmployee);
 
 			if(errorMessages == 0) {
 				if(situation == "exit") {
@@ -473,14 +483,14 @@ function ServerCommunication() {
 						var errorEmail = 0;
 
 						for(var i = 0; i < allEmployees.length; i++) {
-							if(allEmployees[i].username == usernameEmployeeEditInpt.value && usernameEmployeeEditInpt.value != username) {
+							if(allEmployees[i].username == usernameEmployeeEditInpt.value && usernameEmployeeEditInpt.value != thisEmployee.getUsername()) {
 								errorUsername = 1;
 								break;
 							}
 						}
 
 						for(var i = 0; i < allEmployees.length; i++) {
-							if(allEmployees[i].email == emailEmployeeEditInpt.value && emailEmployeeEditInpt.value != email) {
+							if(allEmployees[i].email == emailEmployeeEditInpt.value && emailEmployeeEditInpt.value != thisEmployee.getEmail()) {
 								errorEmail = 1;
 								break;
 							}
@@ -523,24 +533,24 @@ function ServerCommunication() {
 			}
 		}
 
-		function CreateAsyncEmployee(employee, e) {
-			if(!employee.branchId.includes("#")) {
-				employee.branchId = "";
+		function CreateAsyncEmployee(newInfoEmployee) {
+			if(!newInfoEmployee.branchId.includes("#")) {
+				newInfoEmployee.branchId = "";
 			}
 			else {
-				employee.branchId = employee.branchId .substring(1, 5);
-				if((employee.status != status || employee.branchId != branchId) && status == "Employee Manager") {
+				newInfoEmployee.branchId = newInfoEmployee.branchId.substring(1, 5);
+				if((newInfoEmployee.status != thisEmployee.getStatus() || newInfoEmployee.branchId != thisEmployee.getBranchId()) && thisEmployee.getStatus() == "Employee Manager") {
     				impChange = 1;
     			}
 			}
 
-			var employeeStr = JSON.stringify(employee);
+			var employeeStr = JSON.stringify(newInfoEmployee);
 
 			return new Promise ((resolve, reject) => {
 				$.ajax({
 					type: 'POST',
 					url: "../Php/updateEmployeesEditPhp.php",
-					data: {employee: employeeStr, key: username, userThatMakeChanges: userIn, importantChange: impChange, previousBranch: branchId},
+					data: {newEmployee: employeeStr, key: thisEmployee.getId(), importantChange: impChange, previousBranch: thisEmployee.getBranchId()},
 					success: function(data) {
 						//alert(data);
 						resolve(data);
@@ -551,30 +561,31 @@ function ServerCommunication() {
 
 		function EmployeeClickCancelBtn() {
 			alertAddNewInfoC.style.display = "none";
-			usernameEmployeeEditInpt.value = username;
-			emailEmployeeEditInpt.value = email;
-			nameEmployeeEditInpt.value = name;
-			wageEmployeeEditInpt.value = wage;
+			usernameEmployeeEditInpt.value = thisEmployee.getUsername();
+			emailEmployeeEditInpt.value = thisEmployee.getEmail();
+			nameEmployeeEditInpt.value = thisEmployee.getName();
+			wageEmployeeEditInpt.value = thisEmployee.getWage();
 			statusEmployeeEditSelect.value = currentStatusSelected;
-			if(branchId == 0) {
+			if(thisEmployee.getBranchId() == 0) {
 				branchIdEmployeeEditSlct.disabled = true;
 
 				branchIdEmployeeEditSlct.innerHTML = "";
 				var adminOption = document.createElement("option");
 				adminOption.className = "optionsForBranch";
-				adminOption.innerHTML = TransformBranchTo("string", branchId);
+				adminOption.innerHTML = TransformBranchTo("string", thisEmployee.getBranchId());
 				branchIdEmployeeEditSlct.appendChild(adminOption);
 			}
 			else {
 				branchIdEmployeeEditSlct.disabled = false;
 				var serverCommun = new ServerCommunication();
-				serverCommun.UpdateBranchAvailable(username, TranslateStatusTo("english", statusEmployeeEditSelect.value), branchId, branchIdEmployeeEditSlct);
+				serverCommun.UpdateBranchAvailable(thisEmployee.getId(), TranslateStatusTo("english", statusEmployeeEditSelect.value), thisEmployee.getBranchId(), branchIdEmployeeEditSlct);
 			}
 			BackToWaitingEditPanel();
 		}
 		//**
 	}
 
+	//HIRE BACK EX EMPLOYEE(DELETE HIM/HER FROM EX EMPLOYEES TABLES AND ADD TO EMPLOYEES AND USERS TABLE, IF NEEDED)
 	this.HireBackExEmployee = function (employeeInfo) {
 		var statusArrayGr = ["Γενικός Διαχειριστής", "Υπεύθυνος Διαχείρισης", "Υπάλληλος Πρακτορείου", "Υπεύθυνος Αποθήκης", "Οδηγός", "Φύλακας", "Καθαριστής"];
 		var statusArrayGr1 = ["Γενικός Διαχειριστής", "Υπεύθυνος Διαχείρισης", "Υπάλληλος Πρακτορείου", "Υπεύθυνος Αποθήκης"];
@@ -741,6 +752,13 @@ function ServerCommunication() {
 		passwordEmployeeEditInpt.id = "passwordEmployeeEditInpt";
 		passwordEmployeeEditInpt.name = "Password";
 		passwordEmployeeEditInpt.type = "password";
+		if(employeeInfo.lastStatus == "Admin" || employeeInfo.lastStatus == "Employee Manager" || employeeInfo.lastStatus == "Agency Employee" || employeeInfo.lastStatus == "Store Employee") {
+			errorArr[1] = 1;
+		}
+		else {
+			passwordEmployeeEditInpt.disabled = true;
+			errorArr[1] = 0;
+		}
 		passwordEmployeeEditInpt.style.paddingRight = "40px";
 		var passwordEmployeeEditImgBtn = document.createElement("button");
 		passwordEmployeeEditImgBtn.tabIndex = "-1";
@@ -779,6 +797,13 @@ function ServerCommunication() {
 		passwordRepeatEmployeeEditInpt.id = "passwordRepeatEmployeeEditInpt";
 		passwordRepeatEmployeeEditInpt.name = "PasswordRe";
 		passwordRepeatEmployeeEditInpt.type = "password";
+		if(employeeInfo.lastStatus == "Admin" || employeeInfo.lastStatus == "Employee Manager" || employeeInfo.lastStatus == "Agency Employee" || employeeInfo.lastStatus == "Store Employee") {
+			errorArr[2] = 1;
+		}
+		else {
+			passwordRepeatEmployeeEditInpt.disabled = true;
+			errorArr[2] = 0;
+		}
 		passwordRepeatEmployeeEditInpt.style.paddingRight = "40px";
 		var passwordRepeatEmployeeEditImgBtn = document.createElement("button");
 		passwordRepeatEmployeeEditImgBtn.tabIndex = "-1";
@@ -1131,10 +1156,10 @@ function ServerCommunication() {
 				alertInfoForCreatNewItemC.style.display = "none";
 				alertAddNewInfoC.style.display = "block";
 				addNewInfoTitleTextC.innerHTML = "ΠΡΟΣΛΗΨΗ ΠΡΩΗΝ ΥΠΑΛΛΗΛΟΥ";
-				addNewInfoTextC.innerHTML = "Ολα τα πεδία είναι έγκυρα. Είστε σίγουρος ότι θέλετε να προσλάβετε πρώην υπάλληλο.";
+				addNewInfoTextC.innerHTML = "Ολα τα πεδία είναι έγκυρα. Είστε σίγουρος ότι θέλετε να προσλάβετε πρώην υπάλληλο;";
 
 				yesAddNewInfoBtn.addEventListener("click", function() {
-					HireNewEmployee();
+					HireBackExEmployee();
 				});
 				yesAddNewInfoBtn.focus();
 				noAddNewInfoBtn.addEventListener("click", function() {
@@ -1164,8 +1189,9 @@ function ServerCommunication() {
 		}
 
 		//SEND INFO TO SERVER AFTER CONFIRM
-		function HireNewEmployee() {
+		function HireBackExEmployee() {
 			var newExEmployee = {
+				'id': employeeInfo.id,
 		    	'username': usernameEmployeeEditInpt.value,
 		    	'email': employeeInfo.email,
 		   		'name': employeeInfo.name,
@@ -1213,12 +1239,45 @@ function ServerCommunication() {
 		}
 	}
 
+	//HIRE BACK EX EMPLOYEE(DELETE HIM/HER FROM EX EMPLOYEES TABLES AND ADD TO EMPLOYEES AND USERS TABLE, IF NEEDED)
+	this.DeleteExEmployee = function (exEmployeeId) {
+		$.ajax({
+			type: 'POST',
+			url: "../Php/deleteExEmployeePhp.php",
+			data: {id: exEmployeeId},
+			success: function(data) {
+				//EX EMPLOYEE HAS BEEN DELETED SUCCESSFULLY
+				if(data == 1) {
+					alertAddNewInfoC.style.display = "none";
+					alertInfoForCreatNewItemC.style.display = "table";
+					alertInfoForCreatNewItemTextC.innerHTML = "Η ΔΙΑΔΙΚΑΣΙΑ ΟΛΟΚΛΗΡΩΘΗΚΕ ΕΠΙΤΥΧΩΣ(η σελίδα θα ανανεωθεί)";
+					alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+					alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+						alertInfoForCreatNewItemC.style.display = "none";
+						coverPageHelperC.style.display = "none";
+						location.reload();
+					});
+				}
+				//EX EMPLOYEE HASN'T BEEN DELETED SUCCESSFULLY
+				else {
+					alertAddNewInfoC.style.display = "none";
+					alertInfoForCreatNewItemC.style.display = "table";
+					alertInfoForCreatNewItemTextC.innerHTML = "ΚΑΤΙ ΠΗΓΕ ΛΑΘΟΣ";
+					alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+					alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+						alertInfoForCreatNewItemC.style.display = "none";
+					});
+				}
+			}
+		});
+	}
+
 	//WHEN ADMIN CHANGE STATUS OF EMPLOYEE, SHOWS AVAILABLE BRANCHES TO WORK
-	this.UpdateBranchAvailable = function (usernameKey, status, branchId, branchIdEditSelect) {
+	this.UpdateBranchAvailable = function (employeeIdKey, status, branchId, branchIdEditSelect) {
 		$.ajax({
 			type: 'POST',
 			url: "../Php/getBranchesAvailableForEmployeePhp.php",
-			data: {key: usernameKey, statusSearch: status},
+			data: {key: employeeIdKey, statusSearch: status},
 			success: function(data) {
 				//alert(data);
 				//CREATE OPTIONS FOR BRANCH IDS AVAILABLE FOR EACH STATUS
@@ -1242,7 +1301,7 @@ function ServerCommunication() {
 					branchIdEditSelect.appendChild(option);
 					if(branchId == idsOfAvailBranchArray[i]) {
 						option.selected = "selected";
-						if(usernameKey != "") {
+						if(employeeIdKey != "") {
 							option.innerHTML += " (τωρινό)";
 						}
 						else {
@@ -1256,7 +1315,7 @@ function ServerCommunication() {
 
 					if(idsOfAvailBranchArray[i] == null) {
 						option.innerHTML = "Δεν έχει ορισθεί κατάστημα";
-						option.disabled = "disabled";
+						option.disabled = true;
 						option.style.display = "none";
 					}
 				}
@@ -1271,5 +1330,512 @@ function ServerCommunication() {
 				//currentBranchSelected = branchIdEditSelect.options[branchIdEditSelect.selectedIndex].text;
 			}
 		});
+	}
+
+	//WHEN ADMIN PRESSES BUTTON TO EDIT BRANCH INFO
+	this.BranchEditInfo = function (branchInfo) {
+		var change = [0, 0, 0, 0];
+
+		var editWindowC = document.getElementById("editWindowC");
+		editWindowC.style.display = "block";
+
+		var editTitleTextC = document.getElementById("editTitleTextC");
+		//editTitleNextC.innerHTML = "";
+		editTitleTextC.innerHTML = "ΕΠΕΞΕΡΓΑΣΙΑ ΣΤΟΙΧΕΙΩΝ ΚΑΤΑΣΤΗΜΑΤΟΣ";
+
+		var editInfoGetterLeftC = document.getElementById("editInfoGetterLeftC");
+		editInfoGetterLeftC.innerHTML = "";
+
+		var editInfoGetterRightC = document.getElementById("editInfoGetterRightC");
+		editInfoGetterRightC.innerHTML = "";
+
+		//ADMIN CONTROL BRANCH EDIT INFO
+		var adminControlBrC = document.createElement("div");
+		adminControlBrC.id = "adminControlBrC";
+		adminControlBrC.style.userSelect = "none";
+
+		var adminControlTitleBrC = document.createElement("div");
+		adminControlTitleBrC.id = "adminControlTitleBrC";
+		adminControlTitleBrC.innerHTML = "Διαχειριστής";
+		adminControlBrC.appendChild(adminControlTitleBrC);
+
+		var adminControlContentBrInpt = document.createElement("input");
+		adminControlContentBrInpt.id = "adminControlContentBrInpt";
+		adminControlContentBrInpt.value = branchInfo.getAdminControl();
+		adminControlContentBrInpt.disabled = true;
+		adminControlBrC.appendChild(adminControlContentBrInpt);
+
+		editInfoGetterLeftC.appendChild(adminControlBrC);
+
+		//STATUS BRANCH EDIT INFO
+		var statusBrC = document.createElement("div");
+		statusBrC.id = "statusBrC";
+		statusBrC.style.userSelect = "none";
+
+		var statusTitleBrC = document.createElement("div");
+		statusTitleBrC.id = "statusTitleBrC";
+		statusTitleBrC.innerHTML = "Κατάσταση";
+		statusBrC.appendChild(statusTitleBrC);
+
+		var statusContentBrSlct = document.createElement("select");
+		statusContentBrSlct.id = "statusContentBrSlct";
+		statusContentBrSlct.addEventListener("change", function() {
+			if(this.value != TranslateBranchStatusTo("greek", branchInfo.getStatus())) {
+				this.style.border = "2px solid orange";
+				change[0] = 1;
+			}
+			else {
+				this.style.border = "2px solid rgb(13, 18, 24)";
+				change[0] = 0;
+			}
+		});
+		statusBrC.appendChild(statusContentBrSlct);
+
+		if(branchInfo.getManager() == null) {
+			var branchStatusArray = ["Under_C", "Problem"];
+		}
+		else {
+			var branchStatusArray = ["Active", "Under_R", "Under_C", "Problem"];
+		}
+
+		for(var i = 0; i < branchStatusArray.length; i++) {
+			var option = document.createElement("option");
+			option.innerHTML = TranslateBranchStatusTo("greek", branchStatusArray[i]);
+			statusContentBrSlct.appendChild(option);
+			if(branchStatusArray[i] == branchInfo.getStatus()) {
+				option.selected = true;
+			}
+		}
+
+		editInfoGetterLeftC.appendChild(statusBrC);
+
+		//TYPE BRANCH EDIT INFO
+		var typeBrC = document.createElement("div");
+		typeBrC.id = "typeBrC";
+		typeBrC.style.userSelect = "none";
+
+		var typeTitleBrC = document.createElement("div");
+		typeTitleBrC.id = "typeTitleBrC";
+		typeTitleBrC.innerHTML = "Τύπος";
+		typeBrC.appendChild(typeTitleBrC);
+
+		var typeContentBrSlct = document.createElement("select");
+		typeContentBrSlct.id = "typeContentBrSlct";
+		typeContentBrSlct.addEventListener("change", function() {
+			if(this.value != branchInfo.getType()) {
+				this.style.border = "2px solid orange";
+				change[1] = 1;
+			}
+			else {
+				this.style.border = "2px solid rgb(13, 18, 24)";
+				change[1] = 0;
+			}
+		});
+		typeBrC.appendChild(typeContentBrSlct);
+
+		var branchTypeArray = ["Σταθμός", "Απλό κατάστημα"];
+
+		for(var i = 0; i < branchTypeArray.length; i++) {
+			var option = document.createElement("option");
+			option.innerHTML = branchTypeArray[i];
+			typeContentBrSlct.appendChild(option);
+			if(branchTypeArray[i] == branchInfo.getType()) {
+				option.selected = true;
+			}
+		}
+
+		editInfoGetterLeftC.appendChild(typeBrC);
+
+		//STREET BRANCH EDIT INFO
+		var streetBrC = document.createElement("div");
+		streetBrC.id = "streetBrC";
+		streetBrC.style.userSelect = "none";
+
+		var streetTitleBrC = document.createElement("div");
+		streetTitleBrC.id = "streetTitleBrC";
+		streetTitleBrC.innerHTML = "Οδός";
+		streetBrC.appendChild(streetTitleBrC);
+
+		var streetContentBrInpt = document.createElement("input");
+		streetContentBrInpt.id = "streetContentBrInpt";
+		streetContentBrInpt.value = branchInfo.getStreet();
+		streetContentBrInpt.addEventListener("change", function() {
+			if(this.value != branchInfo.getStreet()) {
+				this.style.border = "2px solid orange";
+				change[2] = 1;
+			}
+			else {
+				this.style.border = "2px solid rgb(13, 18, 24)";
+				change[2] = 0;
+			}
+		});
+		streetBrC.appendChild(streetContentBrInpt);
+
+		editInfoGetterRightC.appendChild(streetBrC);
+
+		//IMAGE BRANCH EDIT INFO
+		var imageBrC = document.createElement("div");
+		imageBrC.id = "imageBrC";
+		imageBrC.style.userSelect = "none";
+
+		var imageTitleBrC = document.createElement("div");
+		imageTitleBrC.id = "imageTitleBrC";
+		imageTitleBrC.innerHTML = "Εικόνα";
+		imageBrC.appendChild(imageTitleBrC);
+
+		var imageContentBrInpt = document.createElement("input");
+		imageContentBrInpt.id = "imageContentBrInpt";
+		imageContentBrInpt.value = branchInfo.getImageSrc();
+		imageContentBrInpt.addEventListener("change", function() {
+			if(this.value != branchInfo.getImageSrc()) {
+				this.style.border = "2px solid orange";
+				change[3] = 1;
+			}
+			else {
+				this.style.border = "2px solid rgb(13, 18, 24)";
+				change[3] = 0;
+			}
+		});
+		imageBrC.appendChild(imageContentBrInpt);
+
+		editInfoGetterRightC.appendChild(imageBrC);
+
+		//SEND BRANCH EDITED INFO TO CHECK
+		var sendToCheckEditBrBtn = document.createElement("button");
+		sendToCheckEditBrBtn.id = "sendToCheckEditBrBtn";
+		sendToCheckEditBrBtn.addEventListener("click", function() {
+			//WHEN SOMETHING CHANGED
+			if(change[0] || change[1] || change[2] || change[3]) {
+				alertInfoForCreatNewItemC.style.display = "none";
+				alertAddNewInfoC.style.display = "block";
+				addNewInfoTitleTextC.innerHTML = "ΕΠΕΞΕΡΓΑΣΙΑ ΤΩΝ ΣΤΟΙΧΕΙΩΝ ΤΟΥ ΚΑΤΑΣΤΗΜΑΤΟΣ";
+				addNewInfoTextC.innerHTML = "Είστες σίγουρος για τις αλλαγές των στοιχείων του καταστήματος;<br>Στην συνέχεια θα γίνει αυτόματη ανανέωση της σελίδας.";
+				yesAddNewInfoBtn.addEventListener("click", async function() {
+					var messageOk = await SendInfoToServer(branchInfo.getId(), TranslateBranchStatusTo("english", statusContentBrSlct.value), typeContentBrSlct.value, streetContentBrInpt.value, imageContentBrInpt.value);
+					if(messageOk == "1") {
+						location.reload();
+					}
+					else {
+						alertInfoForCreatNewItemC.style.display = "table";
+						alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος !<br>Σφάλμα του σέρβερ !";
+						alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+						alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+							alertInfoForCreatNewItemC.style.display = "none";
+						});
+						alertInfoForCreatNewItemBtn.focus();
+					}
+				});
+				yesAddNewInfoBtn.focus();
+				noAddNewInfoBtn.addEventListener("click", function() {
+					alertAddNewInfoC.style.display = "none";
+				});
+			}
+			//WHEN NOTHING CHANGED
+			else {
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Δεν έχει γίνει καμία αλλαγή !";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+				});
+				alertInfoForCreatNewItemBtn.focus();
+			}
+		});
+		sendToCheckEditBrBtn.innerHTML = "ΑΛΛΑΓΗ";
+
+		editInfoGetterRightC.appendChild(sendToCheckEditBrBtn);
+
+
+		//CHECK IF USER IN IS THE SAME THAT CONTROLS THE BRANCH THAT IS CLICKED
+		if(userIdIn != branchInfo.getAdminControl()) {
+			statusContentBrSlct.disabled = true;
+			typeContentBrSlct.disabled = true;
+			streetContentBrInpt.disabled = true;
+			imageContentBrInpt.disabled = true;
+			alertInfoForCreatNewItemC.style.display = "table";
+			alertInfoForCreatNewItemTextC.innerHTML = "Δεν είστε υπεύθυνος για αυτό το κατάστημα, οπότε δεν έχετε δικαιώματα στην επεξεργασία του!";
+			alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα!";
+			alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+				alertInfoForCreatNewItemC.style.display = "none";
+			});
+			alertInfoForCreatNewItemBtn.focus();
+		}
+		else {
+			alertInfoForCreatNewItemC.style.display = "none";
+		}
+
+		function SendInfoToServer(id, status, type, street, image) {
+			return new Promise ((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/sendBranchUpdatesPhp.php",
+					data: {id: branchInfo.getId(), status: status, type: type, street: street, image: image},
+					success: function(data) {
+						//alert(data);
+						resolve(data);
+					}
+				});
+			});
+		}
+	}
+
+	//WHEN ADMIN PRESSES BUTTON TO DELETE THIS BRANCH
+	this.DeleteThisBranch = async function (branchInfo) {
+		var alertInfoForCreatNewItemC = document.getElementById("alertInfoForCreatNewItemC");
+		var alertInfoForCreatNewItemTextC = document.getElementById("alertInfoForCreatNewItemTextC");
+		var alertInfoForCreatNewItemBtn = document.getElementById("alertInfoForCreatNewItemBtn");
+		var alertAddNewInfoC = document.getElementById("alertAddNewInfoC");
+		var addNewInfoTitleTextC = document.getElementById("addNewInfoTitleTextC");
+		var addNewInfoTextC = document.getElementById("addNewInfoTextC");
+		var yesAddNewInfoBtn = document.getElementById("yesAddNewInfoBtn");
+		var noAddNewInfoBtn = document.getElementById("noAddNewInfoBtn");
+		var numberOfEmployees = await CheckIfThereAreEmployeesInThisBranch();
+		
+		if(numberOfEmployees > 0) {
+			CloseAlertMessages();
+			alertInfoForCreatNewItemC.style.display = "table";
+			alertInfoForCreatNewItemTextC.innerHTML = "Όσο υπάρχουν ενεργοί υπάλληλοι στο συγκεκριμένο κατάστημα, δεν επιτρέπεται η διαγραφή του!";
+			alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+			alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+				alertInfoForCreatNewItemC.style.display = "none";
+			});
+		}
+		else  {
+			alertAddNewInfoC.style.display = "table";
+			addNewInfoTitleTextC.innerHTML = "ΔΙΑΓΡΑΦΗ ΚΑΤΑΣΤΗΜΑΤΟΣ";
+			addNewInfoTextC.innerHTML = "Είστε σίγουρος ότι θέλετε να διαγράψετε το κατάστημα στην τοποθεσία " + branchInfo.getLocation() + ";<br> Βεβαιωθείτε, πρώτα, ότι έχετε ενημερώσει τα συνδεδεμένα καταστήματα, αν υπάρχουν!";
+			yesAddNewInfoBtn.focus();
+			yesAddNewInfoBtn.addEventListener("click", async function() {
+				DeleteThisBranch();
+			});
+			noAddNewInfoBtn.addEventListener("click", function() {
+				alertAddNewInfoC.style.display = "none";
+			});
+		}
+
+		function CheckIfThereAreEmployeesInThisBranch() {
+			return new Promise ((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/getCountOfEmployeesInThisBranchPhp.php",
+					data: {id: branchInfo.getId()},
+					success: function(data) {
+						//alert(data);
+						resolve(data);
+					}
+				});
+			});
+		}
+
+		function DeleteThisBranch() {
+			$.ajax({
+				type: 'POST',
+				url: "../Php/deleteBranchPhp.php",
+				data: {id: branchInfo.getId()},
+				success: function(data) {
+					//alert(data);
+					alertAddNewInfoC.style.display = "none";
+					CloseAlertMessages();
+					if(data) {
+						alertInfoForCreatNewItemC.style.display = "table";
+						alertInfoForCreatNewItemTextC.innerHTML = "Η διαγραφή του καταστήματος τελείωσε επιτυχώς.<br> Η σελίδα θα ανανεωθεί αυτόματα.";
+						alertInfoForCreatNewItemBtn.innerHTML = "";
+						alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+							//alertInfoForCreatNewItemC.style.display = "none";
+						});
+
+						location.reload();
+					}
+					else {
+						alertInfoForCreatNewItemC.style.display = "table";
+						alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος. Η διαγραφή δεν πραγματοποιήθηκε!<br> Ξαναπροσπαθήστε αργότερα.";
+						alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+						alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+							alertInfoForCreatNewItemC.style.display = "none";
+						});
+					}
+
+				}
+			});
+		}
+	}
+
+	//WHEN ADMIN PRESSES BUTTON TO EDIT THE CONNECTIONS OF THIS BRANCH
+	this.EditTheConnectionsOfThisBranch = async function (branchInfo) {
+		var connectionsIds = await GetIdsOfConnections();
+		var branchesConnected = await branchInfo.getConnectedBranches();
+		var branches = await GetAllBranches();
+
+		branches = ConvertObjectsArrayToBranchObjsArray(branches);
+		//REMOVE THIS BRANCH FROM BRANCHES ARRAY
+		branches = RemoveObjectFromArray(branchInfo, branches);
+
+		CreateViewOfConnectedBranches();
+
+		newId = CompareIdWithATableAndReturn(8, connectionsIds);
+
+		//GET ALL BRANCHES FROM SERVER FOR GIVING THE OPTION TO THE CHOSEN BRANCH TO CHOOSE ITS CONNECTIONS
+		function GetAllBranches() {
+			var array = [];
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/getBranchesPhp.php",
+					data: {},
+					success: function(data) {
+						//alert(data);
+						array = JSON.parse(data);
+						resolve(array);
+					}
+				});
+			});
+		}
+
+		//GET CONNECTIONS ID
+		function GetIdsOfConnections() {
+			var array = [];
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/getIdsOfConnectionsPhp.php",
+					data: {},
+					success: function(data) {
+						//alert(data);
+						array = JSON.parse(data);
+						resolve(array);
+					}
+				});
+			});
+		}
+
+		//CREATE THE VIEW OF ALL THE BRANCHES AND FROM THERE THE USER CAN SEE, WITH WHICH BRANCHES, THIS BRANCH IS CONNECTED AND EDIT THAT
+		function CreateViewOfConnectedBranches() {
+			var editWindowC = document.getElementById("editWindowC");
+			var editTitleTextC = document.getElementById("editTitleTextC");
+			var editInfoGetterLeftC = document.getElementById("editInfoGetterLeftC");
+			var editInfoGetterRightC = document.getElementById("editInfoGetterRightC");
+			var coverEditC = document.getElementById("coverEditC");
+
+			editWindowC.style.display = "table";
+			editTitleTextC.innerHTML = "ΣΥΝΔΕΣΗ ΚΑΤΑΣΤΗΜΑΤΩΝ";
+			editInfoGetterLeftC.innerHTML = "";
+			editInfoGetterRightC.innerHTML = "";
+
+			coverEditC.style.display = "block";
+
+			//CREATE A HELPER ELEMENT TO GIVE HEIGHT TO THE ELEMENT WITH ID editInfoGetterLeftC, SO THE coverEditC CAN FOLLOW UP
+			var helperConnBrC = document.createElement("div");
+			editInfoGetterLeftC.appendChild(helperConnBrC);
+			helperConnBrC.style.height = "350px";
+
+			var	branchesConnectionsContentC = document.createElement("div");
+			branchesConnectionsContentC.id = "branchesConnectionsContentC";
+
+			var allBranchesConnC = document.createElement("div");
+			allBranchesConnC.id = "allBranchesConnC";
+			branchesConnectionsContentC.appendChild(allBranchesConnC);
+
+			coverEditC.appendChild(branchesConnectionsContentC);
+
+			//TITLES IN FIRST ROW OF BRANCHES CONNECTIONS
+			var firstRowOfBrConnectionsContentC = document.createElement("div");
+			firstRowOfBrConnectionsContentC.id = "firstRowOfBrConnectionsContentC";
+
+			var titleConnectedBranchesC = document.createElement("div");
+			titleConnectedBranchesC.id = "titleConnectedBranchesC";
+			var titleConnectedBranchesImg = document.createElement("img");
+			titleConnectedBranchesImg.id = "titleConnectedBranchesImg";
+			titleConnectedBranchesC.appendChild(titleConnectedBranchesImg);
+			firstRowOfBrConnectionsContentC.appendChild(titleConnectedBranchesC);
+
+			var titleNotConnectedBranchesC = document.createElement("div");
+			titleNotConnectedBranchesC.id = "titleNotConnectedBranchesC";
+			var titleNotConnectedBranchesImg = document.createElement("img");
+			titleNotConnectedBranchesImg.id = "titleNotConnectedBranchesImg";
+			titleNotConnectedBranchesC.appendChild(titleNotConnectedBranchesImg);
+			firstRowOfBrConnectionsContentC.appendChild(titleNotConnectedBranchesC);
+
+			var titleOfBranchesToConnC = document.createElement("div");
+			titleOfBranchesToConnC.id = "titleOfBranchesToConnC";
+			titleOfBranchesToConnC.innerHTML = "ΚΑΤΑΣΤΗΜΑΤΑ";
+			firstRowOfBrConnectionsContentC.appendChild(titleOfBranchesToConnC);
+
+			allBranchesConnC.appendChild(firstRowOfBrConnectionsContentC);
+
+			for(var i = 0; i < branches.length; i++) {
+				var rowForConnBranchC = document.createElement("div");
+				rowForConnBranchC.id = "rowForConnBr" + branches[i].getId();
+				rowForConnBranchC.className = "rowForConnBranchC";
+
+				var rowConnectForConnBranchC = document.createElement("div");
+				rowConnectForConnBranchC.className = "rowConnectForConnBranchC";
+				var rowConnectForConnBranchBtn = document.createElement("button");
+				rowConnectForConnBranchBtn.className = "rowConnectForConnBranchBtn";
+				rowConnectForConnBranchBtn.id = "connectBrBtn" + branches[i].getId();
+				rowConnectForConnBranchBtn.addEventListener("click", function () {
+					AddItemToAnArray(this.id, branchesConnected);
+					UpdateViewOfButton("rowForConnBr" + this.id);
+					console.log(branchesConnected);
+				});
+				rowConnectForConnBranchC.appendChild(rowConnectForConnBranchBtn);
+				var rowConnectForConnBranchImg = document.createElement("img");
+				rowConnectForConnBranchImg.className = "rowConnectForConnBranchImg";
+				rowConnectForConnBranchBtn.appendChild(rowConnectForConnBranchImg);
+
+				rowForConnBranchC.appendChild(rowConnectForConnBranchC);
+
+				var rowNotConnectForConnBranchC = document.createElement("div");
+				rowNotConnectForConnBranchC.className = "rowNotConnectForConnBranchC";
+				var rowNotConnectForConnBranchBtn = document.createElement("button");
+				rowNotConnectForConnBranchBtn.id = "notConnectBrBtn" + branches[i].getId();
+				rowNotConnectForConnBranchBtn.addEventListener("click", function () {
+					RemoveItemFromArray(this.id, branchesConnected);
+					UpdateViewOfButton("rowForConnBr" + this.id);
+					console.log(branchesConnected);
+				});
+				rowNotConnectForConnBranchBtn.className = "rowNotConnectForConnBranchBtn";
+				rowNotConnectForConnBranchC.appendChild(rowNotConnectForConnBranchBtn);
+				var rowNotConnectForConnBranchImg = document.createElement("img");
+				rowNotConnectForConnBranchImg.className = "rowNotConnectForConnBranchImg";
+				rowNotConnectForConnBranchBtn.appendChild(rowNotConnectForConnBranchImg);
+
+				rowForConnBranchC.appendChild(rowNotConnectForConnBranchC);
+
+				var rowBranchForConnBranchC = document.createElement("div");
+				rowBranchForConnBranchC.className = "rowBranchForConnBranchC";
+				rowBranchForConnBranchC.innerHTML = "#" + branches[i].getId() + " - " + branches[i].getLocation() + " - " + branches[i].getStreet();
+				rowForConnBranchC.appendChild(rowBranchForConnBranchC);
+
+				allBranchesConnC.appendChild(rowForConnBranchC);
+
+				//CHECK WHICH BRANCHES ARE CONNECTED TO THIS
+				if(branchesConnected.length == 0) {
+					rowNotConnectForConnBranchImg.style.content = "url(../Assets/icons8_connection_status_on_50px_4.png)";
+				}
+				else {
+					var found = 0;
+
+					for(var j = 0; j < branchesConnected.length; j++) {
+						if(branchesConnected[j] == branches[i].getId()) {
+							found = 1;
+							break;
+						}
+					}
+
+					if(found) {
+						rowConnectForConnBranchImg.style.content = "url(../Assets/icons8_connection_status_on_50px_3.png)";
+					}
+					else {
+						rowNotConnectForConnBranchImg.style.content = "url(../Assets/icons8_connection_status_on_50px_4.png)";
+					}
+				}
+			}
+		}
+
+		function UpdateViewOfButton(idOfRow) {
+			var row = document.getElementById(idOfRow);
+			var connectBtn = row.querySelector("");
+			var disConnectBtn = row.querySelector("");
+		}
 	}
 }

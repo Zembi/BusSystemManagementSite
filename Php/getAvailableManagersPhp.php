@@ -21,10 +21,11 @@
 
 	$employees = [];
 
-	$query = "SELECT * FROM employees WHERE BranchId IS NULL";
+	$query = "SELECT * FROM employees WHERE BranchId IS NULL AND Status = 'Employee Manager'";
 	$result = mysqli_query($conn, $query);
 	while (($row = mysqli_fetch_array($result))) {
 		$employee = array(
+			'id' => $row['Id'],
 			'username' => $row['Username'],
 			'email' => $row['Email'],
 			'name' => $row['Name'],

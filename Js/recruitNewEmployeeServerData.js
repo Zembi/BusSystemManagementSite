@@ -44,10 +44,12 @@ var afmInput = document.getElementById("afmInput");
 var afmProblemC = document.getElementById("afmProblemC");
 var amkaInput = document.getElementById("amkaInput");
 var amkaProblemC = document.getElementById("amkaProblemC");
+var emplIdInput = document.getElementById("emplIdInput");
 var confirmRecruitEmployeeBtn = document.getElementById("confirmRecruitEmployeeBtn");
 
 var passwdClickArray = [0, 0];
 var errorArr = [1, 1, 1, 1, 1, 1, 1, 1];
+var	branchNotFoundError = 1;
 var insertedEmployee = 0;
 
 recruitNewEmployeeStart();
@@ -77,7 +79,7 @@ function FindTitleAndEmployeesAndCreateView() {
 
 
 
-//*(2)INITIALIZE OF BUTTONS OF PASSWORD INPUTS
+//*(2)INITIALIZATION OF BUTTONS OF PASSWORD INPUTS
 function PasswordHideShowBtnsListeners() {
 	passwordImgBtn.addEventListener("click", function() {
 		PasswordClick(passwordInput, passwordImgBtn, passwordImg, 0);
@@ -131,7 +133,7 @@ function CheckPasswordClickForPic(passwrdInpt, imgBtn, img, passwdClick) {
 
 
 //*(3)CREATE ON THE SELECT ELEMENTS, THE OPTIONS NEEDED AND ADD EVENTS TO INPUTS NEEDED
-function AddEventsAndCreateTheOptionsOfTheSelectElements() {
+async function AddEventsAndCreateTheOptionsOfTheSelectElements() {
 	//USERNAME NOT ALLOW SPACES
 	usernameInput.addEventListener("keypress", function() {
 		UsernameInputPreventSymbols();
@@ -174,6 +176,7 @@ function AddEventsAndCreateTheOptionsOfTheSelectElements() {
 		}
 	}
 
+	//AFM SELECT MENU AND EVENTS
 	afmInput.addEventListener("keypress", function() {
 		OnlyNumberKey(event, "");
 	});
@@ -183,6 +186,7 @@ function AddEventsAndCreateTheOptionsOfTheSelectElements() {
 		}
 	};
 
+	//AMKA SELECT MENU AND EVENTS
 	amkaInput.addEventListener("keypress", function() {
 		OnlyNumberKey(event, "");
 	});
@@ -191,6 +195,23 @@ function AddEventsAndCreateTheOptionsOfTheSelectElements() {
 			this.value = this.value.slice(0, 11); 
 		}
 	}
+
+	//EMPLOYEE ID SELECT MENU AND EVENTS
+	emplIdInput.disabled = "true";
+	emplIdInput.addEventListener("keypress", function() {
+		OnlyNumberKey(event, "");
+	});
+	emplIdInput.oninput = function () {
+		if (this.value.length > 8) {
+			this.value = this.value.slice(0, 8); 
+		}
+	}
+	//GET LIST OF EMPLOYEES IDS
+	var idsOfEmployees = await EmployeeIdCreation();
+	//console.log(idsOfEmployees);
+	//PRODUCE A NEW UNIQUE ID
+	emplIdInput.value = CompareIdWithATableAndReturn(8, idsOfEmployees);
+
 
 	//AUTO DATE RECRUITMENT DAY
 	recruitmentDayInput.disabled = true;
@@ -268,6 +289,19 @@ function BranchIdOptions() {
 
 	branchIdSlct.innerHTML = "";
 
+	if(statusNow == "Admin" || statusNow == "Employee Manager" || statusNow == "Agency Employee" || statusNow == "Store Employee") {
+		errorArr[4] = 1;
+		errorArr[5] = 1;
+	}
+	else {
+		errorArr[4] = 0;
+		errorArr[5] = 0;
+		passwordInput.disabled = true;
+		passwordImgBtn.disabled = true;
+		passwordRepeatInput.disabled = true;
+		retypePasswordImgBtn.disabled = true;
+	}
+
 	if(statusNow == "Admin") {
 		var option = document.createElement("option");
 		option.id = 0;
@@ -280,6 +314,9 @@ function BranchIdOptions() {
 		branchIdSlct.title = optionTitle;
 
 		branchIdSlct.disabled = true;
+		branchIdSlct.style.color = "white";
+		branchIdSlct.style.borderColor = "white";
+		branchNotFoundError = 0;
 	}
 	else {
 		$.ajax({
@@ -296,12 +333,49 @@ function BranchIdOptions() {
 					option.title = option.name;
 					branchIdSlct.appendChild(option);
 				}
-				var optionTitle = branchIdSlct.options[branchIdSlct.selectedIndex].name;
-				branchIdSlct.title = optionTitle;
+
+				if(branchArray.length == 0) {
+					branchIdSlct.disabled = true;
+					branchIdSlct.style.color = "darkred";
+					branchIdSlct.style.borderColor = "red";
+					var option = document.createElement("option");
+					option.innerHTML = "Δεν βρέθηκε κατάστημα!";
+					branchIdSlct.appendChild(option);
+					branchNotFoundError = 1;
+				}
+				else {
+					branchIdSlct.style.color = "white";
+					branchIdSlct.style.borderColor = "white";
+					var optionTitle = branchIdSlct.options[branchIdSlct.selectedIndex].name;
+					branchIdSlct.title = optionTitle;
+					branchNotFoundError = 0;
+				}
 			}
 		});
 		branchIdSlct.disabled = false;
 	}
+}
+
+//(3)->BRANCH ID CREATE OPTIONS FOR SELECT
+async function EmployeeIdCreation() {
+	var idsOfEmployees = await GetAllIdsOfEmployees();
+
+	return idsOfEmployees;
+}
+
+//(3)->BRANCH ID CREATE OPTIONS FOR SELECT
+function GetAllIdsOfEmployees() {
+	return new Promise ((resolve, reject) => {
+		$.ajax({
+			type: 'POST',
+			url: "../Php/getIdsOfEmployeesfPhp.php",
+			data: {},
+			success: function(data) {
+				data = JSON.parse(data);
+				resolve(data);
+			}
+		});
+	});
 }
 
 
@@ -635,7 +709,8 @@ function RecruitNewEmployeeSearchBarFunction() {
 //*(7)FUNCTION THAT IS BEING CALLED TO MAKE SURE THAT USER WANTS TO SEND DATA TO DATABASE 
 function CheckForConfirmRecruitEmployee() {
 	var allOk = 1;
-	
+	var branchHelper = 0;
+
 	if(errorArr[0] == 0 && errorArr[1] == 0 && errorArr[2] == 0 && errorArr[3] == 0 && errorArr[4] == 0 && errorArr[5] == 0 && errorArr[6] == 0 && errorArr[7] == 0) {
 		allOk = 1;
 	}
@@ -644,13 +719,20 @@ function CheckForConfirmRecruitEmployee() {
 	}
 
 	if(allOk) {
+		if(!branchNotFoundError) {
+			branchHelper = TransformBranchTo("number", branchIdSlct.value);
+		}
+		else {
+			branchHelper = "nothing";
+		}
+
 		alertInfoForCreatNewItemC.style.display = "none";
 		alertAddNewInfoC.style.display = "block";
 		addNewInfoTitleTextC.innerHTML = "ΠΡΟΣΛΗΨΗ ΝΕΟΥ ΥΠΑΛΛΗΛΟΥ";
 		addNewInfoTextC.innerHTML = "Ολα τα πεδία είναι έγκυρα. Είστε σίγουρος ότι θέλετε να προσλάβετε νέο υπάλληλο.";
 
 		yesAddNewInfoBtn.addEventListener("click", function() {
-			HireNewEmployee();
+			HireNewEmployee(branchHelper);
 		});
 		yesAddNewInfoBtn.focus();
 		noAddNewInfoBtn.addEventListener("click", function() {
@@ -680,17 +762,18 @@ function UnderstandAlertMessageBtn() {
 }
 
 //(7)->SEND INFO TO SERVER AFTER CONFIRM
-function HireNewEmployee() {
+function HireNewEmployee(branchHelper) {
 	/*var newEmployeeToHire = new Employee(usernameInput.value, emailInput.value, nameInput.value, iconSlct.value, TransformBranchTo("number", branchIdSlct.value), 
 										TranslateStatusTo("english", statusSlct.value), TranslateSexTo("english", sexSlct.value), wageInput.value,
 										ConvertFromDate(new Date()), afmInput.value, amkaInput.value);*/
 
 	var newEmployee = {
+		'id': emplIdInput.value,
     	'username': usernameInput.value,
     	'email': emailInput.value,
    		'name': nameInput.value,
    		'icon' : iconSlct.value,
-    	'branchId': TransformBranchTo("number", branchIdSlct.value),
+    	'branchId': branchHelper,
     	'status': TranslateStatusTo("english", statusSlct.value),
     	'sex': TranslateSexTo("english", sexSlct.value),
     	'wage' : wageInput.value,
@@ -707,7 +790,7 @@ function HireNewEmployee() {
 		url: "../Php/hireNewEmployeePhp.php",
 		data: {employeeHireObj: newEmployee},
 		success: function(data) {
-			//alert(data);
+			//console.log(data);
 			if(data == 1) {
 				//ALERT MESSAGE
 				insertedEmployee = 1;

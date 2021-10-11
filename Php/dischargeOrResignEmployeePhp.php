@@ -22,7 +22,7 @@
 	$exEmployeeDecoded = json_decode($exEmployee);
 
 	//DELETE EX-EMPLOYEE FROM EMPLOYEES TABLE
-	$sqlDischargeOrResignEmployee = "DELETE FROM employees WHERE ΑΦΜ = '$exEmployeeDecoded->afm'";
+	$sqlDischargeOrResignEmployee = "DELETE FROM employees WHERE Id = '$exEmployeeDecoded->id'";
 
 	if(!mysqli_query($conn, $sqlDischargeOrResignEmployee)) {
 		$errorC = 1;
@@ -30,27 +30,32 @@
 	else {
 		//UPDATE NOTIFICATIONS (DELETE EMPLOYEE FROM NOTIFICATIONS)
 		//IF EX EMPLOYEE IS A RECEIVER AT NOTIFICATION
-		$queryHelper = "SELECT Id, Sender, Receiver FROM notifications";
+		$queryHelper = "SELECT Id, Receiver FROM notifications";
 		$resultHelper = mysqli_query($conn, $queryHelper);
 		while (($row = mysqli_fetch_array($resultHelper))) {
 				$id = $row['Id'];
-				$sender = $row['Sender'];
 				$receivers = $row['Receiver'];
 
 				//CUT IN SLICES STRING OF RECEIVERS
 				$receiverSlices = explode("#", $receivers);
 
 				foreach ($receiverSlices as $value) {
-					$receiverUsername = explode("$", $value);
+					$receiverId = explode("$", $value);
 
-					if($receiverUsername[0] == $exEmployeeDecoded->username) {
+					if($receiverId[0] == $exEmployeeDecoded->id) {
 						$newReceivers = $receivers;
 						$status = "$".substr($value, -1);
 
-						$newReceivers = str_replace($exEmployeeDecoded->username.$status."#", "", $newReceivers);
+						$newReceivers = str_replace($exEmployeeDecoded->id.$status."#", "", $newReceivers);
 
-						$sqlUpdateNotifications = "UPDATE notifications SET Receiver = '$newReceivers' WHERE Id = '$id'";
-						mysqli_query($conn, $sqlUpdateNotifications);
+						if($newReceivers == "") {
+							$sqlDeleteNotifications = "DELETE FROM notifications WHERE Id = '$id'";
+							mysqli_query($conn, $sqlDeleteNotifications);
+						}
+						else {
+							$sqlUpdateNotifications = "UPDATE notifications SET Receiver = '$newReceivers' WHERE Id = '$id'";
+							mysqli_query($conn, $sqlUpdateNotifications);
+						}
 						
 						break;
 					}
@@ -59,15 +64,15 @@
 				$receiverSlices = explode("#", $receivers);
 		}
 		//IF EX EMPLOYEE IS A SENDER AT NOTIFICATION
-		$sqlDeleteNotifications = "DELETE from notifications WHERE Sender = '$exEmployeeDecoded->username'";
+		$sqlDeleteNotifications = "DELETE from notifications WHERE Sender = '$exEmployeeDecoded->id'";
 		mysqli_query($conn, $sqlDeleteNotifications);
 
 		if($exEmployeeDecoded->lastBranchId != null) {
 			//ADD EMPLOYEE TO EX-EMPLOYEE TABLE
-			$sqlAddExEmployee = "INSERT INTO exemployees (Name, Email, Icon, LastBranchId, LastStatus, LastWage, Sex, RecruitmentDay, EndDay, WayOutOfCompany, ΑΦΜ, ΑΜΚΑ, Reason) VALUES  ('$exEmployeeDecoded->name', '$exEmployeeDecoded->email', '$exEmployeeDecoded->icon', '$exEmployeeDecoded->lastBranchId', '$exEmployeeDecoded->lastStatus', '$exEmployeeDecoded->lastWage', '$exEmployeeDecoded->sex', '$exEmployeeDecoded->recruitmentDay', '$exEmployeeDecoded->endDay', '$exEmployeeDecoded->wayOutOfCompany', '$exEmployeeDecoded->afm', '$exEmployeeDecoded->amka', '$exEmployeeDecoded->reason')";
+			$sqlAddExEmployee = "INSERT INTO exemployees (Id, Name, Email, Icon, LastBranchId, LastStatus, LastWage, Sex, RecruitmentDay, EndDay, WayOutOfCompany, ΑΦΜ, ΑΜΚΑ, Reason) VALUES ('$exEmployeeDecoded->id', '$exEmployeeDecoded->name', '$exEmployeeDecoded->email', '$exEmployeeDecoded->icon', '$exEmployeeDecoded->lastBranchId', '$exEmployeeDecoded->lastStatus', '$exEmployeeDecoded->lastWage', '$exEmployeeDecoded->sex', '$exEmployeeDecoded->recruitmentDay', '$exEmployeeDecoded->endDay', '$exEmployeeDecoded->wayOutOfCompany', '$exEmployeeDecoded->afm', '$exEmployeeDecoded->amka', '$exEmployeeDecoded->reason')";
 		}
 		else {
-			$sqlAddExEmployee = "INSERT INTO exemployees (Name, Email, Icon, LastBranchId, LastStatus, LastWage, Sex, RecruitmentDay, EndDay, WayOutOfCompany, ΑΦΜ, ΑΜΚΑ, Reason) VALUES  ('$exEmployeeDecoded->name', '$exEmployeeDecoded->email', '$exEmployeeDecoded->icon', NULL, '$exEmployeeDecoded->lastStatus', '$exEmployeeDecoded->lastWage', '$exEmployeeDecoded->sex', '$exEmployeeDecoded->recruitmentDay', '$exEmployeeDecoded->endDay', '$exEmployeeDecoded->wayOutOfCompany', '$exEmployeeDecoded->afm', '$exEmployeeDecoded->amka', '$exEmployeeDecoded->reason')";
+			$sqlAddExEmployee = "INSERT INTO exemployees (Id, Name, Email, Icon, LastBranchId, LastStatus, LastWage, Sex, RecruitmentDay, EndDay, WayOutOfCompany, ΑΦΜ, ΑΜΚΑ, Reason) VALUES ('$exEmployeeDecoded->id', '$exEmployeeDecoded->name', '$exEmployeeDecoded->email', '$exEmployeeDecoded->icon', NULL, '$exEmployeeDecoded->lastStatus', '$exEmployeeDecoded->lastWage', '$exEmployeeDecoded->sex', '$exEmployeeDecoded->recruitmentDay', '$exEmployeeDecoded->endDay', '$exEmployeeDecoded->wayOutOfCompany', '$exEmployeeDecoded->afm', '$exEmployeeDecoded->amka', '$exEmployeeDecoded->reason')";
 		}
 
 		if(!mysqli_query($conn, $sqlAddExEmployee)) {
@@ -80,7 +85,7 @@
 			}
 
 			if($exEmployeeDecoded->lastStatus == "Admin" || $exEmployeeDecoded->lastStatus == "Employee Manager" || $exEmployeeDecoded->lastStatus == "Agency Employee" || $exEmployeeDecoded->lastStatus == "Store Employee") {
-				$sqlsqlDischargeOrResignUser = "DELETE FROM users WHERE Email = '$exEmployeeDecoded->email'";
+				$sqlsqlDischargeOrResignUser = "DELETE FROM users WHERE IdOfUser = '$exEmployeeDecoded->id'";
 				mysqli_query($conn, $sqlsqlDischargeOrResignUser);
 			}
 		}

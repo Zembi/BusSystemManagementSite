@@ -1,6 +1,4 @@
 
-var ne = new Bus(1,  2, 3, 4);
-
 function Bus(id, model, maxCapacity, ltrPerKm) {
 	this.id = id;
 	this.model = model;

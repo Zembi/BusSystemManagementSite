@@ -21,10 +21,18 @@
 		user-select: none;
 	}
 
+	input {
+		font-family: Roboto Slab;
+	}
+
 	/* Chrome, Safari, Edge, Opera */
 	input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 		-webkit-appearance: none;
 		margin: 0;
+	}
+
+	select {
+		font-family: Roboto Slab;
 	}
 
 	#requestsContentC {
@@ -64,7 +72,7 @@
 	#fullMessageC {
 		display: table;
 		position: sticky;
-		width: 100%; height: 600px;
+		width: 100%; height: 700px;
 		background: transparent;
 		color: rgb(13, 18, 24);
 		top: 90px;
@@ -79,7 +87,7 @@
 
 	#exitFullMsgBtn {
 		display: block;
-		position: absolute;
+		position: relative;
 		background: transparent;
 		color: red;
 		left: 50%;
@@ -106,9 +114,9 @@
 		font-size: 18px;
 		font-weight: bold;
 		text-align: center;
+		overflow: hidden;
 		text-overflow: ellipsis;
 		word-break: break-all;
-		overflow: hidden;
 		border-top: 2px solid grey; border-bottom: 2px solid grey;
 		padding: 10px 10px 10px 10px;
 	}
@@ -128,15 +136,16 @@
 
 	#onlyMsgC {
 		display: block;
-		position: absolute;
-		width: 100%;
+		position: relative;
+		width: 100%; height: 380px;
 		background: white;
-		top: 147px; bottom: 50px;
 		font-size: 16px;
 		word-break: break-all;
 		overflow: auto;
 		border-left: 2px solid grey; border-right: 2px solid grey; border-bottom: 2px solid grey;
+		margin-top: 4px;
 		padding: 10px;
+		z-index: 1;
 	}
 
 	/*WIDTH*/
@@ -163,13 +172,109 @@
 
 	#dateMsgC {
 		display: table;
-		position: absolute;
+		position: relative;
 		background: white;
-		bottom: 20px; left: 50%;
+		left: 50%;
 		border-radius: 0 0 4px 4px;
 		padding: 5px 10px 5px 10px;
+		z-index: 1;
 		transform: translate(-50%, 0);
 	}
+
+	#answerReceiveC {
+		display: none;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		margin-top: -28px;
+	}
+
+		/*FOR RECEIVED MESSAGES*/
+		#answersBtnsC {
+			display: block;
+			position: relative;
+			width: 100%; height: 55px;
+			background: transparent;
+		}
+
+		#answerPositiveBtn {
+			float: left;
+			display: block;
+			position: relative;
+			width: 60px; height: 100%;
+			background: green;
+			left: 70px;
+			opacity: 0.8;
+			cursor: pointer;
+			border: none;
+			border-radius: 4px;
+		}
+
+		#answerPositiveBtn:hover {
+			opacity: 1;
+		}
+
+		#answerPositiveBtn:active {
+			background: darkgreen;
+		}
+
+			#answerPositiveImg {
+				display: block;
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_checkmark_50px_2.png);
+			}
+		
+		#answerNegativeBtn {
+			float: right;
+			display: block;
+			position: relative;
+			width: 60px; height: 100%;
+			background: red;
+			right: 70px;
+			opacity: 0.8;
+			cursor: pointer;
+			border: none;
+			border-radius: 4px;
+		}
+
+		#answerNegativeBtn:hover {
+			opacity: 1;
+		}
+
+		#answerNegativeBtn:active {
+			background: darkred;
+		}
+
+			#answerNegativeImg {
+				display: block;
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_delete_50px_1.png);
+			}
+	
+	#answerSendC {
+		display: none;
+		position: relative;
+		width: 100%; height: 70px;
+		background: transparent;
+		margin-top: -28px;
+	}
+
+		/*FOR SENT MESSAGES*/
+		#answerIfSomeoneIsNegativeC {
+			float: right;
+			display: block;
+			position: relative;
+			width: 70px; height: 100%;
+			background: transparent;
+			right: 60px;
+		}
+
+			#answerIfSomeoneIsNegativeImg {
+				width: 100%; height: 100%;
+				border-radius: 10px;
+				content: url(../Assets/icons8_exclamation_mark_60px.png);
+				animation: alertAnimation 1s linear infinite;
+			}
 	/**/
 	
 	/*RIGHT SPLIT CONTAINER*/
@@ -625,6 +730,14 @@
 			transform: rotate(0deg); 
 		} to { 
 			transform: rotate(360deg); 
+		}
+	}
+
+	@keyframes alertAnimation {
+		from {
+			box-shadow: 0 0 40px red;
+		} to {
+			box-shadow: none;
 		}
 	}
 /**/
