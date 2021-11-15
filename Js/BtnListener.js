@@ -157,7 +157,8 @@ class ButtonListener {
 		var editInfoGetterRightC = document.getElementById("editInfoGetterRightC");
 		var downContainerOfEditC = document.getElementById("downContainerOfEditC");
 		var receiverArray = [];
-		var receiverUsernameArray = [];
+		var receiverEmplObjArray = [];
+		var receiverIdArray = [];
 		var specialSymbol = "__CoDe__";
 
 		editWindowC.style.display = "table";
@@ -217,6 +218,7 @@ class ButtonListener {
 
 		typeNotifInptC.appendChild(typeNotifTextC);
 		typeNotifInptC.appendChild(typeNotifSlct);
+		//typeNotifSlct.focus();
 		editInfoGetterLeftC.appendChild(typeNotifInptC);
 
 		//RECEIVER OF NOTIFICATION
@@ -237,8 +239,6 @@ class ButtonListener {
 		downContainerOfEditC.appendChild(receiverNotifContentC);
 		receiverNotifInptC.appendChild(receiverNotifBtn);
 		editInfoGetterLeftC.appendChild(receiverNotifInptC);
-
-		receiverNotifBtn.focus();
 
 		//WHEN receiverNotifBtn BUTTON PRESSED
 		var coverEditC = document.getElementById("coverEditC");
@@ -264,7 +264,7 @@ class ButtonListener {
 		async function CreateListOfReceiverOptions() {
 			var receiverBranchesOptions = await GetBranchesThatAdminControl();
 
-			await AddNewRowToOptionReceiverList(0, "Γενικός Διαχειριστής");
+			await AddNewRowToOptionReceiverList(0, "Γενικοί Διαχειριστές");
 			for(var i = 0; i < receiverBranchesOptions.length; i++) {
 				if(receiverBranchesOptions[i].manager == null) {
 
@@ -313,6 +313,8 @@ class ButtonListener {
 				checkForAnswerC.style.display = "none";
 				checkboxOpen = false;
 				receiverNotifInptC.style.marginBottom = "50px";
+				checkBoxOfAnswerOrNotInpt.tabIndex = -1;
+				checkBoxOfAnswerOrNotBtn.tabIndex = -1;
 				//checkBoxOfAnswerOrNotInpt.disabled = true;
 				//checkBoxOfAnswerOrNotBtn.style.color = "darkgrey";
 			}
@@ -320,6 +322,8 @@ class ButtonListener {
 				checkForAnswerC.style.display = "table";
 				checkboxOpen = true;
 				receiverNotifInptC.style.marginBottom = "0";
+				checkBoxOfAnswerOrNotInpt.tabIndex = 1;
+				checkBoxOfAnswerOrNotBtn.tabIndex = 1;
 				//checkBoxOfAnswerOrNotInpt.disabled = false;
 				//checkBoxOfAnswerOrNotBtn.style.color = "white";
 			}
@@ -355,6 +359,13 @@ class ButtonListener {
 		textNotifInptC.appendChild(textNotifTextC);
 		textNotifInptC.appendChild(textNotifTextAr);
 		editInfoGetterRightC.appendChild(textNotifInptC);
+
+		//TAB INDEXES
+		typeNotifSlct.tabIndex = 1;
+		receiverNotifBtn.tabIndex = 1;
+		sendNotifbtn.tabIndex = 3;
+		textNotifTextAr.tabIndex = 2;
+		typeNotifSlct.focus();
 
 		sendNotifbtn.addEventListener("click", function() {
 			alertInfoForCreatNewItemC.style.display = "none";
@@ -401,7 +412,7 @@ class ButtonListener {
 				
 				yesAddNewInfoBtn.addEventListener("click", function() {
 					alertAddNewInfoC.style.display = "none";
-					SendNotificationToServer(approve, idNotifInpt.value, typeNotifSlct.value, receiverUsernameArray, textNotifTextAr.value);
+					SendNotificationToServer(approve, idNotifInpt.value, typeNotifSlct.value, receiverIdArray, textNotifTextAr.value);
 				});
 				yesAddNewInfoBtn.focus();
 				noAddNewInfoBtn.addEventListener("click", function() {
@@ -411,7 +422,15 @@ class ButtonListener {
 		});
 
 		async function AddNewRowToOptionReceiverList(id, title) {
-			var employeesUsersArray = await GetUsersThatWorkInThisBranch(id);
+			var employeesUsersArray = await GetAllEmployeesThatWorkInThisBranch(id);
+
+			//BIG CATEGORY OF RECEIVERS
+			var firstFloor = 1;
+			//MIDDLE CATEGORY OF RECEIVERS
+			var secondFloor = 2;
+			//EACH RECEIVER'S CHECKBOX
+			var thirdFloor = 3;
+
 			var adminArray = [];
 			var managerEmplArray = [];
 			var agencyEmplArray = [];
@@ -505,22 +524,25 @@ class ButtonListener {
 					if(this.checked == true) {
 						EnableOrDisableCheckBoxes("Disable", "EmploManag", managerEmplArray, id);
 						for(var i = 0; i < managerEmplArray.length; i++) {
-							var helper = "EmploManag" + id + specialSymbol + managerEmplArray[i].username;
+							var helper = "EmploManag" + id + specialSymbol + managerEmplArray[i].id;
 							var index = receiverArray.indexOf(helper);
 							if(index == -1) {
 								receiverArray.push(helper);
+								receiverEmplObjArray.push(managerEmplArray[i]);
 							}
 						}
 					}
 					else {
 						EnableOrDisableCheckBoxes("Enable", "EmploManag", managerEmplArray, id);
 						for(var i = 0; i < managerEmplArray.length; i++) {
-							var helper = "EmploManag" + id + specialSymbol + managerEmplArray[i].username;
+							var helper = "EmploManag" + id + specialSymbol + managerEmplArray[i].id;
 							var index = receiverArray.indexOf(helper);
 							receiverArray.splice(index, 1);
+							receiverEmplObjArray.splice(index, 1);
 						}
 					}
-					SendInfoFromReceiverArrayToDownContainer(id);
+
+					DecideDownContainerInfo(id, secondFloor);
 				});
 				managerEmplTitleBtn.addEventListener("click", function() {
 					$("#" + this.name).trigger("click");
@@ -552,22 +574,25 @@ class ButtonListener {
 					if(this.checked == true) {
 						EnableOrDisableCheckBoxes("Disable", "AgencyEmpl", agencyEmplArray, id);
 						for(var i = 0; i < agencyEmplArray.length; i++) {
-							var helper = "AgencyEmpl" + id + specialSymbol + agencyEmplArray[i].username;
+							var helper = "AgencyEmpl" + id + specialSymbol + agencyEmplArray[i].id;
 							var index = receiverArray.indexOf(helper);
 							if(index == -1) {
 								receiverArray.push(helper);
+								receiverEmplObjArray.push(agencyEmplArray[i]);
 							}
 						}
 					}
 					else {
 						EnableOrDisableCheckBoxes("Enable", "AgencyEmpl", agencyEmplArray, id);
 						for(var i = 0; i < agencyEmplArray.length; i++) {
-							var helper = "AgencyEmpl" + id + specialSymbol + agencyEmplArray[i].username;
+							var helper = "AgencyEmpl" + id + specialSymbol + agencyEmplArray[i].id;
 							var index = receiverArray.indexOf(helper);
 							receiverArray.splice(index, 1);
+							receiverEmplObjArray.splice(index, 1);
 						}
 					}
-					SendInfoFromReceiverArrayToDownContainer(id);
+
+					DecideDownContainerInfo(id, secondFloor);
 				});
 				agencyEmplTitleBtn.addEventListener("click", function() {
 					$("#" + this.name).trigger("click");
@@ -599,22 +624,25 @@ class ButtonListener {
 					if(this.checked == true) {
 						EnableOrDisableCheckBoxes("Disable", "StoreEmpl", storeEmplArray, id);
 						for(var i = 0; i < storeEmplArray.length; i++) {
-							var helper = "StoreEmpl" + id + specialSymbol + storeEmplArray[i].username;
+							var helper = "StoreEmpl" + id + specialSymbol + storeEmplArray[i].id;
 							var index = receiverArray.indexOf(helper);
 							if(index == -1) {
 								receiverArray.push(helper);
+								receiverEmplObjArray.push(storeEmplArray[i]);
 							}
 						}
 					}
 					else {
 						EnableOrDisableCheckBoxes("Enable", "StoreEmpl", storeEmplArray, id);
 						for(var i = 0; i < storeEmplArray.length; i++) {
-							var helper = "StoreEmpl" + id + specialSymbol + storeEmplArray[i].username;
+							var helper = "StoreEmpl" + id + specialSymbol + storeEmplArray[i].id;
 							var index = receiverArray.indexOf(helper);
 							receiverArray.splice(index, 1);
+							receiverEmplObjArray.splice(index, 1);
 						}
 					}
-					SendInfoFromReceiverArrayToDownContainer(id);
+
+					DecideDownContainerInfo(id, secondFloor);
 				});
 				storeEmplTitleBtn.addEventListener("click", function() {
 					$("#" + this.name).trigger("click");
@@ -628,12 +656,13 @@ class ButtonListener {
 
 
 				for(var i = 0; i < employeesUsersArray.length; i++) {
-					if(employeesUsersArray[i].username != userInObject.getUsername()) {
+					if(employeesUsersArray[i].id != employeeIn.getId()) {
 						var checkBoxC = document.createElement("div");
 						checkBoxC.className = "checkBoxC";
 
 						var checkBox = document.createElement("input");
 						checkBox.className = "checkBox";
+						checkBox.name = i;
 						checkBox.type = "checkBox";
 						checkBoxC.appendChild(checkBox);
 
@@ -660,18 +689,22 @@ class ButtonListener {
 						}
 
 						//IMPORTANT PART THAT PUTS IN ARRAY RECEIVER ID
-						checkBox.id = h + id + specialSymbol + employeesUsersArray[i].username;
+						checkBox.id = h + id + specialSymbol + employeesUsersArray[i].id;
 						checkBoxBtn.name = checkBox.id;
 						checkBox.addEventListener("change", function () {
 							if(this.checked == true) {
 								receiverArray.push(this.id);
+								receiverEmplObjArray.push(employeesUsersArray[this.name]);
 							}
 							else {
 								var index = receiverArray.indexOf(this.id);
 								receiverArray.splice(index, 1);
+								receiverEmplObjArray.splice(index, 1);
 							}
-							SendInfoFromReceiverArrayToDownContainer(id);
+
+							DecideDownContainerInfo(id, thirdFloor, "");
 						});
+
 						checkBoxBtn.addEventListener("click", function() {
 							$("#" + this.name).trigger("click");
 						});
@@ -682,7 +715,7 @@ class ButtonListener {
 				titleOfBranchCheckBox.style.opacity = 0;
 				titleOfBranchCheckBox.disabled = true;
 				for(var i = 0; i < employeesUsersArray.length; i++) {
-					if(employeesUsersArray[i].username != userInObject.getUsername()) {
+					if(employeesUsersArray[i].id != employeeIn.getId()) {
 						var adminEmpContentC = document.createElement("div");
 						adminEmpContentC.className = "adminEmpContentC";
 
@@ -693,6 +726,7 @@ class ButtonListener {
 
 						var checkBox = document.createElement("input");
 						checkBox.className = "checkBox";
+						checkBox.name = i;
 						checkBox.type = "checkBox";
 						checkBoxC.appendChild(checkBox);
 
@@ -703,28 +737,31 @@ class ButtonListener {
 
 						var h = "";
 						adminEmpContentC.appendChild(checkBoxC);
-						managerEmplArray.push(employeesUsersArray[i]);
+						adminArray.push(employeesUsersArray[i]);
 						h = "Admin";
 
 						//IMPORTANT PART THAT PUTS IN ARRAY RECEIVER ID
-						checkBox.id = h + id + specialSymbol + employeesUsersArray[i].username;
+						checkBox.id = h + id + specialSymbol + employeesUsersArray[i].id;
 						checkBoxBtn.name = checkBox.id;
 						checkBox.addEventListener("change", function () {
 							if(this.checked == true) {
 								receiverArray.push(this.id);
+								receiverEmplObjArray.push(employeesUsersArray[this.name]);
 							}
 							else {
 								var index = receiverArray.indexOf(this.id);
 								receiverArray.splice(index, 1);
+								receiverEmplObjArray.splice(index, 1);
 							}
-							SendInfoFromReceiverArrayToDownContainer(id);
+
+							DecideDownContainerInfo(id, firstFloor);
 						});
 						checkBoxBtn.addEventListener("click", function() {
 							$("#" + this.name).trigger("click");
 						});
 					}
 					else {
-						placeForBranchC.style.display = "none";
+						//placeForBranchC.style.display = "none";
 					}
 				}
 			}
@@ -735,7 +772,7 @@ class ButtonListener {
 
 		function EnableOrDisableCheckBoxes(typeOfCall, status, array, id) {
 			for(var i = 0; i < array.length; i++) {
-				var helper = status + id + specialSymbol + array[i].username;
+				var helper = status + id + specialSymbol + array[i].id;
 				var chBox = document.getElementById(helper);
 				var chBoxBtn = document.getElementsByName(helper)[0];
 				if(typeOfCall == "Disable") {
@@ -751,17 +788,22 @@ class ButtonListener {
 			}
 		}
 
-		function SendInfoFromReceiverArrayToDownContainer(id) {
+		function DecideDownContainerInfo(id, floor, receiversOfCategoryArray) {
+			SendInfoFromReceiverArrayToDownContainer(receiversOfCategoryArray);
+		}
+
+		function SendInfoFromReceiverArrayToDownContainer(receiversOfCategoryArray) {
 			var downContainerOfEditC = document.getElementById("downContainerOfEditC");
 			downContainerOfEditC.innerHTML = "";
-			receiverUsernameArray = [];
+			receiverIdArray = [];
 
 			for(var i = 0; i < receiverArray.length; i++) {
 				var receiverC = document.createElement("div");
 				receiverC.className = "receiverC";
 				var helper = receiverArray[i].substr(receiverArray[i].indexOf(specialSymbol) + specialSymbol.length, receiverArray[i].length);
-				receiverC.innerHTML = helper;
-				receiverUsernameArray.push(helper);
+				var foundIdIndex = CompareIdForUsernameAndReturnIndexOfObject(receiverEmplObjArray, helper);
+				receiverIdArray.push(helper);
+				receiverC.innerHTML = receiverEmplObjArray[foundIdIndex].username;
 				downContainerOfEditC.appendChild(receiverC);
 			}
 		}
@@ -771,7 +813,7 @@ class ButtonListener {
 				$.ajax({
 					type: 'POST',
 					url: "../Php/getIdsOfNotificationsPhp.php",
-					data: {type: "All", user: userInObject.getUsername()},
+					data: {type: "All", user: employeeIn.getId()},
 					success: function(data) {
 						data = JSON.parse(data);
 						resolve(data);
@@ -785,7 +827,7 @@ class ButtonListener {
 				$.ajax({
 					type: 'POST',
 					url: "../Php/getBranchesThatAdminControlsPhp.php",
-					data: {username: userInObject.getUsername()},
+					data: {id: employeeIn.getId()},
 					success: function(data) {
 						data = JSON.parse(data);
 						resolve(data);
@@ -794,11 +836,11 @@ class ButtonListener {
 			});
 		}
 
-		function GetUsersThatWorkInThisBranch(branchId) {
+		function GetAllEmployeesThatWorkInThisBranch(branchId) {
 			return new Promise ((resolve, reject) => {
 				$.ajax({
 					type: 'POST',
-					url: "../Php/getUsersThatWorkHere.php",
+					url: "../Php/getAllEmployeesThatWorkHerePhp.php",
 					data: {brId: branchId},
 					success: function(data) {
 						data = JSON.parse(data);
@@ -827,7 +869,7 @@ class ButtonListener {
 			$.ajax({
 				type: 'POST',
 				url: "../Php/sendNotificationToServerPhp.php",
-				data: {approve: approveRep, id: notifId, type: notifType, text: notifText, sender: userInObject.getUsername(), receiver: receivMsg, answer: answerDefaultStatus, date: dateTimeSend},
+				data: {approve: approveRep, id: notifId, type: notifType, text: notifText, sender: employeeIn.getId(), receiver: receivMsg, answer: answerDefaultStatus, date: dateTimeSend},
 				success: function(data) {
 					//alert(data);
 					if(data == 1) {
@@ -843,6 +885,10 @@ class ButtonListener {
 						alertInfoForCreatNewItemC.style.display = "none";
 					});
 					alertInfoForCreatNewItemBtn.focus();
+
+					if(sessionStorage.getItem('action') == "Requests") {
+						location.reload();
+					}
 				}
 			});
 		}

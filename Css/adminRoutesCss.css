@@ -1,0 +1,1793 @@
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		height: 100%;
+		background: transparent;
+		margin: 0;
+		padding: 0;
+	}
+
+	button {
+		font-family: Roboto Slab;
+		user-select: none;
+	}
+
+	input {
+		font-family: Roboto Slab;
+	}
+
+	input:disabled {
+		background: rgb(255, 255, 255, 0.4);
+	}
+
+	select {
+		font-family: Roboto Slab;
+	}
+	
+	select:disabled {
+		background: rgb(255, 255, 255, 0.4);
+	}
+
+	#routesMainC {
+		position: relative;
+		width: 100%; height: auto;
+		background: transparent;
+		font-family: Roboto Slab;
+		overflow: hidden;
+	}
+
+	#routesTitleC {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: rgb(13, 18, 24);
+		color: white;
+		font-size: 36px;
+		text-align: center;
+		border-bottom: 2px solid rgb(58, 65, 89);
+		padding: 10px;
+		user-select: none;
+	}
+
+	#routesBodyC {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: rgba(255, 255, 255, 0.1);
+		font-size: 0;
+		padding-top: 40px;
+	}
+
+	#branchesAndConnectedBranchesC {
+		display: block;
+		position: relative;
+		width: 100%; height: 500px;
+		background: transparent;
+	}
+
+	/*BRANCHES PANEL CREATION*/
+	#allBranchesColumnC {
+		display: inline-block;
+		position: relative;
+		width: 38.5%; height: 100%;
+		background: white;
+		border: 6px solid rgb(13, 18, 24);
+		overflow: hidden;
+		margin-left: 1.5%;
+	}
+
+		#branchRoutesTitleC {
+			display: block;
+			position: relative;
+			height: 10%;
+			background: transparent;
+			font-size: 27px;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 5px solid rgb(22, 36, 53);
+			padding-top: 2px; padding-bottom: 1px;
+		}
+
+		#branchRoutesContentC {
+			display: block;
+			position: relative;
+			width: 100%; height: 89.5%;
+			overflow: auto;
+			margin-top: 0.5%;
+			padding: 10px 4px 10px 4px;
+		}
+
+		/*WIDTH*/
+		#branchRoutesContentC::-webkit-scrollbar {
+			width: 20px;
+		}
+
+		/*TRACK*/
+		#branchRoutesContentC::-webkit-scrollbar-track {
+			border-radius: 2px;
+		}
+			 
+		/*HANDLE*/
+		#branchRoutesContentC::-webkit-scrollbar-thumb {
+			background: rgb(13, 18, 24);
+			border-radius: 2px;
+			border: 1px solid white; border-top: none; border-bottom: none;
+		}
+
+		/*HANDLE HOVER*/
+		#branchRoutesContentC::-webkit-scrollbar-thumb:hover {
+			background: rgb(255, 215, 0); 
+		}
+
+			.mainPlaceForBranchBtn {
+				display: block;
+				position: relative;
+				width: 100%; height: 80px;
+				background: transparent;
+				color: rgb(13, 18, 24);
+				font-size: 0px;
+				border: 2px solid black;
+				cursor: pointer;
+				padding: 5px;
+				margin-top: 1px; margin-bottom: 5px;
+			}
+
+			.mainPlaceForBranchBtn:hover {
+				background: rgb(255, 215, 0);
+				box-shadow: 0 0 15px black;
+			}
+
+			.mainPlaceForBranchBtn:focus {
+				background: rgb(255, 215, 0);
+			}
+
+			.mainPlaceForBranchBtn:active {
+				background: rgb(13, 18, 24);
+				color: white;
+			}
+
+			.firstColumnForBranchRoutesC {
+				float: left;
+				display: block;
+				position: relative;
+				width: 80px; height: 100%;
+				background: transparent;
+				border: 2px solid black;
+			}
+
+			.imgOfBranchRoutesImg {
+				width: 100%; height: 100%;
+			}
+			
+			.secondColumnForBranchRoutesC {
+				height: 100%;
+				background: transparent;
+				overflow: hidden;
+			}
+
+			.firstLineOfBranchRoutesViewC {
+				background: transparent;
+				overflow: hidden;
+				margin-left: 5px;
+			}
+
+			.idBranchBusesC {
+				float: left;
+				display: block;
+				position: relative;
+				background: transparent;
+				font-size: 20px;
+				overflow: hidden;
+				margin-right: 6px;
+			}
+			
+			.locationBranchBusesC {
+				float: left;
+				display: block;
+				position: relative;
+				background: transparent;
+				font-size: 20px;
+				font-weight: bold;
+				margin-right: 6px;
+			}
+
+			.rightBranchInfoC {
+				float: right;
+				display: inlineblock;
+				position: relative;
+				background: transparent;
+				right: 0;
+				margin-top: -5px;
+			}
+
+				.allBranchBusesC {
+					display: block;
+					position: relative;
+					background: transparent;
+				}
+
+					.allBranchBusesTextC {
+						float: left;
+						display: table;
+						position: relative;
+						font-size: 14px;
+						margin: 5px 6px 0 0;
+					}
+					
+					.allBranchBusesNumC {
+						display: table;
+						position: relative;
+						font-size: 20px;
+					}
+
+				.availableBranchBusesC {
+					display: block;
+					position: relative;
+					background: transparent;
+				}
+
+					.availableBranchBusesTextC {
+						float: left;
+						display: table;
+						position: relative;
+						font-size: 12px;
+						font-style: italic;
+						margin: 3.5px 6px 0 0;
+					}
+					
+					.availableBranchBusesNumC {
+						display: table;
+						position: relative;
+						color: green;
+						font-size: 16px;
+						font-style: italic;
+					}
+
+				.statusBranchBusesC {
+					display: block;
+					position: relative;
+					width: 20px; height: 20px;
+					background: transparent;
+				}
+
+					.statusBranchBusesImgC {
+						width: 100%; height: 100%;
+						background-size: 100%;
+					}
+
+			.streetBranchBusesC {
+				display: table;
+				position: absolute;
+				background: transparent;
+				bottom: 5px; left: 90px;
+				font-size: 20px;
+				font-style: italic;
+				text-align: left;
+			}
+	/**/
+
+	/*BETWEEN BRANCHES AND CONNECTED BRANCH IMAGES*/
+	#branchesConnArrowsC {
+		display: inline-block;
+		position: relative;
+		width: 19%; height: 100%;
+		background: transparent;
+		border: none;
+		overflow: hidden;
+		margin-left: 0.5%; margin-right: 0.5%;
+	}
+
+		#startToOrFromDestinationSlctC {
+			display: none;
+			position: absolute;
+			left: 50%;
+			margin-top: 10px;
+			transform: translate(-50%, 0);
+		}
+
+			#startToOrFromDestinationSlct {
+				font-size: 20px;
+			}
+
+			.startFromDestinOption {
+
+			}
+
+		#topLeftArrowImgC {
+			display: none;
+			position: absolute;
+			top: 20%; left: 0px;
+		}
+
+			#topLeftArrowImgC img {
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_rightArrow_2.png);
+			}
+
+		#topRightArrowImgC {
+			display: none;
+			position: absolute;
+			top: 20%; right: 0px;
+		}
+
+			#topRightArrowImgC img {
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_rightArrow_2.png);
+			}
+
+		#centerConnectionArrowImgC {
+			display: block;
+			position: absolute;
+			width: 100px; height: 90px;
+			top: 50%; left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+			#centerConnectionArrowImgC img {
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_unit_50px_1.png);
+			}
+
+		#bottomLeftArrowImgC {
+			display: none;
+			position: absolute;
+			bottom: 20%; left: 0px;
+		}
+
+			#bottomLeftArrowImgC img {
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_leftArrow_2.png);
+			}
+
+		#bottomRightArrowImgC {
+			display: none;
+			position: absolute;
+			bottom: 20%; right: 0px;
+		}
+
+			#bottomRightArrowImgC img {
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_leftArrow_2.png);
+			}
+	/**/
+
+	/**/
+	#allConnectedBranchesColumnC {
+		display: inline-block;
+		position: relative;
+		width: 38.5%; height: 100%;
+		background: rgb(22, 36, 53);
+		border: 6px solid rgb(13, 18, 24);
+		overflow: hidden;
+		margin-right: 1.5%;
+	}
+
+		#connectedBranchRoutesTitleC {
+			display: block;
+			position: relative;
+			height: 10%;
+			background: transparent;
+			color: white;
+			font-size: 27px;
+			text-align: center;
+			font-weight: bold;
+			border-bottom: 5px solid rgb(255, 215, 0);
+			padding-top: 2px; padding-bottom: 1px;
+		}
+
+		#connectedBranchRoutesContentC {
+			display: block;
+			position: relative;
+			width: 100%; height: 89.5%;
+			overflow: auto;
+			margin-top: 0.5%;
+			padding: 10px 4px 10px 4px;
+		}
+
+		/*WIDTH*/
+		#connectedBranchRoutesContentC::-webkit-scrollbar {
+			width: 20px;
+		}
+
+		/*TRACK*/
+		#connectedBranchRoutesContentC::-webkit-scrollbar-track {
+			border-radius: 2px;
+		}
+			 
+		/*HANDLE*/
+		#connectedBranchRoutesContentC::-webkit-scrollbar-thumb {
+			background: rgb(13, 18, 24);
+			border-radius: 2px;
+			border: 1px solid rgb(255, 215, 0);
+		}
+
+		/*HANDLE HOVER*/
+		#connectedBranchRoutesContentC::-webkit-scrollbar-thumb:hover {
+			background: rgb(255, 215, 0);
+			border: 1px solid rgb(13, 18, 24); border-top: none; border-bottom: none;
+		}
+
+			#waitingOfConnectedBranchesImgC {
+				display: block;
+				position: relative;
+				width: 100%; height: 100%;
+				padding-top: 60px;
+			}
+
+				#waitingOfConnectedBranchesTextC {
+					display: table;
+					position: relative;
+					color: white;
+					font-size: 24px;
+					font-style: italic;
+					margin: auto; margin-bottom: 30px;
+				}
+
+				#waitingOfConnectedBranchesImg {
+					display: block;
+					position: relative;
+					width: 100px; height: 100px;
+					margin: auto;
+					content: url(../Assets/icons8_wait_50px.png);
+					animation: spinForWaiting 1s ease-in-out infinite;
+				}
+
+			#emptyConnectedBranchesImgC {
+				display: block;
+				position: relative;
+				width: 100%; height: 100%;
+				padding-top: 60px;
+			}
+
+				#emptyConnectedBranchesTextC {
+					display: table;
+					position: relative;
+					color: grey;
+					font-size: 24px;
+					font-style: italic;
+					text-align: center;
+					margin: auto; margin-bottom: 50px;
+				}
+
+				#emptyConnectedBranchesImg {
+					display: block;
+					position: relative;
+					width: 120px; height: 100px;
+					margin: auto;
+					content: url(../Assets/icons8_empty_box_120px_2.png);
+				}
+
+	/*ROUTES AND EVENT BUTTONS VIEW*/
+	#branchRoutesAndEventBtnsC {
+		display: block;
+		position: relative;
+		width: 90%;
+		background: transparent;
+		margin: 0 5% 0 5%;
+	}
+
+		/*OPENED CONTAINER FOR EACH FUNCTION*/
+		#newRouteAddInfoC {
+			display: none;
+			position: relative;
+			width: 100%; height: 400px;
+			background: rgb(13, 18, 24);
+			overflow: visible;
+			border-radius: 0 6px 6px 0;
+			border: 4px solid rgb(13, 18, 24);
+			margin: 50px 0 10px 0;
+		}
+
+			#openCloseNewRouteAddBtn {
+				float: right;
+				display: block;
+				position: relative;
+				width: 60px; height: 100%;
+				background: grey;
+				cursor: pointer;
+				border: none;
+				padding: 0;
+			}
+
+			#openCloseNewRouteAddBtn:hover {
+				background: rgb(255, 215, 0);
+			}
+
+			#openCloseNewRouteAddBtn:focus {
+				background: rgb(255, 215, 0);
+			}
+
+			#openCloseNewRouteAddBtn:active {
+				background: rgb(13, 18, 24);
+				color: white;
+			}
+
+				#openCloseNewRouteAddBtnImg {
+					display: block;
+					position: absolute;
+					width: 48px; height: 24px;
+					background: transparent;
+					top: 4px; left: 50%;
+					border: none;
+					transform: translate(-50%, 0) rotate(0deg);
+					z-index: 1;
+					content: url(../Assets/icons8_rightArrow_2.png);
+				}
+
+				#newRouteAddInfoTitleC {
+					display: table;
+					position: relative;
+					width: 100%;
+					background: transparent;
+					margin-top: 20px;
+				}
+
+					#newRouteAddInfoTitleTextC {
+						display: table;
+						position: absolute;
+						height: 100%;
+						background: transparent;
+						top: 50%; left: 50%;
+						font-size: 19px;
+						font-weight: bold;
+						writing-mode: vertical-rl;
+						letter-spacing: 0.5px;
+						text-align: center;
+						text-orientation: upright;
+						transform: translate(-50%, -50%);
+					}
+
+			#newRouteAddInfoContentC {
+				float: left;
+				display: none;
+				position: absolute;
+				background: darkgrey;
+				color: rgb(22, 36, 53);
+				top: 0; bottom: 0;
+				left: 63px; right: 0;
+				font-size: 0;
+			}
+
+				#addNewRouteTitleC {
+					display: block;
+					position: absolute;
+					width: 100%;
+					background: rgb(22, 36, 53);
+					top: 0; left: 0;
+					border-radius: 0;
+					padding: 2px 10px 4px 10px;
+				}
+					
+					#addNewRouteTitleTextC {
+						display: block;
+						position: relative;
+						color: white;
+						left: 10%;
+						font-size: 21px;
+					}
+
+				#resetAddNewRouteC {
+					display: block;
+					position: absolute;
+					top: 5px; right: 20px;
+					z-index: 1;
+				}
+					
+					#resetAddNewRouteBtn {
+						display: block;
+						position: relative;
+						background: white;
+						color: rgb(13, 18, 24);
+						cursor: pointer;
+						border-radius: 6px;
+						border: 1px solid rgb(13, 18, 24);
+						padding: 2px 4px 2px 4px;
+					}
+
+					#resetAddNewRouteBtn:hover {
+						background: rgb(255, 215, 0);
+					}
+
+					#resetAddNewRouteBtn:focus {
+						background: rgb(255, 215, 0);
+					}
+
+					#resetAddNewRouteBtn:active {
+						background: rgb(13, 18, 24);
+						color: white;
+						border: 1px solid white;
+					}
+
+				#firstRowAddRouteC {	
+					display: block;
+					position: relative;
+					height: 50%;
+					background: transparent;
+					margin: auto;
+				}
+
+				#firstRowCenterAddRouteC {
+					display: table;
+					position: relative;
+					background: transparent;
+					margin: auto;
+				}
+
+					#dateTimeAddNewRouteC {
+						float: left;
+						display: table;
+						position: relative;
+						background: transparent;
+						overflow: hidden;
+						padding: 0 5px 0 5px;
+						margin: 70px 0 0 0;
+					}
+
+					#dateTimeAddNewRouteTitleC {
+						display: table;
+						position: relative;
+						font-size: 16px;
+						margin: auto;
+						margin-bottom: 1px;
+					}
+
+					#dateTimeAddNewRouteInpt {
+						display: block;
+						position: relative;
+						font-size: 18px;
+						border: 1px solid black;
+					}
+
+					#dateTimeAddNewRouteForEveryWeekOrNotC {
+						display: table;
+						position: relative;
+						margin: auto; margin-top: 5px; margin-bottom: 4px;
+					}
+
+						#dateTimeAddNewRouteForEveryWeekOrNotInpt {
+							float: left;
+							display: block;
+							position: relative;
+							cursor: pointer;
+							margin-top: 7px;
+						}
+
+						#dateTimeAddNewRouteForEveryWeekOrNotBtn {
+							display: block;
+							position: relative;
+							background: transparent;
+							color: rgb(13, 18, 24);
+							font-size: 16px;
+							font-style: italic;
+							cursor: pointer;
+							border-radius: 4px;
+							border: none;
+							padding: 2px 4px 2px 2px;
+						}
+
+						#dateTimeAddNewRouteForEveryWeekOrNotBtn:hover {
+							color: lightgrey;
+						}
+
+						#dateTimeAddNewRouteForEveryWeekOrNotBtn:active {
+							color: rgb(13, 18, 24);
+						}
+
+				#branchFromAddNewRouteC {
+					float: left;
+					display: block;
+					position: relative;
+					width: 200px;
+					background: transparent;
+					word-break: break-word;
+					margin: 70px 0 0 20px;
+				}
+
+					#branchFromAddNewRouteTitleC {
+						display: block;
+						position: relative;
+						width: 100%;
+						font-size: 16px;
+						font-style: italic;
+						text-align: center;
+						margin: auto;
+						padding-right: 8px;
+					}
+
+					#branchFromAddNewRouteTextC {
+						display: block;
+						position: relative;
+						background: white;
+						color: black;
+						width: 100%;
+						font-size: 18px;
+						font-weight: bold;
+						text-align: center;
+						border-radius: 2px;
+						border: 1px solid black;
+						padding: 2px;
+					}
+					
+				#addNewStoppingPointsToRouteC {
+					float: left;
+					display: none;
+					position: relative;
+					width: 300px; height: 100%;
+					background: transparent;
+					margin: 0 0 0 25px;
+					padding: 0 0 1px 0;
+				}
+
+				#addNewStoppingPointsToRouteC:hover #rowOfBtnsInsideNewRouteStationC{
+					display: table;
+				}
+
+					#addNewStoppingPointsToRouteContentC {
+						display: block;
+						position: relative;
+						width: 100%; height: 100%;
+						background: rgb(22, 36, 53);
+						border-radius: 0 0 4px 4px;
+						border: none;
+					}
+					
+						#addNewStoppingPointsToRouteTitleC {
+							display: block;
+							position: relative;
+							width: 100%;
+							background: rgb(22, 36, 53);
+							color: darkgrey;
+							font-size: 20px;
+							text-align: center;
+							border-bottom: 4px solid rgb(13, 18, 24);
+							padding: 1.5px 0 2.5px 0;
+						}
+							
+						#addNewStoppingPointsToRouteContentTextC {
+							display: block;
+							position: relative;
+							overflow: hidden;
+						}
+
+						#rowOfBtnsInsideNewRouteStationC {
+							display: block;
+							position: relative;
+							width: 100%;
+							background: transparent;
+						}
+
+							#addExistingBranchToNewRouteBtn {
+								float: left;
+								display: none;
+								position: relative;
+								width: 0%; height: 0%;
+								background: transparent;
+								color: white;
+								cursor: pointer;
+								border-radius: 0 0 2px 2px;
+								border: 1px solid black;
+								padding: 2px 0 2px 0;
+							}
+
+							#addExistingBranchToNewRouteBtn:hover {
+								background: rgb(255, 215, 0);
+								color: rgb(22, 36, 53);
+							}
+
+							#addExistingBranchToNewRouteBtn:focus {
+								background: rgb(255, 215, 0);
+								color: rgb(22, 36, 53);
+							}
+
+							#addExistingBranchToNewRouteBtn:active {
+								background: black;
+								color: white;
+							}
+
+							#addNewStoppingPointToNewRouteBtn {
+								float: right;
+								display: block;
+								position: relative;
+								width: 100%; height: 100%;
+								background: transparent;
+								color: white;
+								font-size: 14px;
+								cursor: pointer;
+								border-radius: 0 0 2px 2px;
+								border: 1px solid black;
+								padding: 2px 0 2px 0;
+							}
+
+							#addNewStoppingPointToNewRouteBtn:hover {
+								background: rgb(255, 215, 0);
+								color: rgb(22, 36, 53);
+							}
+
+							#addNewStoppingPointToNewRouteBtn:focus {
+								background: rgb(255, 215, 0);
+								color: rgb(22, 36, 53);
+							}
+
+							#addNewStoppingPointToNewRouteBtn:active {
+								background: black;
+								color: white;
+							}
+
+						#addBranchOrStoppingPointBetweenC {
+							display: block;
+							position: relative;
+							width: 100%; height: 130px;
+							background: transparent;
+							overflow: auto;
+							border-radius: 0 0 4px 4px;
+							padding-bottom: 5px;
+						}
+
+						/*WIDTH*/
+						#addBranchOrStoppingPointBetweenC::-webkit-scrollbar {
+							width: 8px;
+							background: white;
+						}
+
+						/*TRACK*/
+						#addBranchOrStoppingPointBetweenC::-webkit-scrollbar-track {
+							border-radius: 2px;
+						}
+							 
+						/*HANDLE*/
+						#addBranchOrStoppingPointBetweenC::-webkit-scrollbar-thumb {
+							background: rgb(255, 215, 0);
+							border-radius: 0;
+							border: 1px solid white; border-top: none; border-bottom: none;
+						}
+
+						/*HANDLE HOVER*/
+						#addBranchOrStoppingPointBetweenC::-webkit-scrollbar-thumb:hover {
+							background: rgb(13, 18, 24); 
+						}
+
+							.addStoppingPointBetweenEachRowC {
+								display: table;
+								position: relative;
+								width: 100%;
+								background: transparent;
+								color: white;
+								font-size: 12px;
+								text-align: center;
+								border: 1px solid rgb(13, 18, 24);
+								padding: 1px 0 1px 0;
+							}
+
+								.destinationForStartRowC {
+									display: block;
+									position: relative;
+									width: 100%; height: 20px;
+									background: transparent;
+									margin: 2px 0 8px 0;
+								}
+								
+									.destinationForStartRowImg {
+										display: block;
+										position: absolute;
+										width: 20px; height: 100%;
+										left: 50%;
+										transform: translate(-50%, 0);
+										content: url(../Assets/icons8_expand_arrow_32px.png);
+									}
+
+								.destinationForEachRowC {
+									display: block;
+									position: relative;
+									width: 100%; height: 20px;
+									background: transparent;
+									margin: 8px 0 6px 0;
+								}
+								
+									.destinationForEachRowImg {
+										display: block;
+										position: absolute;
+										width: 20px; height: 100%;
+										left: 50%;
+										transform: translate(-50%, 0);
+										content: url(../Assets/icons8_expand_arrow_32px.png);
+									}
+
+								.destinationForLastRowC {
+									display: block;
+									position: relative;
+									width: 100%; height: 20px;
+									background: transparent;
+									margin: 10px 0 4px 0;
+								}
+								
+									.destinationForLastRowImg {
+										display: block;
+										position: absolute;
+										width: 20px; height: 100%;
+										left: 50%;
+										transform: translate(-50%, 0);
+										content: url(../Assets/icons8_expand_arrow_32px.png);
+									}
+
+								.addStoppingPointBetweenEachRowInpt {
+									display: table;
+									position: relative;
+									width: 80%;
+									background: white;
+									font-size: 16px;
+									text-align: left;
+									text-overflow: ellipsis;
+									overflow: hidden;
+									border: 1px solid black;
+									margin: auto;
+								}
+
+								.addStoppingPointBetweenEachRowInpt:disabled {
+									background: transparent;
+									color: rgb(255, 215, 0);
+									text-align: center;
+									border: 1px solid rgb(22, 36, 53);
+								}
+
+								.editBetweenRoutesPointsBtn {
+									display: block;
+									position: absolute;
+									width: 8%; height: 22px;
+									background: lightgrey;
+									bottom: 1.5px;
+									left: 0;
+									cursor: pointer;
+									border-radius: 2px;
+									border: 1px solid darkgrey;
+									margin: 0 1% 1px 1%;
+									padding: 0;
+								}
+
+								.editBetweenRoutesPointsBtn:hover {
+									background: rgb(255, 215, 0);
+								}
+
+								.editBetweenRoutesPointsBtn:focus {
+									background: rgb(255, 215, 0);
+								}
+
+								.editBetweenRoutesPointsBtn:active {
+									background: black;
+								}
+
+								.editBetweenRoutesPointsBtn:disabled {
+									opacity: 0.5;
+								}
+
+								.editBetweenRoutesPointsBtn:active .editBetweenRoutesPointsBtnImg {
+									content: url(../Assets/icons8_edit_30px.png);
+								}
+
+									.editBetweenRoutesPointsBtnImg {
+										width: 100%; height: 100%;
+										background: transparent;
+										padding: 1px;
+										content: url(../Assets/icons8_edit_30px_1.png);
+									}
+
+								.deleteBetweenRoutesPointsBtn {
+									display: block;
+									position: absolute;
+									width: 8%; height: 22px;
+									background: lightgrey;
+									bottom: 1.5px;
+									right: 0;
+									cursor: pointer;
+									border-radius: 2px;
+									border: 1px solid darkgrey;
+									margin: 0 1% 1px 1%;
+									padding: 0;
+								}
+
+								.deleteBetweenRoutesPointsBtn:hover {
+									background: rgb(255, 215, 0);
+								}
+
+								.deleteBetweenRoutesPointsBtn:focus {
+									background: rgb(255, 215, 0);
+								}
+
+								.deleteBetweenRoutesPointsBtn:active {
+									background: black;
+								}
+
+								.deleteBetweenRoutesPointsBtn:disabled {
+									opacity: 0.5;
+								}
+
+								.deleteBetweenRoutesPointsBtn:active .deleteBetweenRoutesPointsBtnImg {
+									content: url(../Assets/icons8_delete_trash_30px_2.png);
+								}
+
+									.deleteBetweenRoutesPointsBtnImg {
+										width: 100%; height: 100%;
+										background: transparent;
+										padding: 1px;
+										content: url(../Assets/icons8_delete_trash_30px_1.png);
+									}
+
+				#branchToAddNewRouteC {
+					float: left;
+					display: block;
+					position: relative;
+					width: 200px;
+					background: transparent;
+					word-break: break-word;
+					margin: 70px 0 0 20px;
+				}
+				
+					#branchToAddNewRouteTitleC {
+						display: block;
+						position: relative;
+						width: 100%;
+						font-size: 16px;
+						font-style: italic;
+						text-align: center;
+						margin: auto;
+						padding-left: 8px;
+					}
+							
+					#branchToAddNewRouteTextInpt {
+						display: block;
+						position: relative;
+						background: white;
+						color: black;
+						width: 100%;
+						font-size: 18px;
+						font-weight: bold;
+						text-align: center;
+						border-radius: 2px;
+						border: 1px solid black;
+						padding: 2px;
+					}
+
+					#branchToAddNewRouteTextInpt::-webkit-input-placeholder {
+						color: red;
+						font-size: 13px;
+					}
+
+			#secondRowAddRouteC {
+				display: block;
+				position: relative;
+				width: 100%; height: 50%;
+				background: transparent;
+				padding-top: 10px;
+			}
+
+			#topSideOfBranchNewRouteSideC {
+				display: table;
+				position: relative;
+				width: 100%; height: 40%;
+				background: transparent;
+				margin: auto;
+			}
+
+				#leftSideOfBranchNewRouteOptionOneInptC {
+					float: left;
+					display: block;
+					position: relative;
+					width: 50%;
+					background: transparent;
+				}
+
+					#branchToAddNewRouteDifferentFinalDestinationC {
+						display: table;
+						position: relative;
+						max-width: 80%;
+						background: transparent;
+						color: rgb(22, 36, 53);
+						border-top: 2px solid rgb(13, 18, 24);
+						border-bottom: 2px solid rgb(13, 18, 24);
+						margin: auto;
+						padding: 0.5px 0 1px 0;
+					}
+						
+						#branchToAddNewRouteDifferentFinalDestinationInpt {
+							display: block;
+							position: absolute;
+							top: 50%; left: 0;
+							cursor: pointer;
+							margin: 1px 0 0 0;
+							padding: 0;
+							transform: translate(0, -50%);
+							z-index: 1;
+						}
+							
+						#branchToAddNewRouteDifferentFinalDestinationBtn {
+							display: block;
+							position: relative;
+							background: transparent;
+							color: black;
+							font-size: 15px;
+							text-align: left;
+							cursor: pointer;
+							border: none;
+							margin: 0;
+							padding: 0 0 0 20px;
+						}
+
+						#branchToAddNewRouteDifferentFinalDestinationBtn:hover {
+							color: darkorange;
+						}
+
+						#branchToAddNewRouteDifferentFinalDestinationBtn:active {
+							color: rgb(255, 215, 0);
+						}
+					
+				#rightSideOfBranchNewRouteOptionOneInptC {
+					float: right;
+					display: block;
+					position: relative;
+					width: 50%;
+					background: transparent;
+				}
+
+					#branchToAddNewRouteStoppingPointsC {
+						display: table;
+						position: relative;
+						max-width: 80%;
+						background: transparent;
+						color: rgb(22, 36, 53);
+						border-top: 2px solid rgb(13, 18, 24);
+						border-bottom: 2px solid rgb(13, 18, 24);
+						margin: auto;
+						padding: 0.5px 0 1px 0;
+					}
+						
+						#branchToAddNewRouteStoppingPointsInpt {
+							display: block;
+							position: absolute;
+							top: 50%; left: 0;
+							cursor: pointer;
+							margin: 1px 0 0 0;
+							padding: 0;
+							transform: translate(0, -50%);
+							z-index: 1;
+						}
+						
+						#branchToAddNewRouteStoppingPointsBtn {
+							display: block;
+							position: relative;
+							background: transparent;
+							color: black;
+							font-size: 15px;
+							text-align: left;
+							cursor: pointer;
+							border: none;
+							margin: 0;
+							padding: 0 0 0 20px;
+						}
+
+						#branchToAddNewRouteStoppingPointsBtn:hover {
+							color: darkorange;
+						}
+
+						#branchToAddNewRouteStoppingPointsBtn:active {
+							color: rgb(255, 215, 0);
+						}
+
+			#bottomSideOfBranchNewRouteSideC {
+				display: block;
+				position: relative;
+				width: 90%; height: 60%;
+				background: transparent;
+				overflow: hidden;
+				margin: auto;
+				padding-top: 6px;
+			}
+
+				#branchToAddNewRouteDurationC {
+					float: left;
+					display: block;
+					position: relative;
+					width: 24%;
+					background: transparent;
+					margin-left: 1%; margin-right: 4%;
+				}
+				
+					#branchToAddNewRouteDurationTitleC {
+						display: table;
+						position: relative;
+						color: rgb(22, 36, 53);
+						font-size: 16px;
+						margin: auto;
+					}
+
+					#branchToAddNewRouteDurationContentC {
+						display: table;
+						position: relative;
+						width: 100px;
+						background: transparent;
+						margin: auto; margin-top: 3px;
+					}
+
+						#branchToAddNewRouteDurationHourC {
+							float: left;
+							display: block;
+							position: relative;
+							width: 50%;
+						}
+
+							#branchToAddNewRouteDurationHourInpt {
+								display: block;
+								position: relative;
+								width: 100%;
+								font-size: 16px;
+								text-align: center;
+								border-radius: 4px 0 0 4px;
+								border: 1px solid black;
+								border-right: none;
+							}
+
+							#branchToAddNewRouteDurationHourTitleC {
+								display: block;
+								position: relative;
+								width: 100%;
+								font-size: 13px;
+								font-style: italic;
+								text-align: center;
+							}
+
+						#branchToAddNewRouteDurationMiddlePartC {
+							display: table;
+							position: absolute;
+							background: transparent;
+							top: -1px; left: 50%;
+							font-size: 18px;
+							transform: translate(-50%, 0);
+							z-index: 1;
+						}
+
+						#branchToAddNewRouteDurationMinutesC {
+							float: left;
+							display: block;
+							position: relative;
+							width: 50%;
+						}
+
+							#branchToAddNewRouteDurationMinutesInpt {
+								display: block;
+								position: relative;
+								width: 100%;
+								font-size: 16px;
+								text-align: center;
+								border-radius: 0 4px 4px 0;
+								border: 1px solid black;
+								border-left: none;
+							}
+
+							#branchToAddNewRouteDurationMinutesTitleC {
+								display: block;
+								position: relative;
+								width: 100%;
+								font-size: 13px;
+								font-style: italic;
+								text-align: center;
+							}
+				
+				#branchToAddNewRouteAvailBusToChooseC {
+					float: left;
+					display: block;
+					position: relative;
+					width: 40%;
+					background: rgb(22, 36, 53);
+					border-radius: 2px 2px 4px 4px;
+					margin-top: 4px;
+					padding-top: 1px;
+				}
+				
+					#branchToAddNewRouteAvailBusToChooseTitleC {
+						display: table;
+						position: relative;
+						color: white;
+						font-size: 18px;
+						margin: auto;
+					}
+					
+					#branchToAddNewRouteAvailBusToChooseSlct {
+						display: block;
+						position: relative;
+						width: 100%;
+						font-size: 16px;
+						border-radius: 0 0 4px 4px;
+						border: 1px solid black;
+						margin-top: 3px;
+						padding: 1px 2px;
+					}
+
+				#branchToAddNewRouteAvailBusIdToChooseOverallC {
+					display: block;
+					position: absolute;
+					width: 100%;
+					background: transparent;
+				}
+
+					#branchToAddNewRouteAvailBusIdToChooseC {
+						display: table;
+						position: relative;
+						background: transparent;
+						overflow: hidden;
+						border-radius: 0 0 2px 2px;
+						margin: auto;
+						padding: 1px 4px 1px 4px;
+					}
+
+						#branchToAddNewRouteAvailBusIdToChooseLeftTextC {
+							float: left;
+							display: block;
+							position: relative;
+							font-size: 14px;
+							margin-top: 1px;
+						}
+						#branchToAddNewRouteAvailBusIdToChooseRightTextC {
+							float: left;
+							display: table;
+							position: relative;
+							color: white;
+							font-size: 15px;
+							font-style: italic;
+							margin-left: 6px;
+						}
+
+				#newRouteAddBtn {
+					float: right;
+					display: block;
+					position: relative;
+					width: 16%;
+					background: rgb(22, 36, 53);
+					color: white;
+					font-size: 20px;
+					cursor: pointer;
+					border-radius: 1px;
+					border: 1px solid white;
+					margin-right: 6%; margin-top: 5px;
+					padding: 10px 8px 10px 8px;
+				}
+
+				#newRouteAddBtn:hover {
+					background: rgb(255, 215, 0);
+				}
+
+			#downContainerOfRoutesC {
+				display: none;
+				position: fixed;
+				width: 90%; height: 100px;
+				max-height: 300px;
+				background: rgb(235, 235, 235);
+				bottom: 0; left: 50%;
+				overflow: hidden;
+				border-radius: 2px 2px 0 0;
+				padding: 3px;
+				transform: translate(-50%, 0);
+				z-index: 100;
+			}
+		/**/
+
+		/*ADDED NEW ROUTES SHOW VIEW BEFORE SEND TO SERVER*/
+		#newAddedRouteImgC {
+			display: none;
+			position: relative;
+			width: 40px; height: 35px;
+			margin: auto;
+			transform: rotate(90deg);
+			margin-top: 20px;
+		}
+			#newAddedRouteImg {
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_rightArrow_2.png);
+			}
+
+		#newAddedRouteC {
+			display: none;
+			position: relative;
+			width: 100%; height: 200px;
+			background: red;
+			margin-top: 20px;
+		}
+
+			#newAddedRouteTitleC {
+				font-size: 20px;
+			}
+
+			#newAddedRouteContentC {
+
+			}
+		/**/
+		
+		/*VIEW OF ROUTES*/
+		#chosenBranchRoutesC {
+			display: block;
+			position: relative;
+			width: 100%;
+			margin-top: 100px;
+		}
+
+		#chosenBranchRoutesOnlyC {
+			background: rgb(22, 36, 53, 0.2);
+			box-shadow: 0 0 6px black;
+			border-radius: 5px 5px 0 0;
+		}
+	
+			#chosenBranchRoutesTitleC {
+				display: inline-block;
+				position: relative;
+				width: 100%;
+				background: rgb(13, 18, 24);
+				color: white;
+				font-size: 25px;
+				text-align: center;
+				border-radius: 5px 5px 0 0;
+				padding: 5px;
+			}
+			
+			#chosenBranchRoutesContentC {
+				display: table;
+				width: 100%;
+				max-height: 2000px;
+			}
+
+			/*WIDTH*/
+			#chosenBranchRoutesContentC::-webkit-scrollbar {
+				width: 20px;
+			}
+
+			/*TRACK*/
+			#chosenBranchRoutesContentC::-webkit-scrollbar-track {
+				box-shadow: inset 0 0 5px grey;
+				border-radius: 2px;
+			}
+			 
+			/*HANDLE*/
+			#chosenBranchRoutesContentC::-webkit-scrollbar-thumb {
+				background: rgb(255, 215, 0);
+				border-radius: 2px;
+				border: 1px solid white; border-top: none; border-bottom: none;
+			}
+
+			/*HANDLE HOVER*/
+			#chosenBranchRoutesContentC::-webkit-scrollbar-thumb:hover {
+				background: rgb(13, 18, 24); 
+			}
+
+			#chosenBranchRoutesAllContentWhenWaitingC {
+				display: none;
+				position: relative;
+				width: 100%; height: 100%;
+			}
+
+			#waitingOfRoutesImgC {
+				display: block;
+				position: relative;
+				width: 100%;
+				padding-top: 60px;
+			}
+
+				#waitingOfRoutesTextC {
+					display: table;
+					position: relative;
+					color: rgb(13, 18, 24);
+					font-size: 24px;
+					font-style: italic;
+					margin: auto; margin-bottom: 30px;
+				}
+
+				#waitingOfRoutesImg {
+					display: block;
+					position: relative;
+					width: 140px; height: 140px;
+					margin: auto; margin-bottom: 80px;
+					content: url(../Assets/icons8_wait_120px_3.png);
+					animation: spinForWaiting 1s ease-in-out infinite;
+				}
+
+			/*ROUTES OF CHOSEN BRANCHES CONTENT STYLING*/
+			#chosenBranchRoutesAllContentAfterWaitingC {
+				display: none;
+				position: relative;
+				width: 100%;
+			}
+
+				#endWaitingOfRoutesImgC {
+					display: block;
+					position: relative;
+					width: 100%; height: 100%;
+					padding-top: 60px;
+				}
+
+					#endWaitingOfRoutesTextC {
+						display: table;
+						position: relative;
+						color: grey;
+						font-size: 24px;
+						font-weight: bold;
+						font-style: italic;
+						margin: auto; margin-bottom: 50px;
+					}
+
+					#endWaitingOfRoutesImg {
+						display: block;
+						position: relative;
+						width: 170px; height: 140px;
+						margin: auto; margin-bottom: 80px;
+						content: url(../Assets/icons8_empty_box_120px_2.png);
+					}
+
+				.rowRouteC {
+					width: ;
+				}
+				
+					.deleteRouteC {
+
+					}
+				
+						.deleteRouteInpt {
+
+						}
+				
+					.editRouteC {
+
+					}
+				
+						.editRouteInpt {
+
+						}
+				
+					.hourStartRouteC {
+
+					}
+				
+						.hourStartRouteHoursInpt {
+
+						}
+				
+						.hourStartRouteMinutesInpt {
+
+						}
+				
+					.hourArrivalRouteC {
+
+					}
+				
+						.hourEndRouteHoursInpt {
+
+						}
+				
+						.hourEndRouteMinutesInpt {
+
+						}
+				
+					.durationRouteC {
+
+					}
+				
+						.durationRouteHoursInpt {
+
+						}
+				
+						.durationRouteMinutesInpt {
+
+						}
+				
+					.stationsRouteC {
+
+					}
+				
+					.busIdRouteC {
+
+					}
+				
+					.activeRouteC {
+
+					}
+
+		#eventBtnsOfRoutesC {
+			position: absolute;
+			width: 220px; height: 192px;
+			background: transparent;
+			top: 100px; right: -165px;
+			overflow: visible;
+			z-index: 2;
+			margin-right: -5%;
+		}
+
+			#addNewRouteBtn {
+				display: block;
+				position: relative;
+				width: 100%; height: 60px;
+				background: green;
+				right: 0;
+				font-size: 0;
+				cursor: pointer;
+				border: 2px solid rgb(13, 18, 24);
+				padding: 0;
+				transition: right 0.2s;
+			}
+
+			#addNewRouteBtn:hover {
+				background: rgb(22, 36, 53);
+				right: 160px;
+			}
+
+			#addNewRouteBtn:disabled {
+				background: darkgrey;
+			}
+
+				#addNewRouteBtnC {
+					width: 60px; height: 100%;
+					background: darkgreen;
+					color: rgb(13, 18, 24);
+					border: none;
+					padding: 0;
+				}
+
+				#addNewRouteBtn:hover #addNewRouteBtnC {
+					background: rgb(22, 36, 53);
+				}
+
+				#addNewRouteBtn:disabled #addNewRouteBtnC {
+					background: transparent;
+				}
+
+				#addNewRouteTextC {
+					display: inline-block;
+					position: absolute;
+					background: transparent;
+					top: 50%; left: 60px;
+					font-size: 22px;
+					font-style: italic;
+					overflow: hidden;
+					border-left: 4px solid rgb(13, 18, 24);
+					padding-left: 4px;
+					transform: translate(0, -50%);
+				}
+
+				#addNewRouteBtn:active #addNewRouteTextC {
+					color: white;
+					border-left: 4px solid white;
+				}
+
+			#editRouteBtn {
+				display: block;
+				position: relative;
+				width: 100%; height: 60px;
+				background: orange;
+				right: 0;
+				font-size: 0;
+				cursor: pointer;
+				border: 2px solid rgb(13, 18, 24);
+				margin: 6px 0 6px 0;
+				padding: 0;
+				transition: right 0.2s;
+			}
+
+			#editRouteBtn:hover {
+				background: rgb(22, 36, 53);
+				right: 160px;
+			}
+
+			#editRouteBtn:disabled {
+				background: darkgrey;
+			}
+
+				#editRouteBtnC {
+					width: 60px; height: 100%;
+					background: darkorange;
+					color: rgb(13, 18, 24);
+					border: none;
+					padding: 0;
+				}
+
+				#editRouteBtn:hover #editRouteBtnC {
+					background: rgb(22, 36, 53);
+				}
+
+				#editRouteBtn:disabled #editRouteBtnC {
+					background: transparent;
+				}
+
+				#editRouteTextC {
+					display: inline-block;
+					position: absolute;
+					background: transparent;
+					top: 50%; left: 60px;
+					font-size: 22px;
+					font-style: italic;
+					overflow: hidden;
+					border-left: 4px solid rgb(13, 18, 24);
+					padding-left: 4px;
+					transform: translate(0, -50%);
+				}
+
+
+				#editRouteBtn:active #editRouteTextC {
+					color: white;
+					border-left: 4px solid white;
+				}
+
+			#deleteRoutesBtn {
+				display: block;
+				position: relative;
+				width: 100%; height: 60px;
+				background: red;
+				right: 0;
+				font-size: 0;
+				cursor: pointer;
+				border: 2px solid rgb(13, 18, 24);
+				padding: 0;
+				transition: right 0.2s;
+			}
+
+			#deleteRoutesBtn:hover {
+				background: rgb(22, 36, 53);
+				right: 160px;
+			}
+
+			#deleteRoutesBtn:disabled {
+				background: darkgrey;
+			}
+
+				#deleteRoutesBtnC {
+					width: 60px; height: 100%;
+					background: darkred;
+					color: rgb(13, 18, 24);
+					border: none;
+					padding: 0;
+				}
+
+				#deleteRoutesBtn:hover #deleteRoutesBtnC {
+					background: rgb(22, 36, 53);
+				}
+
+				#deleteRoutesBtn:disabled #deleteRoutesBtnC {
+					background: transparent;
+				}
+
+				#deleteRoutesTextC {
+					display: inline-block;
+					position: absolute;
+					background: transparent;
+					top: 50%; left: 60px;
+					font-size: 22px;
+					font-style: italic;
+					overflow: hidden;
+					border-left: 4px solid rgb(13, 18, 24);
+					padding-left: 4px;
+					transform: translate(0, -50%);
+				}
+
+				#deleteRoutesBtn:active #deleteRoutesTextC {
+					color: white;
+					border-left: 4px solid white;
+				}
+
+			#underShowRoutesC {
+				width: 100%; height: 100px;
+				background: transparent;
+			}
+		/**/
+	/**/
+
+	/*MEDIA FOR LOWER PIXEL SCREEN*/
+	@media screen and (max-width: 1300px) {
+	
+	}
+
+	/*ANIMATIONS*/
+	@keyframes spinForWaiting {
+		from {
+			transform: rotate(0deg);
+		} to {
+			transform: rotate(360deg);
+		}
+	}

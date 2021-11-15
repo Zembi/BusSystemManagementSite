@@ -172,6 +172,26 @@ function TranslateBranchStatusTo(language, statusOption) {
 	}
 }
 
+//CHOOSE ICON, DEPENDING FROM THE STATUS OF THE BRANCH
+function StatusChooseIcon(container, branch) {
+	if(branch.getStatus() == "Active") {
+		container.style.backgroundImage = "url(../Assets/icons8_ok_30px.png)";
+		container.title = "Ενεργά";
+	}
+	else if(branch.getStatus() == "Under_R") {
+		container.style.backgroundImage = "url(../Assets/icons8_construction_carpenter_ruler_30px.png)";
+		container.title = "Υπό-επισκευή";
+	}
+	else if(branch.getStatus() == "Under_C") {
+		container.style.backgroundImage = "url(../Assets/icons8_construction_30px.png)";
+		container.title = "Υπο-κατασκευή";
+	}
+	else if(branch.getStatus() == "Problem") {
+		container.style.backgroundImage = "url(../Assets/icons8_high_priority_30px_2.png)";
+		container.title = "Μη ενεργά";
+	}
+}
+
 //TRANSLATE STATUS VALUE
 function TranslateStatusTo(language, statusOption) {
 	var arrayGr = ["Γενικός Διαχειριστής", "Υπεύθυνος Διαχείρισης", "Υπάλληλος Πρακτορείου", "Υπεύθυνος Αποθήκης", "Οδηγός", "Φύλακας", "Καθαριστής"];
@@ -246,11 +266,11 @@ function TranslateSexTo(language, sexOption) {
 
 //TRANSFORM BRANCH VALUE TO NUMBER
 function TransformBranchTo(type, branchOption) {
-	var result = 0;
+	var result = "0";
 
 	if(type == "number") {
 		if(branchOption == "#0") {
-			result = 0;
+			result = "0";
 		}
 		else {
 			result = branchOption.slice(1, 5);
@@ -323,12 +343,12 @@ function ConvertObjectToEmployeeObj(item) {
 	return new Employee(item.id, item.username, item.email, item.name, item.icon, item.branchId, item.status, item.sex, item.wage, item.recruitmentDay, item.afm, item.amka, item.password);
 }
 
-//CONVERT A SIMPLE OBJECT TO AN EMPLOYEE OBJECT AND RERURN IT
+//CONVERT AN OBJECT ARRAY TO AN EMPLOYEE OBJECT AND RERURN IT
 function ConvertObjectsArrayToEmployeeObjsArray(itemsArray) {
 	var employeesArray = [];
 
 	for(var i = 0; i < itemsArray.length; i++) {
-		employeesArray.push(new Employee(itemsArray[i].id, itemsArray[i].username, itemsArray[i].email, itemsArray[i].name, itemsArray[i].icon, itemsArray[i].branchId, itemsArray[i].status, itemsArray[i].sex, itemsArray[i].wage, itemsArray[i].recruitmentDay, itemsArray[i].afm, itemsArray[i].amka, itemsArray[i].password));
+		employeesArray.push(ConvertObjectToEmployeeObj(itemsArray[i]));
 	}
 	
 	return employeesArray;
@@ -339,15 +359,47 @@ function ConvertObjectToBranchObj(item) {
 	return new Branch(item.id, item.type, item.street, item.location, item.image, item.manager, item.storeId, item.status, item.adminControl);
 }
 
-//CONVERT A SIMPLE OBJECT TO A BRANCH OBJECT AND RERURN IT
+//CONVERT AN OBJECT ARRAY TO A BRANCH OBJECT AND RERURN IT
 function ConvertObjectsArrayToBranchObjsArray(itemsArray) {
 	var branchesArray = [];
 
 	for(var i = 0; i < itemsArray.length; i++) {
-		branchesArray.push(new Branch(itemsArray[i].id, itemsArray[i].type, itemsArray[i].street, itemsArray[i].location, itemsArray[i].image, itemsArray[i].manager, itemsArray[i].storeId, itemsArray[i].status, itemsArray[i].adminControl));
+		branchesArray.push(ConvertObjectToBranchObj(itemsArray[i]));
 	}
 	
 	return branchesArray;
+}
+
+//CONVERT A SIMPLE OBJECT TO A BUS OBJECT AND RERURN IT
+function ConvertObjectToBusObj(item) {
+	return new Bus(item.id, item.info, item.branchConnected, item.availability);
+}
+
+//CONVERT AN OBJECT ARRAY TO A BUS OBJECT AND RERURN IT
+function ConvertObjectsArrayToBusObjsArray(itemsArray) {
+	var busesArray = [];
+
+	for(var i = 0; i < itemsArray.length; i++) {
+		busesArray.push(ConvertObjectToBusObj(itemsArray[i]));
+	}
+	
+	return busesArray;
+}
+
+//CONVERT A SIMPLE OBJECT TO A ROUTE OBJECT AND RERURN IT
+function ConvertObjectToRouteObj(item) {
+	return new Route(item.id, item.start, item.end, item.day, item.date, item.hourStart, item.hourArrival, item.duration, item.stations, item.busId, item.active);
+}
+
+//CONVERT AN OBJECT ARRAY TO A ROUTE OBJECT AND RERURN IT
+function ConvertObjectsArrayToRouteObjsArray(itemsArray) {
+	var routesArray = [];
+
+	for(var i = 0; i < itemsArray.length; i++) {
+		routesArray.push(ConvertObjectToBusObj(itemsArray[i]));
+	}
+	
+	return routesArray;
 }
 
 //CLOSE MESSAGE ALERTS WHEN THIS FUNCTION IS BEING CALLED
@@ -374,6 +426,31 @@ function WordEndingGiveArticles(word, type) {
 	finalWord = article + word;
 
 	return finalWord;
+}
+
+//COMPARE IF TWO OBJECTS ARE EQUAL
+function CompareTwoObjectS(object1, object2) {
+	var equal = 0;
+
+	if(JSON.stringify(object1) === JSON.stringify(object2)) {
+		equal = 1;
+	}
+
+	return equal;
+}
+
+//COMPARE AN ITEM WITH EMPLOYEE'S ID, THAT THERE IS, IN AN ARRAY OF EMPLOYEES AND RETURN ITS INDEX IN THE ARRAY
+function CompareIdForUsernameAndReturnIndexOfObject(employees, id) {
+	var c = 0;
+
+	for(var i = 0; i < employees.length; i++) {
+		if(employees[i].id === id) {
+			c = i;
+			break;
+		}
+	}
+
+	return c;
 }
 
 //REMOVE SPECIFIC OBJECT FROM ARRAY
@@ -416,4 +493,105 @@ function AddItemToAnArray(item, array) {
 	}
 
 	return array;
+}
+
+//MAKE ARRAYS HAVE UNIQUE VALUES
+function UniqueArrays(value, index, self) {
+	return self.indexOf(value) === index;
+}
+
+//FUNCTION THAT PREVENTS CLICK, TO BE TRIGGERED, MORE THAN ONCE
+function Debounce(func, wait, immediate) {
+	var timeout;
+	return (function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if(!immediate) {
+				func.apply(context, args);
+			}
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if(callNow) {
+			func.apply(context, args);
+		}
+	});
+};
+
+//FIND SPECIFIC ITEM FROM ARRAY WITH OBJECTS
+function FindSpecificItemFromArrayObj(array, key) {
+	return (array.map(function(item) {
+		return item[key];
+	}));
+}
+
+//CONVERT THE DATE VALUE OF THE OBJECT Date TO A STRING, THAT INPUT datetime UNDERSTANDS, AS VALUE
+function ConvertDateToStringForInputDateTime(dateObj) {
+	var year = dateObj.getFullYear() + "";
+	var month = dateObj.getMonth() + 1 + "";
+	var day = dateObj.getDate() + "";
+	var hours = dateObj.getHours();
+	var minutes = dateObj.getMinutes();
+
+	if(month.length < 2) {
+		month = "0" + month;
+	}
+			
+	if(day.length < 2) {
+		day = "0" + day;
+	}
+
+	hours = "" + hours;
+	if(hours.length < 2) {
+		hours = "0" + hours;
+	}
+
+	minutes = "" + minutes;
+	if(minutes.length < 2) {
+		minutes = "0" + minutes;
+	}
+
+	return (year + "-" + month + "-" + day + "T" + hours + ":" + minutes);
+}
+
+//CONVERT DAY NUMBER TO STRING
+function ConvertDayNumToString(number) {
+	var dayStr = "";
+
+	if(number == 0) {
+		dayStr = "Κυριακή";
+	}
+	else if(number == 1) {
+		dayStr = "Δευτέρα";
+	}
+	else if(number == 2) {
+		dayStr = "Τρίτη";
+	}
+	else if(number == 3) {
+		dayStr = "Τετάρτη";
+	}
+	else if(number == 4) {
+		dayStr = "Πέμπτη";
+	}
+	else if(number == 5) {
+		dayStr = "Παρασκευή";
+	}
+	else if(number == 6) {
+		dayStr = "Σάββατο";
+	}
+
+	return dayStr;
+}
+
+//ADD ZEROS IF NEEDED TO TIME
+function AddZerosToTime(value) {
+	value = value + "";
+	
+	if(value.length < 2) {
+		value = "0" + value;
+	}
+
+	return value;
 }

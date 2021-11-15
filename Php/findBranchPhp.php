@@ -15,6 +15,7 @@
 	if(!mysqli_select_db($conn, $db)) {
 		echo "Database Not Selected";
 	}
+
 	$branchToFind = $_POST['branch'];
 	$branchFound = "";
 	$query = "SELECT * FROM branches WHERE Id = '$branchToFind'";

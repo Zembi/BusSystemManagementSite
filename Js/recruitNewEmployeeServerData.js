@@ -709,7 +709,7 @@ function RecruitNewEmployeeSearchBarFunction() {
 //*(7)FUNCTION THAT IS BEING CALLED TO MAKE SURE THAT USER WANTS TO SEND DATA TO DATABASE 
 function CheckForConfirmRecruitEmployee() {
 	var allOk = 1;
-	var branchHelper = 0;
+	var branchHelper = "0";
 
 	if(errorArr[0] == 0 && errorArr[1] == 0 && errorArr[2] == 0 && errorArr[3] == 0 && errorArr[4] == 0 && errorArr[5] == 0 && errorArr[6] == 0 && errorArr[7] == 0) {
 		allOk = 1;
@@ -725,6 +725,7 @@ function CheckForConfirmRecruitEmployee() {
 		else {
 			branchHelper = "nothing";
 		}
+
 
 		alertInfoForCreatNewItemC.style.display = "none";
 		alertAddNewInfoC.style.display = "block";
@@ -763,10 +764,6 @@ function UnderstandAlertMessageBtn() {
 
 //(7)->SEND INFO TO SERVER AFTER CONFIRM
 function HireNewEmployee(branchHelper) {
-	/*var newEmployeeToHire = new Employee(usernameInput.value, emailInput.value, nameInput.value, iconSlct.value, TransformBranchTo("number", branchIdSlct.value), 
-										TranslateStatusTo("english", statusSlct.value), TranslateSexTo("english", sexSlct.value), wageInput.value,
-										ConvertFromDate(new Date()), afmInput.value, amkaInput.value);*/
-
 	var newEmployee = {
 		'id': emplIdInput.value,
     	'username': usernameInput.value,
@@ -782,6 +779,8 @@ function HireNewEmployee(branchHelper) {
     	'afm' : afmInput.value,
     	'amka' : amkaInput.value
 	};
+
+	console.log(newEmployee);
 
     newEmployee = JSON.stringify(newEmployee);
 

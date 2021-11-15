@@ -17,6 +17,8 @@
 	}
 
 	$allOk = 1;
+	$okBrConn = 1;
+	$okBus = 1;
 
 	$id = $_POST['id'];
 
@@ -28,9 +30,18 @@
 	}
 	else {
 		
-		$sqlDeleteBranchConnections = "DELETE FROM branchesconnections WHERE BranchId = '$id' || ConnectedBranch = '$id'";
+		$sqlDeleteBranchConnections = "DELETE FROM branchesconnections WHERE BranchId = '$id' OR ConnectedBranch = '$id'";
 		if(!mysqli_query($conn, $sqlDeleteBranchConnections)) {
-			$allOk = 0;
+			$okBrConn = 0;
+		}
+
+		$sqlUpdateBuses = "UPDATE buses SET BranchConnected = NULL WHERE BranchConnected = '$id'";
+		if(!mysqli_query($conn, $sqlUpdateBuses)) {
+			$okBus = 0;
+		}
+
+		if($okBrConn && $okBus) {
+			$allOk = 1;
 		}
 	}
 

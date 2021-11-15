@@ -86,14 +86,76 @@ function StopLoadingStatusInfo() {
 //*(4)TITLE OF THIS SHOW VIEW AND CREATE ACTIONS FOR ALL BRANCHES
 function TitleAndBasicActionsOfBranches() {
 	var titleShowBranchesC = document.getElementById("titleShowBranchesC");
+	var titleTextShowBranchesC = document.getElementById("titleTextShowBranchesC");
 
-	titleShowBranchesC.innerHTML = "ΠΡΟΒΟΛΗ ΚΑΤΑΣΤΗΜΑΤΩΝ";
+	titleTextShowBranchesC.innerHTML = "ΠΡΟΒΟΛΗ ΚΑΤΑΣΤΗΜΑΤΩΝ";
 	ActionOfOpeningAndClosingAllBranchesInfo();
 }
 
 //(4)->CREATE ACTION OF OPENING AND CLOSING ALL BRANCHES INFO, WITH ONE BUTTON
 function ActionOfOpeningAndClosingAllBranchesInfo() {
+	var buttonsMenuActionsC = document.getElementById("buttonsMenuActionsC");
 
+	var openCloseAllBranchesInfoBtn = document.createElement("button");
+	openCloseAllBranchesInfoBtn.id = "openCloseAllBranchesInfoBtn";
+	openCloseAllBranchesInfoBtn.innerHTML = "Άνοιγμα όλων των πληροφοριών";
+	openCloseAllBranchesInfoBtn.name = 0;
+	openCloseAllBranchesInfoBtn.addEventListener("click", function() {
+		if(this.name == 0) {
+			OpenAllBranchInfoButtons();
+			this.innerHTML = "Κλείσιμο όλων των πληροφοριών";
+			this.name = 1;
+		}
+		else {
+			CloseAllBranchInfoButtons();
+			this.innerHTML = "Άνοιγμα όλων των πληροφοριών";
+			this.name = 0;
+		}
+	});
+
+	buttonsMenuActionsC.appendChild(openCloseAllBranchesInfoBtn);
+}
+
+//(4)->OPEN ALL BRANCH INFO BUTTONS
+function OpenAllBranchInfoButtons() {
+	var allBranchesViewC = document.getElementsByClassName("prototypeBranchViewC");
+	var buttonsInfoArray = [];
+
+	//REMOVE DISABLED BUTTONS
+	for(var i = 0; i < allBranchesViewC.length; i++) {
+		var branchInfoBtn = allBranchesViewC[i].querySelector("#branchInfoBtn");
+
+		if(!branchInfoBtn.disabled) {
+			buttonsInfoArray.push(branchInfoBtn);
+		}
+	}
+
+	for(var i = (buttonsInfoArray.length - 1); i >= 0; i--) {
+		if(buttonsInfoArray[i].name == 0) {
+			buttonsInfoArray[i].click();
+		}
+	}
+}
+
+//(4)->CLOSE ALL BRANCH INFO BUTTONS
+function CloseAllBranchInfoButtons() {
+	var allBranchesViewC = document.getElementsByClassName("prototypeBranchViewC");
+	var buttonsInfoArray = [];
+
+	//REMOVE DISABLED BUTTONS
+	for(var i = 0; i < allBranchesViewC.length; i++) {
+		var branchInfoBtn = allBranchesViewC[i].querySelector("#branchInfoBtn");
+
+		if(!branchInfoBtn.disabled) {
+			buttonsInfoArray.push(branchInfoBtn);
+		}
+	}
+
+	for(var i = (buttonsInfoArray.length - 1); i >= 0; i--) {
+		if(buttonsInfoArray[i].name == 1) {
+			buttonsInfoArray[i].click();
+		}
+	}
 }
 
 

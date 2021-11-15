@@ -193,6 +193,25 @@ async function InitializeAndKeyPressCheckEvents() {
 		this.style.border = "1px solid rgb(13, 18, 24)";
 		OnlyNumberKey(event, "");
 	});
+
+	locationNewBranchInpt.addEventListener("keypress", function(e) {
+		NotAllowSymbol(e, 33);
+		NotAllowSymbol(e, 35);
+		NotAllowSymbol(e, 36);
+		NotAllowSymbol(e, 39);
+		NotAllowSymbol(e, 44);
+		NotAllowSymbol(e, 46);
+	});
+
+	addressNewBranchInpt.addEventListener("keypress", function(e) {
+		NotAllowSymbol(e, 33);
+		NotAllowSymbol(e, 35);
+		NotAllowSymbol(e, 36);
+		NotAllowSymbol(e, 39);
+		NotAllowSymbol(e, 44);
+		NotAllowSymbol(e, 46);
+	});
+
 	imageNewBranchInpt.addEventListener("keypress", NoWhiteSpace);
 	//managerNewBranchSlct.addEventListener("keypress", NoWhiteSpace);
 	SearchManagerOptions();

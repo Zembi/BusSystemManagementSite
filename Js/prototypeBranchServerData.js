@@ -20,9 +20,7 @@ async function FindThisBranch() {
 	AddInfoTop();
 	AddInfoMiddle();
 	AddInfoBottom();
-	if(topPartC.children[0].innerHTML == "Σταθμός") {
-		topPartC.children[5].click();
-	}
+	
 	countBranch++;
 }
 
@@ -65,7 +63,7 @@ function AddInfoTop() {
 	//#typeBrViewC
 	topPartC.children[0].innerHTML = branchArray[countBranch].getType();
 	//#statusBrViewC
-	StatusChooseIcon();
+	StatusChooseIcon(topPartC.children[1], branchArray[countBranch]);
 	//#uniqueIdBrViewC
 	topPartC.children[2].innerHTML = "#" + branchArray[countBranch].getId();
 	//#editBrViewBtn
@@ -80,26 +78,6 @@ function AddInfoTop() {
 	topPartC.children[5].addEventListener("click", function() {
 		ConnectBranches(id, document.getElementsByClassName("prototypeBranchViewC")[id], c);
 	});
-}
-
-//(3)->CHOOSE ICON, DEPENDING FROM THE STATUS OF THE BRANCH
-function StatusChooseIcon() {
-	if(branchArray[countBranch].getStatus() == "Active") {
-		topPartC.children[1].style.backgroundImage = "url(../Assets/icons8_ok_30px.png)";
-		topPartC.children[1].title = "Ενεργά";
-	}
-	else if(branchArray[countBranch].getStatus() == "Under_R") {
-		topPartC.children[1].style.backgroundImage = "url(../Assets/icons8_construction_carpenter_ruler_30px.png)";
-		topPartC.children[1].title = "Υπό-επισκευή";
-	}
-	else if(branchArray[countBranch].getStatus() == "Under_C") {
-		topPartC.children[1].style.backgroundImage = "url(../Assets/icons8_construction_30px.png)";
-		topPartC.children[1].title = "Υπο-κατασκευή";
-	}
-	else if(branchArray[countBranch].getStatus() == "Problem") {
-		topPartC.children[1].style.backgroundImage = "url(../Assets/icons8_high_priority_30px_2.png)";
-		topPartC.children[1].title = "Μη ενεργά";
-	}
 }
 
 //(3)->FUNCTION BEING CALLED WHEN USER WANTS TO EDIT THE INFO OF THE BRANCH
@@ -144,13 +122,13 @@ function ConnectBranches(id, element, branchCount) {
 async function AddInfoMiddle() {
 	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
 
-	//#imageBranchC
+	//BRANCH IMAGE(#imageBranchC)
 	midPartC.children[0].children[0].style.content = "url(../Assets/BranchesImages/" + branchArray[id].getImageSrc() + ")";
-	//#locationBranchC
+	//LOCATION(#locationBranchC)
 	midRightPartC.children[0].children[1].innerHTML = branchArray[id].getLocation();
-	//#streetBranchC
+	//STREET(#streetBranchC)
 	midRightPartC.children[0].children[2].innerHTML = "(" + branchArray[id].getStreet() + ")";
-	//#managerNameC
+	//MANAGER(#managerNameC)
 	if(branchArray[id].getManager() == null) {
 		midRightPartC.children[1].children[1].innerHTML = "Δεν έχει ορισθεί υπεύθυνος διαχείρισης !";
 		ManagerChooseIcon(null);
@@ -165,7 +143,7 @@ async function AddInfoMiddle() {
 		midRightPartC.children[1].children[1].innerHTML = manager.getName();
 		ManagerChooseIcon(manager);
 	}
-	//#adminControlManagerC
+	//EMPLOYEES(#numberOfEmployeesC)
 	midRightPartC.children[2].children[0].innerHTML = "Υπάλληλοι: ";
 	midRightPartC.children[2].children[0].style.float = "left";
 	midRightPartC.children[2].children[1].innerHTML = employeesOfThisBranchArray.length;
@@ -173,24 +151,25 @@ async function AddInfoMiddle() {
 	midRightPartC.children[2].children[1].style.fontWeight = "bold";
 	midRightPartC.children[2].children[1].style.fontStyle = "italic";
 	midRightPartC.children[2].children[1].style.marginLeft = "10px";
-	//#adminControlManagerC
+	//BUSES(#numberOfBusesC)
 	midRightPartC.children[3].children[0].innerHTML = "Λεωφορεία: ";
 	midRightPartC.children[3].children[0].style.float = "left";
-	midRightPartC.children[3].children[1].innerHTML = "#BusesNumber";
-	midRightPartC.children[3].children[1].style.float = "left";
-	midRightPartC.children[3].children[1].style.fontWeight = "bold";
-	midRightPartC.children[3].children[1].style.fontStyle = "italic";
-	midRightPartC.children[3].children[1].style.marginLeft = "10px";
-	//#adminControlManagerC
+	var numberOfAvailableBusesC = midRightPartC.children[3].querySelector("#numberOfAvailableBusesC");
+	var numberOfUnavailableBusesC = midRightPartC.children[3].querySelector("#numberOfUnavailableBusesC");
+	numberOfAvailableBusesC.innerHTML = (await branchArray[id].getAvailableBuses()).length;
+	numberOfUnavailableBusesC.innerHTML = (await branchArray[id].getNonAvailableBuses()).length;
+	//ADMIN(#adminControlsC)
 	midRightPartC.children[4].children[0].innerHTML = "Υπεύθυνος Καταστήματος: ";
 	midRightPartC.children[4].children[0].style.float = "left";
 	var adminControlEmployee = await branchArray[id].getAdminControlEmployeeObj();
-	midRightPartC.children[4].children[1].innerHTML = adminControlEmployee.getUsername();
-	midRightPartC.children[4].children[1].style.float = "left";
-	midRightPartC.children[4].children[1].style.fontWeight = "bold";
-	midRightPartC.children[4].children[1].style.marginLeft = "10px";
+	adminControlEmployee = ConvertObjectToEmployeeObj(adminControlEmployee);
+	var adminControlUsernameC = midRightPartC.children[4].querySelector("#adminControlUsernameC");
+	adminControlUsernameC.innerHTML = adminControlEmployee.getUsername();
+	adminControlUsernameC.style.float = "left";
+	adminControlUsernameC.style.fontWeight = "bold";
+	adminControlUsernameC.style.marginLeft = "10px";
 	if(userIdIn == branchArray[id].getAdminControl()) {
-		midRightPartC.children[4].children[1].style.color = "rgb(255, 215, 0)";
+		adminControlUsernameC.style.color = "rgb(255, 215, 0)";
 	}
 }
 
@@ -216,8 +195,16 @@ async function FindEmployee(manager) {
 //*(5)DOWN PART OF PROTOTYPE BRANCH CONTAINER
 function AddInfoBottom() {
 	var id = prototypeBranchViewC.parentElement.id.match(/\d+/)[0];
+
 	//#branchInfoBtn
+	bottomPartC.children[0].children[0].name = 0;
 	bottomPartC.children[0].children[0].addEventListener("click", function() {
+		if(this.name == 0) {
+			this.name = 1;
+		}
+		else {
+			this.name = 0;
+		}
 		OpenBranchInfo(id, document.getElementsByClassName("prototypeBranchViewC")[id]);
 	});
 
@@ -229,6 +216,7 @@ function AddInfoBottom() {
 		bottomPartC.children[0].children[0].style.background = "grey";
 	}
 	else {
+		bottomPartC.children[0].children[0].disabled = false;
 		bottomPartC.children[0].children[0].innerHTML = "Πληροφορίες για το κατάστημα: " + branchArray[id].getLocation();
 	}
 }

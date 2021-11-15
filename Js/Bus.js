@@ -1,23 +1,39 @@
 
-function Bus(id, model, maxCapacity, ltrPerKm) {
+function Bus(id, info, branchConnected, availability) {
 	this.id = id;
-	this.model = model;
-	this.maxCapacity = maxCapacity;
-	this.ltrPerKm = ltrPerKm;
+	this.info = info;
+	this.branchConnected = branchConnected;
+	this.availability = availability;
 
 	this.getId = function() {
 		return this.id;
 	}
 
-	this.getModel = function() {
-		return this.model;
+	this.getInfo = function() {
+		return this.info;
 	}
 
-	this.getMaxCapacity = function() {
-		return this.maxCapacity;
+	this.getBranchConnected = function() {
+		return this.branchConnected;
 	}
 	
-	this.getLtrPerKm = function() {
-		return this.ltrPerKm;
+	this.getAvailability = function() {
+		return this.availability;
+	}
+
+	this.findBranchConnectedObject = function() {
+		var branchId = this.getBranchConnected();
+		return new Promise ((resolve, reject) => {
+			$.ajax({
+				type: 'POST',
+				url: "../Php/findBranchPhp.php",
+				data: {branch: branchId},
+				success: function(data) {
+					//alert(data);
+					data = JSON.parse(data);
+					resolve(data);
+				}
+			});
+		});
 	}
 }

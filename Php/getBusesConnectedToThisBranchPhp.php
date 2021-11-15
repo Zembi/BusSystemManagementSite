@@ -22,7 +22,13 @@
 	$branchId = $_POST['id'];
 	$buses = [];
 
-	$query = "SELECT * FROM buses WHERE BranchConnected = '$branchId' ORDER BY `Availability` DESC";
+	if($branchId == "NULL") {
+		$query = "SELECT * FROM buses WHERE BranchConnected IS NULL ORDER BY `Availability` DESC";
+	}
+	else {
+		$query = "SELECT * FROM buses WHERE BranchConnected = '$branchId' ORDER BY `Availability` DESC";
+	}
+
 	$result = mysqli_query($conn, $query);
 	while (($row = mysqli_fetch_array($result))) {
 		$bus = array(

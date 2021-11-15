@@ -74,102 +74,325 @@
 	#branchArrayC {
 		float: left;
 		width: 45%;
-		background: white;
-		overflow: hidden;
+		background: transparent;
+		overflow: visible;
 		border-radius: 2px 2px 6px 6px;
-		box-shadow: 0 0 10px black;
 		margin: auto; margin-left: 3%;
 		user-select: none;
 	}
 
-	#branchBusesTitleC {
-		background: rgb(13, 18, 24);
-		color: white;
-		font-size: 28px;
-		text-align: center;
-		border: 4px solid grey; border-bottom: 2px solid grey;
+	#allBranchesColumnC {
+		box-shadow: 0 0 10px black;
 	}
 
-	#branchBusesContentC {
+		#branchBusesTitleC {
+			background: rgb(13, 18, 24);
+			color: white;
+			font-size: 28px;
+			text-align: center;
+			border: 4px solid grey; border-bottom: 2px solid grey;
+		}
+
+		#branchBusesContentC {
+			display: block;
+			position: relative;
+			width: 100%; height: 100%;
+			overflow: auto;
+			border-radius: 0 0 4px 4px;
+			border: 4px solid grey;
+		}
+
+		/*WIDTH*/
+		#branchBusesContentC::-webkit-scrollbar {
+			width: 15px;
+			background: transparent;
+		}
+
+		/*TRACK*/
+		#branchBusesContentC::-webkit-scrollbar-track {
+			background: transparent;
+		}
+			
+		/*HANDLE*/
+		#branchBusesContentC::-webkit-scrollbar-thumb {
+			background: rgb(13, 18, 24);
+		}
+
+		/*HANDLE ON HOVER*/
+		#branchBusesContentC::-webkit-scrollbar-thumb:hover {
+			background: rgb(255, 215, 0);
+		}
+
+	#addBusesToChosenBranchC {
+		display: table;
+		position: relative;
+		background: transparent;
+		margin: auto;
+	}
+	
+		#addBusToChosendBranchBtn {
+			background: rgb(55, 117, 41);
+			color: white;
+			font-size: 20px;
+			cursor: pointer;
+			border: 1px solid darkgrey;
+			border-radius: 2px;
+			padding: 2px 6px 2px 6px;
+		}
+
+		#addBusToChosendBranchBtn:hover {
+			background: rgb(13, 18, 24);
+			color: white;
+		}
+
+		#addBusToChosendBranchBtn:focus {
+			background: rgb(13, 18, 24);
+			color: white;
+		}
+
+		#addBusToChosendBranchBtn:active {
+			background: rgb(55, 117, 41);
+		}
+
+	/*ADD NEW BUS WINDOW STYLING*/
+	#busNewIdC {
 		display: block;
 		position: relative;
-		width: 100%; height: 100%;
-		overflow: auto;
-		border-radius: 0 0 4px 4px;
-		border: 4px solid grey;
-	}
-
-	/*WIDTH*/
-	#branchBusesContentC::-webkit-scrollbar {
-		width: 15px;
+		width: 100%;
 		background: transparent;
+		margin: 15px 0 30px 0;
 	}
-
-	/*TRACK*/
-	#branchBusesContentC::-webkit-scrollbar-track {
-		background: transparent;
-	}
+	
+		#busNewIdTitleC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+		}
 		
-	/*HANDLE*/
-	#branchBusesContentC::-webkit-scrollbar-thumb {
-		background: rgb(13, 18, 24);
+		#busNewIdInpt {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			text-align: center;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 3px;
+		}
+
+	#busBranchConnC {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		margin: 45px 0 30px 0;
+	}
+	
+		#busBranchConnTitleC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+		}
+
+		#busBranchConnInpt {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			text-align: center;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 3px;
+		}
+
+	#checkForAvailabilityC {
+		display: table;
+		position: relative;
+		background: transparent;
+		user-select: none;
+		margin: auto; margin-top: 25px;
+
 	}
 
-	/*HANDLE ON HOVER*/
-	#branchBusesContentC::-webkit-scrollbar-thumb:hover {
-		background: rgb(255, 215, 0);
+		#checkBoxForAvailabilityInpt {
+			cursor: pointer;
+			margin-right: 6px;
+		}
+
+		#checkBoxForAvailabilityLabel {
+
+		}
+
+		#checkBoxForAvailabilityBtn {
+			background: transparent;
+			color: white;
+			font-size: 16px;
+			cursor: pointer;
+			border: none;
+			padding: 0;
+		}
+
+	#sendNewBusBtn {
+		display: block;
+		position: relative;
+		width: 50%; height: 50px;
+		background: rgb(22, 36, 53);
+		color: white;
+		font-size: 22px;
+		text-align: center;
+		overflow: hidden;
+		cursor: pointer;
+		border-color: white;
+		margin: auto; margin-top: 65px;
+		padding: 2px;
 	}
+
+	#sendNewBusBtn:hover {
+		color: rgb(255, 215, 0);
+		border-color: rgb(255, 215, 0);
+	}
+
+	#sendNewBusBtn:focus {
+		color: rgb(255, 215, 0);
+		border-color: rgb(255, 215, 0);
+	}
+
+	#infoBusesC {
+		display: block;
+		position: relative;
+		width: 100%; height: 350px;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+		#infoBusesTextC {
+			position: relative;
+			height: 30px;
+			font-size: 22px;
+			text-align: center;
+			user-select: none;
+		}
+
+		#infoBusesTextAr {
+			display: block;
+			position: relative;
+			width: 100%; height: 90%;
+			background: white;
+			color: rgb(22, 36, 53);
+			letter-spacing: 1px;
+			font-size: 18px;
+			resize: none;
+			border: 2px solid rgb(118, 118, 118);
+			padding: 5px 5px 4px 5px;
+		}
+
+		/*WIDTH*/
+		#infoBusesTextAr::-webkit-scrollbar {
+			width: 20px;
+		}
+
+		/*TRACK*/
+		#infoBusesTextAr::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 5px grey;
+			border-radius: 2px;
+		}
+				 
+		/*HANDLE*/
+		#infoBusesTextAr::-webkit-scrollbar-thumb {
+			background: rgb(22, 36, 53);
+			border-radius: 2px;
+			border: 1px solid white; border-top: none; border-bottom: none;
+		}
+
+		/*HANDLE HOVER*/
+		#infoBusesTextAr::-webkit-scrollbar-thumb:hover {
+			background: rgb(255, 215, 0); 
+		}
+		/**/
+	/**/
 
 	#busesFromChosenBranchC {
 		float: right;
-		display: block;
-		position: relative;
 		width: 45%;
-		background: white;
-		overflow: hidden;
+		background: transparent;
+		overflow: visible;
 		border-radius: 2px 2px 6px 6px;
-		box-shadow: 0 0 10px black;
 		margin: auto; margin-right: 3%;
 		user-select: none;
 	}
+
+	#allBusesFromChosenBranchColumnC {
+		box-shadow: 0 0 10px black;	
+	}
 	
-	#busesFromChosenBranchTitleC {
-		background: rgb(13, 18, 24);
-		color: white;
-		font-size: 28px;
-		text-align: center;
-		border: 4px solid grey; border-bottom: 2px solid grey;
-	}
+		#busesFromChosenBranchTitleC {
+			background: rgb(13, 18, 24);
+			color: white;
+			font-size: 28px;
+			text-align: center;
+			border: 4px solid grey; border-bottom: 2px solid grey;
+		}
 
-	#busesFromChosenBranchContentC {
-		display: block;
+		#busesFromChosenBranchContentC {
+			display: block;
+			position: relative;
+			width: 100%; height: 100%;
+			overflow: auto;
+			border-radius: 0 0 4px 4px;
+			border: 4px solid grey;
+		}
+
+		/*WIDTH*/
+		#busesFromChosenBranchContentC::-webkit-scrollbar {
+			width: 15px;
+			background: transparent;
+		}
+
+		/*TRACK*/
+		#busesFromChosenBranchContentC::-webkit-scrollbar-track {
+			background: transparent;
+		}
+			
+		/*HANDLE*/
+		#busesFromChosenBranchContentC::-webkit-scrollbar-thumb {
+			background: rgb(13, 18, 24);
+		}
+
+		/*HANDLE ON HOVER*/
+		#busesFromChosenBranchContentC::-webkit-scrollbar-thumb:hover {
+			background: rgb(255, 215, 0);
+		}
+
+	#deleteBusesToChosenBranchC {
+		display: table;
 		position: relative;
-		width: 100%; height: 100%;
-		overflow: auto;
-		border-radius: 0 0 4px 4px;
-		border: 4px solid grey;
-	}
-
-	/*WIDTH*/
-	#busesFromChosenBranchContentC::-webkit-scrollbar {
-		width: 15px;
 		background: transparent;
+		margin: auto;
 	}
+	
+		#deleteBusToChosendBranchBtn {
+			background: rgb(140, 43, 43);
+			color: white;
+			font-size: 20px;
+			cursor: pointer;
+			border: 1px solid darkgrey;
+			border-radius: 2px;
+			padding: 2px 6px 2px 6px;
+		}
 
-	/*TRACK*/
-	#busesFromChosenBranchContentC::-webkit-scrollbar-track {
-		background: transparent;
-	}
-		
-	/*HANDLE*/
-	#busesFromChosenBranchContentC::-webkit-scrollbar-thumb {
-		background: rgb(13, 18, 24);
-	}
+		#deleteBusToChosendBranchBtn:hover {
+			background: rgb(13, 18, 24);
+			color: white;
+		}
 
-	/*HANDLE ON HOVER*/
-	#busesFromChosenBranchContentC::-webkit-scrollbar-thumb:hover {
-		background: rgb(255, 215, 0);
-	}
+		#deleteBusToChosendBranchBtn:focus {
+			background: rgb(13, 18, 24);
+			color: white;
+		}
+
+		#deleteBusToChosendBranchBtn:active {
+			background: rgb(140, 43, 43);
+		}
 
 	/*BRANCHES PANEL CREATION*/
 	.mainPlaceForBranchBtn {
@@ -217,6 +440,7 @@
 	.streetBranchBusesC {
 		display: table;
 		position: relative;
+		text-align: left;
 	}
 
 	/*BUSES PANEL CREATION*/
@@ -289,6 +513,7 @@
 		font-style: italic;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		text-align: left;
 		white-space: nowrap;
 		border-left: 4px solid rgb(58, 65, 89);
 		margin-top: 1px;
@@ -345,13 +570,45 @@
 			font-size: 26px;
 			font-weight: bold;
 		}
+
+		#editBusToChosendBranchBtn {
+			display: block;
+			position: absolute;
+			width: 40px; height: 40px;
+			background: transparent;
+			top: 72px; left: 50%;
+			overflow: hidden;
+			cursor: pointer;
+			border-radius: 1000% 45% 1000% 35%;
+			border: none;
+			padding: 0;
+			transform: translate(-50%, 0);
+		}
+
+			#editBusToChosendBranchBtnImg {
+				width: 100%; height: 100%;
+				content: url(../Assets/icons8_edit_30px_5.png);
+			}
+
+			#editBusToChosendBranchBtnImg:hover {
+				content: url(../Assets/icons8_edit_30px_3.png);
+			}
+
+			#editBusToChosendBranchBtnImg:focus {
+				content: url(../Assets/icons8_edit_30px_3.png);
+			}
+
+			#editBusToChosendBranchBtnImg:active {
+				content: url(../Assets/icons8_edit_30px_5.png);
+			}
 		
 		#infoBusC {
 			display: block;
 			position: absolute;
 			background: transparent;
 			color: rgb(13, 18, 24);
-			top: 100px; bottom: 0px;
+			top: 120px; bottom: 0px;
+			left: 0; right: 0;
 			font-size: 20px;
 			border-radius: 4px;
 			border: 2px solid grey; border-bottom: none;
@@ -363,6 +620,142 @@
 			box-shadow: 0 0 6px black;
 		}
 
+	/*EDIT BUS WINDOW STYLING*/
+	#busIdEditC {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		margin: 15px 0 30px 0;
+	}
+		
+		#busIdEditTitleC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+		}
+
+		#busIdEditInpt {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			text-align: center;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 3px;
+		}
+
+	#busEditBranchesOptionsC {
+		display: block;
+		position: relative;
+		width: 100%;
+		background: transparent;
+		margin: 45px 0 30px 0;
+	}
+		
+		#busEditBranchesOptionsTitleC {
+			font-size: 22px;
+			text-align: center;
+			margin: 0 0 5px 0;
+		}
+		
+		#busEditBranchesOptionsSlct {
+			width: 100%;
+			color: rgb(13, 18, 24);
+			font-size: 18px;
+			text-align: center;
+			border-radius: 2px;
+			border: 2px solid rgb(13, 18, 24);
+			padding: 3px;
+		}
+
+		.busEditBranchesOption {
+
+		}
+
+	#checkForAvailabilityEditC {
+		display: table;
+		position: relative;
+		background: transparent;
+		user-select: none;
+		margin: auto; margin-top: 25px;
+	}
+		
+		#checkBoxForAvailabilityEditInpt {
+			cursor: pointer;
+			margin-right: 6px;
+		}
+		
+		#checkBoxForAvailabilityEditLabel {
+
+		}
+
+		#checkBoxForAvailabilityEditBtn {
+			background: transparent;
+			color: white;
+			font-size: 16px;
+			cursor: pointer;
+			border: none;
+			padding: 0;
+		}
+
+	#updateBusEditBtn {
+		display: block;
+		position: relative;
+		width: 50%; height: 50px;
+		background: rgb(22, 36, 53);
+		color: white;
+		font-size: 22px;
+		text-align: center;
+		overflow: hidden;
+		cursor: pointer;
+		border-color: white;
+		margin: auto; margin-top: 65px;
+		padding: 2px;
+	}
+
+	#updateBusEditBtn:hover {
+		color: rgb(255, 215, 0);
+		border-color: rgb(255, 215, 0);
+	}
+
+	#updateBusEditBtn:focus {
+		color: rgb(255, 215, 0);
+		border-color: rgb(255, 215, 0);
+	}
+
+	#infoBusesEditC {
+		display: block;
+		position: relative;
+		width: 100%; height: 350px;
+		background: transparent;
+		overflow: hidden;
+		margin: auto; margin-top: 15px; margin-bottom: 25px;
+		padding: 2px;
+	}
+
+		#infoBusesEditTextC {
+			position: relative;
+			height: 30px;
+			font-size: 22px;
+			text-align: center;
+			user-select: none;
+		}
+
+		#infoBusesEditTextAr {
+			display: block;
+			position: relative;
+			width: 100%; height: 90%;
+			background: white;
+			color: rgb(22, 36, 53);
+			letter-spacing: 1px;
+			font-size: 18px;
+			resize: none;
+			border: 2px solid rgb(118, 118, 118);
+			padding: 5px 5px 4px 5px;
+		}
+
+	/**/
 
 	/*MEDIA FOR LOWER PIXEL SCREEN*/
 	@media screen and (max-width: 1300px) {

@@ -57,10 +57,6 @@ function Branch(id, type, street, location, imageSrc, manager, store, status, ad
 		return this.employees;
 	}
 
-	this.getBuses = function() {
-		return this.buses;
-	}
-
 	this.getStore = function() {
 		return this.store;
 	}
@@ -82,9 +78,9 @@ function Branch(id, type, street, location, imageSrc, manager, store, status, ad
       			url: "../Php/findEmployeePhp.php",
       			data: {id: adminCntrl},
       			success: function(data) {
+      				console.log("done");
       				employeePhp = JSON.parse(data);
-      				var employeeObj = ConvertObjectToEmployeeObj(employeePhp);
-	    			resolve(employeeObj);
+	    			resolve(employeePhp);
       			}
 			});
 		});
@@ -96,6 +92,71 @@ function Branch(id, type, street, location, imageSrc, manager, store, status, ad
 			$.ajax({
 				type: 'POST',
 				url: "../Php/getConnectedBranchesPhp.php",
+				data: {id: id},
+				success: function(data) {
+					//alert(data);
+					array = JSON.parse(data);
+					resolve(array);
+				}
+			});
+		});
+	}
+
+	this.getObjConnectedBranches = function() {
+		var array = [];
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				type: 'POST',
+				url: "../Php/getObjConnectedBranchesPhp.php",
+				data: {id: id},
+				success: function(data) {
+					//alert(data);
+					array = JSON.parse(data);
+					array = ConvertObjectsArrayToBranchObjsArray(array);
+					resolve(array);
+				}
+			});
+		});
+	}
+
+	this.getBuses = function() {
+		var array = [];
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				type: 'POST',
+				url: "../Php/getBusesConnectedToThisBranchPhp.php",
+				data: {id: id},
+				success: function(data) {
+					//alert(data);
+					array = JSON.parse(data);
+					resolve(array);
+				}
+			});
+		});
+	}
+
+	this.getAvailableBuses = function() {
+		var array = [];
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				type: 'POST',
+				url: "../Php/getAvailableBusesConnectedToThisBranchPhp.php",
+				data: {id: id},
+				success: function(data) {
+					//alert(data);
+					array = JSON.parse(data);
+					resolve(array);
+				}
+			});
+		});
+	}
+
+	this.getNonAvailableBuses = function() {
+		var array = [];
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				type: 'POST',
+				url: "../Php/getNonAvailableBusesConnectedToThisBranchPhp.php",
 				data: {id: id},
 				success: function(data) {
 					//alert(data);

@@ -16,7 +16,7 @@ async function ServerStart() {
 	/*window.addEventListener("unload", function(event) {
     	document.getElementById("logOutBtn").click();
 	});*/
-
+	
 	//UPDATE AND NOTIFICATIONS CHECKS
 	NotificationsCheck("Receive");
 }
@@ -86,7 +86,7 @@ callme();*/
 
 //BEING CALLED EVERY 5 SECS, UPDATE THE NOTIFICATIONS NUMBER
 async function NotificationsCheck(type) {
-	var notifsIdsArray = await IdsNotif(type, userUsernameIn);
+	var notifsIdsArray = await IdsNotif(type);
 	var numberOfRequestsTextC = document.getElementById("numberOfRequestsTextC");
 	var requestsBtnImg = document.getElementById("requestsBtnImg");
 	var alertNotifInfoC = document.getElementById("alertNotifInfoC");
@@ -125,12 +125,12 @@ async function NotificationsCheck(type) {
 }
 
 //GET ALL RECEIVED NOTIFICATIONS THAT MATCH USER THAT HAS BEEN SIGNED IN
-function IdsNotif(typeNotif, userUsernameIn) {
+function IdsNotif(typeNotif) {
 	return new Promise ((resolve, reject) => {
 		$.ajax({
 			type: 'POST',
 			url: "../Php/getIdsOfNotificationsPhp.php",
-			data: {type: typeNotif, user: userUsernameIn},
+			data: {type: typeNotif, user: userIdIn},
 			success: function(data) {
 				var notifObj = JSON.parse(data);
 				resolve(notifObj);

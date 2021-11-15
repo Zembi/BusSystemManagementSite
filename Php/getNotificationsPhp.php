@@ -17,12 +17,12 @@
 	}
 
 	$type = $_POST['typeOfGet'];
-	$user = $_POST['user'];
+	$userId = $_POST['userId'];
 
 	$notifs = [];
 
 	if($type == "Receiver") {
-		$queryHelper = "SELECT * FROM notifications WHERE Sender <> '$user' ORDER BY `DateTimeSend` DESC";
+		$queryHelper = "SELECT * FROM notifications WHERE Sender <> '$userId' ORDER BY `DateTimeSend` DESC";
 		
 		$resultHelper = mysqli_query($conn, $queryHelper);
 		while (($row = mysqli_fetch_array($resultHelper))) {
@@ -31,19 +31,44 @@
 
 			$count = 0;
 			foreach ($receiverSlices as $value) {
-				$receiverUsername = explode("$", $value);
+				$receiverId = explode("$", $value);
 
-				if($receiverUsername[0] == $user) {
+				if($receiverId[0] == $userId) {
+					$sender = $row['Sender'];
+
+
+					$queryFindEmployee = "SELECT * FROM employees WHERE Id = '$sender'";
+					$resultFindEmployee = mysqli_query($conn, $queryFindEmployee);
+
+					while (($rowFindEmpl = mysqli_fetch_array($resultFindEmployee))) {
+						$employeeSender = array(
+							'id' => $rowFindEmpl['Id'],
+							'username' => $rowFindEmpl['Username'],
+							'email' => $rowFindEmpl['Email'],
+							'name' => $rowFindEmpl['Name'],
+				   			'icon' => $rowFindEmpl['Icon'],
+							'branchId' => $rowFindEmpl['BranchId'],
+							'status' => $rowFindEmpl['Status'],
+							'sex' => $rowFindEmpl['Sex'],
+							'wage' => $rowFindEmpl['Wage'],
+							'recruitmentDay' => $rowFindEmpl['RecruitmentDay'],
+							'AFM' => $rowFindEmpl['ΑΦΜ'],
+							'AMKA' => $rowFindEmpl['ΑΜΚΑ']
+						);
+					}
+
 					$notifFound = array(
 						'id' => $row['Id'],
 						'type' => $row['Type'],
 						'textArea' => $row['TextArea'],
-			   			'sender' => $row['Sender'],
-			   			'status' => $receiverUsername[1],
+			   			'sender' => $employeeSender,
+						'receiverPos' => $count,
+			   			'status' => $receiverId[1],
 			   			'answer' => $row['Answer'],
 						'dateTimeSend' => $row['DateTimeSend']
 					);
 					array_push($notifs, $notifFound);
+
 					break;
 				}
 				$count++;
@@ -51,17 +76,51 @@
 		}
 	}
 	else if($type == "Sender") {
-		$query = "SELECT * FROM notifications WHERE Sender = '$user' ORDER BY `DateTimeSend` DESC";
+		$queryHelper = "SELECT * FROM notifications WHERE Sender = '$userId' ORDER BY `DateTimeSend` DESC";
 		
-		$result = mysqli_query($conn, $query);
-		while (($row = mysqli_fetch_array($result))) {
+		$resultHelper = mysqli_query($conn, $queryHelper);
+		while (($row = mysqli_fetch_array($resultHelper))) {
+			$receivers = $row['Receiver'];
+			$receiverSlices = explode("#", $receivers);
+			$removeLastElement = array_pop($receiverSlices);
+
+			$employeeReceivers = [];
+			$employeeReceiversStatus = [];
+			foreach ($receiverSlices as $value) {
+				$receiver = explode("$", $value);
+				$receiverId = $receiver[0];
+				$receiverStatus = $receiver[1];
+				array_push($employeeReceiversStatus, $receiverStatus);
+
+				$queryFindEmployee = "SELECT * FROM employees WHERE Id = '$receiverId'";
+				$resultFindEmployee = mysqli_query($conn, $queryFindEmployee);
+
+				while (($rowFindEmpl = mysqli_fetch_array($resultFindEmployee))) {
+					$employeeReceiver = array(
+						'id' => $rowFindEmpl['Id'],
+						'username' => $rowFindEmpl['Username'],
+						'email' => $rowFindEmpl['Email'],
+						'name' => $rowFindEmpl['Name'],
+				   		'icon' => $rowFindEmpl['Icon'],
+						'branchId' => $rowFindEmpl['BranchId'],
+						'status' => $rowFindEmpl['Status'],
+						'sex' => $rowFindEmpl['Sex'],
+						'wage' => $rowFindEmpl['Wage'],
+						'recruitmentDay' => $rowFindEmpl['RecruitmentDay'],
+						'AFM' => $rowFindEmpl['ΑΦΜ'],
+						'AMKA' => $rowFindEmpl['ΑΜΚΑ']
+					);
+					array_push($employeeReceivers, $employeeReceiver);
+				}
+			}
+
 			$notifFound = array(
 				'id' => $row['Id'],
 				'type' => $row['Type'],
 				'textArea' => $row['TextArea'],
-	   			'sender' => $row['Sender'],
-	   			'receiver' => $row['Receiver'],
-	   			'answer' => $row['Answer'],
+				'receivers' => $employeeReceivers,
+				'status' => $employeeReceiversStatus,
+				'answer' => $row['Answer'],
 				'dateTimeSend' => $row['DateTimeSend']
 			);
 			array_push($notifs, $notifFound);

@@ -30,21 +30,28 @@
 	else {
 		//UPDATE NOTIFICATIONS (DELETE EMPLOYEE FROM NOTIFICATIONS)
 		//IF EX EMPLOYEE IS A RECEIVER AT NOTIFICATION
-		$queryHelper = "SELECT Id, Receiver FROM notifications";
+		$queryHelper = "SELECT Id, Receiver, Answer FROM notifications";
 		$resultHelper = mysqli_query($conn, $queryHelper);
 		while (($row = mysqli_fetch_array($resultHelper))) {
 				$id = $row['Id'];
 				$receivers = $row['Receiver'];
-
+				$answers = $row['Answer'];
 				//CUT IN SLICES STRING OF RECEIVERS
 				$receiverSlices = explode("#", $receivers);
+				$removeLastReceiverEmpty = array_pop($receiverSlices);
+				$receiverAnswersSlices = explode(",", $answers);
 
+				$counter = 0;
 				foreach ($receiverSlices as $value) {
 					$receiverId = explode("$", $value);
 
 					if($receiverId[0] == $exEmployeeDecoded->id) {
 						$newReceivers = $receivers;
 						$status = "$".substr($value, -1);
+
+						array_splice($receiverAnswersSlices, $counter, 1);
+
+						$newAnswersString = implode(",", $receiverAnswersSlices);
 
 						$newReceivers = str_replace($exEmployeeDecoded->id.$status."#", "", $newReceivers);
 
@@ -55,10 +62,15 @@
 						else {
 							$sqlUpdateNotifications = "UPDATE notifications SET Receiver = '$newReceivers' WHERE Id = '$id'";
 							mysqli_query($conn, $sqlUpdateNotifications);
+
+							//DELETE AND HIS/HER ANSWERS FROM NOTIFICATIONS
+							$sqlUpdateAnswerNotifications = "UPDATE notifications SET Answer = '$newAnswersString' WHERE Id = '$id'";
+							mysqli_query($conn, $sqlUpdateAnswerNotifications);
 						}
 						
 						break;
 					}
+					$counter++;
 				}
 				//UPDATE RECEIVERS WITHOUT THE EXEMPLOYEE
 				$receiverSlices = explode("#", $receivers);

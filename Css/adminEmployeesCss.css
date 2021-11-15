@@ -597,6 +597,10 @@
 	#employeeAskInfoBtn:hover img {
 		content: url(../Assets/icons8_question_mark_30px_2.png);
 	}
+	
+	#employeeAskInfoBtn:focus img {
+		content: url(../Assets/icons8_question_mark_30px_2.png);
+	}
 
 	#employeeAskInfoBtn:active img {
 		content: url(../Assets/icons8_question_mark_30px_3.png);

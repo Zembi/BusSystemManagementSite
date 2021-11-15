@@ -458,7 +458,6 @@ function ServerCommunication() {
 		//FINAL CLICK THAT APPROVES UPDATE OF CHOSEN EMPLOYEE
 		async function EmployeeApproveClickOkBtn(newInfoEmployee, situation) {
 			var errorMessages = 0;
-			console.log(newInfoEmployee);
 			errorMessages = await CreateAsyncEmployee(newInfoEmployee);
 
 			if(errorMessages == 0) {
@@ -514,7 +513,7 @@ function ServerCommunication() {
 						alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
 						alertInfoForCreatNewItemBtn.focus();
 						alertInfoForCreatNewItemBtn.addEventListener("click", function() {
-							alertInfoForCreatNewItemC.style.display = "none";
+							CloseAlertMessages();
 							EmployeeClickCancelBtn();
 						});
 					}
@@ -1257,6 +1256,7 @@ function ServerCommunication() {
 						coverPageHelperC.style.display = "none";
 						location.reload();
 					});
+					alertInfoForCreatNewItemBtn.focus();
 				}
 				//EX EMPLOYEE HASN'T BEEN DELETED SUCCESSFULLY
 				else {
@@ -1267,6 +1267,7 @@ function ServerCommunication() {
 					alertInfoForCreatNewItemBtn.addEventListener("click", function() {
 						alertInfoForCreatNewItemC.style.display = "none";
 					});
+					alertInfoForCreatNewItemBtn.focus();
 				}
 			}
 		});
@@ -1327,13 +1328,12 @@ function ServerCommunication() {
 					branchIdEditSelect.disabled = false;
 					branchIdEditSelect.style.borderColor = "rgb(13, 18, 24)";
 				}
-				//currentBranchSelected = branchIdEditSelect.options[branchIdEditSelect.selectedIndex].text;
 			}
 		});
 	}
 
 	//WHEN ADMIN PRESSES BUTTON TO EDIT BRANCH INFO
-	this.BranchEditInfo = function (branchInfo) {
+	this.BranchEditInfo = function (branchObj) {
 		var change = [0, 0, 0, 0];
 
 		var editWindowC = document.getElementById("editWindowC");
@@ -1361,7 +1361,7 @@ function ServerCommunication() {
 
 		var adminControlContentBrInpt = document.createElement("input");
 		adminControlContentBrInpt.id = "adminControlContentBrInpt";
-		adminControlContentBrInpt.value = branchInfo.getAdminControl();
+		adminControlContentBrInpt.value = branchObj.getAdminControl();
 		adminControlContentBrInpt.disabled = true;
 		adminControlBrC.appendChild(adminControlContentBrInpt);
 
@@ -1380,7 +1380,7 @@ function ServerCommunication() {
 		var statusContentBrSlct = document.createElement("select");
 		statusContentBrSlct.id = "statusContentBrSlct";
 		statusContentBrSlct.addEventListener("change", function() {
-			if(this.value != TranslateBranchStatusTo("greek", branchInfo.getStatus())) {
+			if(this.value != TranslateBranchStatusTo("greek", branchObj.getStatus())) {
 				this.style.border = "2px solid orange";
 				change[0] = 1;
 			}
@@ -1391,7 +1391,7 @@ function ServerCommunication() {
 		});
 		statusBrC.appendChild(statusContentBrSlct);
 
-		if(branchInfo.getManager() == null) {
+		if(branchObj.getManager() == null) {
 			var branchStatusArray = ["Under_C", "Problem"];
 		}
 		else {
@@ -1402,7 +1402,7 @@ function ServerCommunication() {
 			var option = document.createElement("option");
 			option.innerHTML = TranslateBranchStatusTo("greek", branchStatusArray[i]);
 			statusContentBrSlct.appendChild(option);
-			if(branchStatusArray[i] == branchInfo.getStatus()) {
+			if(branchStatusArray[i] == branchObj.getStatus()) {
 				option.selected = true;
 			}
 		}
@@ -1422,7 +1422,7 @@ function ServerCommunication() {
 		var typeContentBrSlct = document.createElement("select");
 		typeContentBrSlct.id = "typeContentBrSlct";
 		typeContentBrSlct.addEventListener("change", function() {
-			if(this.value != branchInfo.getType()) {
+			if(this.value != branchObj.getType()) {
 				this.style.border = "2px solid orange";
 				change[1] = 1;
 			}
@@ -1439,7 +1439,7 @@ function ServerCommunication() {
 			var option = document.createElement("option");
 			option.innerHTML = branchTypeArray[i];
 			typeContentBrSlct.appendChild(option);
-			if(branchTypeArray[i] == branchInfo.getType()) {
+			if(branchTypeArray[i] == branchObj.getType()) {
 				option.selected = true;
 			}
 		}
@@ -1458,9 +1458,9 @@ function ServerCommunication() {
 
 		var streetContentBrInpt = document.createElement("input");
 		streetContentBrInpt.id = "streetContentBrInpt";
-		streetContentBrInpt.value = branchInfo.getStreet();
+		streetContentBrInpt.value = branchObj.getStreet();
 		streetContentBrInpt.addEventListener("change", function() {
-			if(this.value != branchInfo.getStreet()) {
+			if(this.value != branchObj.getStreet()) {
 				this.style.border = "2px solid orange";
 				change[2] = 1;
 			}
@@ -1468,6 +1468,14 @@ function ServerCommunication() {
 				this.style.border = "2px solid rgb(13, 18, 24)";
 				change[2] = 0;
 			}
+		});
+		streetContentBrInpt.addEventListener("keypress", function(e) {
+			NotAllowSymbol(e, 33);
+			NotAllowSymbol(e, 35);
+			NotAllowSymbol(e, 36);
+			NotAllowSymbol(e, 39);
+			NotAllowSymbol(e, 44);
+			NotAllowSymbol(e, 46);
 		});
 		streetBrC.appendChild(streetContentBrInpt);
 
@@ -1485,9 +1493,9 @@ function ServerCommunication() {
 
 		var imageContentBrInpt = document.createElement("input");
 		imageContentBrInpt.id = "imageContentBrInpt";
-		imageContentBrInpt.value = branchInfo.getImageSrc();
+		imageContentBrInpt.value = branchObj.getImageSrc();
 		imageContentBrInpt.addEventListener("change", function() {
-			if(this.value != branchInfo.getImageSrc()) {
+			if(this.value != branchObj.getImageSrc()) {
 				this.style.border = "2px solid orange";
 				change[3] = 1;
 			}
@@ -1511,7 +1519,7 @@ function ServerCommunication() {
 				addNewInfoTitleTextC.innerHTML = "ΕΠΕΞΕΡΓΑΣΙΑ ΤΩΝ ΣΤΟΙΧΕΙΩΝ ΤΟΥ ΚΑΤΑΣΤΗΜΑΤΟΣ";
 				addNewInfoTextC.innerHTML = "Είστες σίγουρος για τις αλλαγές των στοιχείων του καταστήματος;<br>Στην συνέχεια θα γίνει αυτόματη ανανέωση της σελίδας.";
 				yesAddNewInfoBtn.addEventListener("click", async function() {
-					var messageOk = await SendInfoToServer(branchInfo.getId(), TranslateBranchStatusTo("english", statusContentBrSlct.value), typeContentBrSlct.value, streetContentBrInpt.value, imageContentBrInpt.value);
+					var messageOk = await SendInfoToServer(branchObj.getId(), TranslateBranchStatusTo("english", statusContentBrSlct.value), typeContentBrSlct.value, streetContentBrInpt.value, imageContentBrInpt.value);
 					if(messageOk == "1") {
 						location.reload();
 					}
@@ -1547,7 +1555,7 @@ function ServerCommunication() {
 
 
 		//CHECK IF USER IN IS THE SAME THAT CONTROLS THE BRANCH THAT IS CLICKED
-		if(userIdIn != branchInfo.getAdminControl()) {
+		if(userIdIn != branchObj.getAdminControl()) {
 			statusContentBrSlct.disabled = true;
 			typeContentBrSlct.disabled = true;
 			streetContentBrInpt.disabled = true;
@@ -1569,7 +1577,7 @@ function ServerCommunication() {
 				$.ajax({
 					type: 'POST',
 					url: "../Php/sendBranchUpdatesPhp.php",
-					data: {id: branchInfo.getId(), status: status, type: type, street: street, image: image},
+					data: {id: branchObj.getId(), status: status, type: type, street: street, image: image},
 					success: function(data) {
 						//alert(data);
 						resolve(data);
@@ -1580,7 +1588,7 @@ function ServerCommunication() {
 	}
 
 	//WHEN ADMIN PRESSES BUTTON TO DELETE THIS BRANCH
-	this.DeleteThisBranch = async function (branchInfo) {
+	this.DeleteThisBranch = async function (branchObj) {
 		var alertInfoForCreatNewItemC = document.getElementById("alertInfoForCreatNewItemC");
 		var alertInfoForCreatNewItemTextC = document.getElementById("alertInfoForCreatNewItemTextC");
 		var alertInfoForCreatNewItemBtn = document.getElementById("alertInfoForCreatNewItemBtn");
@@ -1603,7 +1611,7 @@ function ServerCommunication() {
 		else  {
 			alertAddNewInfoC.style.display = "table";
 			addNewInfoTitleTextC.innerHTML = "ΔΙΑΓΡΑΦΗ ΚΑΤΑΣΤΗΜΑΤΟΣ";
-			addNewInfoTextC.innerHTML = "Είστε σίγουρος ότι θέλετε να διαγράψετε το κατάστημα στην τοποθεσία " + branchInfo.getLocation() + ";<br> Βεβαιωθείτε, πρώτα, ότι έχετε ενημερώσει τα συνδεδεμένα καταστήματα, αν υπάρχουν!";
+			addNewInfoTextC.innerHTML = "Είστε σίγουρος ότι θέλετε να διαγράψετε το κατάστημα στην τοποθεσία " + branchObj.getLocation() + ";<br> Βεβαιωθείτε, πρώτα, ότι έχετε ενημερώσει τα συνδεδεμένα καταστήματα, αν υπάρχουν!";
 			yesAddNewInfoBtn.focus();
 			yesAddNewInfoBtn.addEventListener("click", async function() {
 				DeleteThisBranch();
@@ -1618,7 +1626,7 @@ function ServerCommunication() {
 				$.ajax({
 					type: 'POST',
 					url: "../Php/getCountOfEmployeesInThisBranchPhp.php",
-					data: {id: branchInfo.getId()},
+					data: {id: branchObj.getId()},
 					success: function(data) {
 						//alert(data);
 						resolve(data);
@@ -1631,7 +1639,7 @@ function ServerCommunication() {
 			$.ajax({
 				type: 'POST',
 				url: "../Php/deleteBranchPhp.php",
-				data: {id: branchInfo.getId()},
+				data: {id: branchObj.getId()},
 				success: function(data) {
 					//alert(data);
 					alertAddNewInfoC.style.display = "none";
@@ -1654,25 +1662,22 @@ function ServerCommunication() {
 							alertInfoForCreatNewItemC.style.display = "none";
 						});
 					}
-
 				}
 			});
 		}
 	}
 
 	//WHEN ADMIN PRESSES BUTTON TO EDIT THE CONNECTIONS OF THIS BRANCH
-	this.EditTheConnectionsOfThisBranch = async function (branchInfo) {
-		var connectionsIds = await GetIdsOfConnections();
-		var branchesConnected = await branchInfo.getConnectedBranches();
+	this.EditTheConnectionsOfThisBranch = async function (branchObj) {
 		var branches = await GetAllBranches();
+		var buttonsStartingPoint = [];
+		var buttonsNow = [];
 
 		branches = ConvertObjectsArrayToBranchObjsArray(branches);
 		//REMOVE THIS BRANCH FROM BRANCHES ARRAY
-		branches = RemoveObjectFromArray(branchInfo, branches);
+		branches = RemoveObjectFromArray(branchObj, branches);
 
 		CreateViewOfConnectedBranches();
-
-		newId = CompareIdWithATableAndReturn(8, connectionsIds);
 
 		//GET ALL BRANCHES FROM SERVER FOR GIVING THE OPTION TO THE CHOSEN BRANCH TO CHOOSE ITS CONNECTIONS
 		function GetAllBranches() {
@@ -1709,12 +1714,17 @@ function ServerCommunication() {
 		}
 
 		//CREATE THE VIEW OF ALL THE BRANCHES AND FROM THERE THE USER CAN SEE, WITH WHICH BRANCHES, THIS BRANCH IS CONNECTED AND EDIT THAT
-		function CreateViewOfConnectedBranches() {
+		async function CreateViewOfConnectedBranches() {
 			var editWindowC = document.getElementById("editWindowC");
 			var editTitleTextC = document.getElementById("editTitleTextC");
 			var editInfoGetterLeftC = document.getElementById("editInfoGetterLeftC");
 			var editInfoGetterRightC = document.getElementById("editInfoGetterRightC");
 			var coverEditC = document.getElementById("coverEditC");
+			var branchesConnFromServer = await branchObj.getConnectedBranches();
+			branchesConnFromServer = branchesConnFromServer.filter(UniqueArrays);
+			var branchesConnAdd = [];
+			var branchesConnDelete = [];
+			var branchesConnToAddIds = [];
 
 			editWindowC.style.display = "table";
 			editTitleTextC.innerHTML = "ΣΥΝΔΕΣΗ ΚΑΤΑΣΤΗΜΑΤΩΝ";
@@ -1736,7 +1746,6 @@ function ServerCommunication() {
 			branchesConnectionsContentC.appendChild(allBranchesConnC);
 
 			coverEditC.appendChild(branchesConnectionsContentC);
-
 			//TITLES IN FIRST ROW OF BRANCHES CONNECTIONS
 			var firstRowOfBrConnectionsContentC = document.createElement("div");
 			firstRowOfBrConnectionsContentC.id = "firstRowOfBrConnectionsContentC";
@@ -1757,7 +1766,68 @@ function ServerCommunication() {
 
 			var titleOfBranchesToConnC = document.createElement("div");
 			titleOfBranchesToConnC.id = "titleOfBranchesToConnC";
-			titleOfBranchesToConnC.innerHTML = "ΚΑΤΑΣΤΗΜΑΤΑ";
+			var updateBranchesConnectedBtn = document.createElement("button");
+			updateBranchesConnectedBtn.id = "updateBranchesConnectedBtn";
+			updateBranchesConnectedBtn.innerHTML = "Ενημέρωση";
+			updateBranchesConnectedBtn.addEventListener("click", async function() {
+				PushUpButtons();
+				var connectionsIds = await GetIdsOfConnections();
+				CreateTheArrayForBranchesConnIds(branchesConnToAddIds, branchesConnAdd, connectionsIds);
+				if(branchesConnToAddIds.length == 0) {
+					branchesConnToAddIds = 0;
+				}
+				if(branchesConnAdd.length == 0) {
+					branchesConnAdd = 0;
+				}
+				if(branchesConnDelete.length == 0) {
+					branchesConnDelete = 0;
+				}
+				var dataReturn = await UpdateServerForBranchesConnected(branchesConnToAddIds, branchesConnAdd, branchesConnDelete);
+				if(dataReturn) {
+					alertInfoForCreatNewItemC.style.display = "table";
+					alertInfoForCreatNewItemTextC.innerHTML = "Η ενημέρωση πέτυχε. Παρακαλώ συνεχίστε.";
+					alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+					alertInfoForCreatNewItemBtn.focus();
+					alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+						alertInfoForCreatNewItemC.style.display = "none";
+					});
+					setTimeout(function() {
+						alertInfoForCreatNewItemC.style.display = "none";
+					}, 2000);
+
+					branchesConnFromServer = await branchObj.getConnectedBranches();
+					branchesConnFromServer = branchesConnFromServer.filter(UniqueArrays);
+					CheckAndCreateTheViewOfBranchesConn(branchesConnFromServer);
+					branchesConnAdd = [];
+					branchesConnDelete = [];
+					branchesConnToAddIds = [];
+				}
+				else {
+					alertInfoForCreatNewItemC.style.display = "table";
+					alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος. Η ενημέρωση δεν πέτυχε!<br> Ξαναπροσπαθήστε αργότερα.";
+					alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+					alertInfoForCreatNewItemBtn.focus();
+					alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+						alertInfoForCreatNewItemC.style.display = "none";
+					});
+				}
+			});
+			titleOfBranchesToConnC.appendChild(updateBranchesConnectedBtn);
+			var titleTextOfBranchesToConnC = document.createElement("div");
+			titleTextOfBranchesToConnC.id = "titleTextOfBranchesToConnC";
+			titleTextOfBranchesToConnC.innerHTML = "ΚΑΤΑΣΤΗΜΑΤΑ";
+			titleOfBranchesToConnC.appendChild(titleTextOfBranchesToConnC);
+			var resetBranchesConnectedBtn = document.createElement("button");
+			resetBranchesConnectedBtn.id = "resetBranchesConnectedBtn";
+			resetBranchesConnectedBtn.innerHTML = "Επαναφορά";
+			resetBranchesConnectedBtn.addEventListener("click", function() {
+				ResetBranchesConnected(branchesConnFromServer);
+				branchesConnAdd = [];
+				branchesConnDelete = [];
+				branchesConnToAddIds = [];
+			});
+			titleOfBranchesToConnC.appendChild(resetBranchesConnectedBtn);
+
 			firstRowOfBrConnectionsContentC.appendChild(titleOfBranchesToConnC);
 
 			allBranchesConnC.appendChild(firstRowOfBrConnectionsContentC);
@@ -1772,10 +1842,17 @@ function ServerCommunication() {
 				var rowConnectForConnBranchBtn = document.createElement("button");
 				rowConnectForConnBranchBtn.className = "rowConnectForConnBranchBtn";
 				rowConnectForConnBranchBtn.id = "connectBrBtn" + branches[i].getId();
-				rowConnectForConnBranchBtn.addEventListener("click", function () {
-					AddItemToAnArray(this.id, branchesConnected);
-					UpdateViewOfButton("rowForConnBr" + this.id);
-					console.log(branchesConnected);
+				rowConnectForConnBranchBtn.value = i;
+				rowConnectForConnBranchBtn.addEventListener("click", function() {
+					var id = this.id.slice(-4);
+					var active = 0;
+					if(this.name == "active") {
+						active = 1;
+					}
+					else {
+						active = 0;
+					}
+					AddToBranchesConnected(id, branchesConnAdd, branchesConnDelete, active, this.value);
 				});
 				rowConnectForConnBranchC.appendChild(rowConnectForConnBranchBtn);
 				var rowConnectForConnBranchImg = document.createElement("img");
@@ -1787,13 +1864,20 @@ function ServerCommunication() {
 				var rowNotConnectForConnBranchC = document.createElement("div");
 				rowNotConnectForConnBranchC.className = "rowNotConnectForConnBranchC";
 				var rowNotConnectForConnBranchBtn = document.createElement("button");
-				rowNotConnectForConnBranchBtn.id = "notConnectBrBtn" + branches[i].getId();
-				rowNotConnectForConnBranchBtn.addEventListener("click", function () {
-					RemoveItemFromArray(this.id, branchesConnected);
-					UpdateViewOfButton("rowForConnBr" + this.id);
-					console.log(branchesConnected);
-				});
 				rowNotConnectForConnBranchBtn.className = "rowNotConnectForConnBranchBtn";
+				rowNotConnectForConnBranchBtn.id = "notConnectBrBtn" + branches[i].getId();
+				rowNotConnectForConnBranchBtn.value = i;
+				rowNotConnectForConnBranchBtn.addEventListener("click", function() {
+					var id = this.id.slice(-4);
+					var active = 0;
+					if(this.name == "active") {
+						active = 1;
+					}
+					else {
+						active = 0;
+					}
+					RemoveBranchConnected(id, branchesConnAdd, branchesConnDelete, active, this.value);
+				});
 				rowNotConnectForConnBranchC.appendChild(rowNotConnectForConnBranchBtn);
 				var rowNotConnectForConnBranchImg = document.createElement("img");
 				rowNotConnectForConnBranchImg.className = "rowNotConnectForConnBranchImg";
@@ -1807,35 +1891,790 @@ function ServerCommunication() {
 				rowForConnBranchC.appendChild(rowBranchForConnBranchC);
 
 				allBranchesConnC.appendChild(rowForConnBranchC);
+			}
 
-				//CHECK WHICH BRANCHES ARE CONNECTED TO THIS
-				if(branchesConnected.length == 0) {
-					rowNotConnectForConnBranchImg.style.content = "url(../Assets/icons8_connection_status_on_50px_4.png)";
+			//CHECK AND SHOW WHICH BRANCHES ARE CONNECTED TO THIS AND WHICH ISN'T
+			CheckAndCreateTheViewOfBranchesConn(branchesConnFromServer);
+		}
+
+		function AddToBranchesConnected(id, editArrayOfBranchesConnToAdd, editArrayOfBranchesConnToDelete, active, pos) {
+			buttonsNow[pos] = 1;
+			editArrayOfBranchesConnToAdd.push(id);
+			RemoveItemFromArray(id, editArrayOfBranchesConnToDelete);
+			UpdateViewOfButton("rowForConnBr", id, "connect");
+			if(!active) {
+				BringButtonsDown();
+			}
+			FindStartingPositionOfBrConnButtons();
+		}
+
+		function RemoveBranchConnected(id, editArrayOfBranchesConnToAdd, editArrayOfBranchesConnToDelete, active, pos) {
+			buttonsNow[pos] = 0;
+			RemoveItemFromArray(id, editArrayOfBranchesConnToAdd);
+			editArrayOfBranchesConnToDelete.push(id);
+			UpdateViewOfButton("rowForConnBr", id, "disconnect");
+			if(!active) {
+				BringButtonsDown();
+			}
+			FindStartingPositionOfBrConnButtons();
+		}
+
+		function FindStartingPositionOfBrConnButtons() {
+			var wrongPos = 0;
+			for(var i = 0; i < buttonsStartingPoint.length; i++) {
+				if(buttonsStartingPoint[i] != buttonsNow[i]) {
+					wrongPos = 1;
+					break;
+				}
+			}
+
+			if(!wrongPos) {
+				PushUpButtons();
+			}
+		}
+
+		function ResetBranchesConnected(startingArrayBranchConn) {
+			CheckAndCreateTheViewOfBranchesConn(startingArrayBranchConn);
+			PushUpButtons();
+			return startingArrayBranchConn;
+		}
+
+		function BringButtonsDown() {
+			var updateBranchesConnectedBtn = document.getElementById("updateBranchesConnectedBtn");
+			var resetBranchesConnectedBtn = document.getElementById("resetBranchesConnectedBtn");
+
+			updateBranchesConnectedBtn.style.marginTop = "3px";
+			updateBranchesConnectedBtn.tabIndex = "1";
+			resetBranchesConnectedBtn.style.marginTop = "3px";
+			resetBranchesConnectedBtn.tabIndex = "1";
+		}
+
+		function PushUpButtons() {
+			var updateBranchesConnectedBtn = document.getElementById("updateBranchesConnectedBtn");
+			var resetBranchesConnectedBtn = document.getElementById("resetBranchesConnectedBtn");
+
+			updateBranchesConnectedBtn.style.marginTop = "-200px";
+			updateBranchesConnectedBtn.tabIndex = "-1";
+			resetBranchesConnectedBtn.style.marginTop = "-200px";
+			resetBranchesConnectedBtn.tabIndex = "-1";
+		}
+
+		function UpdateViewOfButton(firstidOfRow, idOfBranch, command) {
+			var idConnectBtn = "connectBrBtn" + idOfBranch;
+			var idDisconnectBtn = "notConnectBrBtn" + idOfBranch;
+			var connectBtn = document.getElementById(idConnectBtn);
+			var disconnectBtn = document.getElementById(idDisconnectBtn);
+
+			if(command == "connect") {
+				connectBtn.querySelector(".rowConnectForConnBranchImg").style.content = "url(../Assets/icons8_connection_status_on_50px_3.png)";
+				connectBtn.style.border = "1px solid darkgreen";
+				connectBtn.name = "active";
+				disconnectBtn.querySelector(".rowNotConnectForConnBranchImg").style.content = "url(../Assets/icons8_connection_status_on_50px_1.png)";
+				disconnectBtn.style.border = "none";
+				disconnectBtn.name = "sleep";
+			}
+			else if(command == "disconnect") {
+				connectBtn.querySelector(".rowConnectForConnBranchImg").style.content = "url(../Assets/icons8_connection_status_on_50px_1.png)";
+				connectBtn.style.border = "none";
+				connectBtn.name = "sleep";
+				disconnectBtn.querySelector(".rowNotConnectForConnBranchImg").style.content = "url(../Assets/icons8_connection_status_on_50px_4.png)";
+				disconnectBtn.style.border = "1px solid darkred";
+				disconnectBtn.name = "active";
+			}
+		}
+
+		function CreateTheArrayForBranchesConnIds(idsArr, branchesToConnArr, brConnsIdsArr) {
+			for(var i = 0; i < branchesToConnArr.length; i++) {
+				newId = CompareIdWithATableAndReturn(8, brConnsIdsArr);
+				idsArr.push(newId);
+			}
+
+			return idsArr;
+		}
+
+		function UpdateServerForBranchesConnected(branchesConnNewIds, newBranchesToConnect, branchesToDlte) {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/updateServerForBranchesConnectedPhp.php",
+					data: {id: branchObj.getId(), branchesToConnect: newBranchesToConnect, branchesConnIds: branchesConnNewIds, branchesToDelete: branchesToDlte},
+					success: function(data) {
+						//alert(data);
+						resolve(data);
+					}
+				});
+			});
+		}
+
+		function StartingPointAfterUpdate(serverUpdatedBrConnArray) {
+			PushUpButtons();
+
+			return serverUpdatedBrConnArray;
+		}
+
+		function CheckAndCreateTheViewOfBranchesConn(branchesConn) {
+			buttonsStartingPoint = [];
+			buttonsNow = [];
+
+			for(var i = 0; i < branches.length; i++) {
+				var idConnectBtn = "connectBrBtn" + branches[i].getId();
+				var idDisconnectBtn = "notConnectBrBtn" + branches[i].getId();
+				var connectBtn = document.getElementById(idConnectBtn);
+				var connectBtnImg = connectBtn.querySelector(".rowConnectForConnBranchImg"); 
+				var disconnectBtn = document.getElementById(idDisconnectBtn);
+				var disconnectBtnImg = disconnectBtn.querySelector(".rowNotConnectForConnBranchImg");
+
+				if(branchesConn.length == 0) {
+					buttonsStartingPoint.push(0);
+					buttonsNow.push(0);
+					connectBtnImg.style.content = "url(../Assets/icons8_connection_status_on_50px_1.png)";
+					connectBtn.style.border = "none";
+					connectBtn.name = "sleep";
+					disconnectBtnImg.style.content = "url(../Assets/icons8_connection_status_on_50px_4.png)";
+					disconnectBtn.style.border = "1px solid darkred";
+					disconnectBtn.name = "active";
 				}
 				else {
 					var found = 0;
 
-					for(var j = 0; j < branchesConnected.length; j++) {
-						if(branchesConnected[j] == branches[i].getId()) {
+					for(var j = 0; j < branchesConn.length; j++) {
+						if(branchesConn[j] == branches[i].getId()) {
 							found = 1;
 							break;
 						}
 					}
 
 					if(found) {
-						rowConnectForConnBranchImg.style.content = "url(../Assets/icons8_connection_status_on_50px_3.png)";
+						buttonsStartingPoint.push(1);
+						buttonsNow.push(1);
+						connectBtnImg.style.content = "url(../Assets/icons8_connection_status_on_50px_3.png)";
+						connectBtn.style.border = "1px solid darkgreen";
+						connectBtn.name = "active";
+						disconnectBtnImg.style.content = "url(../Assets/icons8_connection_status_on_50px_1.png)";
+						disconnectBtn.style.border = "none";
+						disconnectBtn.name = "sleep";
 					}
 					else {
-						rowNotConnectForConnBranchImg.style.content = "url(../Assets/icons8_connection_status_on_50px_4.png)";
+						buttonsStartingPoint.push(0);
+						buttonsNow.push(0);
+						connectBtnImg.style.content = "url(../Assets/icons8_connection_status_on_50px_1.png)";
+						connectBtn.style.border = "none";
+						connectBtn.name = "sleep";
+						disconnectBtnImg.style.content = "url(../Assets/icons8_connection_status_on_50px_4.png)";
+						disconnectBtn.style.border = "1px solid darkred";
+						disconnectBtn.name = "active";
 					}
 				}
 			}
+			console.log(buttonsStartingPoint);
+		}
+	}
+
+	this.AddNewBusToServer = async function(branchObj) {
+		var busesIds = await GetAllIdsOfBuses();
+
+		var editWindowC = document.getElementById("editWindowC");
+		editWindowC.style.display = "block";
+
+		var editTitleTextC = document.getElementById("editTitleTextC");
+		editTitleTextC.innerHTML = "ΠΡΟΣΘΗΚΗ ΝΕΟΥ ΛΕΩΦΟΡΕΙΟΥ";
+
+		var editInfoGetterLeftC = document.getElementById("editInfoGetterLeftC");
+		editInfoGetterLeftC.innerHTML = "";
+
+		var editInfoGetterRightC = document.getElementById("editInfoGetterRightC");
+		editInfoGetterRightC.innerHTML = "";
+
+		//UNIQUE ID OF BUS
+		var newIdOfBus = CompareIdWithATableAndReturn(9, busesIds);
+
+		var busNewIdC = document.createElement("div");
+		busNewIdC.id = "busNewIdC";
+		busNewIdC.style.userSelect = "none";
+
+		var busNewIdTitleC = document.createElement("div");
+		busNewIdTitleC.id = "busNewIdTitleC";
+		busNewIdTitleC.innerHTML = "Μοναδικός κωδικός";
+		busNewIdC.appendChild(busNewIdTitleC);
+
+		var busNewIdInpt = document.createElement("input");
+		busNewIdInpt.id = "busNewIdInpt";
+		busNewIdInpt.value = newIdOfBus;
+		busNewIdInpt.disabled = true;
+		busNewIdC.appendChild(busNewIdInpt);
+
+		editInfoGetterLeftC.appendChild(busNewIdC);
+
+		//BRANCH ID THAT BUS WILL CONNECT
+		var busBranchConnC = document.createElement("div");
+		busBranchConnC.id = "busBranchConnC";
+		busBranchConnC.style.userSelect = "none";
+
+		var busBranchConnTitleC = document.createElement("div");
+		busBranchConnTitleC.id = "busBranchConnTitleC";
+		busBranchConnTitleC.innerHTML = "Κατάστημα σύνδεσης";
+		busBranchConnC.appendChild(busBranchConnTitleC);
+
+		var busBranchConnInpt = document.createElement("input");
+		busBranchConnInpt.id = "busBranchConnInpt";
+		if(branchObj != "NULL") {
+			busBranchConnInpt.value = branchObj.getLocation() + " (" + branchObj.getStreet() + ")";
+		}
+		else {
+			busBranchConnInpt.value = "Ελεύθερο";
+		}
+		busBranchConnInpt.disabled = true;
+		busBranchConnC.appendChild(busBranchConnInpt);
+
+		editInfoGetterLeftC.appendChild(busBranchConnC);
+
+		//CHECKBOX TO CHECK THE AVAILABILITY OF THE NEW BUS 
+		var checkForAvailabilityC = document.createElement("id");
+		checkForAvailabilityC.id = "checkForAvailabilityC";
+
+		var checkBoxForAvailabilityInpt = document.createElement("input");
+		checkBoxForAvailabilityInpt.id = "checkBoxForAvailabilityInpt";
+		checkBoxForAvailabilityInpt.type = "checkbox";
+		checkBoxForAvailabilityInpt.tabIndex = 1;
+
+		checkForAvailabilityC.appendChild(checkBoxForAvailabilityInpt);
+
+		var checkBoxForAvailabilityLabel = document.createElement("label");
+		checkBoxForAvailabilityLabel.id = "checkBoxForAvailabilityLabel";
+		checkBoxForAvailabilityLabel.for = "checkBoxForAvailabilityInpt";
+
+		var checkBoxForAvailabilityBtn = document.createElement("button");
+		checkBoxForAvailabilityBtn.id = "checkBoxForAvailabilityBtn";
+		checkBoxForAvailabilityBtn.innerHTML = "Διαθέσιμο για χρήση";
+		checkBoxForAvailabilityBtn.addEventListener("click", function() {
+			checkBoxForAvailabilityInpt.click();
+		});
+		checkBoxForAvailabilityBtn.tabIndex = 1;
+		checkBoxForAvailabilityLabel.appendChild(checkBoxForAvailabilityBtn);
+
+		checkForAvailabilityC.appendChild(checkBoxForAvailabilityLabel);
+
+		editInfoGetterLeftC.appendChild(checkForAvailabilityC);
+
+		//BUTTON SEND NEW BUS TO SERVER
+		var sendNewBusBtn = document.createElement("button");
+		sendNewBusBtn.id = "sendNewBusBtn";
+		sendNewBusBtn.innerHTML = "ΕΠΙΒΕΒΑΙΩΣΗ";
+		sendNewBusBtn.addEventListener("click", function() {
+			if(infoBusesTextAr.value != "") {
+				CheckIfUserIsSureAboutThisAction();
+			}
+			else {
+				ProblemActionEvent();
+			}
+		});
+		sendNewBusBtn.tabIndex = 3;
+
+		editInfoGetterLeftC.appendChild(sendNewBusBtn);
+
+		//BUS INFO WINDOW
+		var infoBusesC = document.createElement("div");
+		infoBusesC.id = "infoBusesC";
+		var infoBusesTextC = document.createElement("div");
+		infoBusesTextC.id = "infoBusesTextC";
+		infoBusesTextC.innerHTML = "Πληροφορίες νέου λεωφορείου";
+		var infoBusesTextAr = document.createElement("textarea");
+		infoBusesTextAr.id = "infoBusesTextAr";
+		infoBusesTextAr.placeholder = "Γράψτε εδώ πληροφορίες για το νέο λεωφορείο, όπως μάρκα, χωρητικότητα, χρονολογία και άλλες λεπτομέρειες.";
+		infoBusesTextAr.oninput = function () {
+			if (this.value.length > 500) {
+				this.value = this.value.slice(0, 500);
+			}
+		}
+		infoBusesTextAr.addEventListener("input", function() {
+			if(this.value != "") {
+				infoBusesTextAr.style.border = "2px solid rgb(118, 118, 118)";
+			}
+		});
+		infoBusesTextAr.tabIndex = 2;
+
+		infoBusesC.appendChild(infoBusesTextC);
+		infoBusesC.appendChild(infoBusesTextAr);
+		editInfoGetterRightC.appendChild(infoBusesC);
+
+		infoBusesTextAr.focus();
+
+		function CheckIfUserIsSureAboutThisAction() {
+			CloseAlertMessages();
+			alertAddNewInfoC.style.display = "block";
+			addNewInfoTitleTextC.innerHTML = "ΔΗΜΙΟΥΡΓΙΑ ΝΕΟΥ ΛΕΩΦΟΡΕΙΟΥ";
+			var status = "";
+			if(checkBoxForAvailabilityInpt.checked) {
+				status = "ενεργό";
+			}
+			else {
+				status = "ανενεργό";
+			}
+
+			if(branchObj != "NULL") {
+				addNewInfoTextC.innerHTML = "Ολα τα πεδία είναι έγκυρα.<br>Είστε σίγουρος για την δημιουργία ενός νέου λεωφορείου, για το κατάστημα " + branchObj.getLocation() + " (" + branchObj.getStreet() + "), ως " + status + ";";
+			}
+			else {
+				addNewInfoTextC.innerHTML = "Ολα τα πεδία είναι έγκυρα.<br>Είστε σίγουρος για την δημιουργία ενός νέου λεωφορείου, χωρίς να ανήκει σε κάποιο κατάστημα, ως " + status + ";";
+			}
+
+			yesAddNewInfoBtn.addEventListener("click", function() {
+				AddNewBusToServer();
+			});
+			yesAddNewInfoBtn.focus();
+			noAddNewInfoBtn.addEventListener("click", function() {
+				alertAddNewInfoC.style.display = "none";
+			});
 		}
 
-		function UpdateViewOfButton(idOfRow) {
-			var row = document.getElementById(idOfRow);
-			var connectBtn = row.querySelector("");
-			var disConnectBtn = row.querySelector("");
+		//AFTER USER HAS CONFIRMED THE CREATION OF NEW BUS
+		async function AddNewBusToServer() {
+			var status = "0";
+			var id = "";
+
+			if(checkBoxForAvailabilityInpt.checked) {
+				status = "1";
+			}
+
+			if(branchObj != "NULL") {
+				id = branchObj.getId();
+			}
+			else {
+				id = "NULL";
+			}
+
+			var newBus = {
+				'id': busNewIdInpt.value,
+				'info': infoBusesTextAr.value,
+		    	'branchConnected': id,
+		    	'availability': status
+			};
+
+			newBus = JSON.stringify(newBus);
+
+			var result = await SendNewBusToServer(newBus);
+
+			if(result == "1") {
+				alertAddNewInfoC.style.display = "none";
+				alertInfoForCreatNewItemC.style.display = "table";
+				if(id != "NULL") {
+					alertInfoForCreatNewItemTextC.innerHTML = "Η διαδικασία ολοκληρώθηκε επιτυχώς! Το νέο λεωφορείο προστέθηκε στο κατάστημα " + branchObj.getLocation() + " (" + branchObj.getStreet() + ").<br>(Η σελίδα θα ανανεωθεί αυτόματα)";
+				}
+				else {
+					alertInfoForCreatNewItemTextC.innerHTML = "Η διαδικασία ολοκληρώθηκε επιτυχώς! Το νέο λεωφορείο προστέθηκε στα ελεύθερα λεωφορεία.<br>(Η σελίδα θα ανανεωθεί αυτόματα)";
+				}
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.focus();
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+					location.reload();
+				});
+				location.reload();
+			}
+			else {
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος. Ξαναπροσπαθήστε αργότερα.";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.focus();
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+				});
+			}
 		}
+
+		//SEND NEW BUS TO SERVER
+		function SendNewBusToServer(newBus) {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/sendNewBusToServerPhp.php",
+					data: {bus: newBus},
+					success: function(data) {
+						//alert(data);
+						resolve(data);
+					}
+				});
+			});
+		}
+
+		//BEING CALLED WHEN INFO OF BUS IS EMPTY AND USER IS TRYING TO SEND TO THE SERVER NEW BUS
+		function ProblemActionEvent() {
+			alertInfoForCreatNewItemC.style.display = "table";
+			alertInfoForCreatNewItemTextC.innerHTML = "Δεν μπορεί να ολοκληρωθεί η διαδικασία, χωρίς κάποιο στοιχείο για το λεωφορείο!";
+			alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+			alertInfoForCreatNewItemBtn.focus();
+			alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+				alertInfoForCreatNewItemC.style.display = "none";
+				infoBusesTextAr.style.border = "2px solid rgb(118, 118, 118)";
+			});
+			infoBusesTextAr.style.border = "4px solid darkred";
+		}
+	}
+
+	this.DeleteBusFromServer = function(busObj, branchConnectedObj) {
+		CloseAlertMessages();
+		alertAddNewInfoC.style.display = "block";
+		addNewInfoTitleTextC.innerHTML = "ΔΙΑΓΡΑΦΗ ΛΕΩΦΟΡΕΙΟΥ";
+		var status = "";
+		if(busObj.getAvailability() == "1") {
+			status = "ενεργό";
+		}
+		else {
+			status = "ανενεργό";
+		}
+
+		if(busObj.getBranchConnected() == null) {
+			addNewInfoTextC.innerHTML = "Θέλετε να διαγράψετε το λεωφορείο με κωδικό " + busObj.getId() + ";<br>Δεν ανήκει σε κάποιο κατάστημα και είναι σε κατάσταση, " + status + ".";
+		}
+		else {
+			addNewInfoTextC.innerHTML = "Θέλετε να διαγράψετε το λεωφορείο με κωδικό " + busObj.getId() + ";<br>Βεβαιωθείτε, πρώτα, ότι έχετε ενημερώσει το κατάστημα, στο οποίο ανήκει (" + branchConnectedObj.getLocation() + " - #" + branchConnectedObj.getId() + "), σε κατάσταση " + status + ".";
+		}
+		yesAddNewInfoBtn.addEventListener("click", function() {
+			DlteBusFromServer();
+		});
+		yesAddNewInfoBtn.focus();
+		noAddNewInfoBtn.addEventListener("click", function() {
+			alertAddNewInfoC.style.display = "none";
+		});
+
+		async function DlteBusFromServer() {
+			var result = await DeleteChosenBus();
+			if(result == "1") {
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Η διαδικασία ολοκληρώθηκε! Το λεωφορείο με κωδικό " + busObj.getId() + " διαφράφτηκε, επιτυχώς!<br>(Η σελίδα θα ανανεωθεί αυτόματα)";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.focus();
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+					location.reload();
+				});
+				location.reload();
+			}
+			else {
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος. Ξαναπροσπαθήστε αργότερα.";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.focus();
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+				});
+			}
+		}
+
+		function DeleteChosenBus() {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/deleteBusFromServerPhp.php",
+					data: {busId: busObj.getId()},
+					success: function(data) {
+						//alert(data);
+						resolve(data);
+					}
+				});
+			});
+		}
+	}
+
+	this.UpdateBusToServer = async function(busObj) {
+		var branches = await GetAllBranchesFromServer();
+		branches = ConvertObjectsArrayToBranchObjsArray(branches);
+
+		var editWindowC = document.getElementById("editWindowC");
+		editWindowC.style.display = "block";
+
+		var editTitleTextC = document.getElementById("editTitleTextC");
+		editTitleTextC.innerHTML = "ΕΠΕΞΕΡΓΑΣΙΑ ΣΤΟΙΧΕΙΩΝ ΛΕΩΦΟΡΕΙΟΥ";
+
+		var editInfoGetterLeftC = document.getElementById("editInfoGetterLeftC");
+		editInfoGetterLeftC.innerHTML = "";
+
+		var editInfoGetterRightC = document.getElementById("editInfoGetterRightC");
+		editInfoGetterRightC.innerHTML = "";
+
+		//ID OF BUS
+		var busIdEditC = document.createElement("div");
+		busIdEditC.id = "busIdEditC";
+		busIdEditC.style.userSelect = "none";
+
+		var busIdEditTitleC = document.createElement("div");
+		busIdEditTitleC.id = "busIdEditTitleC";
+		busIdEditTitleC.innerHTML = "Μοναδικός κωδικός";
+		busIdEditC.appendChild(busIdEditTitleC);
+
+		var busIdEditInpt = document.createElement("input");
+		busIdEditInpt.id = "busIdEditInpt";
+		busIdEditInpt.value = busObj.getId();
+		busIdEditInpt.disabled = true;
+		busIdEditC.appendChild(busIdEditInpt);
+
+		editInfoGetterLeftC.appendChild(busIdEditC);
+
+		//BRANCHES OPTIONS THAT BUS CAN CONNECT
+		var busEditBranchesOptionsC = document.createElement("div");
+		busEditBranchesOptionsC.id = "busEditBranchesOptionsC";
+		busEditBranchesOptionsC.style.userSelect = "none";
+
+		var busEditBranchesOptionsTitleC = document.createElement("div");
+		busEditBranchesOptionsTitleC.id = "busEditBranchesOptionsTitleC";
+		busEditBranchesOptionsTitleC.innerHTML = "Καταστήματα για σύνδεση";
+		busEditBranchesOptionsC.appendChild(busEditBranchesOptionsTitleC);
+
+		var busEditBranchesOptionsSlct = document.createElement("select");
+		busEditBranchesOptionsSlct.id = "busEditBranchesOptionsSlct";
+		var busEditBranchesOption = document.createElement("option");
+		busEditBranchesOption.className = "busEditBranchesOption";
+		busEditBranchesOption.id = "busEditBranchesOptionNULL";
+		busEditBranchesOption.innerHTML = "Ελεύθερο (Χωρίς κατάστημα)";
+		busEditBranchesOptionsSlct.appendChild(busEditBranchesOption);
+		busEditBranchesOptionsSlct.tabIndex = 1;
+
+		if(busObj.getBranchConnected() == null) {
+			busEditBranchesOptionsSlct.value = "Ελεύθερο (Χωρίς κατάστημα)";
+		}
+		for(var i = 0; i < branches.length; i++) {
+			var busEditBranchesOption = document.createElement("option");
+			busEditBranchesOption.className = "busEditBranchesOption";
+			busEditBranchesOption.id = "busEditBranchesOption" + branches[i].getId();
+			busEditBranchesOption.innerHTML = branches[i].getLocation() + " (" + branches[i].getStreet() + ")";
+			busEditBranchesOptionsSlct.appendChild(busEditBranchesOption);
+
+			if(busObj.getBranchConnected() == branches[i].getId()) {
+				busEditBranchesOptionsSlct.value = branches[i].getLocation() + " (" + branches[i].getStreet() + ")";
+			}
+		}
+
+		busEditBranchesOptionsC.appendChild(busEditBranchesOptionsSlct);
+
+		editInfoGetterLeftC.appendChild(busEditBranchesOptionsC);
+
+		//CHECKBOX TO CHECK THE AVAILABILITY OF THE EDITED BUS 
+		var checkForAvailabilityEditC = document.createElement("id");
+		checkForAvailabilityEditC.id = "checkForAvailabilityEditC";
+
+		var checkBoxForAvailabilityEditInpt = document.createElement("input");
+		checkBoxForAvailabilityEditInpt.id = "checkBoxForAvailabilityEditInpt";
+		checkBoxForAvailabilityEditInpt.type = "checkbox";
+		checkBoxForAvailabilityEditInpt.tabIndex = 1;
+
+		checkForAvailabilityEditC.appendChild(checkBoxForAvailabilityEditInpt);
+
+		var checkBoxForAvailabilityEditLabel = document.createElement("label");
+		checkBoxForAvailabilityEditLabel.id = "checkBoxForAvailabilityEditLabel";
+		checkBoxForAvailabilityEditLabel.for = "checkBoxForAvailabilityEditInpt";
+
+		var checkBoxForAvailabilityEditBtn = document.createElement("button");
+		checkBoxForAvailabilityEditBtn.id = "checkBoxForAvailabilityEditBtn";
+		checkBoxForAvailabilityEditBtn.innerHTML = "Διαθέσιμο για χρήση";
+		if(busObj.getAvailability() == "1") {
+			checkBoxForAvailabilityEditInpt.checked = true;
+		}
+		else {
+			checkBoxForAvailabilityEditInpt.checked = false;
+		}
+		checkBoxForAvailabilityEditBtn.addEventListener("click", function() {
+			checkBoxForAvailabilityEditInpt.click();
+		});
+		checkBoxForAvailabilityEditBtn.tabIndex = 1;
+		checkBoxForAvailabilityEditLabel.appendChild(checkBoxForAvailabilityEditBtn);
+
+		checkForAvailabilityEditC.appendChild(checkBoxForAvailabilityEditLabel);
+
+		editInfoGetterLeftC.appendChild(checkForAvailabilityEditC);
+
+		//BUTTON SEND NEW BUS TO SERVER
+		var updateBusEditBtn = document.createElement("button");
+		updateBusEditBtn.id = "updateBusEditBtn";
+		updateBusEditBtn.innerHTML = "ΕΝΗΜΕΡΩΣΗ";
+		updateBusEditBtn.addEventListener("click", function() {
+			if(infoBusesEditTextAr.value != "") {
+				CheckIfUserIsSureAboutThisAction();
+			}
+			else {
+				ProblemActionEvent();
+			}
+		});
+		updateBusEditBtn.tabIndex = 3;
+
+		editInfoGetterLeftC.appendChild(updateBusEditBtn);
+
+		//BUS INFO EDITED WINDOW
+		var infoBusesEditC = document.createElement("div");
+		infoBusesEditC.id = "infoBusesEditC";
+		var infoBusesEditTextC = document.createElement("div");
+		infoBusesEditTextC.id = "infoBusesEditTextC";
+		infoBusesEditTextC.innerHTML = "Τροποποίηση Πληροφοριών";
+		var infoBusesEditTextAr = document.createElement("textarea");
+		infoBusesEditTextAr.id = "infoBusesEditTextAr";
+		infoBusesEditTextAr.placeholder = "Γράψτε εδώ πληροφορίες για το νέο λεωφορείο, όπως μάρκα, χωρητικότητα, χρονολογία και άλλες λεπτομέρειες.";
+		infoBusesEditTextAr.oninput = function () {
+			if (this.value.length > 500) {
+				this.value = this.value.slice(0, 500);
+			}
+		}
+		infoBusesEditTextAr.addEventListener("input", function() {
+			if(this.value != "") {
+				infoBusesEditTextAr.style.border = "2px solid rgb(118, 118, 118)";
+			}
+		});
+		infoBusesEditTextAr.innerHTML = busObj.getInfo();
+		infoBusesEditTextAr.tabIndex = 2;
+
+		infoBusesEditC.appendChild(infoBusesEditTextC);
+		infoBusesEditC.appendChild(infoBusesEditTextAr);
+		editInfoGetterRightC.appendChild(infoBusesEditC);
+
+		infoBusesEditTextAr.focus();
+
+		function CheckIfUserIsSureAboutThisAction() {
+			CloseAlertMessages();
+			alertAddNewInfoC.style.display = "block";
+			addNewInfoTitleTextC.innerHTML = "ΕΠΕΞΕΡΓΑΣΙΑ ΣΤΟΙΧΕΙΩΝ ΛΕΩΦΟΡΕΙΟΥ";
+			var status = "";
+			var availability = "0";
+
+			if(checkBoxForAvailabilityEditInpt.checked) {
+				status = "ενεργό";
+			}
+			else {
+				status = "ανενεργό";
+			}
+
+			if(checkBoxForAvailabilityEditInpt.checked) {
+				availability = "1";
+			}
+
+			var branchToConnect = busEditBranchesOptionsSlct.options[busEditBranchesOptionsSlct.selectedIndex].id;
+			branchToConnect = branchToConnect.substring(branchToConnect.length - 4);
+
+			var currentBranchObj = "NULL";
+
+			for(var i = 0; i < branches.length; i++) {
+				if(branches[i].getId() == branchToConnect) {
+					currentBranchObj = branches[i];
+					break;
+				}
+			}
+
+			var newBus = {
+				'id': busIdEditInpt.value,
+				'info': infoBusesEditTextAr.value,
+		    	'branchConnected': branchToConnect,
+		    	'availability': availability
+			};
+			var newBusStringify = JSON.stringify(newBus);
+			var newBusObj = ConvertObjectToBusObj(newBus);
+
+			if(branchToConnect != "NULL") {
+				addNewInfoTextC.innerHTML = "Ολα τα πεδία είναι έγκυρα.<br>Είστε σίγουρος για την τροποποίηση του επιλεγμένου λεωφορείου, για το κατάστημα " + currentBranchObj.getLocation() + " (" + currentBranchObj.getStreet() + "), ως " + status + ";";
+			}
+			else {
+				addNewInfoTextC.innerHTML = "Ολα τα πεδία είναι έγκυρα.<br>Είστε σίγουρος για την τροποποίηση του επιλεγμένου λεωφορείου, χωρίς να ανήκει σε κάποιο κατάστημα, ως " + status + ";";
+			}
+
+			yesAddNewInfoBtn.addEventListener("click", function() {
+				UpdateBusFromServer(newBusStringify, newBusObj, currentBranchObj);
+			});
+			yesAddNewInfoBtn.focus();
+			noAddNewInfoBtn.addEventListener("click", function() {
+				alertAddNewInfoC.style.display = "none";
+			});
+		}
+
+		//AFTER USER HAS CONFIRMED THE EDIT OF THE BUS
+		async function UpdateBusFromServer(newBusStringify, newBusObj, currentBranchObj) {
+			var status = "0";
+			var messageStatus = "ανενεργό";
+			var id = "";
+
+			if(checkBoxForAvailabilityEditInpt.checked) {
+				status = "1";
+				messageStatus = "ενεργό";
+			}
+
+			if(currentBranchObj != "NULL") {
+				id = currentBranchObj.getId();
+			}
+			else {
+				id = "NULL";
+			}
+
+			var result = await UpdateEditedBusToServer(newBusStringify);
+
+			if(result == "1") {
+				alertAddNewInfoC.style.display = "none";
+				alertInfoForCreatNewItemC.style.display = "table";
+				if(id != "NULL") {
+					alertInfoForCreatNewItemTextC.innerHTML = "Η διαδικασία ολοκληρώθηκε επιτυχώς! Το λεωφορείο ενημερώθηκε στο κατάστημα " + currentBranchObj.getLocation() + " (" + currentBranchObj.getStreet() + "), ως " + messageStatus + ".<br>(Η σελίδα θα ανανεωθεί αυτόματα)";
+				}
+				else {
+					alertInfoForCreatNewItemTextC.innerHTML = "Η διαδικασία ολοκληρώθηκε επιτυχώς! Το λεωφορείο ενημερώθηκε στα ελεύθερα λεωφορεία, ως " + messageStatus + ".<br>(Η σελίδα θα ανανεωθεί αυτόματα)";
+				}
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.focus();
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+					location.reload();
+				});
+				location.reload();
+			}
+			else {
+				alertInfoForCreatNewItemC.style.display = "table";
+				alertInfoForCreatNewItemTextC.innerHTML = "Κάτι πήγε λάθος. Ξαναπροσπαθήστε αργότερα.";
+				alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+				alertInfoForCreatNewItemBtn.focus();
+				alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+					alertInfoForCreatNewItemC.style.display = "none";
+				});
+			}
+		}
+
+		//GET ALL BRANCES FROM SERVER
+		function GetAllBranchesFromServer() {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/getBranchesPhp.php",
+					data: {},
+					success: function(data) {
+						//alert(data);
+						data = JSON.parse(data);
+						resolve(data);
+					}
+				});
+			});
+		}
+
+		//UPDATE BUS FROM SERVER
+		function UpdateEditedBusToServer(newBus) {
+			return new Promise((resolve, reject) => {
+				$.ajax({
+					type: 'POST',
+					url: "../Php/updateBusToServerPhp.php",
+					data: {bus: newBus},
+					success: function(data) {
+						//alert(data);
+						resolve(data);
+					}
+				});
+			});
+		}
+
+		//BEING CALLED WHEN INFO OF BUS IS EMPTY AND USER IS TRYING TO SEND TO THE SERVER EDITED BUS
+		function ProblemActionEvent() {
+			alertInfoForCreatNewItemC.style.display = "table";
+			alertInfoForCreatNewItemTextC.innerHTML = "Δεν μπορεί να ολοκληρωθεί η διαδικασία, χωρίς κάποιο στοιχείο για το λεωφορείο!";
+			alertInfoForCreatNewItemBtn.innerHTML = "Το κατάλαβα";
+			alertInfoForCreatNewItemBtn.focus();
+			alertInfoForCreatNewItemBtn.addEventListener("click", function() {
+				alertInfoForCreatNewItemC.style.display = "none";
+				infoBusesEditTextAr.style.border = "2px solid rgb(118, 118, 118)";
+			});
+			infoBusesEditTextAr.style.border = "4px solid darkred";
+		}
+	}
+
+	this.AddNewRoute = function() {
+
 	}
 }

@@ -36,9 +36,11 @@
 	}
 
 	#requestsContentC {
-		display: block;
 		position: relative;
-
+		width: 100%; height: 100%;
+		background: transparent;
+		font-family: Roboto Slab;
+		overflow: hidden;
 	}
 
 	#requestsHeaderCountC {
@@ -101,6 +103,10 @@
 	}
 
 	#exitFullMsgBtn:hover {
+		color: rgb(255, 215, 0);
+	}
+
+	#exitFullMsgBtn:focus {
 		color: rgb(255, 215, 0);
 	}
 
@@ -186,7 +192,7 @@
 		position: relative;
 		width: 100%;
 		background: transparent;
-		margin-top: -28px;
+		margin-top: -31px;
 	}
 
 		/*FOR RECEIVED MESSAGES*/
@@ -202,20 +208,26 @@
 			display: block;
 			position: relative;
 			width: 60px; height: 100%;
-			background: green;
+			background: rgb(22, 36, 53);
 			left: 70px;
-			opacity: 0.8;
+			opacity: 0.9;
 			cursor: pointer;
+			border-radius: 0 0 4px 4px;
 			border: none;
-			border-radius: 4px;
 		}
 
 		#answerPositiveBtn:hover {
 			opacity: 1;
+			background: rgb(55, 117, 41);
+		}
+
+		#answerPositiveBtn:focus {
+			opacity: 1;
+			background: rgb(55, 117, 41);
 		}
 
 		#answerPositiveBtn:active {
-			background: darkgreen;
+			background: rgb(13, 18, 24);
 		}
 
 			#answerPositiveImg {
@@ -229,20 +241,26 @@
 			display: block;
 			position: relative;
 			width: 60px; height: 100%;
-			background: red;
+			background: rgb(22, 36, 53);
 			right: 70px;
-			opacity: 0.8;
+			opacity: 0.9;
 			cursor: pointer;
+			border-radius: 0 0 4px 4px;
 			border: none;
-			border-radius: 4px;
 		}
 
 		#answerNegativeBtn:hover {
+			opacity: 1;	
+			background: rgb(140, 43, 43);
+		}
+
+		#answerNegativeBtn:focus {
 			opacity: 1;
+			background: rgb(140, 43, 43);
 		}
 
 		#answerNegativeBtn:active {
-			background: darkred;
+			background: rgb(13, 18, 24);
 		}
 
 			#answerNegativeImg {
@@ -250,6 +268,19 @@
 				width: 100%; height: 100%;
 				content: url(../Assets/icons8_delete_50px_1.png);
 			}
+
+		#aboutAnswerInfoC {
+			display: block;
+			position: relative;
+			width: 80%;
+			background: transparent;
+			color: grey;
+			font-size: 16px;
+			font-style: italic;
+			border: none;
+			margin: auto;
+			margin-top: 8px;
+		}
 	
 	#answerSendC {
 		display: none;
@@ -260,7 +291,7 @@
 	}
 
 		/*FOR SENT MESSAGES*/
-		#answerIfSomeoneIsNegativeC {
+		#answerOfSummaryC {
 			float: right;
 			display: block;
 			position: relative;
@@ -269,12 +300,40 @@
 			right: 60px;
 		}
 
-			#answerIfSomeoneIsNegativeImg {
+			#answerOfSummaryImg {
 				width: 100%; height: 100%;
 				border-radius: 10px;
-				content: url(../Assets/icons8_exclamation_mark_60px.png);
-				animation: alertAnimation 1s linear infinite;
 			}
+
+			#aboutInformAnswerInfoBtn {
+				display: block;
+				position: absolute;
+				width: 26px; height: 24px;
+				background: transparent;
+				top: 65%; right: -40px;
+				cursor: pointer;
+				border: none;
+				padding: 0;
+				transform: translate(0, -50%);
+			}
+
+				#aboutInformAnswerInfoBtnImg {
+					width: 100%; height: 100%;
+					background: transparent;
+					content: url(../Assets/icons8_question_mark_30px.png);
+				}
+
+				#aboutInformAnswerInfoBtn:hover #aboutInformAnswerInfoBtnImg {
+					content: url(../Assets/icons8_question_mark_30px_2.png);
+				}
+
+				#aboutInformAnswerInfoBtn:focus #aboutInformAnswerInfoBtnImg {
+					content: url(../Assets/icons8_question_mark_30px_2.png);
+				}
+
+				#aboutInformAnswerInfoBtn:active #aboutInformAnswerInfoBtnImg {
+					content: url(../Assets/icons8_question_mark_30px_4.png);
+				}
 	/**/
 	
 	/*RIGHT SPLIT CONTAINER*/
@@ -463,6 +522,10 @@
 			color: rgb(13, 18, 24);
 		}
 
+		.senderAndMsgRecBtn:focus {
+			color: rgb(13, 18, 24);
+		}
+
 		.senderRecC {
 			float: left;
 			display: block;
@@ -514,16 +577,34 @@
 		user-select: none;
 	}
 
-	.titleTextTypeSendC {
+	.titleTypeSendC {
 		display: table;
 		position: relative;
 		background: rgb(13, 18, 24);
+		height: 22px;
+		border: none;
+		margin: auto;
+		padding: 0 4px 0 4px;
+		z-index: 2;
+	}
+
+	.titleTextTypeSendC {
+		display: inline-block;
+		position: relative;
+		background: transparent;
 		color: rgb(255, 215, 0);
 		font-size: 20px;
 		border: 2px solid rgb(13, 18, 24);
-		margin: auto;
-		padding: 1px 4px 1px 4px;
-		z-index: 2;
+	}
+
+	.titleTextTypeSendImg {
+		display: inline-block;
+		position: absolute;
+		width: 29px; height: 100%;
+		background: rgb(13, 18, 24);
+		border: 2px solid rgb(13, 18, 24);
+		margin-left: 3px;
+		padding: 1px 0 1px 0;
 	}
 
 	.contentSendC {
@@ -649,6 +730,10 @@
 			color: rgb(13, 18, 24);
 		}
 
+		.receiversAndMsgSendBtn:focus {
+			color: rgb(13, 18, 24);
+		}
+
 		.receiversSendC {
 			float: left;
 			display: block;
@@ -733,7 +818,23 @@
 		}
 	}
 
-	@keyframes alertAnimation {
+	@keyframes positiveAlertAnimation {
+		from {
+			box-shadow: 0 0 40px green;
+		} to {
+			box-shadow: none;
+		}
+	}
+
+	@keyframes iddleAlertAnimation {
+		from {
+			box-shadow: 0 0 40px rgb(221, 182, 143);
+		} to {
+			box-shadow: none;
+		}
+	}
+
+	@keyframes negativeAlertAnimation {
 		from {
 			box-shadow: 0 0 40px red;
 		} to {
